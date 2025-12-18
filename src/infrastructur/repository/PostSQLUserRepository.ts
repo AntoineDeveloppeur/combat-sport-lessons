@@ -6,7 +6,7 @@ export class PostSQLUserRepository implements UserRepository {
   constructor(user: User) {
     this.user = user
   }
-  async save() {
+  async create() {
     // save User in a PostSQL way
   }
 }
