@@ -1,5 +1,5 @@
 import User from "../../domain/Entities/user.js"
-import { PostSQLUserRepository } from "../../infrastructure/repository/PostSQLUserRepository.js"
+import { UserRepository } from "../../domain/Repositories/userRepository.js"
 
 type UserInfoFromFrontend = { name: string; email: string }
 type CreateUserReturn = Promise<{
@@ -7,14 +7,17 @@ type CreateUserReturn = Promise<{
 }>
 
 export async function createUser(
-  UserInfoFromFrontend: UserInfoFromFrontend
-): CreateUserReturn {
-  try {
-    const user = new User(UserInfoFromFrontend)
-    const db = new PostSQLUserRepository(user)
-    await db.create()
-    return { error: null }
-  } catch (error) {
-    return { error: error }
+  userInfoFromFrontend: UserInfoFromFrontend,
+  userRepository: UserRepository // je trouve ça étrange d'injecter une interface et non une instance de class
+) {
+  // Ajouter la logique si l'utilisateur existe déjà
+  const emailAlreadyUsed = await userRepository.isEmailAlreadyUsed(
+    userInfoFromFrontend.email
+  )
+  if (emailAlreadyUsed) {
+    throw new EmailAlreadyUsed(userInfoFromFrontend)
   }
+
+  const user = new User(userInfoFromFrontend)
+  await userRepository.create(user)
 }
