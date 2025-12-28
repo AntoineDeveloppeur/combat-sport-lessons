@@ -26,7 +26,7 @@ const userCtrl = {
       if (error instanceof StorageError) {
         return res.status(error.status).json({ error: error.message })
       }
-      console.log(String(error))
+      console.error(error)
       return res.status(500).json({ error: "Erreur interne au serveur" })
     }
   },
