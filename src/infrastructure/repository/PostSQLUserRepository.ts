@@ -12,7 +12,7 @@ export class PostSQLUserRepository implements UserRepository {
     setTimeout(() => {}, 1000)
     return true
   }
-  async modifyPassword(id: string, passwordHashed: string): Promise<void> {
+  async modifyPassword(id: string, hash: string): Promise<void> {
     console.log("password updated")
     setTimeout(() => {}, 1000)
   }
