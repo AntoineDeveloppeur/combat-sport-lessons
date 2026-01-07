@@ -1,6 +1,6 @@
 import { UserRepository } from "../../domain/Repositories/userRepository.js"
 import { IncorrectCurrentPassword } from "../../domain/errors/IncorrectCurrentPassword.js"
-import { UserDoesntExist } from "../../domain/errors/UserDoesntExist.js"
+import { EmailNotFound } from "../../domain/errors/EmailNotFound.js"
 import { PasswordHasher } from "../../domain/services/PasswordHasher.js"
 
 export default async function updatePassword(
@@ -10,13 +10,8 @@ export default async function updatePassword(
   userRepository: UserRepository,
   passwordHasher: PasswordHasher
 ) {
-  // find the user
   const userId = await userRepository.findUserId(email)
-  if (!userId) {
-    throw new UserDoesntExist(email)
-  }
-
-  // Verify if user gives the correct password
+  // Verify if user gives the correct current password
   const storedHash = await userRepository.getHash(userId)
   const isCorrectCurrentPassword = passwordHasher.verify(
     currentPassword,

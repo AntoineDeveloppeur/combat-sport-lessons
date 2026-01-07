@@ -12,17 +12,22 @@
     "dev": "nodemon ./dist/src/presentation/server.js",
     "type:watch": "npx tsc --watch",
     "lint": "npx eslint",
-    "prettier": "npx prettier . --write"
+    "prettier": "npx prettier . --write",
+    "db:start": "docker-compose up",
+    "db:stop": "docker-compose down",
+    "db:reset": "docker-compose down -v && docker-compose up -d"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "express": "^5.2.1",
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.2",
+    "@types/pg": "^8.16.0",
     "eslint": "^9.39.2",
     "globals": "^16.5.0",
     "jiti": "^2.6.1",
