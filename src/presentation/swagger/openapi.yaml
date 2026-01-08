@@ -1,0 +1,176 @@
+openapi: 3.0.0
+info:
+  title: Repository Pattern API
+  version: 1.0.0
+  description: API de gestion d'utilisateurs avec authentification
+
+servers:
+  - url: http://localhost:4000
+    description: Serveur de développement
+
+tags:
+  - name: Users
+    description: Gestion des utilisateurs
+
+paths:
+  /user/create:
+    post:
+      tags:
+        - Users
+      summary: Créer un nouvel utilisateur
+      description: Enregistre un nouvel utilisateur dans la base de données PostgreSQL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+            example:
+              name: John Doe
+              email: john.doe@example.com
+              password: SecurePass123!
+      responses:
+        "201":
+          description: Utilisateur créé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: utilisateur créé avec succès
+        "400":
+          description: Email déjà utilisé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: john.doe@example.com est déjà utilisé
+        "500":
+          description: Erreur interne du serveur
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: Erreur interne au serveur
+
+  /user/updatePassword:
+    post:
+      tags:
+        - Users
+      summary: Modifier le mot de passe
+      description: Met à jour le mot de passe d'un utilisateur après vérification du mot de passe actuel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePasswordRequest"
+            example:
+              email: john.doe@example.com
+              currentPassword: SecurePass123!
+              newPassword: NewSecurePass456!
+      responses:
+        "200":
+          description: Mot de passe modifié avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: mot de passé modifié avec succès
+        "400":
+          description: Email non trouvé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: john.doe@example.com doesn't have an account
+        "401":
+          description: Mot de passe actuel incorrect
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: l'ancien mot de passe donné est incorrect
+        "500":
+          description: Erreur interne du serveur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              examples:
+                erreurGenerale:
+                  summary: Erreur générale
+                  value:
+                    message: Erreur interne du serveur
+                erreurUserIdNotFound:
+                  summary: ID utilisateur non trouvé (erreur interne)
+                  value:
+                    error: Erreur interne au serveur, veuillez contacter l'administrateur
+
+components:
+  schemas:
+    CreateUserRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          description: Nom complet de l'utilisateur
+          example: John Doe
+        email:
+          type: string
+          format: email
+          description: Adresse email unique de l'utilisateur
+          example: john.doe@example.com
+        password:
+          type: string
+          format: password
+          description: Mot de passe de l'utilisateur (minimum 8 caractères)
+          example: SecurePass123!
+
+    UpdatePasswordRequest:
+      type: object
+      required:
+        - email
+        - currentPassword
+        - newPassword
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email de l'utilisateur
+          example: john.doe@example.com
+        currentPassword:
+          type: string
+          format: password
+          description: Mot de passe actuel pour vérification
+          example: SecurePass123!
+        newPassword:
+          type: string
+          format: password
+          description: Nouveau mot de passe
+          example: NewSecurePass456!
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Message d'erreur
