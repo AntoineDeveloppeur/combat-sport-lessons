@@ -1,13 +1,13 @@
 import User from "../../domain/Entities/user.js"
 import { UserRepository } from "../../domain/Repositories/userRepository.js"
 import { EmailAlreadyUsed } from "../../domain/errors/EmailAlreadyUsed.js"
-import { UserInfoFromFrontend } from "../../../types/index.js"
+import { UserInfoFromFrontend } from "../dto/UserInfoFromFrontend.js"
 import { IdGenerator } from "../../domain/services/IdGenerator.js"
 import { PasswordHasher } from "../../domain/services/PasswordHasher.js"
 
 export async function createUser(
   userInfoFromFrontend: UserInfoFromFrontend,
-  userRepository: UserRepository, // je trouve ça étrange d'injecter une interface et non une instance de class
+  userRepository: UserRepository,
   idGenerator: IdGenerator,
   passwordHasher: PasswordHasher
 ) {

@@ -5,7 +5,7 @@ import { EmailNotFound } from "../../domain/errors/EmailNotFound.js"
 import { EmailAlreadyUsed } from "../../domain/errors/EmailAlreadyUsed.js"
 import { IncorrectCurrentPassword } from "../../domain/errors/IncorrectCurrentPassword.js"
 import updatePassword from "../../application/useCases/UpdatePassword.js"
-import { UserInfoFromFrontend } from "../../../types/index.js"
+import { UserInfoFromFrontend } from "../../application/dto/UserInfoFromFrontend.js"
 import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGenerator.js"
 import { BcryptPasswordHasher } from "../../infrastructure/services/BcryptHashPassword.js"
 import pool from "../../infrastructure/postSQL/postSQLPool.js"
@@ -16,7 +16,7 @@ const userCtrl = {
     console.log("dans le controller")
     try {
       await createUser(
-        req.body as unknown as UserInfoFromFrontend,
+        req.body as unknown as UserInfoFromFrontend, // Mettre en place un validateur de donnée
         new PostSQLUserRepository(pool),
         new RandomUUIDGenerator(),
         new BcryptPasswordHasher()

@@ -59,7 +59,7 @@ paths:
                 error: Erreur interne au serveur
 
   /user/updatePassword:
-    post:
+    patch:
       tags:
         - Users
       summary: Modifier le mot de passe

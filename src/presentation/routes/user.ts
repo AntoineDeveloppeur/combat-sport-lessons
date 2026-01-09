@@ -12,7 +12,7 @@ router.post(
   }
 )
 
-router.post("/updatePassword", async (req: Request, res: Response) => {
+router.patch("/updatePassword", async (req: Request, res: Response) => {
   console.log("dans le router")
   await userCtrl.handleUpdatePassword(req, res)
 })
