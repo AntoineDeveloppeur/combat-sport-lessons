@@ -1,47 +1,133 @@
-## Objectif
+# 🏗️ Repository Pattern API
 
-- Appréhender le repository Pattern
-- Apprendre les requêtes SQL
+> Une API REST démontrant l'implémentation du Repository Pattern avec TypeScript, PostgreSQL et une architecture hexagonale.
 
-A travers la création d'une API permettant de :
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-Express-green.svg)](https://expressjs.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Docker-blue.svg)](https://www.postgresql.org/)
+[![Swagger](https://img.shields.io/badge/API-Swagger-85EA2D.svg)](http://localhost:4000/api-docs)
+
+---
+
+## 🎯 Pourquoi ce projet ?
+
+Ce projet est un exercice d'apprentissage approfondi visant à maîtriser :
+
+- **Le Repository Pattern** : abstraction de la couche de persistance pour une meilleure testabilité et maintenabilité
+- **SQL natif** : écriture de requêtes SQL brutes avec PostgreSQL (sans ORM)
+- **Architecture hexagonale** : séparation stricte entre domaine, application et infrastructure
+- **TypeScript avancé** : interfaces, injection de dépendances et typage fort
+
+## 🚀 Testez l'API
+
+### Prérequis
+
+- [Node.js](https://nodejs.org/) (v18+)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+
+### Installation rapide
+
+```bash
+# 1. Installer les dépendances
+npm install
+
+# 2. Démarrer PostgreSQL avec Docker
+npm run db:start
+
+# 3. Compiler TypeScript (dans un terminal séparé)
+npm run type:watch
+
+# 4. Lancer le serveur (dans un autre terminal)
+npm run dev
+```
+
+### 🎉 Accédez à Swagger
+
+Ouvrez votre navigateur : **[http://localhost:4000/api-docs](http://localhost:4000/api-docs)**
+
+Vous pouvez immédiatement tester les endpoints avec l'interface interactive ! Vous pouvez
 
 - Créer un utilisateur
-- Modifier un mot de passe
+- Modifier le mot de passe
 
-### Conditions d'utilisation
+## 🏛️ Architecture
 
-- Utiliser Postman pour envoyer les requêtes
+Le projet suit une **architecture hexagonale** (ports & adapters) :
 
-### Points clés
+```
+src/
+├── domain/              # Cœur métier (indépendant de toute technologie)
+│   ├── Entities/        # Entités métier (User)
+│   ├── Repositories/    # Interfaces des repositories
+│   ├── services/        # Interfaces des services (hasher, ID generator)
+│   ├── errors/          # Classes d'erreurs custom
+│   └── utils/           # Types et utilitaires
+│
+├── application/         # Cas d'usage (orchestration)
+│   └── useCases/        # CreateUser, UpdatePassword
+│
+├── infrastructure/      # Implémentations techniques
+│   ├── postSQL/         # Repository PostgreSQL + pool de connexion
+│   └── services/        # Implémentations concrètes (bcrypt, UUID)
+│
+└── presentation/        # Couche HTTP
+    ├── controllers/     # Contrôleurs Express
+    ├── routes/          # Définition des routes
+    └── swagger/         # Documentation OpenAPI
+```
 
-- Séparation claire de la logique métier et de la technique : les applications/useCases utilise les interface et non les class concrète
-- Les contrats sont spécifiés dans src/domain/ pour les Repositories mais aussi pour les services tel que le hasher les mots de passe ou créé un identifiant unique
+---
 
-### Comment la base de donnée fonctionne
+## 🔑 Concepts clés implémentés
 
-- Docker monte une image de postgres et initie la base de donnée avec le fichier src/infrastructure/postSQL/init.sql
-- La connexion à la base de donnée est faite avec une pool de connexion src/infrastructure/postSQL/postgrePool.ts
+### 1. Repository Pattern
 
-### Gestions des erreurs
+Les **use cases** dépendent d'**interfaces**, pas d'implémentations concrètes :
 
-- Utilise des custom class définis dans src/domain/errors. Elles centralisent ainsi les messages d'erreur et les status
-- Un seul bloc try catch dans le controllers qui récupère toutes les erreurs pour renvoyer une réponse adaptée
+```typescript
+// ✅ Le use case utilise l'interface
+class CreateUser {
+  constructor(userRepository: UserRepository) {}
+}
 
-### Démarrer l'API en mode dev
+// ✅ L'implémentation concrète est injectée au runtime
+const createUser = new CreateUser(new PostgreSQLUserRepository(pool))
+```
 
-- npm install
+### 2. Contrats définis dans le domaine
 
-#### Run la base de données POSTGRES
+Tous les contrats (repositories, services) sont dans `src/domain/` :
 
-- Démarrer l'application Docker desktop
-- `npm run db:start`
+- `UserRepository` : contrat pour la persistance des utilisateurs
+- `Hasher` : contrat pour le hachage de mots de passe
+- `IdGenerator` : contrat pour la génération d'identifiants uniques
 
-La base de donnée est initialisée avec des utilisateurs fictifs.
+### 3. Gestion d'erreurs centralisée
 
-#### Build l'API
+- Classes custom dans `src/domain/errors/` (ex: `EmailNotFound`, `EmailAlreadyExists`)
+- Chaque erreur encapsule son message et son code HTTP
+- Un seul bloc `try/catch` dans les contrôleurs pour gérer toutes les erreurs
 
-- `npm run type:watch`
+### 4. Base de données PostgreSQL
 
-#### Démarrer node
+- **Docker Compose** monte une instance PostgreSQL
+- Initialisation automatique via `src/infrastructure/postSQL/init.sql`
+- Pool de connexions géré dans `src/infrastructure/postSQL/postSQLPool.ts`
+- Requêtes SQL natives avec paramètres sécurisés
 
-- `npm run dev `
+---
+
+## 🗄️ Base de données
+
+La base de données est initialisée avec des **utilisateurs fictifs** pour faciliter les tests.
+
+---
+
+## 📦 Stack technique
+
+- **Runtime** : Node.js avec TypeScript
+- **Framework** : Express 5
+- **Base de données** : PostgreSQL (via Docker)
+- **Hachage** : bcrypt
+- **Documentation** : Swagger UI + OpenAPI
+- **Outils** : ESLint, Prettier, Nodemon
