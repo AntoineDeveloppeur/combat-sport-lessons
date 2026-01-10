@@ -3,10 +3,10 @@ import bcrypt from "bcrypt"
 
 export class BcryptPasswordHasher implements PasswordHasher {
   private saltRounds: number = 10
-  hash(password: string): string {
-    return bcrypt.hashSync(password, this.saltRounds)
+  async hash(password: string): Promise<string> {
+    return await bcrypt.hash(password, this.saltRounds)
   }
-  verify(password: string, hash: string): boolean {
-    return bcrypt.compareSync(password, hash)
+  async verify(password: string, hash: string): Promise<boolean> {
+    return await bcrypt.compare(password, hash)
   }
 }

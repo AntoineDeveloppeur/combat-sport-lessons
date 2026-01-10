@@ -17,11 +17,12 @@ export async function createUser(
   if (emailAlreadyUsed) {
     throw new EmailAlreadyUsed(createUserRequest.email)
   }
+  const hash = await passwordHasher.hash(createUserRequest.password)
   const user = new User({
     id: idGenerator.generate(),
     name: createUserRequest.name,
     email: createUserRequest.email,
-    hash: passwordHasher.hash(createUserRequest.password),
+    hash: hash,
   })
   await userRepository.create(user)
 }

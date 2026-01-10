@@ -10,15 +10,15 @@ export async function updatePassword(
   passwordHasher: PasswordHasher
 ) {
   const userId = await userRepository.findUserId(email)
+
   // Verify if user gives the correct current password
   const storedHash = await userRepository.getHash(userId)
-  const isCorrectCurrentPassword = passwordHasher.verify(
+  const isCorrectCurrentPassword = await passwordHasher.verify(
     currentPassword,
     storedHash
   )
   if (!isCorrectCurrentPassword) throw new IncorrectCurrentPassword()
 
-  // Modify Password
-  const hash = passwordHasher.hash(newPassword)
-  await userRepository.updatePassword(userId, hash)
+  const newHash = await passwordHasher.hash(newPassword)
+  await userRepository.updatePassword(userId, newHash)
 }
