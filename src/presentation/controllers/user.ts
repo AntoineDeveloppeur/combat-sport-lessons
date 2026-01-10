@@ -11,14 +11,18 @@ import { BcryptPasswordHasher } from "../../infrastructure/services/BcryptPasswo
 import { pool } from "../../infrastructure/postSQL/postSQLPool.js"
 import { UserIdNotFound } from "../../domain/errors/UserIdNotFound.js"
 
+const postSQLUserRepository = new PostSQLUserRepository(pool)
+const randomUUIDGenerator = new RandomUUIDGenerator()
+const bcryptPasswordHasher = new BcryptPasswordHasher()
+
 const userCtrl = {
   handleCreateUser: async (req: Request, res: Response) => {
     try {
       await createUser(
         req.body as unknown as CreateUserRequest, // Mettre en place un validateur de donnée
-        new PostSQLUserRepository(pool),
-        new RandomUUIDGenerator(),
-        new BcryptPasswordHasher()
+        postSQLUserRepository,
+        randomUUIDGenerator,
+        bcryptPasswordHasher
       )
       return res.status(201).json({ message: "utilisateur créé avec succès" })
     } catch (error) {
@@ -35,8 +39,8 @@ const userCtrl = {
         req.body.email,
         req.body.currentPassword,
         req.body.newPassword,
-        new PostSQLUserRepository(pool),
-        new BcryptPasswordHasher()
+        postSQLUserRepository,
+        bcryptPasswordHasher
       )
       return res
         .status(200)
