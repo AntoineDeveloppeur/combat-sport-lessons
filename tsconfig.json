@@ -1,31 +1,29 @@
 {
-  // Some typical compiler options
   "compilerOptions": {
     "target": "es2020",
     "module": "ES2020",
     "moduleResolution": "bundler",
     "outDir": "./dist",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
-    // ...
+    "esModuleInterop": true,
+
+    // Options de sécurité et qualité
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
+
+    // Options supplémentaires recommandées
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
   },
 
-  // NEW: Options for file/directory watching
   "watchOptions": {
-    // Use native file system events for files and directories
     "watchFile": "useFsEvents",
     "watchDirectory": "useFsEvents",
-
-    // Poll files for updates more frequently
-    // when they're updated a lot.
     "fallbackPolling": "dynamicPriority",
-
-    // Don't coalesce watch notification
     "synchronousWatchDirectory": true,
-
-    // Finally, two additional settings for reducing the amount of possible
-    // files to track  work from these directories
-    "excludeDirectories": ["**/node_modules", "_build"],
-    "excludeFiles": ["build/fileWhichChangesOften.ts"]
+    "excludeDirectories": ["**/node_modules"]
   }
 }

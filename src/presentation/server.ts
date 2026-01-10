@@ -18,7 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Affiche la requête reçue
-app.use((req, res, next) => {
+app.use((req, _res, next) => {
   const fullUrl = `${req.protocol}://${req.get("host")}${req.url}`
   const origin = req.get("Origin") || req.get("Referer") || "Direct access"
   console.log(
@@ -41,12 +41,12 @@ app.use(
   })
 )
 // Export de la spec OpenAPI en JSON (pour import Postman)
-app.get("/api-docs.json", (req, res) => {
+app.get("/api-docs.json", (_req, res) => {
   res.setHeader("Content-Type", "application/json")
   res.json(swaggerDocument)
 })
 app.use("/user", userRoutes)
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.send(`
     <h1>Repository Pattern API</h1>
     <p>Documentation disponible sur <a href="/api-docs">/api-docs</a></p>

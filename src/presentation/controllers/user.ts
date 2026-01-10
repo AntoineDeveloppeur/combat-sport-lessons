@@ -56,7 +56,7 @@ const userCtrl = {
         return res.status(error.status).json({ error: error.message })
       }
       console.error(error)
-      res.status(500).json({ error: "Erreur interne du serveur" })
+      return res.status(500).json({ error: "Erreur interne du serveur" })
     }
   },
 }
