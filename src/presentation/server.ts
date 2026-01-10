@@ -1,5 +1,5 @@
 import express from "express"
-import userRoutes from "./routes/user.js"
+import userRoutes from "./routes/users.js"
 import swaggerUi from "swagger-ui-express"
 import YAML from "yamljs"
 import { fileURLToPath } from "url"
@@ -45,7 +45,7 @@ app.get("/api-docs.json", (_req, res) => {
   res.setHeader("Content-Type", "application/json")
   res.json(swaggerDocument)
 })
-app.use("/user", userRoutes)
+app.use("/users", userRoutes)
 app.get("/", (_req, res) => {
   res.send(`
     <h1>Repository Pattern API</h1>

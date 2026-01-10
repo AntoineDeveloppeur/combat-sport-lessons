@@ -13,7 +13,7 @@ tags:
     description: Gestion des utilisateurs
 
 paths:
-  /user/create:
+  /users:
     post:
       tags:
         - Users
@@ -58,7 +58,7 @@ paths:
               example:
                 error: Erreur interne au serveur
 
-  /user/updatePassword:
+  /users/password:
     patch:
       tags:
         - Users
