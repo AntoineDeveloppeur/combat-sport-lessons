@@ -85,7 +85,7 @@ paths:
                   message:
                     type: string
               example:
-                message: mot de passé modifié avec succès
+                message: mot de passe modifié avec succès
         "400":
           description: Email non trouvé
           content:

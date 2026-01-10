@@ -7,7 +7,7 @@ import { IncorrectCurrentPassword } from "../../domain/errors/IncorrectCurrentPa
 import { updatePassword } from "../../application/useCases/UpdatePassword.js"
 import { CreateUserRequest } from "../../application/dto/CreateUserRequest.js"
 import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGenerator.js"
-import { BcryptPasswordHasher } from "../../infrastructure/services/BcryptHashPassword.js"
+import { BcryptPasswordHasher } from "../../infrastructure/services/BcryptPasswordHasher.js"
 import { pool } from "../../infrastructure/postSQL/postSQLPool.js"
 import { UserIdNotFound } from "../../domain/errors/UserIdNotFound.js"
 
@@ -40,7 +40,7 @@ const userCtrl = {
       )
       return res
         .status(200)
-        .json({ message: "mot de passé modifié avec succès" })
+        .json({ message: "mot de passe modifié avec succès" })
     } catch (error) {
       if (error instanceof EmailNotFound) {
         return res.status(error.status).json({ error: error.message })
@@ -56,7 +56,7 @@ const userCtrl = {
         return res.status(error.status).json({ error: error.message })
       }
       console.error(error)
-      res.status(500).json({ message: "Erreur interne du serveur" })
+      res.status(500).json({ error: "Erreur interne du serveur" })
     }
   },
 }
