@@ -1,5 +1,5 @@
-import { User } from "../../domain/entities/user.js"
-import { UserRepository } from "../../domain/repositories/userRepository.js"
+import { User } from "../../domain/Entities/User.js"
+import { UserRepository } from "../../domain/Repositories/userRepository.js"
 import { EmailAlreadyUsed } from "../../domain/errors/EmailAlreadyUsed.js"
 import { CreateUserRequest } from "../dto/CreateUserRequest.js"
 import { IdGenerator } from "../../domain/services/IdGenerator.js"

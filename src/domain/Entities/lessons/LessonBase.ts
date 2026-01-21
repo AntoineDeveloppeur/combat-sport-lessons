@@ -6,6 +6,7 @@ type LessonType =
 
 export interface LessonBase {
   readonly type: LessonType
+  objective: string
   duration: number
   sport: string
   coreInstructions: string
