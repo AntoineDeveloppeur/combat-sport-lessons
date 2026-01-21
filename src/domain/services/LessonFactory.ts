@@ -2,41 +2,36 @@ import { LessonCoreOnly } from "../Entities/lessons/LessonCoreOnly"
 import { LessonWithCoolDown } from "../Entities/lessons/LessonWithCoolDown"
 import { LessonWithWarmUp } from "../Entities/lessons/LessonWithWarmUp"
 import { LessonFull } from "../Entities/lessons/LessonFull"
-
-type LessonType =
-  | LessonCoreOnly
-  | LessonWithWarmUp
-  | LessonWithCoolDown
-  | LessonFull
+import { LessonType } from "../type"
 
 export class LessonFactory {
   static create(lessonData: LessonType): LessonType {
+    const { objective, duration, sport, coreInstructions } = lessonData
     switch (lessonData.type) {
       case "lesson":
-        return new LessonCoreOnly(
-          lessonData.duration,
-          lessonData.sport,
-          lessonData.coreInstructions
-        )
+        return new LessonCoreOnly(objective, duration, sport, coreInstructions)
       case "lessonWithWarmUp":
         return new LessonWithWarmUp(
-          lessonData.duration,
-          lessonData.sport,
-          lessonData.coreInstructions,
+          objective,
+          duration,
+          sport,
+          coreInstructions,
           lessonData.warmUpInstructions
         )
       case "lessonWithCoolDown":
         return new LessonWithCoolDown(
-          lessonData.duration,
-          lessonData.sport,
-          lessonData.coreInstructions,
+          objective,
+          duration,
+          sport,
+          coreInstructions,
           lessonData.coolDownInstructions
         )
-      case "fullLesson":
+      case "lessonFull":
         return new LessonFull(
-          lessonData.duration,
-          lessonData.sport,
-          lessonData.coreInstructions,
+          objective,
+          duration,
+          sport,
+          coreInstructions,
           lessonData.warmUpInstructions,
           lessonData.coolDownInstructions
         )

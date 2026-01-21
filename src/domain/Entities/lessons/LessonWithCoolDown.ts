@@ -1,12 +1,15 @@
 import { LessonBase } from "./LessonBase"
+import { Sport } from "../../type"
 
-export class LessonWithCoolDown implements LessonBase {
-  readonly type = "lessonWithCoolDown" as const
+export class LessonWithCoolDown extends LessonBase {
+  public readonly type = "lessonWithCoolDown" as const
   constructor(
-    public objective: string,
-    public duration: number,
-    public sport: string,
-    public coreInstructions: string,
-    public coolDownInstructions: string
-  ) {}
+    objective: string,
+    duration: number,
+    sport: Sport,
+    coreInstructions: string,
+    public readonly coolDownInstructions: string
+  ) {
+    super(objective, duration, sport, coreInstructions)
+  }
 }
