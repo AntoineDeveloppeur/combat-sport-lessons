@@ -1,5 +1,4 @@
 import { type Sport } from "../type"
-import { DurationStrict } from "./DurationStrict"
 import { Instruction } from "./Instructions"
 
 export class Lesson {
