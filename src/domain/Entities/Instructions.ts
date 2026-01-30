@@ -1,9 +1,10 @@
 import { DurationStrict } from "./DurationStrict"
 
-export interface Instructions {
+export interface Instruction {
   title?: string
   mainContent: string
-  duration: string | DurationStrict
+  durationText?: string
+  durationNumber?: DurationStrict
   objective?: string
 }
 
