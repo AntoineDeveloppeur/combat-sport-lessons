@@ -1,7 +1,13 @@
-export const Form = ({ children, ...props }) => {
+import { FormHTMLAttributes, ReactNode } from "react"
+
+type FormProps = FormHTMLAttributes<HTMLFormElement> & {
+  children: ReactNode
+}
+
+export const Form = ({ children, ...props }: FormProps) => {
   return (
-    <form className="row" {...props} noValidate>
+    <form className="w-full" {...props} noValidate>
       {children}
     </form>
-  );
-};
+  )
+}

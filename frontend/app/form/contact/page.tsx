@@ -8,7 +8,7 @@ import { Field } from "../../../components/Field"
 import { Form } from "../../../components/Form"
 import { Input } from "../../../components/Input"
 
-export const Contact = () => {
+export default function Contact() {
   const [state, setState] = useAppState()
   const {
     handleSubmit,
@@ -21,13 +21,13 @@ export const Contact = () => {
   const Router = useRouter()
   const saveData = (data) => {
     setState({ ...state, ...data })
-    Router.push("/education")
+    Router.push("/form/education")
   }
 
   return (
     <Form onSubmit={handleSubmit(saveData)}>
-      <fieldset>
-        <legend>Contact</legend>
+      <fieldset className="flex flex-col items-start w-[600px]">
+        <legend className="mb-4 text-lg font-semibold">Contact</legend>
         <Field label="First name" error={errors?.firstName}>
           <Input
             {...register("firstName", { required: "First name is required" })}
@@ -65,7 +65,12 @@ export const Contact = () => {
             id="password-confirm"
           />
         </Field>
-        <Link href="/form/education">Next</Link>
+        <Link
+          href="/form/education"
+          className="px-4 py-2 rounded font-medium transition-colors bg-blue-600 hover:bg-blue-700 text-white mt-6"
+        >
+          Next
+        </Link>
       </fieldset>
     </Form>
   )

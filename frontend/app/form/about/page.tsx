@@ -8,7 +8,7 @@ import { Button } from "../../../components/Button"
 import { Field } from "../../../components/Field"
 import { Form } from "../../../components/Form"
 
-export const About = () => {
+export default function About() {
   const [state, setState] = useAppState()
   const { handleSubmit, register } = useForm({ defaultValues: state })
   const Router = useRouter()
@@ -20,20 +20,28 @@ export const About = () => {
 
   return (
     <Form onSubmit={handleSubmit(saveData)}>
-      <fieldset>
-        <legend>About</legend>
+      <fieldset className="flex flex-col items-start w-[600px]">
+        <legend className="mb-4 text-lg font-semibold">About</legend>
         <Field label="About me">
           <textarea
             {...register("about")}
             id="about"
-            className="form-control"
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </Field>
-        <div className="button-row">
-          <Link className={`btn btn-secondary`} to="/education">
+        <div className="flex justify-between w-full">
+          <Link
+            className="px-4 py-2 rounded font-medium transition-colors bg-blue-600 hover:bg-blue-700 text-white mt-6"
+            href="/form/education"
+          >
             {"<"} Previous
           </Link>
-          <Button>Next {">"}</Button>
+          <Link
+            className="px-4 py-2 rounded font-medium transition-colors bg-blue-600 hover:bg-blue-700 text-white mt-6"
+            href="/form/confirm"
+          >
+            {">"} Next
+          </Link>
         </div>
       </fieldset>
     </Form>

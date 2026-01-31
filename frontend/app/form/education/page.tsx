@@ -9,10 +9,9 @@ import { Field } from "../../../components/Field"
 import { Form } from "../../../components/Form"
 import { Input } from "../../../components/Input"
 
-export const Education = () => {
+export default function Education() {
   const [state, setState] = useAppState()
   const { handleSubmit, register } = useForm({ defaultValues: state })
-  // const navigate = useNavigate()
   const Router = useRouter()
 
   const saveData = (data) => {
@@ -23,19 +22,27 @@ export const Education = () => {
 
   return (
     <Form onSubmit={handleSubmit(saveData)}>
-      <fieldset>
-        <legend>Education</legend>
+      <fieldset className="flex flex-col items-start w-[600px]">
+        <legend className="mb-4 text-lg font-semibold">Education</legend>
         <Field label="University">
           <Input {...register("university")} id="university" />
         </Field>
         <Field label="Degree">
           <Input {...register("degree")} id="degree" />
         </Field>
-        <div className="button-row">
-          <Link className={`btn btn-secondary`} to="/">
+        <div className="flex justify-between w-full">
+          <Link
+            className="px-4 py-2 rounded font-medium transition-colors bg-blue-600 hover:bg-blue-700 text-white mt-6"
+            href="/form/contact"
+          >
             {"<"} Previous
           </Link>
-          <Button>Next {">"}</Button>
+          <Link
+            className="px-4 py-2 rounded font-medium transition-colors bg-blue-600 hover:bg-blue-700 text-white mt-6"
+            href="/form/about"
+          >
+            {">"} Next
+          </Link>
         </div>
       </fieldset>
     </Form>

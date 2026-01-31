@@ -1,24 +1,32 @@
-import React from "react";
+import React, { ReactNode } from "react"
 
-export const Field = ({ children, label, error }) => {
-  const id = getChildId(children);
+type FieldProps = {
+  children: ReactNode
+  label: string
+  error?: { message?: string }
+}
+
+export const Field = ({ children, label, error }: FieldProps) => {
+  const id = getChildId(children)
 
   return (
-    <div className="col-sm-12 mb-3">
-      <label htmlFor={id} className="form-label">
+    <div className="w-full mb-3">
+      <label htmlFor={id} className="block mb-2 font-medium">
         {label}
       </label>
       {children}
-      {error && <small className="error">{error.message}</small>}
+      {error && (
+        <small className="block mt-1 text-sm text-red-600">
+          {error.message}
+        </small>
+      )}
     </div>
-  );
-};
+  )
+}
 
-// Get id prop from a child element
-export const getChildId = (children) => {
-  const child = React.Children.only(children);
-
-  if ("id" in child?.props) {
-    return child.props.id;
-  }
-};
+export const getChildId = (children: ReactNode): string | undefined => {
+  const child = React.Children.only(children) as React.ReactElement<{
+    id?: string
+  }>
+  return child?.props?.id
+}

@@ -6,7 +6,7 @@ import { Button } from "../../../components/Button"
 import { Form } from "../../../components/Form"
 import { Section, SectionRow } from "../../../components/Section"
 
-export const Confirm = () => {
+export default function Confirm() {
   const [state] = useAppState()
   const { handleSubmit } = useForm({ defaultValues: state })
 
@@ -17,7 +17,7 @@ export const Confirm = () => {
 
   return (
     <Form onSubmit={handleSubmit(submitData)}>
-      <h1 className="mb-4">Confirm</h1>
+      <h1 className="text-3xl font-bold mb-6">Confirm</h1>
       <Section title="Personal info" url="/">
         <SectionRow>
           <div>First name</div>
@@ -48,7 +48,7 @@ export const Confirm = () => {
           <div>{state.about}</div>
         </SectionRow>
       </Section>
-      <div className="d-flex justify-content-start">
+      <div className="flex justify-start">
         <Button>Submit</Button>
       </div>
     </Form>
