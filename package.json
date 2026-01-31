@@ -17,6 +17,7 @@
     "lint-staged": "^15.2.11"
   },
   "dependencies": {
+    "eslint": "^9.39.2",
     "prettier": "^3.8.1"
   }
 }
