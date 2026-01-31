@@ -1,10 +1,10 @@
 {
   "backend/**/*.{js,ts}": [
-    "cd backend && npx eslint --fix",
-    "cd backend && npx prettier --write"
+    "npx eslint --config backend/eslint.config.ts --fix",
+    "npx prettier --write"
   ],
   "frontend/**/*.{js,jsx,ts,tsx,mjs}": [
-    "cd frontend && npx eslint --fix",
-    "cd frontend && npx prettier --write"
+    "npx eslint --config frontend/eslint.config.mjs --fix",
+    "npx prettier --write"
   ]
 }
