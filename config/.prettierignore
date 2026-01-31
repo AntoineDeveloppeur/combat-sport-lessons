@@ -1,0 +1,11 @@
+# Ignore artifacts:
+**/build
+**/coverage
+**/node_modules
+**/dist
+**/.next
+
+# Config files
+*.yml
+*.yaml
+package-lock.json

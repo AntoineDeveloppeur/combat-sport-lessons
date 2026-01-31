@@ -15,5 +15,8 @@
     "@commitlint/config-conventional": "^19.6.2",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11"
+  },
+  "dependencies": {
+    "prettier": "^3.8.1"
   }
 }
