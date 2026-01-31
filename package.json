@@ -1,0 +1,19 @@
+{
+  "name": "combat-sport-lessons-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd frontend && npm run lint",
+    "prettier:backend": "cd backend && npm run prettier",
+    "prettier:frontend": "cd frontend && npx prettier . --write"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.2",
+    "@commitlint/config-conventional": "^19.6.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11"
+  }
+}
