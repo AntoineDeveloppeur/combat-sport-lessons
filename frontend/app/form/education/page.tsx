@@ -1,5 +1,8 @@
+"use client"
+
 import { useForm } from "react-hook-form"
-import { useNavigate, Link } from "react-router-dom"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { useAppState } from "../../state"
 import { Button } from "../../../components/Button"
 import { Field } from "../../../components/Field"
@@ -9,11 +12,13 @@ import { Input } from "../../../components/Input"
 export const Education = () => {
   const [state, setState] = useAppState()
   const { handleSubmit, register } = useForm({ defaultValues: state })
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+  const Router = useRouter()
 
   const saveData = (data) => {
     setState({ ...state, ...data })
-    navigate("/about")
+    // navigate("/about")
+    Router.push("/form/about")
   }
 
   return (
@@ -21,22 +26,13 @@ export const Education = () => {
       <fieldset>
         <legend>Education</legend>
         <Field label="University">
-          <Input
-            {...register("university")}
-            id="university"
-          />
+          <Input {...register("university")} id="university" />
         </Field>
         <Field label="Degree">
-          <Input
-            {...register("degree")}
-            id="degree"
-          />
+          <Input {...register("degree")} id="degree" />
         </Field>
         <div className="button-row">
-          <Link
-            className={`btn btn-secondary`}
-            to="/"
-          >
+          <Link className={`btn btn-secondary`} to="/">
             {"<"} Previous
           </Link>
           <Button>Next {">"}</Button>

@@ -1,5 +1,8 @@
+"use client"
+
 import { useForm } from "react-hook-form"
-import { useNavigate, Link } from "react-router-dom"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { useAppState } from "../../state"
 import { Button } from "../../../components/Button"
 import { Field } from "../../../components/Field"
@@ -8,11 +11,11 @@ import { Form } from "../../../components/Form"
 export const About = () => {
   const [state, setState] = useAppState()
   const { handleSubmit, register } = useForm({ defaultValues: state })
-  const navigate = useNavigate()
+  const Router = useRouter()
 
   const saveData = (data) => {
     setState({ ...state, ...data })
-    navigate("/confirm")
+    Router.push("/form/confirm")
   }
 
   return (
@@ -27,10 +30,7 @@ export const About = () => {
           />
         </Field>
         <div className="button-row">
-          <Link
-            className={`btn btn-secondary`}
-            to="/education"
-          >
+          <Link className={`btn btn-secondary`} to="/education">
             {"<"} Previous
           </Link>
           <Button>Next {">"}</Button>
