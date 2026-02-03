@@ -2,14 +2,15 @@
 
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
+import { useContext } from "react"
 import Link from "next/link"
-import { useAppState } from "../../state"
+import { AppStateContext } from "../../state"
 import { Field } from "../../../components/Field"
 import { Form } from "../../../components/Form"
 import { Input } from "../../../components/Input"
 
 export default function Education() {
-  const [state, setState] = useAppState()
+  const [state, setState] = useContext(AppStateContext)!
   const { handleSubmit, register } = useForm({ defaultValues: state })
   const Router = useRouter()
 

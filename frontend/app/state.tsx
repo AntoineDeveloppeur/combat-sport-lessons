@@ -1,12 +1,6 @@
 "use client"
 
-import {
-  createContext,
-  useContext,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from "react"
+import { createContext, useState, Dispatch, SetStateAction } from "react"
 
 interface FormState {
   firstName?: string
@@ -23,7 +17,7 @@ type AppStateContextType =
   | [FormState, Dispatch<SetStateAction<FormState>>]
   | undefined
 
-export const AppStateContext = createContext<AppStateContextType>([])
+export const AppStateContext = createContext<AppStateContextType>(undefined)
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const value = useState<FormState>({})
@@ -32,12 +26,4 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       {children}
     </AppStateContext.Provider>
   )
-}
-
-export function useAppState() {
-  const context = useContext(AppStateContext)
-  if (!context) {
-    throw new Error("useAppState must be used within the AppProvider")
-  }
-  return context
 }

@@ -1,13 +1,14 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { useAppState } from "../../state"
+import { useContext } from "react"
+import { AppStateContext } from "../../state"
 import { Button } from "../../../components/Button"
 import { Form } from "../../../components/Form"
 import { Section, SectionRow } from "../../../components/Section"
 
 export default function Confirm() {
-  const [state] = useAppState()
+  const [state] = useContext(AppStateContext)!
   const { handleSubmit } = useForm({ defaultValues: state })
 
   const submitData = (data) => {

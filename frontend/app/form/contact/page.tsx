@@ -2,14 +2,16 @@
 
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
-import { useAppState } from "../../state"
+import { useContext } from "react"
+import { AppStateContext } from "../../state"
 import Link from "next/link"
 import { Field } from "../../../components/Field"
 import { Form } from "../../../components/Form"
 import { Input } from "../../../components/Input"
+import { Button } from "@/components/Button"
 
 export default function Contact() {
-  const [state, setState] = useAppState()
+  const [state, setState] = useContext(AppStateContext)!
   const {
     handleSubmit,
     register,
@@ -19,7 +21,7 @@ export default function Contact() {
   const watchPassword = watch("password")
 
   const Router = useRouter()
-  const saveData = (data) => {
+  const saveData = (data: object) => {
     setState((prev) => ({ ...prev, ...data }))
     Router.push("/form/education")
   }
@@ -65,12 +67,7 @@ export default function Contact() {
             id="password-confirm"
           />
         </Field>
-        <Link
-          href="/form/education"
-          className="px-4 py-2 rounded font-medium transition-colors bg-blue-600 hover:bg-blue-700 text-white mt-6"
-        >
-          Next
-        </Link>
+        <Button>Next</Button>
       </fieldset>
     </Form>
   )
