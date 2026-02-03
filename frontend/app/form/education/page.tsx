@@ -31,10 +31,10 @@ export default function Education() {
       <fieldset className="flex flex-col items-start w-[600px]">
         <legend className="mb-4 text-lg font-semibold">Education</legend>
         <Field label="University">
-          <Input {...register("university")} id="university" />
+          <Input {...register("university")} />
         </Field>
         <Field label="Degree">
-          <Input {...register("degree")} id="degree" />
+          <Input {...register("degree")} />
         </Field>
         <div className="flex justify-between w-full">
           <Button type="button" onClick={handlePrevious}>

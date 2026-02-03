@@ -33,27 +33,23 @@ export default function Contact() {
         <Field label="First name" error={errors?.firstName}>
           <Input
             {...register("firstName", { required: "First name is required" })}
-            id="first-name"
           />
         </Field>
         <Field label="Last name" error={errors?.lastName}>
           <Input
             {...register("lastName", { required: "Last name is required" })}
-            id="last-name"
           />
         </Field>
         <Field label="Email" error={errors?.email}>
           <Input
             {...register("email", { required: "Email is required" })}
             type="email"
-            id="email"
           />
         </Field>
         <Field label="Password" error={errors?.password}>
           <Input
             {...register("password", { required: "Password is required" })}
             type="password"
-            id="password"
           />
         </Field>
         <Field label="Confirm password" error={errors?.confirmPassword}>
@@ -64,7 +60,6 @@ export default function Contact() {
                 value === watchPassword || "The passwords do not match",
             })}
             type="password"
-            id="password-confirm"
           />
         </Field>
         <Button>Next</Button>
