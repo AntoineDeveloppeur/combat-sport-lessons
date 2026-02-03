@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation"
 import { useContext } from "react"
 import { AppStateContext } from "../../state"
 import Link from "next/link"
-import { Field } from "../../../components/Field"
+import { Field, FieldLabel, FieldError } from "@/components/ui/field"
 import { Form } from "../../../components/Form"
-import { Input } from "../../../components/Input"
-import { Button } from "@/components/Button"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
 export default function Contact() {
   const [state, setState] = useContext(AppStateContext)!
@@ -30,37 +30,52 @@ export default function Contact() {
     <Form onSubmit={handleSubmit(saveData)}>
       <fieldset className="flex flex-col items-start w-[600px]">
         <legend className="mb-4 text-lg font-semibold">Contact</legend>
-        <Field label="First name" error={errors?.firstName}>
+        <Field>
+          <FieldLabel htmlFor="firstName">First name</FieldLabel>
           <Input
+            id="firstName"
             {...register("firstName", { required: "First name is required" })}
           />
+          <FieldError>{errors?.firstName?.message}</FieldError>
         </Field>
-        <Field label="Last name" error={errors?.lastName}>
+        <Field>
+          <FieldLabel htmlFor="lastName">Last name</FieldLabel>
           <Input
+            id="lastName"
             {...register("lastName", { required: "Last name is required" })}
           />
+          <FieldError>{errors?.lastName?.message}</FieldError>
         </Field>
-        <Field label="Email" error={errors?.email}>
+        <Field>
+          <FieldLabel htmlFor="email">Email</FieldLabel>
           <Input
-            {...register("email", { required: "Email is required" })}
+            id="email"
             type="email"
+            {...register("email", { required: "Email is required" })}
           />
+          <FieldError>{errors?.email?.message}</FieldError>
         </Field>
-        <Field label="Password" error={errors?.password}>
+        <Field>
+          <FieldLabel htmlFor="password">Password</FieldLabel>
           <Input
-            {...register("password", { required: "Password is required" })}
+            id="password"
             type="password"
+            {...register("password", { required: "Password is required" })}
           />
+          <FieldError>{errors?.password?.message}</FieldError>
         </Field>
-        <Field label="Confirm password" error={errors?.confirmPassword}>
+        <Field>
+          <FieldLabel htmlFor="confirmPassword">Confirm password</FieldLabel>
           <Input
+            id="confirmPassword"
+            type="password"
             {...register("confirmPassword", {
               required: "Confirm the password",
               validate: (value) =>
                 value === watchPassword || "The passwords do not match",
             })}
-            type="password"
           />
+          <FieldError>{errors?.confirmPassword?.message}</FieldError>
         </Field>
         <Button>Next</Button>
       </fieldset>

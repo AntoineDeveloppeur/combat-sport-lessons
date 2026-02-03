@@ -4,9 +4,10 @@ import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useContext } from "react"
 import { AppStateContext } from "../../state"
-import { Button } from "../../../components/Button"
-import { Field } from "../../../components/Field"
+import { Button } from "@/components/ui/button"
+import { Field, FieldLabel } from "@/components/ui/field"
 import { Form } from "../../../components/Form"
+import { Textarea } from "@/components/ui/textarea"
 
 export default function About() {
   const [state, setState] = useContext(AppStateContext)!
@@ -30,11 +31,9 @@ export default function About() {
     <Form onSubmit={handleSubmit(saveData)}>
       <fieldset className="flex flex-col items-start w-[600px]">
         <legend className="mb-4 text-lg font-semibold">About</legend>
-        <Field label="About me">
-          <textarea
-            {...register("about")}
-            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
+        <Field>
+          <FieldLabel htmlFor="about">About me</FieldLabel>
+          <Textarea id="about" {...register("about")} />
         </Field>
         <div className="flex justify-between w-full">
           <Button type="button" onClick={handlePrevious}>

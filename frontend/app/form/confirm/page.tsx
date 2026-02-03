@@ -2,9 +2,9 @@
 
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { AppStateContext } from "../../state"
-import { Button } from "../../../components/Button"
+import { Button } from "@/components/ui/button"
 import { Form } from "../../../components/Form"
 import { Section, SectionRow } from "../../../components/Section"
 
