@@ -1,5 +1,5 @@
 "use client"
-
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 export const Stepper = () => {
@@ -14,16 +14,24 @@ export const Stepper = () => {
     <nav className="w-full py-6">
       <ol className="flex justify-between w-full">
         <li className="flex-1 text-center">
-          <span className={highlight("/form/contact")}>Contact</span>
+          <Link href="/form/contact" className={highlight("/form/contact")}>
+            Contact
+          </Link>
         </li>
         <li className="flex-1 text-center">
-          <span className={highlight("/form/education")}>Education</span>
+          <Link href="/form/education" className={highlight("/form/education")}>
+            Education
+          </Link>
         </li>
         <li className="flex-1 text-center">
-          <span className={highlight("/form/about")}>About</span>
+          <Link href="/form/about" className={highlight("/form/about")}>
+            About
+          </Link>
         </li>
         <li className="flex-1 text-center">
-          <span className={highlight("/form/confirm")}>Confirm</span>
+          <Link href="/form/confirm" className={highlight("/form/confirm")}>
+            Confirm
+          </Link>
         </li>
       </ol>
     </nav>
