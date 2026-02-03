@@ -20,7 +20,7 @@ export default function Contact() {
 
   const Router = useRouter()
   const saveData = (data) => {
-    setState({ ...state, ...data })
+    setState((prev) => ({ ...prev, ...data }))
     Router.push("/form/education")
   }
 

@@ -14,8 +14,7 @@ export default function Education() {
   const Router = useRouter()
 
   const saveData = (data) => {
-    setState({ ...state, ...data })
-    // navigate("/about")
+    setState((prev) => ({ ...prev, ...data }))
     Router.push("/form/about")
   }
 

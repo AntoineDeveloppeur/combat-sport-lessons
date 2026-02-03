@@ -14,7 +14,7 @@ export default function About() {
   const Router = useRouter()
 
   const saveData = (data) => {
-    setState({ ...state, ...data })
+    setState((prev) => ({ ...prev, ...data }))
     Router.push("/form/confirm")
   }
 
