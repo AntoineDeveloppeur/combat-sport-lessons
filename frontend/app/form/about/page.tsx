@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useContext } from "react"
-import Link from "next/link"
 import { AppStateContext } from "../../state"
 import { Button } from "../../../components/Button"
 import { Field } from "../../../components/Field"
@@ -20,6 +19,13 @@ export default function About() {
     Router.push("/form/confirm")
   }
 
+  const handlePrevious = () => {
+    handleSubmit((data) => {
+      setState((prev) => ({ ...prev, ...data }))
+      Router.push("/form/education")
+    })()
+  }
+
   return (
     <Form onSubmit={handleSubmit(saveData)}>
       <fieldset className="flex flex-col items-start w-[600px]">
@@ -32,12 +38,9 @@ export default function About() {
           />
         </Field>
         <div className="flex justify-between w-full">
-          <Link
-            className="px-4 py-2 rounded font-medium transition-colors bg-blue-600 hover:bg-blue-700 text-white mt-6"
-            href="/form/education"
-          >
+          <Button type="button" onClick={handlePrevious}>
             {"<"} Previous
-          </Link>
+          </Button>
 
           <Button>{">"} Next</Button>
         </div>

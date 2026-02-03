@@ -3,20 +3,27 @@
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useContext } from "react"
-import Link from "next/link"
 import { AppStateContext } from "../../state"
 import { Field } from "../../../components/Field"
 import { Form } from "../../../components/Form"
 import { Input } from "../../../components/Input"
+import { Button } from "@/components/Button"
 
 export default function Education() {
   const [state, setState] = useContext(AppStateContext)!
   const { handleSubmit, register } = useForm({ defaultValues: state })
   const Router = useRouter()
 
-  const saveData = (data) => {
+  const saveData = (data: object) => {
     setState((prev) => ({ ...prev, ...data }))
     Router.push("/form/about")
+  }
+
+  const handlePrevious = () => {
+    handleSubmit((data) => {
+      setState((prev) => ({ ...prev, ...data }))
+      Router.push("/form/contact")
+    })()
   }
 
   return (
@@ -30,18 +37,11 @@ export default function Education() {
           <Input {...register("degree")} id="degree" />
         </Field>
         <div className="flex justify-between w-full">
-          <Link
-            className="px-4 py-2 rounded font-medium transition-colors bg-blue-600 hover:bg-blue-700 text-white mt-6"
-            href="/form/contact"
-          >
+          <Button type="button" onClick={handlePrevious}>
             {"<"} Previous
-          </Link>
-          <Link
-            className="px-4 py-2 rounded font-medium transition-colors bg-blue-600 hover:bg-blue-700 text-white mt-6"
-            href="/form/about"
-          >
-            {">"} Next
-          </Link>
+          </Button>
+
+          <Button>{">"} Next</Button>
         </div>
       </fieldset>
     </Form>

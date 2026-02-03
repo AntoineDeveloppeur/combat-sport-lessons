@@ -2,18 +2,27 @@
 
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
+import { useRouter } from "next/router"
 import { AppStateContext } from "../../state"
 import { Button } from "../../../components/Button"
 import { Form } from "../../../components/Form"
 import { Section, SectionRow } from "../../../components/Section"
 
 export default function Confirm() {
-  const [state] = useContext(AppStateContext)!
+  const [state, setState] = useContext(AppStateContext)!
   const { handleSubmit } = useForm({ defaultValues: state })
+  const Router = useRouter()
 
   const submitData = (data) => {
     console.info(data)
     // Submit data to the server
+  }
+
+  const handlePrevious = () => {
+    handleSubmit((data) => {
+      setState((prev) => ({ ...prev, ...data }))
+      Router.push("/form/education")
+    })()
   }
 
   return (
@@ -49,6 +58,10 @@ export default function Confirm() {
           <div>{state.about}</div>
         </SectionRow>
       </Section>
+      <Button type="button" onClick={handlePrevious}>
+        {"<"} Previous
+      </Button>
+
       <div className="flex justify-start">
         <Button>Submit</Button>
       </div>
