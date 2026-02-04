@@ -3,8 +3,8 @@
 import { createContext, useState, Dispatch, SetStateAction } from "react"
 
 interface FormState {
-  firstName?: string
-  lastName?: string
+  sport?: string
+  objective?: string
   email?: string
   password?: string
   confirmPassword?: string

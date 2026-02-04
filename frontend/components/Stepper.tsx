@@ -14,8 +14,8 @@ export const Stepper = () => {
     <nav className="w-full py-6">
       <ol className="flex justify-between w-full">
         <li className="flex-1 text-center">
-          <Link href="/form/contact" className={highlight("/form/contact")}>
-            Contact
+          <Link href="/form/general" className={highlight("/form/general")}>
+            Général
           </Link>
         </li>
         <li className="flex-1 text-center">

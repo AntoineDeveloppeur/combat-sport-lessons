@@ -22,7 +22,7 @@ export default function Education() {
   const handlePrevious = () => {
     handleSubmit((data) => {
       setState((prev) => ({ ...prev, ...data }))
-      Router.push("/form/contact")
+      Router.push("/form/general")
     })()
   }
 
