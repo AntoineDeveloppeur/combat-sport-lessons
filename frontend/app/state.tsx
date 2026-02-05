@@ -5,7 +5,8 @@ import { createContext, useState, Dispatch, SetStateAction } from "react"
 interface FormState {
   sport?: string
   objective?: string
-  email?: string
+  warmUp?: "custom" | "preset"
+  coolDown?: "custom" | "preset"
   password?: string
   confirmPassword?: string
   university?: string
