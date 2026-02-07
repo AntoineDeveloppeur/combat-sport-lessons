@@ -23,7 +23,7 @@ export default function About() {
   const handlePrevious = () => {
     handleSubmit((data) => {
       setState((prev) => ({ ...prev, ...data }))
-      Router.push("/form/education")
+      Router.push("/form/echauffement")
     })()
   }
 

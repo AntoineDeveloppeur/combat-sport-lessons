@@ -73,7 +73,8 @@ export default function General() {
 
   const saveData = (data: object) => {
     setState((prev) => ({ ...prev, ...data }))
-    Router.push("/form/education")
+    console.log("state", state)
+    Router.push("/form/echauffement")
   }
 
   return (
@@ -131,7 +132,7 @@ export default function General() {
                     Je sélectionne un échauffement tout fait
                   </FieldTitle>
                   <FieldDescription>
-                    la sélection sera proposé plus tard
+                    la sélection sera proposée plus tard
                   </FieldDescription>
                 </FieldContent>
                 <RadioGroupItem value="preset" />
@@ -166,7 +167,7 @@ export default function General() {
                     Je sélectionne une fin de séance toute faite
                   </FieldTitle>
                   <FieldDescription>
-                    la sélection sera proposé plus tard
+                    la sélection sera proposée plus tard
                   </FieldDescription>
                 </FieldContent>
                 <RadioGroupItem value="preset" />

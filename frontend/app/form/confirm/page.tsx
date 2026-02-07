@@ -21,7 +21,7 @@ export default function Confirm() {
   const handlePrevious = () => {
     handleSubmit((data) => {
       setState((prev) => ({ ...prev, ...data }))
-      Router.push("/form/education")
+      Router.push("/form/echauffement")
     })()
   }
 
@@ -42,7 +42,7 @@ export default function Confirm() {
           <div>{state.email}</div>
         </SectionRow>
       </Section>
-      <Section title="Education" url="/education">
+      <Section title="" url="/echauffement">
         <SectionRow>
           <div>University</div>
           <div>{state.university}</div>
