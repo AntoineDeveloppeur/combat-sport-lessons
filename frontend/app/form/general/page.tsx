@@ -17,7 +17,7 @@ import {
 import { Form } from "../../../components/Form"
 import { Button } from "@/components/ui/button"
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
-import { sportList } from "@/app/data/sportList"
+import { sportList } from "@/data/sportList"
 import { Textarea } from "@/components/ui/textarea"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -30,7 +30,7 @@ export default function General() {
   const validationSchema = Yup.object().shape({
     sport: Yup.string()
       .oneOf(sportList, "Veuillez choisir un sport dans la liste")
-      .required("Veuillez choisir le sport"), // il faudrait que le sport choisie ne soit pas la sélection par défaut 'sélectionner le sport'
+      .required("Veuillez choisir le sport"),
     objective: Yup.string()
       .min(20, "L'objectif doit contenir au moins 20 caractères")
       .max(500, "L'objectif ne peut pas dépasser 500 caractères")

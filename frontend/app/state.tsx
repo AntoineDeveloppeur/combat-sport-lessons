@@ -7,6 +7,9 @@ interface FormState {
   objective?: string
   warmUp?: "custom" | "preset"
   coolDown?: "custom" | "preset"
+  instruction1?: string
+  instruction1min?: number
+  instruction1sec?: number
   password?: string
   confirmPassword?: string
   university?: string
