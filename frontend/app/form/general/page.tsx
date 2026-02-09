@@ -97,8 +97,9 @@ export default function General() {
           <FieldError>{errors?.sport?.message}</FieldError>
         </Field>
         <Field>
-          <FieldLabel>Objectif de la séance</FieldLabel>
+          <FieldLabel htmlFor="objective">Objectif de la séance</FieldLabel>
           <Textarea
+            id="objective"
             {...register("objective")}
             placeholder="Exemple : la séance va permettre d'améliorer la technique du coups de pied bas pour un public débutant"
           ></Textarea>
@@ -122,7 +123,7 @@ export default function General() {
                     J&apos;écris moi-même l&apos;échauffement
                   </FieldTitle>
                 </FieldContent>
-                <RadioGroupItem value="custom" />
+                <RadioGroupItem id="custom-warm-up" value="custom" />
               </Field>
             </FieldLabel>
             <FieldLabel htmlFor="preset-warm-up">
@@ -135,7 +136,7 @@ export default function General() {
                     la sélection sera proposée plus tard
                   </FieldDescription>
                 </FieldContent>
-                <RadioGroupItem value="preset" />
+                <RadioGroupItem id="preset-warm-up" value="preset" />
               </Field>
             </FieldLabel>
             <FieldError>{errors?.warmUp?.message}</FieldError>
@@ -152,12 +153,12 @@ export default function General() {
             }
             className="max-w-sm"
           >
-            <FieldLabel htmlFor="preset-warm-up">
+            <FieldLabel htmlFor="custom-cool-down">
               <Field orientation="horizontal">
                 <FieldContent>
                   <FieldTitle>Je les écris moi-même</FieldTitle>
                 </FieldContent>
-                <RadioGroupItem value="custom" />
+                <RadioGroupItem id="custom-cool-down" value="custom" />
               </Field>
             </FieldLabel>
             <FieldLabel htmlFor="preset-cool-down">
@@ -170,7 +171,7 @@ export default function General() {
                     la sélection sera proposée plus tard
                   </FieldDescription>
                 </FieldContent>
-                <RadioGroupItem value="preset" />
+                <RadioGroupItem id="preset-cool-down" value="preset" />
               </Field>
             </FieldLabel>
           </RadioGroup>

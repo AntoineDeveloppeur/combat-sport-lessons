@@ -2,14 +2,18 @@
 
 import { createContext, useState, Dispatch, SetStateAction } from "react"
 
-interface FormState {
+export interface InstructionType {
+  text: string
+  min: number
+  sec: number
+}
+
+export interface FormState {
   sport?: string
   objective?: string
   warmUp?: "custom" | "preset"
   coolDown?: "custom" | "preset"
-  instruction1?: string
-  instruction1min?: number
-  instruction1sec?: number
+  warmUpInstructions?: InstructionType[]
   password?: string
   confirmPassword?: string
   university?: string
