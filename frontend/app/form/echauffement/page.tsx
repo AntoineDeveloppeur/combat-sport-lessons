@@ -1,8 +1,8 @@
 "use client"
 
-import { useForm } from "react-hook-form"
+import { useFieldArray, useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
-import { useContext } from "react"
+import { useContext, useState, useEffect } from "react"
 import { AppStateContext } from "../../provider"
 import { FieldSet, FieldLegend } from "@/components/ui/field"
 import { Form } from "../../../components/Form"
@@ -13,6 +13,9 @@ import { Instruction } from "@/components/Instruction"
 
 export default function WarmUp() {
   const [state, setState] = useContext(AppStateContext)!
+  const [instructionCount, setInstructionCount] = useState<number>(
+    state.warmUpInstructions?.length ?? 1
+  )
   const Router = useRouter()
 
   const validationSchema = Yup.object().shape({
@@ -38,24 +41,70 @@ export default function WarmUp() {
 
   // Inferer le type est obligatoire car sinon les inputs du formulaire sont inférer comme possiblement undefined
   type GeneralFormData = Yup.InferType<typeof validationSchema>
-  const defaultValues = {
-    warmUpInstructions: [
-      {
-        text: state.warmUpInstructions?.[0]?.text ?? "",
-        min: state.warmUpInstructions?.[0]?.min ?? 1,
-        sec: state.warmUpInstructions?.[0]?.sec ?? 0,
-      },
-    ],
-  } as GeneralFormData
+  const defaultValues = state.warmUpInstructions
+    ? {
+        warmUpInstructions: state.warmUpInstructions?.map((instruction) => {
+          return {
+            text: instruction.text,
+            min: instruction.min,
+            sec: instruction.sec,
+          }
+        }),
+      }
+    : ({
+        warmUpInstructions: [
+          {
+            text: "",
+            min: 1,
+            sec: 0,
+          },
+        ],
+      } as GeneralFormData)
 
   const {
     handleSubmit,
     register,
     formState: { errors },
+    control,
   } = useForm<GeneralFormData>({
     defaultValues: defaultValues,
     resolver: yupResolver(validationSchema),
   })
+
+  /**
+   * Handle dynamic Instrcution addition
+   */
+
+  const { fields, append, remove } = useFieldArray({
+    name: "warmUpInstructions",
+    control,
+  })
+  const addInstruction = () => {
+    setInstructionCount((prev) => prev + 1)
+    console.log("InstructionCount", instructionCount)
+  }
+
+  // Update field array when ticket number changed
+  useEffect(() => {
+    const newVal = instructionCount
+    const oldVal = fields.length
+    if (newVal > oldVal) {
+      // append tickets to field array
+      for (let i = oldVal; i < newVal; i++) {
+        append({ text: "", min: 1, sec: 0 })
+      }
+    } else {
+      // remove tickets from field array
+      for (let i = oldVal; i > newVal; i--) {
+        remove(i - 1)
+      }
+    }
+  }, [instructionCount])
+
+  /**
+   * Handle saving form data in a state
+   * Handle changing page
+   */
   const saveData = (data: object) => {
     setState((prev) => ({ ...prev, ...data }))
     Router.push("/form/about")
@@ -78,7 +127,18 @@ export default function WarmUp() {
           que vous pouvez. Ajoutez une instruction avec le boutton &quot;ajouter
           une instruction&quot;
         </FieldLegend>
-        <Instruction id={0} errors={errors} register={register}></Instruction>
+        {fields.map((_field, index) => (
+          <Instruction
+            id={index}
+            key={index}
+            errors={errors}
+            register={register}
+          ></Instruction>
+        ))}
+        <Button type="button" onClick={() => addInstruction()}>
+          {" "}
+          Ajouter un champs
+        </Button>
         <div className="flex justify-between w-full">
           <Button type="button" onClick={handlePrevious}>
             {"<"} Previous

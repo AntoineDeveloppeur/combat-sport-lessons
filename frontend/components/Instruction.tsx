@@ -14,7 +14,7 @@ export function Instruction({ id, errors, register }: InstructionProps) {
   return (
     <>
       <Field>
-        <FieldTitle>Instruction n°{id}</FieldTitle>
+        <FieldTitle>Instruction n°{id + 1}</FieldTitle>
         <Textarea {...register(`warmUpInstructions.${id}.text`)} />
         <FieldError>
           {errors?.warmUpInstructions?.[id]?.text?.message}
