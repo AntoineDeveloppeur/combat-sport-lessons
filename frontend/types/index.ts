@@ -4,7 +4,8 @@ export interface InstructionType {
   sec: number
 }
 
-export interface FormState {
+// None of the properties are mandatory to allow futur incomplete saving
+export interface Lesson {
   sport?: string
   objective?: string
   warmUp?: "custom" | "preset"

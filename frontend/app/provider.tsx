@@ -1,16 +1,14 @@
 "use client"
 
 import { createContext, useState, Dispatch, SetStateAction } from "react"
-import { FormState } from "@/types"
+import { Lesson } from "@/types"
 
-type LessonContextType =
-  | [FormState, Dispatch<SetStateAction<FormState>>]
-  | undefined
+type LessonContextType = [Lesson, Dispatch<SetStateAction<Lesson>>] | undefined
 
 export const LessonContext = createContext<LessonContextType>(undefined)
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const value = useState<FormState>({})
+  const value = useState<Lesson>({})
   return (
     <LessonContext.Provider value={value}>{children}</LessonContext.Provider>
   )

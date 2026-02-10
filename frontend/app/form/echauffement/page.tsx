@@ -13,8 +13,10 @@ import { Instruction } from "@/components/Instruction"
 
 export default function WarmUp() {
   const [lesson, setLesson] = useContext(LessonContext)!
+
+  // Initialise instruction field count with lesson to avoid inputs lossg with unmounts
   const [instructionCount, setInstructionCount] = useState<number>(
-    lesson.warmUpInstructions?.length ?? 1
+    lesson.warmUpInstructions?.length || 1
   )
   const Router = useRouter()
 
@@ -38,19 +40,10 @@ export default function WarmUp() {
       )
       .required(),
   })
-
-  // Inferer le type est obligatoire car sinon les inputs du formulaire sont inférer comme possiblement undefined
+  // Infer type is mandatory otherwise forms inputs are infered from Lesson. Lesson Object properties are not mandatory
   type GeneralFormData = Yup.InferType<typeof validationSchema>
   const defaultValues = lesson.warmUpInstructions
-    ? {
-        warmUpInstructions: lesson.warmUpInstructions?.map((instruction) => {
-          return {
-            text: instruction.text,
-            min: instruction.min,
-            sec: instruction.sec,
-          }
-        }),
-      }
+    ? lesson
     : ({
         warmUpInstructions: [
           {
@@ -72,7 +65,7 @@ export default function WarmUp() {
   })
 
   /**
-   * Handle dynamic Instrcution addition
+   * Handle dynamic form :  Instruction addition
    */
 
   const { fields, append, remove } = useFieldArray({
@@ -83,7 +76,7 @@ export default function WarmUp() {
     setInstructionCount((prev) => prev + 1)
   }
 
-  // Update field array when ticket number changed
+  // Update field array when instruction count change
   useEffect(() => {
     const newVal = instructionCount
     const oldVal = fields.length
@@ -98,11 +91,12 @@ export default function WarmUp() {
         remove(i - 1)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [instructionCount])
 
   /**
-   * Handle saving form data in a state
-   * Handle changing page
+   * Handle saving form data in lesson state variable
+   * Handle navigation
    */
   const saveData = (data: object) => {
     setLesson((prev) => ({ ...prev, ...data }))

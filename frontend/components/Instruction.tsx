@@ -2,12 +2,12 @@ import { UseFormRegister, FieldErrors } from "react-hook-form"
 import { Field, FieldTitle, FieldError } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { FormState } from "@/types/index"
+import { Lesson } from "@/types/index"
 
 interface InstructionProps {
   id: number
-  errors: FieldErrors<FormState>
-  register: UseFormRegister<FormState>
+  errors: FieldErrors<Lesson>
+  register: UseFormRegister<Lesson>
 }
 
 export function Instruction({ id, errors, register }: InstructionProps) {
