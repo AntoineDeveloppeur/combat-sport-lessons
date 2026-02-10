@@ -3,7 +3,7 @@
 import { useFieldArray, useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useContext, useState, useEffect } from "react"
-import { AppStateContext } from "../../provider"
+import { LessonContext } from "../../provider"
 import { FieldSet, FieldLegend } from "@/components/ui/field"
 import { Form } from "../../../components/Form"
 import { Button } from "@/components/ui/button"
@@ -12,9 +12,9 @@ import * as Yup from "yup"
 import { Instruction } from "@/components/Instruction"
 
 export default function WarmUp() {
-  const [state, setState] = useContext(AppStateContext)!
+  const [lesson, setLesson] = useContext(LessonContext)!
   const [instructionCount, setInstructionCount] = useState<number>(
-    state.warmUpInstructions?.length ?? 1
+    lesson.warmUpInstructions?.length ?? 1
   )
   const Router = useRouter()
 
@@ -41,9 +41,9 @@ export default function WarmUp() {
 
   // Inferer le type est obligatoire car sinon les inputs du formulaire sont inférer comme possiblement undefined
   type GeneralFormData = Yup.InferType<typeof validationSchema>
-  const defaultValues = state.warmUpInstructions
+  const defaultValues = lesson.warmUpInstructions
     ? {
-        warmUpInstructions: state.warmUpInstructions?.map((instruction) => {
+        warmUpInstructions: lesson.warmUpInstructions?.map((instruction) => {
           return {
             text: instruction.text,
             min: instruction.min,
@@ -81,7 +81,6 @@ export default function WarmUp() {
   })
   const addInstruction = () => {
     setInstructionCount((prev) => prev + 1)
-    console.log("InstructionCount", instructionCount)
   }
 
   // Update field array when ticket number changed
@@ -106,13 +105,13 @@ export default function WarmUp() {
    * Handle changing page
    */
   const saveData = (data: object) => {
-    setState((prev) => ({ ...prev, ...data }))
+    setLesson((prev) => ({ ...prev, ...data }))
     Router.push("/form/about")
   }
 
   const handlePrevious = () => {
     handleSubmit((data) => {
-      setState((prev) => ({ ...prev, ...data }))
+      setLesson((prev) => ({ ...prev, ...data }))
 
       Router.push("/form/general")
     })()

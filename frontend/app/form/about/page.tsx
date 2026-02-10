@@ -3,26 +3,26 @@
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useContext } from "react"
-import { AppStateContext } from "../../provider"
+import { LessonContext } from "../../provider"
 import { Button } from "@/components/ui/button"
 import { Field, FieldLabel } from "@/components/ui/field"
 import { Form } from "../../../components/Form"
 import { Textarea } from "@/components/ui/textarea"
 
 export default function About() {
-  const [state, setState] = useContext(AppStateContext)!
-  const { handleSubmit, register } = useForm({ defaultValues: state })
+  const [lesson, setLesson] = useContext(LessonContext)!
+  const { handleSubmit, register } = useForm({ defaultValues: lesson })
   const Router = useRouter()
 
   const saveData = (data) => {
     console.log("data saved from about")
-    setState((prev) => ({ ...prev, ...data }))
+    setLesson((prev) => ({ ...prev, ...data }))
     Router.push("/form/confirm")
   }
 
   const handlePrevious = () => {
     handleSubmit((data) => {
-      setState((prev) => ({ ...prev, ...data }))
+      setLesson((prev) => ({ ...prev, ...data }))
       Router.push("/form/echauffement")
     })()
   }

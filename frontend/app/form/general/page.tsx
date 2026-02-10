@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useContext } from "react"
-import { AppStateContext } from "../../provider"
+import { LessonContext } from "../../provider"
 import {
   Field,
   FieldLabel,
@@ -24,7 +24,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
 
 export default function General() {
-  const [state, setState] = useContext(AppStateContext)!
+  const [lesson, setLesson] = useContext(LessonContext)!
   const Router = useRouter()
 
   const validationSchema = Yup.object().shape({
@@ -51,9 +51,9 @@ export default function General() {
   // Inferer le type est obligatoire car sinon les inputs du formulaire sont inférer comme possiblement undefined
   type GeneralFormData = Yup.InferType<typeof validationSchema>
   const defaultValues = {
-    ...state,
-    warmUp: state.warmUp || "custom",
-    coolDown: state.coolDown || "custom",
+    ...lesson,
+    warmUp: lesson.warmUp || "custom",
+    coolDown: lesson.coolDown || "custom",
   } as GeneralFormData
 
   const {
@@ -72,8 +72,8 @@ export default function General() {
   const coolDownValue = watch("coolDown")
 
   const saveData = (data: object) => {
-    setState((prev) => ({ ...prev, ...data }))
-    console.log("state", state)
+    setLesson((prev) => ({ ...prev, ...data }))
+    console.log("lesson", lesson)
     Router.push("/form/echauffement")
   }
 

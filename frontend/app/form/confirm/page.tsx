@@ -3,14 +3,14 @@
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
 import { useRouter } from "next/navigation"
-import { AppStateContext } from "../../provider"
+import { LessonContext } from "../../provider"
 import { Button } from "@/components/ui/button"
 import { Form } from "../../../components/Form"
 import { Section, SectionRow } from "../../../components/Section"
 
 export default function Confirm() {
-  const [state, setState] = useContext(AppStateContext)!
-  const { handleSubmit } = useForm({ defaultValues: state })
+  const [lesson, setLesson] = useContext(LessonContext)!
+  const { handleSubmit } = useForm({ defaultValues: lesson })
   const Router = useRouter()
 
   const submitData = (data) => {
@@ -20,7 +20,7 @@ export default function Confirm() {
 
   const handlePrevious = () => {
     handleSubmit((data) => {
-      setState((prev) => ({ ...prev, ...data }))
+      setLesson((prev) => ({ ...prev, ...data }))
       Router.push("/form/echauffement")
     })()
   }
@@ -31,31 +31,31 @@ export default function Confirm() {
       <Section title="Personal info" url="/">
         <SectionRow>
           <div>First name</div>
-          <div>{state.firstName}</div>
+          <div>{lesson.firstName}</div>
         </SectionRow>
         <SectionRow>
           <div>Last name</div>
-          <div>{state.lastName}</div>
+          <div>{lesson.lastName}</div>
         </SectionRow>
         <SectionRow>
           <div>Email</div>
-          <div>{state.email}</div>
+          <div>{lesson.email}</div>
         </SectionRow>
       </Section>
       <Section title="" url="/echauffement">
         <SectionRow>
           <div>University</div>
-          <div>{state.university}</div>
+          <div>{lesson.university}</div>
         </SectionRow>
         <SectionRow>
           <div>Degree</div>
-          <div>{state.degree}</div>
+          <div>{lesson.degree}</div>
         </SectionRow>
       </Section>
       <Section title="About" url="/about">
         <SectionRow>
           <div>About me</div>
-          <div>{state.about}</div>
+          <div>{lesson.about}</div>
         </SectionRow>
       </Section>
       <Button type="button" onClick={handlePrevious}>
