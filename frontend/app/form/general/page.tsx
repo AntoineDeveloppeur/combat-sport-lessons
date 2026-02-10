@@ -10,18 +10,15 @@ import {
   FieldError,
   FieldSet,
   FieldLegend,
-  FieldContent,
-  FieldTitle,
-  FieldDescription,
 } from "@/components/ui/field"
 import { Form } from "../../../components/Form"
 import { Button } from "@/components/ui/button"
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
 import { sportList } from "@/data/sportList"
 import { Textarea } from "@/components/ui/textarea"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
+import TwoOptionRadioField from "@/components/TwoOptionRadioField"
 
 export default function General() {
   const [lesson, setLesson] = useContext(LessonContext)!
@@ -68,9 +65,6 @@ export default function General() {
     mode: "onSubmit",
   })
 
-  const warmUpValue = watch("warmUp")
-  const coolDownValue = watch("coolDown")
-
   const saveData = (data: object) => {
     setLesson((prev) => ({ ...prev, ...data }))
     console.log("lesson", lesson)
@@ -105,79 +99,26 @@ export default function General() {
           ></Textarea>
           <FieldError>{errors?.objective?.message}</FieldError>
         </Field>
-        <FieldSet className="flex flex-col items-start w-[600px]">
-          <FieldLegend className="mb-4 text-lg font-semibold">
-            Pour l&apos;échauffement ?
-          </FieldLegend>
-          <RadioGroup
-            value={warmUpValue}
-            onValueChange={(value) =>
-              setValue("warmUp", value as "custom" | "preset")
-            }
-            className="max-w-sm"
-          >
-            <FieldLabel htmlFor="custom-warm-up">
-              <Field orientation="horizontal">
-                <FieldContent>
-                  <FieldTitle>
-                    J&apos;écris moi-même l&apos;échauffement
-                  </FieldTitle>
-                </FieldContent>
-                <RadioGroupItem id="custom-warm-up" value="custom" />
-              </Field>
-            </FieldLabel>
-            <FieldLabel htmlFor="preset-warm-up">
-              <Field orientation="horizontal">
-                <FieldContent>
-                  <FieldTitle>
-                    Je sélectionne un échauffement tout fait
-                  </FieldTitle>
-                  <FieldDescription>
-                    la sélection sera proposée plus tard
-                  </FieldDescription>
-                </FieldContent>
-                <RadioGroupItem id="preset-warm-up" value="preset" />
-              </Field>
-            </FieldLabel>
-            <FieldError>{errors?.warmUp?.message}</FieldError>
-          </RadioGroup>
-        </FieldSet>
-        <FieldSet className="flex flex-col items-start w-[600px]">
-          <FieldLegend className="mb-4 text-lg font-semibold">
-            Pour le retour au calme ou les étirements
-          </FieldLegend>
-          <RadioGroup
-            value={coolDownValue}
-            onValueChange={(value) =>
-              setValue("coolDown", value as "custom" | "preset")
-            }
-            className="max-w-sm"
-          >
-            <FieldLabel htmlFor="custom-cool-down">
-              <Field orientation="horizontal">
-                <FieldContent>
-                  <FieldTitle>Je les écris moi-même</FieldTitle>
-                </FieldContent>
-                <RadioGroupItem id="custom-cool-down" value="custom" />
-              </Field>
-            </FieldLabel>
-            <FieldLabel htmlFor="preset-cool-down">
-              <Field orientation="horizontal">
-                <FieldContent>
-                  <FieldTitle>
-                    Je sélectionne une fin de séance toute faite
-                  </FieldTitle>
-                  <FieldDescription>
-                    la sélection sera proposée plus tard
-                  </FieldDescription>
-                </FieldContent>
-                <RadioGroupItem id="preset-cool-down" value="preset" />
-              </Field>
-            </FieldLabel>
-          </RadioGroup>
-          <FieldError>{errors?.coolDown?.message}</FieldError>
-        </FieldSet>
-
+        <TwoOptionRadioField
+          name="warmUp"
+          legend="Pour l'échauffement ?"
+          title1="J'écris moi-même l'échauffement"
+          title2="Je sélectionne un échauffement tout fait"
+          subtitle2="la sélection sera proposée plus tard"
+          watch={watch}
+          setValue={setValue}
+          errors={errors}
+        />
+        <TwoOptionRadioField
+          name="coolDown"
+          legend="Pour le retour au calme ou les étirements"
+          title1="Je les écris moi-même"
+          title2="Je sélectionne une fin de séance toute faite"
+          subtitle2="la sélection sera proposée plus tard"
+          watch={watch}
+          setValue={setValue}
+          errors={errors}
+        />
         <Button>Next</Button>
       </FieldSet>
     </Form>
