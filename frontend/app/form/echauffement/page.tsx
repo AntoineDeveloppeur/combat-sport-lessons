@@ -100,7 +100,7 @@ export default function WarmUp() {
    */
   const saveData = (data: object) => {
     setLesson((prev) => ({ ...prev, ...data }))
-    Router.push("/form/about")
+    Router.push("/form/corps")
   }
 
   const handlePrevious = () => {
@@ -122,6 +122,7 @@ export default function WarmUp() {
         </FieldLegend>
         {fields.map((_field, index) => (
           <Instruction
+            step="warmUpInstructions"
             id={index}
             key={index}
             errors={errors}

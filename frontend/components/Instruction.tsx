@@ -5,25 +5,24 @@ import { Textarea } from "@/components/ui/textarea"
 import { Lesson } from "@/types/index"
 
 interface InstructionProps {
+  step: "warmUpInstructions" | "bodyInstructions" | "coolDownInstructions"
   id: number
   errors: FieldErrors<Lesson>
   register: UseFormRegister<Lesson>
 }
 
-export function Instruction({ id, errors, register }: InstructionProps) {
+export function Instruction({ step, id, errors, register }: InstructionProps) {
   return (
     <>
       <Field>
         <FieldTitle>Instruction n°{id + 1}</FieldTitle>
-        <Textarea {...register(`warmUpInstructions.${id}.text`)} />
-        <FieldError>
-          {errors?.warmUpInstructions?.[id]?.text?.message}
-        </FieldError>
+        <Textarea {...register(`${step}.${id}.text`)} />
+        <FieldError>{errors?.[step]?.[id]?.text?.message}</FieldError>
       </Field>
 
       <Field orientation="horizontal" className="w-auto items-center gap-2">
         <Input
-          {...register(`warmUpInstructions.${id}.min`)}
+          {...register(`${step}.${id}.min`)}
           className="text-center"
           type="number"
           min="0"
@@ -33,7 +32,7 @@ export function Instruction({ id, errors, register }: InstructionProps) {
         <span className="text-sm text-muted-foreground">min</span>
 
         <Input
-          {...register(`warmUpInstructions.${id}.sec`)}
+          {...register(`${step}.${id}.sec`)}
           className="text-center"
           type="number"
           min="0"
@@ -43,8 +42,8 @@ export function Instruction({ id, errors, register }: InstructionProps) {
         <span className="text-sm text-muted-foreground">sec</span>
       </Field>
 
-      <FieldError>{errors?.warmUpInstructions?.[id]?.min?.message}</FieldError>
-      <FieldError>{errors?.warmUpInstructions?.[id]?.sec?.message}</FieldError>
+      <FieldError>{errors?.[step]?.[id]?.min?.message}</FieldError>
+      <FieldError>{errors?.[step]?.[id]?.sec?.message}</FieldError>
     </>
   )
 }

@@ -122,6 +122,7 @@ export default function Body() {
         </FieldLegend>
         {fields.map((_field, index) => (
           <Instruction
+            step="bodyInstructions"
             id={index}
             key={index}
             errors={errors}
