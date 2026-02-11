@@ -27,13 +27,13 @@ export const Stepper = () => {
           </Link>
         </li>
         <li className="flex-1 text-center">
-          <Link href="/form/about" className={highlight("/form/about")}>
-            About
+          <Link href="/form/corps" className={highlight("/form/corps")}>
+            Corps de séance
           </Link>
         </li>
         <li className="flex-1 text-center">
-          <Link href="/form/confirm" className={highlight("/form/confirm")}>
-            Confirm
+          <Link href="/form/calme" className={highlight("/form/calme")}>
+            Retour au calme
           </Link>
         </li>
       </ol>

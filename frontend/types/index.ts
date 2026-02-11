@@ -11,9 +11,6 @@ export interface Lesson {
   warmUp?: "custom" | "preset"
   coolDown?: "custom" | "preset"
   warmUpInstructions?: InstructionType[]
-  password?: string
-  confirmPassword?: string
-  university?: string
-  degree?: string
-  about?: string
+  bodyInstructions?: InstructionType[]
+  coolDownInstructions?: InstructionType[]
 }
