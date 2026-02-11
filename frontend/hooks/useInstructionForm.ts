@@ -108,11 +108,13 @@ export function useInstructionForm({
   const handlePrevious = () => {
     handleSubmit((data) => {
       setLesson((prev) => ({ ...prev, ...data }))
+      console.log("lesson", lesson)
       if (previousRoute) Router.push(previousRoute)
     })()
   }
   const saveData = (data: object) => {
     setLesson((prev) => ({ ...prev, ...data }))
+    console.log("lesson", lesson)
     if (nextRoute) Router.push(nextRoute)
   }
 

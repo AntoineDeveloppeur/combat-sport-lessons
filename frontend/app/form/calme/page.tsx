@@ -19,7 +19,6 @@ export default function Confirm() {
     fieldName: "coolDownInstructions",
     routes: {
       previousRoute: "/form/corps/",
-      nextRoute: "/form/echauffement",
     },
   })
 
