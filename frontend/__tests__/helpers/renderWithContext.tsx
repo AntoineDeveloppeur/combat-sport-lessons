@@ -1,14 +1,11 @@
-import { LessonContext } from "@/app/provider"
 import { render } from "@testing-library/react"
+import { LessonContext } from "@/app/provider"
 
 export const renderWithContext = (component: React.ReactElement) => {
-  const mockLesson = {
-    warmUpInstructions: [{ text: "", min: 1, sec: 0 }],
-  }
   const mockSetLesson = vi.fn()
 
   return render(
-    <LessonContext.Provider value={[mockLesson, mockSetLesson]}>
+    <LessonContext.Provider value={[{}, mockSetLesson]}>
       {component}
     </LessonContext.Provider>
   )
