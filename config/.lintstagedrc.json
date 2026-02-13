@@ -5,6 +5,7 @@
   ],
   "frontend/**/*.{js,jsx,ts,tsx,mjs}": [
     "npx eslint --config frontend/eslint.config.mjs --fix",
-    "npx prettier --config config/.prettierrc --write"
+    "npx prettier --config config/.prettierrc --write",
+    "npm run test --workspace=frontend -- --run --changed"
   ]
 }
