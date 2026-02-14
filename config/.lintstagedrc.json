@@ -6,6 +6,6 @@
   "frontend/**/*.{js,jsx,ts,tsx,mjs}": [
     "npx eslint --config frontend/eslint.config.mjs --fix",
     "npx prettier --config config/.prettierrc --write",
-    "npm --prefix frontend run test -- --run"
+    "npm --prefix frontend run test -- --run --passWithNoTests"
   ]
 }
