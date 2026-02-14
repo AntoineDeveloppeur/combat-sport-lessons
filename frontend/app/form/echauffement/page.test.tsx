@@ -9,11 +9,16 @@ vi.mock("next/navigation", () => ({
   }),
 }))
 
+vi.mock("@/data/warmUpPreset", () => ({
+  warmUpPresetTitles: ["shadowBoxing", "course à pied"],
+}))
+
 describe("WarmUp page", () => {
-  it('click on "ajouter champs" adds an Instruction component', async () => {
+  it('with custom: click on "ajouter champs" adds an Instruction component', async () => {
     // Arrange
     const user = userEvent.setup()
-    renderWithContext(<WarmUp />)
+
+    renderWithContext(<WarmUp />, { warmUp: "custom" })
 
     // Vérifie qu'il y a 1 instruction au départ
     expect(screen.getByText(/Instruction n°1/i)).toBeInTheDocument()
@@ -26,5 +31,18 @@ describe("WarmUp page", () => {
     // Assert
     expect(screen.getByText(/Instruction n°1/i)).toBeInTheDocument()
     expect(screen.getByText(/Instruction n°2/i)).toBeInTheDocument()
+  })
+  it("with preset: render NativeSelectOption", async () => {
+    renderWithContext(<WarmUp />, { warmUp: "preset" })
+
+    expect(
+      screen.getByText(/Sélectionne un échauffement prédéfinis/i)
+    ).toBeInTheDocument()
+  })
+  it("with preset: render all preset warmUp ", async () => {
+    renderWithContext(<WarmUp />, { warmUp: "preset" })
+
+    expect(screen.getByText(/shadowBoxing/i)).toBeInTheDocument()
+    expect(screen.getByText(/course à pied/i)).toBeInTheDocument()
   })
 })

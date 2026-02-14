@@ -1,13 +1,20 @@
 "use client"
 
-import { FieldSet, FieldLegend } from "@/components/ui/field"
-import { Form } from "../../../components/Form"
+import { FieldSet, FieldLegend, Field, FieldError } from "@/components/ui/field"
+import { Form } from "@/components/Form"
 import { Button } from "@/components/ui/button"
-
+import { warmUpPresetTitles } from "@/data/warmUpPreset"
 import { Instruction } from "@/components/Instruction"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
+import { useContext } from "react"
+import { LessonContext } from "@/app/provider"
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
 
 export default function WarmUp() {
+  const [lesson] = useContext(LessonContext)!
+
+  const warmUpType = lesson.warmUp === "preset" ? "preset" : "custom"
+
   const {
     handleSubmit,
     register,
@@ -27,21 +34,46 @@ export default function WarmUp() {
   return (
     <Form onSubmit={handleSubmit(saveData)}>
       <FieldSet className="flex flex-col items-start w-[600px]">
-        <FieldLegend className="mb-4 text-lg font-semibold">
-          Échauffement, écriver une suite d&apos;instruction composés de texte
-          et d&apos;une durée. Vous pouvez ajoutez autant d&apos;instructions
-          que vous pouvez. Ajoutez une instruction avec le boutton &quot;ajouter
-          une instruction&quot;
-        </FieldLegend>
-        {fields.map((_field, index) => (
-          <Instruction
-            step="warmUpInstructions"
-            id={index}
-            key={index}
-            errors={errors}
-            register={register}
-          ></Instruction>
-        ))}
+        {warmUpType === "custom" && (
+          <>
+            <FieldLegend className="mb-4 text-lg font-semibold">
+              Échauffement, écriver une suite d&apos;instruction composés de
+              texte et d&apos;une durée. Vous pouvez ajoutez autant
+              d&apos;instructions que vous pouvez. Ajoutez une instruction avec
+              le boutton &quot;ajouter une instruction&quot;
+            </FieldLegend>
+            {fields.map((_field, index) => (
+              <Instruction
+                step="warmUpInstructions"
+                id={index}
+                key={index}
+                errors={errors}
+                register={register}
+              ></Instruction>
+            ))}
+          </>
+        )}
+        {warmUpType === "preset" && (
+          <>
+            <FieldLegend className="mb-4 text-lg font-semibold">
+              Trouvez l&apos;échauffement qui est le plus adaptée à votre corps
+              de séance
+            </FieldLegend>
+            <Field>
+              <NativeSelect {...register("warmUpPresetTitle")}>
+                <NativeSelectOption value="">
+                  Sélectionne un échauffement prédéfinis
+                </NativeSelectOption>
+                {warmUpPresetTitles.map((preset) => (
+                  <NativeSelectOption key={preset} value={preset}>
+                    {preset}
+                  </NativeSelectOption>
+                ))}
+              </NativeSelect>
+              <FieldError>{errors?.sport?.message}</FieldError>
+            </Field>
+          </>
+        )}
         <Button type="button" onClick={() => addInstruction()}>
           {" "}
           Ajouter un champs
