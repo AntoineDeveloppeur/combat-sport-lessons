@@ -1,6 +1,6 @@
 "use client"
 
-import { FieldSet, FieldLegend, Field, FieldError } from "@/components/ui/field"
+import { FieldSet, FieldLegend } from "@/components/ui/field"
 import { Form } from "@/components/Form"
 import { Button } from "@/components/ui/button"
 import { warmUpPresetTitles } from "@/data/warmUpPreset"
@@ -8,7 +8,7 @@ import { Instruction } from "@/components/Instruction"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
 import { useContext } from "react"
 import { LessonContext } from "@/app/provider"
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
+import Select from "@/components/Select"
 
 export default function WarmUp() {
   const [lesson] = useContext(LessonContext)!
@@ -59,19 +59,13 @@ export default function WarmUp() {
               Trouvez l&apos;échauffement qui est le plus adaptée à votre corps
               de séance
             </FieldLegend>
-            <Field>
-              <NativeSelect {...register("warmUpPresetTitle")}>
-                <NativeSelectOption value="">
-                  Sélectionne un échauffement prédéfinis
-                </NativeSelectOption>
-                {warmUpPresetTitles.map((preset) => (
-                  <NativeSelectOption key={preset} value={preset}>
-                    {preset}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
-              <FieldError>{errors?.sport?.message}</FieldError>
-            </Field>
+            <Select
+              lessonKey="warmUpPresetTitle"
+              placeholder="Sélectionne un échauffement prédéfinis"
+              selectOptions={warmUpPresetTitles}
+              register={register}
+              errors={errors}
+            />
           </>
         )}
         <Button type="button" onClick={() => addInstruction()}>
