@@ -15,24 +15,13 @@ export default function WarmUp() {
 
   const warmUpType = lesson.warmUp === "preset" ? "preset" : "custom"
 
-  const {
-    handleSubmit,
-    register,
-    errors,
-    fields,
-    addInstruction,
-    saveData,
-    handlePrevious,
-  } = useInstructionForm({
-    fieldName: "warmUpInstructions",
-    routes: {
-      previousRoute: "/form/general",
-      nextRoute: "/form/corps",
-    },
-  })
+  const { register, errors, fields, addInstruction, handleSaveAndNavigate } =
+    useInstructionForm({
+      fieldName: "warmUpInstructions",
+    })
 
   return (
-    <Form onSubmit={handleSubmit(saveData)}>
+    <Form>
       <FieldSet className="flex flex-col items-start w-[600px]">
         {warmUpType === "custom" && (
           <>
@@ -73,11 +62,18 @@ export default function WarmUp() {
           Ajouter un champs
         </Button>
         <div className="flex justify-between w-full">
-          <Button type="button" onClick={handlePrevious}>
-            {"<"} Previous
+          <Button
+            type="button"
+            onClick={() => handleSaveAndNavigate("/form/general")}
+          >
+            {">"} Next
           </Button>
-
-          <Button>{">"} Next</Button>
+          <Button
+            type="button"
+            onClick={() => handleSaveAndNavigate("/form/corps")}
+          >
+            {">"} Next
+          </Button>
         </div>
       </FieldSet>
     </Form>

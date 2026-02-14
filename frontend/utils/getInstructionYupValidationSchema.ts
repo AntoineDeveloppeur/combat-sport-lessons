@@ -1,7 +1,7 @@
 import * as Yup from "yup"
 import { type Lesson } from "@/types"
 
-export function yupValidationSchema(
+export function getYupValidationSchema(
   fieldName: keyof Lesson
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Yup.ObjectSchema<any> {

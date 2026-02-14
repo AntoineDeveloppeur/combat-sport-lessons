@@ -8,24 +8,13 @@ import { Instruction } from "@/components/Instruction"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
 
 export default function Body() {
-  const {
-    handleSubmit,
-    register,
-    errors,
-    fields,
-    addInstruction,
-    saveData,
-    handlePrevious,
-  } = useInstructionForm({
-    fieldName: "bodyInstructions",
-    routes: {
-      previousRoute: "/form/echauffement",
-      nextRoute: "/form/calme",
-    },
-  })
+  const { register, errors, fields, addInstruction, handleSaveAndNavigate } =
+    useInstructionForm({
+      fieldName: "bodyInstructions",
+    })
 
   return (
-    <Form onSubmit={handleSubmit(saveData)}>
+    <Form>
       <FieldSet className="flex flex-col items-start w-[600px]">
         <FieldLegend className="mb-4 text-lg font-semibold">
           Corps de séance
@@ -44,11 +33,18 @@ export default function Body() {
           Ajouter un champs
         </Button>
         <div className="flex justify-between w-full">
-          <Button type="button" onClick={handlePrevious}>
-            {"<"} Previous
+          <Button
+            type="button"
+            onClick={() => handleSaveAndNavigate("/form/echauffement")}
+          >
+            {">"} Previous
           </Button>
-
-          <Button>{">"} Next</Button>
+          <Button
+            type="button"
+            onClick={() => handleSaveAndNavigate("/form/calme")}
+          >
+            {">"} Next
+          </Button>{" "}
         </div>
       </FieldSet>
     </Form>

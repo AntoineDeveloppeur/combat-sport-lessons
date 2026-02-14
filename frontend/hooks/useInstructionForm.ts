@@ -1,24 +1,16 @@
-// hooks/useInstructionForm.ts
-import {
-  useForm,
-  useFieldArray,
-  FieldErrors,
-  FieldArrayWithId,
-} from "react-hook-form"
-import { useState, useEffect, useContext } from "react"
+import { useForm, FieldErrors, FieldArrayWithId } from "react-hook-form"
+import { useContext } from "react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
 import { LessonContext } from "@/app/provider"
-import { useRouter } from "next/navigation"
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
-import { yupValidationSchema } from "@/utils/instructionValidationSchema"
+import { getYupValidationSchema } from "@/utils/getInstructionYupValidationSchema"
+import { getInstructionDefaultValue } from "@/utils/getInstructionDefaultValue"
+import { useInstructionFieldArray } from "./useInstructionFieldArray"
+import { useSaveAndNavigate } from "./useSaveAndNavigate"
 
 interface UseInstructionFormConfig {
   fieldName: "warmUpInstructions" | "bodyInstructions" | "coolDownInstructions"
-  routes: {
-    previousRoute?: string
-    nextRoute?: string
-  }
 }
 
 interface UseInstructionReturn {
@@ -27,32 +19,20 @@ interface UseInstructionReturn {
   errors: FieldErrors<T>
   fields: FieldArrayWithId<T, string, "id">[]
   addInstruction: () => void
-  saveData: (data: object) => void
-  handlePrevious: () => void
+  handleSaveAndNavigate: (route: string) => void
 }
 
 export function useInstructionForm({
   fieldName,
-  routes,
 }: UseInstructionFormConfig): UseInstructionReturn {
-  const { previousRoute, nextRoute } = routes
   const [lesson, setLesson] = useContext(LessonContext)!
-  const Router = useRouter()
 
-  const [instructionCount, setInstructionCount] = useState<number>(
-    lesson[fieldName]?.length || 1
-  )
-
-  // Validation schema (identique pour tous)
-  const validationSchema = yupValidationSchema(fieldName)
-
+  const validationSchema = getYupValidationSchema(fieldName)
   type FormData = Yup.InferType<typeof validationSchema>
-
-  const defaultValues = lesson[fieldName]
-    ? lesson
-    : ({
-        [fieldName]: [{ text: "", min: 1, sec: 0 }],
-      } as FormData)
+  const defaultValues = getInstructionDefaultValue(
+    lesson,
+    fieldName
+  ) as FormData
 
   const {
     handleSubmit,
@@ -64,41 +44,15 @@ export function useInstructionForm({
     resolver: yupResolver(validationSchema),
   })
 
-  const { fields, append, remove } = useFieldArray({
-    name: fieldName,
-    control,
-  })
+  const { addInstruction, fields } = useInstructionFieldArray(
+    lesson,
+    fieldName,
+    control
+  )
 
-  const addInstruction = () => {
-    setInstructionCount((prev) => prev + 1)
-  }
-
-  useEffect(() => {
-    const newVal = instructionCount
-    const oldVal = fields.length
-    if (newVal > oldVal) {
-      for (let i = oldVal; i < newVal; i++) {
-        append({ text: "", min: 1, sec: 0 })
-      }
-    } else {
-      for (let i = oldVal; i > newVal; i--) {
-        remove(i - 1)
-      }
-    }
-  }, [instructionCount, append, remove, fields.length])
-
-  const handlePrevious = () => {
-    handleSubmit((data) => {
-      setLesson((prev) => ({ ...prev, ...data }))
-      console.log("lesson", lesson)
-      if (previousRoute) Router.push(previousRoute)
-    })()
-  }
-  const saveData = (data: object) => {
-    setLesson((prev) => ({ ...prev, ...data }))
-    console.log("lesson", lesson)
-    if (nextRoute) Router.push(nextRoute)
-  }
+  const { saveAndNavigate } = useSaveAndNavigate(setLesson)
+  const handleSaveAndNavigate = (route?: string) =>
+    handleSubmit((data) => saveAndNavigate(data, route))()
 
   return {
     handleSubmit,
@@ -106,7 +60,6 @@ export function useInstructionForm({
     errors,
     fields,
     addInstruction,
-    saveData,
-    handlePrevious,
+    handleSaveAndNavigate,
   }
 }
