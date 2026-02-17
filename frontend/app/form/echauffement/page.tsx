@@ -15,7 +15,7 @@ export default function WarmUp() {
 
   const warmUpType = lesson.warmUp === "preset" ? "preset" : "custom"
 
-  const { register, errors, fields, addInstruction, handleSaveAndNavigate } =
+  const { register, errors, fields, addInstruction, saveAndNavigate } =
     useInstructionForm({
       fieldName: "warmUpInstructions",
     })
@@ -64,14 +64,11 @@ export default function WarmUp() {
         <div className="flex justify-between w-full">
           <Button
             type="button"
-            onClick={() => handleSaveAndNavigate("/form/general")}
+            onClick={() => saveAndNavigate("/form/general")}
           >
             {">"} Next
           </Button>
-          <Button
-            type="button"
-            onClick={() => handleSaveAndNavigate("/form/corps")}
-          >
+          <Button type="button" onClick={() => saveAndNavigate("/form/corps")}>
             {">"} Next
           </Button>
         </div>

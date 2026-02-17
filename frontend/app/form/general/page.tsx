@@ -1,7 +1,6 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { useRouter } from "next/navigation"
 import { useContext } from "react"
 import { LessonContext } from "../../provider"
 import {
@@ -19,10 +18,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
 import TwoOptionRadioField from "@/components/TwoOptionRadioField"
+import { useSaveAndNavigate } from "@/hooks/useSaveAndNavigate"
 
 export default function General() {
   const [lesson, setLesson] = useContext(LessonContext)!
-  const Router = useRouter()
 
   const validationSchema = Yup.object().shape({
     sport: Yup.string()
@@ -65,14 +64,10 @@ export default function General() {
     mode: "onSubmit",
   })
 
-  const saveData = (data: object) => {
-    setLesson((prev) => ({ ...prev, ...data }))
-    console.log("lesson", lesson)
-    Router.push("/form/echauffement")
-  }
+  const { saveAndNavigate } = useSaveAndNavigate(handleSubmit, setLesson)
 
   return (
-    <Form onSubmit={handleSubmit(saveData)}>
+    <Form>
       <FieldSet className="flex flex-col items-start w-[600px]">
         <FieldLegend className="mb-4 text-lg font-semibold">
           Général
@@ -119,7 +114,12 @@ export default function General() {
           setValue={setValue}
           errors={errors}
         />
-        <Button>Next</Button>
+        <Button
+          type="button"
+          onClick={() => saveAndNavigate("/form/echauffement")}
+        >
+          {">"} Next
+        </Button>
       </FieldSet>
     </Form>
   )

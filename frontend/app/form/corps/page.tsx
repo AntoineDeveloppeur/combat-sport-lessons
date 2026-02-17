@@ -8,7 +8,7 @@ import { Instruction } from "@/components/Instruction"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
 
 export default function Body() {
-  const { register, errors, fields, addInstruction, handleSaveAndNavigate } =
+  const { register, errors, fields, addInstruction, saveAndNavigate } =
     useInstructionForm({
       fieldName: "bodyInstructions",
     })
@@ -35,14 +35,11 @@ export default function Body() {
         <div className="flex justify-between w-full">
           <Button
             type="button"
-            onClick={() => handleSaveAndNavigate("/form/echauffement")}
+            onClick={() => saveAndNavigate("/form/echauffement")}
           >
             {">"} Previous
           </Button>
-          <Button
-            type="button"
-            onClick={() => handleSaveAndNavigate("/form/calme")}
-          >
+          <Button type="button" onClick={() => saveAndNavigate("/form/calme")}>
             {">"} Next
           </Button>{" "}
         </div>

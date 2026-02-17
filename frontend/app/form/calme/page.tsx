@@ -7,7 +7,7 @@ import { FieldSet, FieldLegend } from "@/components/ui/field"
 import { Instruction } from "@/components/Instruction"
 
 export default function Confirm() {
-  const { register, errors, fields, addInstruction, handleSaveAndNavigate } =
+  const { register, errors, fields, addInstruction, saveAndNavigate } =
     useInstructionForm({
       fieldName: "coolDownInstructions",
     })
@@ -32,14 +32,11 @@ export default function Confirm() {
           Ajouter un champs
         </Button>
         <div className="flex justify-between w-full">
-          <Button
-            type="button"
-            onClick={() => handleSaveAndNavigate("/form/corps")}
-          >
+          <Button type="button" onClick={() => saveAndNavigate("/form/corps")}>
             {"<"} Previous
           </Button>
 
-          <Button type="button" onClick={() => handleSaveAndNavigate()}>
+          <Button type="button" onClick={() => saveAndNavigate()}>
             {">"} Next
           </Button>
         </div>

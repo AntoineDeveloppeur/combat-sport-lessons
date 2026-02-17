@@ -19,7 +19,7 @@ interface UseInstructionReturn {
   errors: FieldErrors<T>
   fields: FieldArrayWithId<T, string, "id">[]
   addInstruction: () => void
-  handleSaveAndNavigate: (route: string) => void
+  saveAndNavigate: (route: string) => void
 }
 
 export function useInstructionForm({
@@ -50,9 +50,7 @@ export function useInstructionForm({
     control
   )
 
-  const { saveAndNavigate } = useSaveAndNavigate(setLesson)
-  const handleSaveAndNavigate = (route?: string) =>
-    handleSubmit((data) => saveAndNavigate(data, route))()
+  const { saveAndNavigate } = useSaveAndNavigate(handleSubmit, setLesson)
 
   return {
     handleSubmit,
@@ -60,6 +58,6 @@ export function useInstructionForm({
     errors,
     fields,
     addInstruction,
-    handleSaveAndNavigate,
+    saveAndNavigate,
   }
 }

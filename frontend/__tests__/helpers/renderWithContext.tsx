@@ -4,7 +4,7 @@ import { Lesson } from "@/types"
 
 export const renderWithContext = (
   component: React.ReactElement,
-  lesson: Lesson | undefined
+  lesson?: Lesson
 ) => {
   const mockSetLesson = vi.fn()
   const mockLesson = lesson ? lesson : {}
