@@ -1,4 +1,5 @@
 import { Lesson } from "@/types"
+import { defaultValues } from "@/data/instructionDefaultValues"
 
 export function getInstructionDefaultValue(
   lesson: Lesson,
@@ -7,7 +8,7 @@ export function getInstructionDefaultValue(
   const res = lesson[fieldName]
     ? lesson
     : {
-        [fieldName]: [{ text: "", min: 1, sec: 0 }],
+        [fieldName]: defaultValues,
       }
   return res
 }

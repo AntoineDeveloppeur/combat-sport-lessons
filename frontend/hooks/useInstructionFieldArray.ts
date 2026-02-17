@@ -1,6 +1,7 @@
 import { useFieldArray, FieldArrayWithId, Control } from "react-hook-form"
 import { type Lesson } from "@/types"
 import { useState, useEffect } from "react"
+import { defaultValues } from "@/data/instructionDefaultValues"
 
 interface UseInstructionFieldArrayReturn {
   addInstruction: () => void
@@ -31,7 +32,7 @@ export function useInstructionFieldArray(
     const oldVal = fields.length
     if (newVal > oldVal) {
       for (let i = oldVal; i < newVal; i++) {
-        append({ text: "", min: 1, sec: 0 })
+        append(defaultValues)
       }
     } else {
       for (let i = oldVal; i > newVal; i--) {
