@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import General from "./page"
-import { renderWithContext } from "@/__tests__/helpers/renderWithContext"
+import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
 
 const mockPush = vi.fn()
 
@@ -18,7 +18,7 @@ describe("General page", () => {
 
   it("cannot submit form when sport is not selected", async () => {
     const user = userEvent.setup()
-    renderWithContext(<General />)
+    renderWithProvider(<General />)
 
     const objectiveTextarea = screen.getByPlaceholderText(
       /exemple : la séance va permettre/i
@@ -36,7 +36,7 @@ describe("General page", () => {
 
   it("cannot submit form when objective is empty", async () => {
     const user = userEvent.setup()
-    renderWithContext(<General />)
+    renderWithProvider(<General />)
 
     const sportSelect = screen.getByRole("combobox")
     await user.selectOptions(sportSelect, "Judo")
@@ -49,7 +49,7 @@ describe("General page", () => {
 
   it("cannot submit form when objective is too short (less than 20 characters)", async () => {
     const user = userEvent.setup()
-    renderWithContext(<General />)
+    renderWithProvider(<General />)
 
     const sportSelect = screen.getByRole("combobox")
     await user.selectOptions(sportSelect, "Judo")
@@ -73,7 +73,7 @@ describe("General page", () => {
 
   it("submits form successfully with valid data", async () => {
     const user = userEvent.setup()
-    renderWithContext(<General />)
+    renderWithProvider(<General />)
 
     const sportSelect = screen.getByRole("combobox")
     await user.selectOptions(sportSelect, "Judo")

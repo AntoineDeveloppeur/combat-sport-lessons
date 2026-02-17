@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import Body from "./page"
-import { renderWithContext } from "@/__tests__/helpers/renderWithContext"
+import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
 
 const mockPush = vi.fn()
 
@@ -18,7 +18,7 @@ describe("Body page", () => {
 
   it('click on "ajouter champs" adds an Instruction component', async () => {
     const user = userEvent.setup()
-    renderWithContext(<Body />)
+    renderWithProvider(<Body />)
 
     expect(screen.getByText(/Instruction n°1/i)).toBeInTheDocument()
     expect(screen.queryByText(/Instruction n°2/i)).not.toBeInTheDocument()
@@ -32,7 +32,7 @@ describe("Body page", () => {
 
   it("cannot submit form when instruction text is empty", async () => {
     const user = userEvent.setup()
-    renderWithContext(<Body />)
+    renderWithProvider(<Body />)
 
     const nextButton = screen.getByRole("button", { name: /next/i })
     await user.click(nextButton)
@@ -48,7 +48,7 @@ describe("Body page", () => {
 
   it("cannot submit form when instruction text is too short (less than 3 characters)", async () => {
     const user = userEvent.setup()
-    renderWithContext(<Body />)
+    renderWithProvider(<Body />)
 
     const textareas = screen.getAllByRole("textbox")
     await user.type(textareas[0], "ab")
@@ -67,7 +67,7 @@ describe("Body page", () => {
 
   it("cannot submit form when minutes are invalid (greater than 90)", async () => {
     const user = userEvent.setup()
-    renderWithContext(<Body />)
+    renderWithProvider(<Body />)
 
     const textareas = screen.getAllByRole("textbox")
     await user.type(textareas[0], "Valid instruction text")
@@ -91,7 +91,7 @@ describe("Body page", () => {
 
   it("cannot submit form when seconds are invalid (greater than 59)", async () => {
     const user = userEvent.setup()
-    renderWithContext(<Body />)
+    renderWithProvider(<Body />)
 
     const textareas = screen.getAllByRole("textbox")
     await user.type(textareas[0], "Valid instruction text")
@@ -115,7 +115,7 @@ describe("Body page", () => {
 
   it("submits form successfully with valid data", async () => {
     const user = userEvent.setup()
-    renderWithContext(<Body />)
+    renderWithProvider(<Body />)
 
     const textareas = screen.getAllByRole("textbox")
     await user.type(textareas[0], "Valid instruction text")

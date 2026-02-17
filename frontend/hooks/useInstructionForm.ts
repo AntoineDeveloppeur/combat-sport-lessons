@@ -1,13 +1,12 @@
 import { useForm, FieldErrors, FieldArrayWithId } from "react-hook-form"
-import { useContext } from "react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
-import { LessonContext } from "@/app/provider"
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
 import { getYupValidationSchema } from "@/utils/getInstructionYupValidationSchema"
-import { getInstructionDefaultValue } from "@/utils/getInstructionDefaultValue"
 import { useInstructionFieldArray } from "./useInstructionFieldArray"
 import { useSaveAndNavigate } from "./useSaveAndNavigate"
+import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { useAppSelector } from "@/store/hooks"
 
 interface UseInstructionFormConfig {
   fieldName: "warmUpInstructions" | "bodyInstructions" | "coolDownInstructions"
@@ -25,14 +24,10 @@ interface UseInstructionReturn {
 export function useInstructionForm({
   fieldName,
 }: UseInstructionFormConfig): UseInstructionReturn {
-  const [lesson, setLesson] = useContext(LessonContext)!
-
   const validationSchema = getYupValidationSchema(fieldName)
   type FormData = Yup.InferType<typeof validationSchema>
-  const defaultValues = getInstructionDefaultValue(
-    lesson,
-    fieldName
-  ) as FormData
+
+  const lesson = useAppSelector(selectlesson)
 
   const {
     handleSubmit,
@@ -40,7 +35,7 @@ export function useInstructionForm({
     formState: { errors },
     control,
   } = useForm<FormData>({
-    defaultValues,
+    defaultValues: lesson,
     resolver: yupResolver(validationSchema),
   })
 
@@ -50,7 +45,7 @@ export function useInstructionForm({
     control
   )
 
-  const { saveAndNavigate } = useSaveAndNavigate(handleSubmit, setLesson)
+  const { saveAndNavigate } = useSaveAndNavigate(handleSubmit)
 
   return {
     handleSubmit,

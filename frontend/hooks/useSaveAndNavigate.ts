@@ -1,21 +1,21 @@
 import { useRouter } from "next/navigation"
-import { Dispatch, SetStateAction } from "react"
-import { Lesson } from "@/types"
 import { UseFormHandleSubmit } from "react-hook-form"
+import { useAppDispatch } from "@/store/hooks"
+import { save } from "@/features/lesson/lessonSlice"
 
 interface UseSaveAndNavigateReturn {
   saveAndNavigate: (route?: string) => void
 }
 
 export function useSaveAndNavigate(
-  handleSubmit: UseFormHandleSubmit<T>,
-  setLesson: Dispatch<SetStateAction<Lesson>>
+  handleSubmit: UseFormHandleSubmit<T>
 ): UseSaveAndNavigateReturn {
   const Router = useRouter()
+  const dispatch = useAppDispatch()
 
   const saveAndNavigate = (route?: string) => {
     handleSubmit((data) => {
-      setLesson((prev) => ({ ...prev, ...data }))
+      dispatch(save(data))
       if (route) Router.push(route)
     })()
   }

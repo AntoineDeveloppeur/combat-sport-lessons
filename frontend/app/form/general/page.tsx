@@ -1,8 +1,6 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { useContext } from "react"
-import { LessonContext } from "../../provider"
 import {
   Field,
   FieldLabel,
@@ -19,9 +17,11 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
 import TwoOptionRadioField from "@/components/TwoOptionRadioField"
 import { useSaveAndNavigate } from "@/hooks/useSaveAndNavigate"
+import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { useAppSelector } from "@/store/hooks"
 
 export default function General() {
-  const [lesson, setLesson] = useContext(LessonContext)!
+  const lesson = useAppSelector(selectlesson)
 
   const validationSchema = Yup.object().shape({
     sport: Yup.string()
@@ -46,11 +46,6 @@ export default function General() {
 
   // Inferer le type est obligatoire car sinon les inputs du formulaire sont inférer comme possiblement undefined
   type GeneralFormData = Yup.InferType<typeof validationSchema>
-  const defaultValues = {
-    ...lesson,
-    warmUp: lesson.warmUp || "custom",
-    coolDown: lesson.coolDown || "custom",
-  } as GeneralFormData
 
   const {
     handleSubmit,
@@ -60,11 +55,11 @@ export default function General() {
     formState: { errors },
   } = useForm<GeneralFormData>({
     resolver: yupResolver(validationSchema),
-    defaultValues: defaultValues,
+    defaultValues: lesson,
     mode: "onSubmit",
   })
 
-  const { saveAndNavigate } = useSaveAndNavigate(handleSubmit, setLesson)
+  const { saveAndNavigate } = useSaveAndNavigate(handleSubmit)
 
   return (
     <Form>

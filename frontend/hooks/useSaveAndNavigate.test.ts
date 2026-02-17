@@ -3,16 +3,26 @@ import { renderHook, act } from "@testing-library/react"
 import { useSaveAndNavigate } from "./useSaveAndNavigate"
 import { Lesson } from "@/types"
 import { UseFormHandleSubmit } from "react-hook-form"
+import { createWrapper } from "@/__tests__/helpers/renderWithProvider"
 
 vi.mock("next/navigation", () => ({
   useRouter: vi.fn(),
 }))
 
+vi.mock("@/store/hooks", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/store/hooks")>()
+  return {
+    ...actual,
+    useAppDispatch: vi.fn(),
+  }
+})
+
 const { useRouter } = await import("next/navigation")
+const { useAppDispatch } = await import("@/store/hooks")
 
 describe("useSaveAndNavigate", () => {
   const mockPush = vi.fn()
-  const mockSetLesson = vi.fn()
+  const mockDispatch = vi.fn()
   const mockHandleSubmit = vi.fn()
 
   beforeEach(() => {
@@ -25,6 +35,7 @@ describe("useSaveAndNavigate", () => {
       replace: vi.fn(),
       prefetch: vi.fn(),
     })
+    vi.mocked(useAppDispatch).mockReturnValue(mockDispatch)
   })
 
   it("should return saveAndNavigate function", () => {
@@ -32,11 +43,12 @@ describe("useSaveAndNavigate", () => {
       callback({})
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     expect(result.current.saveAndNavigate).toBeInstanceOf(Function)
@@ -47,11 +59,12 @@ describe("useSaveAndNavigate", () => {
       callback({})
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     act(() => {
@@ -61,7 +74,7 @@ describe("useSaveAndNavigate", () => {
     expect(mockHandleSubmit).toHaveBeenCalled()
   })
 
-  it("should call setLesson with merged data", () => {
+  it("should call dispatch with form data", () => {
     const formData: Partial<Lesson> = {
       sport: "Boxing",
       objective: "Improve stamina",
@@ -71,27 +84,24 @@ describe("useSaveAndNavigate", () => {
       callback(formData)
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     act(() => {
       result.current.saveAndNavigate()
     })
 
-    expect(mockSetLesson).toHaveBeenCalled()
-    const setLessonCallback = mockSetLesson.mock.calls[0][0]
-    const previousLesson: Lesson = { warmUp: "custom" }
-    const result_data = setLessonCallback(previousLesson)
-
-    expect(result_data).toEqual({
-      warmUp: "custom",
-      sport: "Boxing",
-      objective: "Improve stamina",
-    })
+    expect(mockDispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: expect.any(String),
+        payload: formData,
+      })
+    )
   })
 
   it("should navigate to route when route is provided", () => {
@@ -99,11 +109,12 @@ describe("useSaveAndNavigate", () => {
       callback({})
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     act(() => {
@@ -118,11 +129,12 @@ describe("useSaveAndNavigate", () => {
       callback({})
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     act(() => {
@@ -132,7 +144,7 @@ describe("useSaveAndNavigate", () => {
     expect(mockPush).not.toHaveBeenCalled()
   })
 
-  it("should merge previous lesson data with new form data", () => {
+  it("should dispatch new form data", () => {
     const newData: Partial<Lesson> = {
       bodyInstructions: [{ text: "Push-ups", min: 2, sec: 0 }],
     }
@@ -141,29 +153,24 @@ describe("useSaveAndNavigate", () => {
       callback(newData)
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     act(() => {
       result.current.saveAndNavigate()
     })
 
-    const setLessonCallback = mockSetLesson.mock.calls[0][0]
-    const previousLesson: Lesson = {
-      sport: "Karate",
-      warmUpInstructions: [{ text: "Warm up", min: 1, sec: 0 }],
-    }
-    const mergedData = setLessonCallback(previousLesson)
-
-    expect(mergedData).toEqual({
-      sport: "Karate",
-      warmUpInstructions: [{ text: "Warm up", min: 1, sec: 0 }],
-      bodyInstructions: [{ text: "Push-ups", min: 2, sec: 0 }],
-    })
+    expect(mockDispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: expect.any(String),
+        payload: newData,
+      })
+    )
   })
 
   it("should navigate to different routes", () => {
@@ -171,11 +178,12 @@ describe("useSaveAndNavigate", () => {
       callback({})
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     act(() => {
@@ -196,26 +204,27 @@ describe("useSaveAndNavigate", () => {
       callback({})
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     act(() => {
       result.current.saveAndNavigate()
     })
 
-    expect(mockSetLesson).toHaveBeenCalled()
-    const setLessonCallback = mockSetLesson.mock.calls[0][0]
-    const previousLesson: Lesson = { sport: "Judo" }
-    const result_data = setLessonCallback(previousLesson)
-
-    expect(result_data).toEqual({ sport: "Judo" })
+    expect(mockDispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: expect.any(String),
+        payload: {},
+      })
+    )
   })
 
-  it("should override previous lesson properties with new data", () => {
+  it("should dispatch new data to Redux", () => {
     const newData: Partial<Lesson> = {
       sport: "Boxing",
       objective: "New objective",
@@ -225,28 +234,24 @@ describe("useSaveAndNavigate", () => {
       callback(newData)
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     act(() => {
       result.current.saveAndNavigate()
     })
 
-    const setLessonCallback = mockSetLesson.mock.calls[0][0]
-    const previousLesson: Lesson = {
-      sport: "Karate",
-      objective: "Old objective",
-    }
-    const mergedData = setLessonCallback(previousLesson)
-
-    expect(mergedData).toEqual({
-      sport: "Boxing",
-      objective: "New objective",
-    })
+    expect(mockDispatch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: expect.any(String),
+        payload: newData,
+      })
+    )
   })
 
   it("should call handleSubmit callback immediately", () => {
@@ -258,11 +263,12 @@ describe("useSaveAndNavigate", () => {
       }
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     act(() => {
@@ -277,11 +283,12 @@ describe("useSaveAndNavigate", () => {
       callback({})
     })
 
-    const { result } = renderHook(() =>
-      useSaveAndNavigate(
-        mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>,
-        mockSetLesson
-      )
+    const { result } = renderHook(
+      () =>
+        useSaveAndNavigate(
+          mockHandleSubmit as unknown as UseFormHandleSubmit<Lesson>
+        ),
+      { wrapper: createWrapper() }
     )
 
     act(() => {
@@ -289,6 +296,6 @@ describe("useSaveAndNavigate", () => {
     })
 
     expect(mockPush).not.toHaveBeenCalled()
-    expect(mockSetLesson).toHaveBeenCalled()
+    expect(mockDispatch).toHaveBeenCalled()
   })
 })

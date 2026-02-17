@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import WarmUp from "./page"
-import { renderWithContext } from "@/__tests__/helpers/renderWithContext"
+import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
@@ -18,7 +18,7 @@ describe("WarmUp page", () => {
     // Arrange
     const user = userEvent.setup()
 
-    renderWithContext(<WarmUp />, { warmUp: "custom" })
+    renderWithProvider(<WarmUp />, { warmUp: "custom" })
 
     // Vérifie qu'il y a 1 instruction au départ
     expect(screen.getByText(/Instruction n°1/i)).toBeInTheDocument()
@@ -33,14 +33,14 @@ describe("WarmUp page", () => {
     expect(screen.getByText(/Instruction n°2/i)).toBeInTheDocument()
   })
   it("with preset: render NativeSelectOption", async () => {
-    renderWithContext(<WarmUp />, { warmUp: "preset" })
+    renderWithProvider(<WarmUp />, { warmUp: "preset" })
 
     expect(
       screen.getByText(/Sélectionne un échauffement prédéfinis/i)
     ).toBeInTheDocument()
   })
   it("with preset: render all preset warmUp ", async () => {
-    renderWithContext(<WarmUp />, { warmUp: "preset" })
+    renderWithProvider(<WarmUp />, { warmUp: "preset" })
 
     expect(screen.getByText(/shadowBoxing/i)).toBeInTheDocument()
     expect(screen.getByText(/course à pied/i)).toBeInTheDocument()

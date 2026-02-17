@@ -1,15 +1,8 @@
 "use client"
 
-import { createContext, useState, Dispatch, SetStateAction } from "react"
-import { Lesson } from "@/types"
-
-type LessonContextType = [Lesson, Dispatch<SetStateAction<Lesson>>] | undefined
-
-export const LessonContext = createContext<LessonContextType>(undefined)
+import { Provider } from "react-redux"
+import { store } from "@/store/index"
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const value = useState<Lesson>({})
-  return (
-    <LessonContext.Provider value={value}>{children}</LessonContext.Provider>
-  )
+  return <Provider store={store}>{children}</Provider>
 }

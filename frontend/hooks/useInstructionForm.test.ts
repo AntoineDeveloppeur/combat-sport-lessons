@@ -2,6 +2,7 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import { renderHook } from "@testing-library/react"
+import { createWrapper } from "@/__tests__/helpers/renderWithProvider"
 import { useInstructionForm } from "./useInstructionForm"
 import { Lesson } from "@/types"
 import { ReactNode } from "react"
@@ -26,10 +27,6 @@ vi.mock("@/utils/getInstructionYupValidationSchema", () => ({
   getYupValidationSchema: vi.fn(),
 }))
 
-vi.mock("@/utils/getInstructionDefaultValue", () => ({
-  getInstructionDefaultValue: vi.fn(),
-}))
-
 vi.mock("@/app/provider", () => ({
   LessonContext: {
     Provider: ({ children }: { children: ReactNode }) => children,
@@ -50,8 +47,6 @@ const { useInstructionFieldArray } = await import("./useInstructionFieldArray")
 const { useSaveAndNavigate } = await import("./useSaveAndNavigate")
 const { getYupValidationSchema } =
   await import("@/utils/getInstructionYupValidationSchema")
-const { getInstructionDefaultValue } =
-  await import("@/utils/getInstructionDefaultValue")
 const { useContext } = await import("react")
 
 describe("useInstructionForm", () => {
@@ -63,7 +58,11 @@ describe("useInstructionForm", () => {
   const mockSetLesson = vi.fn()
 
   const mockLesson: Lesson = {
-    warmUpInstructions: [{ text: "Warm up", min: 1, sec: 0 }],
+    warmUp: "custom",
+    coolDown: "custom",
+    warmUpInstructions: [{ text: "", min: 1, sec: 0 }],
+    bodyInstructions: [{ text: "", min: 1, sec: 0 }],
+    coolDownInstructions: [{ text: "", min: 1, sec: 0 }],
   }
 
   const mockFields = [{ id: "1", text: "Warm up", min: 1, sec: 0 }]
@@ -74,10 +73,6 @@ describe("useInstructionForm", () => {
     vi.mocked(useContext).mockReturnValue([mockLesson, mockSetLesson])
 
     vi.mocked(getYupValidationSchema).mockReturnValue({} as any)
-
-    vi.mocked(getInstructionDefaultValue).mockReturnValue({
-      warmUpInstructions: [{ text: "Warm up", min: 1, sec: 0 }],
-    })
 
     vi.mocked(useForm).mockReturnValue({
       handleSubmit: mockHandleSubmit,
@@ -109,66 +104,65 @@ describe("useInstructionForm", () => {
   })
 
   it("should return handleSubmit from useForm", () => {
-    const { result } = renderHook(() =>
-      useInstructionForm({ fieldName: "warmUpInstructions" })
+    const { result } = renderHook(
+      () => useInstructionForm({ fieldName: "warmUpInstructions" }),
+      { wrapper: createWrapper() }
     )
 
     expect(result.current.handleSubmit).toBe(mockHandleSubmit)
   })
 
   it("should return register from useForm", () => {
-    const { result } = renderHook(() =>
-      useInstructionForm({ fieldName: "warmUpInstructions" })
+    const { result } = renderHook(
+      () => useInstructionForm({ fieldName: "warmUpInstructions" }),
+      { wrapper: createWrapper() }
     )
 
     expect(result.current.register).toBe(mockRegister)
   })
 
   it("should return errors from useForm", () => {
-    const { result } = renderHook(() =>
-      useInstructionForm({ fieldName: "warmUpInstructions" })
+    const { result } = renderHook(
+      () => useInstructionForm({ fieldName: "warmUpInstructions" }),
+      { wrapper: createWrapper() }
     )
 
     expect(result.current.errors).toEqual({})
   })
 
   it("should return fields from useInstructionFieldArray", () => {
-    const { result } = renderHook(() =>
-      useInstructionForm({ fieldName: "warmUpInstructions" })
+    const { result } = renderHook(
+      () => useInstructionForm({ fieldName: "warmUpInstructions" }),
+      { wrapper: createWrapper() }
     )
 
     expect(result.current.fields).toBe(mockFields)
   })
 
   it("should return addInstruction from useInstructionFieldArray", () => {
-    const { result } = renderHook(() =>
-      useInstructionForm({ fieldName: "warmUpInstructions" })
+    const { result } = renderHook(
+      () => useInstructionForm({ fieldName: "warmUpInstructions" }),
+      { wrapper: createWrapper() }
     )
 
     expect(result.current.addInstruction).toBe(mockAddInstruction)
   })
 
   it("should return saveAndNavigate from useSaveAndNavigate", () => {
-    const { result } = renderHook(() =>
-      useInstructionForm({ fieldName: "warmUpInstructions" })
+    const { result } = renderHook(
+      () => useInstructionForm({ fieldName: "warmUpInstructions" }),
+      { wrapper: createWrapper() }
     )
 
     expect(result.current.saveAndNavigate).toBe(mockSaveAndNavigate)
   })
 
   it("should call getYupValidationSchema with fieldName", () => {
-    renderHook(() => useInstructionForm({ fieldName: "bodyInstructions" }))
+    renderHook(() => useInstructionForm({ fieldName: "bodyInstructions" }), {
+      wrapper: createWrapper(),
+    })
 
     expect(getYupValidationSchema).toHaveBeenCalledWith("bodyInstructions")
-  })
-
-  it("should call getInstructionDefaultValue with lesson and fieldName", () => {
-    renderHook(() => useInstructionForm({ fieldName: "coolDownInstructions" }))
-
-    expect(getInstructionDefaultValue).toHaveBeenCalledWith(
-      mockLesson,
-      "coolDownInstructions"
-    )
   })
 
   it("should call useForm with defaultValues and resolver", () => {
@@ -176,19 +170,20 @@ describe("useInstructionForm", () => {
 
     vi.mocked(getYupValidationSchema).mockReturnValue(mockSchema as any)
 
-    const mockDefaults = { warmUpInstructions: [] }
-    vi.mocked(getInstructionDefaultValue).mockReturnValue(mockDefaults)
-
-    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }))
+    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }), {
+      wrapper: createWrapper(),
+    })
 
     expect(useForm).toHaveBeenCalledWith({
-      defaultValues: mockDefaults,
+      defaultValues: mockLesson,
       resolver: expect.any(Function),
     })
   })
 
   it("should call useInstructionFieldArray with lesson, fieldName and control", () => {
-    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }))
+    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }), {
+      wrapper: createWrapper(),
+    })
 
     expect(useInstructionFieldArray).toHaveBeenCalledWith(
       mockLesson,
@@ -197,42 +192,51 @@ describe("useInstructionForm", () => {
     )
   })
 
-  it("should call useSaveAndNavigate with handleSubmit and setLesson", () => {
-    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }))
+  it("should call useSaveAndNavigate with handleSubmit", () => {
+    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }), {
+      wrapper: createWrapper(),
+    })
 
-    expect(useSaveAndNavigate).toHaveBeenCalledWith(
-      mockHandleSubmit,
-      mockSetLesson
-    )
+    expect(useSaveAndNavigate).toHaveBeenCalledWith(mockHandleSubmit)
   })
 
   it("should work with warmUpInstructions fieldName", () => {
-    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }))
+    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }), {
+      wrapper: createWrapper(),
+    })
 
     expect(getYupValidationSchema).toHaveBeenCalledWith("warmUpInstructions")
   })
 
   it("should work with bodyInstructions fieldName", () => {
-    renderHook(() => useInstructionForm({ fieldName: "bodyInstructions" }))
+    renderHook(() => useInstructionForm({ fieldName: "bodyInstructions" }), {
+      wrapper: createWrapper(),
+    })
 
     expect(getYupValidationSchema).toHaveBeenCalledWith("bodyInstructions")
   })
 
   it("should work with coolDownInstructions fieldName", () => {
-    renderHook(() => useInstructionForm({ fieldName: "coolDownInstructions" }))
+    renderHook(
+      () => useInstructionForm({ fieldName: "coolDownInstructions" }),
+      { wrapper: createWrapper() }
+    )
 
     expect(getYupValidationSchema).toHaveBeenCalledWith("coolDownInstructions")
   })
 
-  it("should use LessonContext to get lesson and setLesson", () => {
-    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }))
+  it("should use Redux to get lesson", () => {
+    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }), {
+      wrapper: createWrapper(),
+    })
 
-    expect(useContext).toHaveBeenCalled()
+    expect(getYupValidationSchema).toHaveBeenCalled()
   })
 
   it("should return all required properties", () => {
-    const { result } = renderHook(() =>
-      useInstructionForm({ fieldName: "warmUpInstructions" })
+    const { result } = renderHook(
+      () => useInstructionForm({ fieldName: "warmUpInstructions" }),
+      { wrapper: createWrapper() }
     )
 
     expect(result.current).toHaveProperty("handleSubmit")
@@ -270,8 +274,9 @@ describe("useInstructionForm", () => {
       unregister: vi.fn(),
     } as any)
 
-    const { result } = renderHook(() =>
-      useInstructionForm({ fieldName: "warmUpInstructions" })
+    const { result } = renderHook(
+      () => useInstructionForm({ fieldName: "warmUpInstructions" }),
+      { wrapper: createWrapper() }
     )
 
     expect(result.current.errors).toEqual(mockErrors)
@@ -298,7 +303,9 @@ describe("useInstructionForm", () => {
       unregister: vi.fn(),
     } as any)
 
-    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }))
+    renderHook(() => useInstructionForm({ fieldName: "warmUpInstructions" }), {
+      wrapper: createWrapper(),
+    })
 
     expect(useInstructionFieldArray).toHaveBeenCalledWith(
       mockLesson,

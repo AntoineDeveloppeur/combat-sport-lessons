@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/button"
 import { warmUpPresetTitles } from "@/data/warmUpPreset"
 import { Instruction } from "@/components/Instruction"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
-import { useContext } from "react"
-import { LessonContext } from "@/app/provider"
 import Select from "@/components/Select"
+import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { useAppSelector } from "@/store/hooks"
 
 export default function WarmUp() {
-  const [lesson] = useContext(LessonContext)!
-
+  const lesson = useAppSelector(selectlesson)
   const warmUpType = lesson.warmUp === "preset" ? "preset" : "custom"
 
   const { register, errors, fields, addInstruction, saveAndNavigate } =
