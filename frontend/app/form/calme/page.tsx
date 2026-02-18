@@ -36,7 +36,7 @@ export default function Confirm() {
             {"<"} Previous
           </Button>
 
-          <Button type="button" onClick={() => saveAndNavigate()}>
+          <Button type="button" onClick={() => saveAndNavigate("/form/calme")}>
             {">"} Next
           </Button>
         </div>

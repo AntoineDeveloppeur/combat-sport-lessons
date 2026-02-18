@@ -39,6 +39,10 @@ export default function WarmUp() {
                 register={register}
               ></Instruction>
             ))}
+            <Button type="button" onClick={() => addInstruction()}>
+              {" "}
+              Ajouter un champs
+            </Button>
           </>
         )}
         {warmUpType === "preset" && (
@@ -56,10 +60,7 @@ export default function WarmUp() {
             />
           </>
         )}
-        <Button type="button" onClick={() => addInstruction()}>
-          {" "}
-          Ajouter un champs
-        </Button>
+
         <div className="flex justify-between w-full">
           <Button
             type="button"
