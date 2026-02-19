@@ -2,7 +2,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import CustomInstructions from "./customInstructions"
+import CustomInstructions from "./CustomInstructions"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
 import { UseFormRegister, FieldErrors } from "react-hook-form"
 import { Lesson } from "@/types"
@@ -33,7 +33,9 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+    )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
     expect(screen.queryByText("Instruction n°2")).not.toBeInTheDocument()
@@ -54,7 +56,9 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+    )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
     expect(screen.getByText("Instruction n°2")).toBeInTheDocument()
@@ -74,7 +78,9 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+    )
 
     const addButton = screen.getByRole("button", { name: /ajouter un champs/i })
     await user.click(addButton)
@@ -92,7 +98,9 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+    )
 
     const legend = document.querySelector("legend")
     expect(legend).toBeInTheDocument()
@@ -116,7 +124,9 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+    )
 
     expect(screen.getByText("Text is required")).toBeInTheDocument()
   })
@@ -134,7 +144,9 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+    )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
     expect(screen.getByText("Instruction n°2")).toBeInTheDocument()
@@ -150,14 +162,16 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+    )
 
     expect(mockRegister).toHaveBeenCalledWith("warmUpInstructions.0.text")
     expect(mockRegister).toHaveBeenCalledWith("warmUpInstructions.0.min")
     expect(mockRegister).toHaveBeenCalledWith("warmUpInstructions.0.sec")
   })
 
-  it("fieldLegend should show the word Echauffement", () => {
+  it("fieldLegend should display the legend prop", () => {
     vi.mocked(useInstructionForm).mockReturnValue({
       register: mockRegister,
       errors: {} as FieldErrors<Lesson>,
@@ -167,9 +181,14 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions
+        legend="Custom legend text"
+        lessonKey="warmUpInstructions"
+      />
+    )
 
-    expect(screen.getByText(/Échauffement/i)).toBeInTheDocument()
+    expect(screen.getByText("Custom legend text")).toBeInTheDocument()
   })
 
   it("should render the add button with correct text", () => {
@@ -182,7 +201,9 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+    )
 
     const addButton = screen.getByRole("button", { name: /ajouter un champs/i })
     expect(addButton).toBeInTheDocument()
@@ -199,10 +220,12 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions legend="Test legend" lessonKey="bodyInstructions" />
+    )
 
     expect(useInstructionForm).toHaveBeenCalledWith({
-      fieldName: "warmUpInstructions",
+      fieldName: "bodyInstructions",
     })
   })
 
@@ -219,10 +242,15 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions
+        legend="Test legend"
+        lessonKey="coolDownInstructions"
+      />
+    )
 
-    expect(mockRegister).toHaveBeenCalledWith("warmUpInstructions.0.text")
-    expect(mockRegister).toHaveBeenCalledWith("warmUpInstructions.1.text")
+    expect(mockRegister).toHaveBeenCalledWith("coolDownInstructions.0.text")
+    expect(mockRegister).toHaveBeenCalledWith("coolDownInstructions.1.text")
   })
 
   it("should not call addInstruction on initial render", () => {
@@ -235,7 +263,9 @@ describe("CustomInstructions", () => {
       saveAndNavigate: vi.fn(),
     })
 
-    render(<CustomInstructions />)
+    render(
+      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+    )
 
     expect(mockAddInstruction).not.toHaveBeenCalled()
   })

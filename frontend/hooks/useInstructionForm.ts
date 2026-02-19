@@ -7,9 +7,10 @@ import { useInstructionFieldArray } from "./useInstructionFieldArray"
 import { useSaveAndNavigate } from "./useSaveAndNavigate"
 import { selectlesson } from "@/features/lesson/lessonSelectors"
 import { useAppSelector } from "@/store/hooks"
+import type { LessonInstructionKey } from "@/types"
 
 interface UseInstructionFormConfig {
-  fieldName: "warmUpInstructions" | "bodyInstructions" | "coolDownInstructions"
+  fieldName: LessonInstructionKey
 }
 
 interface UseInstructionReturn {

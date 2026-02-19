@@ -17,4 +17,9 @@ export interface Lesson {
   coolDownPresetTitle?: string
 }
 
+export type LessonInstructionKey =
+  | "warmUpInstructions"
+  | "bodyInstructions"
+  | "coolDownInstructions"
+
 export type Preset = Record<string, InstructionType[]>

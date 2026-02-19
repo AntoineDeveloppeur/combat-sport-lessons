@@ -4,23 +4,27 @@ import { FieldLegend } from "@/components/ui/field"
 import { Button } from "@/components/ui/button"
 import { Instruction } from "@/components/Instruction"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
+import type { InstructionFamily } from "@/types"
 
-export default function CustomInstructions() {
+interface CustomInstructionsProps {
+  legend: string
+  lessonKey: InstructionFamily
+}
+
+export default function CustomInstructions({
+  legend,
+  lessonKey,
+}: CustomInstructionsProps) {
   const { register, errors, fields, addInstruction } = useInstructionForm({
-    fieldName: "warmUpInstructions",
+    fieldName: lessonKey,
   })
 
   return (
     <>
-      <FieldLegend className="mb-4 text-lg font-semibold">
-        Échauffement, écriver une suite d&apos;instruction composés de texte et
-        d&apos;une durée. Vous pouvez ajoutez autant d&apos;instructions que
-        vous pouvez. Ajoutez une instruction avec le boutton &quot;ajouter une
-        instruction&quot;
-      </FieldLegend>
+      <FieldLegend className="mb-4 text-lg font-semibold">{legend}</FieldLegend>
       {fields.map((_field, index) => (
         <Instruction
-          step="warmUpInstructions"
+          step={lessonKey}
           id={index}
           key={index}
           errors={errors}
