@@ -30,7 +30,10 @@ export const renderWithProvider = (
     preloadedState,
   })
 
-  return render(<Provider store={mockStore}>{component}</Provider>)
+  return {
+    ...render(<Provider store={mockStore}>{component}</Provider>),
+    store: mockStore,
+  }
 }
 
 export const createWrapper = (lesson?: Lesson) => {

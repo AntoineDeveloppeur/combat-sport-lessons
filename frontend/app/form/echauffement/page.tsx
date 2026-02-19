@@ -1,11 +1,10 @@
 "use client"
 
-import { FieldSet, FieldLegend } from "@/components/ui/field"
+import { FieldSet } from "@/components/ui/field"
 import { Form } from "@/components/Form"
-import { Button } from "@/components/ui/button"
+
 import { warmUpPresetTitles } from "@/data/warmUpPreset"
-import { Instruction } from "@/components/Instruction"
-import { useInstructionForm } from "@/hooks/useInstructionForm"
+
 import { selectlesson } from "@/features/lesson/lessonSelectors"
 import { useAppSelector } from "@/store/hooks"
 import PresetInstructions from "@/components/PresetInstructions"
@@ -14,11 +13,6 @@ import CustomInstructions from "@/components/CustomInstructions"
 export default function WarmUp() {
   const lesson = useAppSelector(selectlesson)
   const warmUpType = lesson.warmUp === "preset" ? "preset" : "custom"
-
-  const { register, errors, fields, addInstruction, saveAndNavigate } =
-    useInstructionForm({
-      fieldName: "warmUpInstructions",
-    })
 
   return (
     <Form>
@@ -41,18 +35,6 @@ export default function WarmUp() {
             defaultValues={lesson}
           />
         )}
-
-        <div className="flex justify-between w-full">
-          <Button
-            type="button"
-            onClick={() => saveAndNavigate("/form/general")}
-          >
-            {">"} Next
-          </Button>
-          <Button type="button" onClick={() => saveAndNavigate("/form/corps")}>
-            {">"} Next
-          </Button>
-        </div>
       </FieldSet>
     </Form>
   )

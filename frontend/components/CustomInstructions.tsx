@@ -4,20 +4,22 @@ import { FieldLegend } from "@/components/ui/field"
 import { Button } from "@/components/ui/button"
 import { Instruction } from "@/components/Instruction"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
-import type { InstructionFamily } from "@/types"
+import type { LessonInstructionKey } from "@/types"
+import FormSaveAndNavigate from "./FormSaveAndNavigate"
 
 interface CustomInstructionsProps {
   legend: string
-  lessonKey: InstructionFamily
+  lessonKey: LessonInstructionKey
 }
 
 export default function CustomInstructions({
   legend,
   lessonKey,
 }: CustomInstructionsProps) {
-  const { register, errors, fields, addInstruction } = useInstructionForm({
-    fieldName: lessonKey,
-  })
+  const { register, errors, fields, addInstruction, handleSubmit } =
+    useInstructionForm({
+      fieldName: lessonKey,
+    })
 
   return (
     <>
@@ -35,6 +37,11 @@ export default function CustomInstructions({
         {" "}
         Ajouter un champs
       </Button>
+      <FormSaveAndNavigate
+        handleSubmit={handleSubmit}
+        prev="/form/general"
+        next="/form/corps"
+      />
     </>
   )
 }

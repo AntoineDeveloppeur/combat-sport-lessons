@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
 import { useForm } from "react-hook-form"
 import { Lesson } from "@/types"
+import FormSaveAndNavigate from "./FormSaveAndNavigate"
 
 interface PresetInstructionsProps {
   legend: string
@@ -31,6 +32,7 @@ export default function PresetInstructions({
   const {
     register,
     formState: { errors },
+    handleSubmit,
   } = useForm<FormData>({
     defaultValues: defaultValues as FormData,
     resolver: yupResolver(validationSchema),
@@ -45,6 +47,11 @@ export default function PresetInstructions({
         selectOptions={selectOptions}
         register={register}
         errors={errors}
+      />
+      <FormSaveAndNavigate
+        handleSubmit={handleSubmit}
+        prev="/form/general"
+        next="/form/corps"
       />
     </>
   )

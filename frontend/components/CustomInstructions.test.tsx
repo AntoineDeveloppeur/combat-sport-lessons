@@ -9,6 +9,19 @@ import { Lesson } from "@/types"
 
 vi.mock("@/hooks/useInstructionForm")
 
+vi.mock("@/components/FormSaveAndNavigate", () => ({
+  default: ({ handleSubmit, prev, next }: any) => (
+    <div data-testid="form-save-navigate">
+      <button data-testid="prev-button" data-route={prev}>
+        Prev
+      </button>
+      <button data-testid="next-button" data-route={next}>
+        Next
+      </button>
+    </div>
+  ),
+}))
+
 describe("CustomInstructions", () => {
   const mockRegister: UseFormRegister<Lesson> = vi.fn((name) => ({
     name,
