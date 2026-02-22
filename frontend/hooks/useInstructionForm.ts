@@ -4,7 +4,6 @@ import * as Yup from "yup"
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
 import { getYupValidationSchema } from "@/utils/getInstructionYupValidationSchema"
 import { useInstructionFieldArray } from "./useInstructionFieldArray"
-import { useSaveAndNavigate } from "./useSaveAndNavigate"
 import { selectlesson } from "@/features/lesson/lessonSelectors"
 import { useAppSelector } from "@/store/hooks"
 import type { LessonInstructionKey } from "@/types"
@@ -19,7 +18,6 @@ interface UseInstructionReturn {
   errors: FieldErrors<T>
   fields: FieldArrayWithId<T, string, "id">[]
   addInstruction: () => void
-  saveAndNavigate: (route: string) => void
 }
 
 export function useInstructionForm({
@@ -46,14 +44,11 @@ export function useInstructionForm({
     control
   )
 
-  const { saveAndNavigate } = useSaveAndNavigate(handleSubmit)
-
   return {
     handleSubmit,
     register,
     errors,
     fields,
     addInstruction,
-    saveAndNavigate,
   }
 }
