@@ -13,7 +13,7 @@ interface SelectProps {
   errors: FieldErrors<T>
 }
 
-export default function Select({
+export default function SelectField({
   lessonKey,
   placeholder,
   selectOptions,

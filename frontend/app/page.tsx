@@ -1,5 +1,5 @@
 import General from "./form/general/page"
-import { Stepper } from "../components/Stepper"
+import { Stepper } from "../components/form/Stepper"
 
 export default function Home() {
   return (

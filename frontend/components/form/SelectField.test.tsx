@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest"
 import { render, screen } from "@testing-library/react"
-import Select from "./Select"
+import SelectField from "./SelectField"
 import { UseFormRegister, FieldErrors } from "react-hook-form"
 import { Lesson } from "@/types/index"
 
@@ -21,20 +21,20 @@ describe("Select", () => {
   }
 
   it("should render a select element", () => {
-    const { container } = render(<Select {...defaultProps} />)
+    const { container } = render(<SelectField {...defaultProps} />)
     const select = container.querySelector("select")
     expect(select).toBeInTheDocument()
   })
 
   it("should render placeholder as first option", () => {
-    render(<Select {...defaultProps} />)
+    render(<SelectField {...defaultProps} />)
     const options = screen.getAllByRole("option")
     expect(options[0]).toHaveTextContent("Choose a sport")
     expect(options[0]).toHaveValue("")
   })
 
   it("should render all select options", () => {
-    render(<Select {...defaultProps} />)
+    render(<SelectField {...defaultProps} />)
     const options = screen.getAllByRole("option")
 
     expect(options).toHaveLength(4)
@@ -44,7 +44,7 @@ describe("Select", () => {
   })
 
   it("should set correct values for options", () => {
-    render(<Select {...defaultProps} />)
+    render(<SelectField {...defaultProps} />)
     const options = screen.getAllByRole("option")
 
     expect(options[1]).toHaveValue("Boxing")
@@ -53,7 +53,7 @@ describe("Select", () => {
   })
 
   it("should call register with correct lessonKey", () => {
-    render(<Select {...defaultProps} lessonKey="objective" />)
+    render(<SelectField {...defaultProps} lessonKey="objective" />)
     expect(mockRegister).toHaveBeenCalledWith("objective")
   })
 
@@ -62,12 +62,12 @@ describe("Select", () => {
       sport: { message: "Sport is required", type: "required" },
     }
 
-    render(<Select {...defaultProps} errors={errorsWithMessage} />)
+    render(<SelectField {...defaultProps} errors={errorsWithMessage} />)
     expect(screen.getByText("Sport is required")).toBeInTheDocument()
   })
 
   it("should not display error when errors object is empty", () => {
-    const { container } = render(<Select {...defaultProps} />)
+    const { container } = render(<SelectField {...defaultProps} />)
     const errorElement = container.querySelector('[class*="error"]')
 
     if (errorElement) {
@@ -77,7 +77,7 @@ describe("Select", () => {
 
   it("should render with different lessonKey", () => {
     render(
-      <Select
+      <SelectField
         {...defaultProps}
         lessonKey="warmUpPresetTitle"
         placeholder="Select warm up"
@@ -90,7 +90,7 @@ describe("Select", () => {
   })
 
   it("should render empty select when selectOptions is empty", () => {
-    render(<Select {...defaultProps} selectOptions={[]} />)
+    render(<SelectField {...defaultProps} selectOptions={[]} />)
     const options = screen.getAllByRole("option")
 
     expect(options).toHaveLength(1)
@@ -98,7 +98,7 @@ describe("Select", () => {
   })
 
   it("should render with single option", () => {
-    render(<Select {...defaultProps} selectOptions={["Only Option"]} />)
+    render(<SelectField {...defaultProps} selectOptions={["Only Option"]} />)
     const options = screen.getAllByRole("option")
 
     expect(options).toHaveLength(2)
@@ -106,7 +106,7 @@ describe("Select", () => {
   })
 
   it("should use option value as key", () => {
-    const { container } = render(<Select {...defaultProps} />)
+    const { container } = render(<SelectField {...defaultProps} />)
     const options = container.querySelectorAll("option")
 
     expect(options[1]).toHaveAttribute("value", "Boxing")
@@ -120,7 +120,7 @@ describe("Select", () => {
     }
 
     render(
-      <Select
+      <SelectField
         {...defaultProps}
         lessonKey="objective"
         errors={errorsWithObjective}
@@ -136,7 +136,7 @@ describe("Select", () => {
     }
 
     const { container } = render(
-      <Select
+      <SelectField
         {...defaultProps}
         lessonKey="objective"
         errors={errorsWithSport}

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest"
 import { render, screen } from "@testing-library/react"
-import { Instruction } from "./Instruction"
+import InstructionField from "./InstructionField"
 import { UseFormRegister, FieldErrors } from "react-hook-form"
 import { Lesson } from "@/types/index"
 
@@ -20,29 +20,29 @@ describe("Instruction", () => {
   }
 
   it("should render the instruction title with correct number", () => {
-    render(<Instruction {...defaultProps} />)
+    render(<InstructionField {...defaultProps} />)
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
   })
 
   it("should render instruction title with id + 1", () => {
-    render(<Instruction {...defaultProps} id={2} />)
+    render(<InstructionField {...defaultProps} id={2} />)
     expect(screen.getByText("Instruction n°3")).toBeInTheDocument()
   })
 
   it("should render a textarea for instruction text", () => {
-    render(<Instruction {...defaultProps} />)
+    render(<InstructionField {...defaultProps} />)
     const textarea = document.querySelector("textarea")
     expect(textarea).toBeInTheDocument()
   })
 
   it("should render two number inputs for minutes and seconds", () => {
-    render(<Instruction {...defaultProps} />)
+    render(<InstructionField {...defaultProps} />)
     const numberInputs = screen.getAllByRole("spinbutton")
     expect(numberInputs).toHaveLength(2)
   })
 
   it("should render minutes input with correct attributes", () => {
-    render(<Instruction {...defaultProps} />)
+    render(<InstructionField {...defaultProps} />)
     const inputs = screen.getAllByRole("spinbutton")
     const minInput = inputs[0]
 
@@ -53,7 +53,7 @@ describe("Instruction", () => {
   })
 
   it("should render seconds input with correct attributes", () => {
-    render(<Instruction {...defaultProps} />)
+    render(<InstructionField {...defaultProps} />)
     const inputs = screen.getAllByRole("spinbutton")
     const secInput = inputs[1]
 
@@ -64,13 +64,15 @@ describe("Instruction", () => {
   })
 
   it("should render min and sec labels", () => {
-    render(<Instruction {...defaultProps} />)
+    render(<InstructionField {...defaultProps} />)
     expect(screen.getByText("min")).toBeInTheDocument()
     expect(screen.getByText("sec")).toBeInTheDocument()
   })
 
   it("should call register with correct field names", () => {
-    render(<Instruction {...defaultProps} step="bodyInstructions" id={1} />)
+    render(
+      <InstructionField {...defaultProps} step="bodyInstructions" id={1} />
+    )
 
     expect(mockRegister).toHaveBeenCalledWith("bodyInstructions.1.text")
     expect(mockRegister).toHaveBeenCalledWith("bodyInstructions.1.min")
@@ -86,7 +88,7 @@ describe("Instruction", () => {
       ],
     }
 
-    render(<Instruction {...defaultProps} errors={errorsWithTextError} />)
+    render(<InstructionField {...defaultProps} errors={errorsWithTextError} />)
     expect(screen.getByText("Text is required")).toBeInTheDocument()
   })
 
@@ -99,7 +101,7 @@ describe("Instruction", () => {
       ],
     }
 
-    render(<Instruction {...defaultProps} errors={errorsWithMinError} />)
+    render(<InstructionField {...defaultProps} errors={errorsWithMinError} />)
     expect(screen.getByText("Min must be valid")).toBeInTheDocument()
   })
 
@@ -112,7 +114,7 @@ describe("Instruction", () => {
       ],
     }
 
-    render(<Instruction {...defaultProps} errors={errorsWithSecError} />)
+    render(<InstructionField {...defaultProps} errors={errorsWithSecError} />)
     expect(screen.getByText("Sec must be valid")).toBeInTheDocument()
   })
 
@@ -128,7 +130,7 @@ describe("Instruction", () => {
     }
 
     render(
-      <Instruction
+      <InstructionField
         {...defaultProps}
         step="coolDownInstructions"
         errors={errorsWithMultiple}
@@ -141,7 +143,7 @@ describe("Instruction", () => {
   })
 
   it("should not display errors when errors object is empty", () => {
-    render(<Instruction {...defaultProps} />)
+    render(<InstructionField {...defaultProps} />)
     const errorElements = document.querySelectorAll('[class*="error"]')
     errorElements.forEach((element) => {
       expect(element.textContent).toBe("")
@@ -149,13 +151,15 @@ describe("Instruction", () => {
   })
 
   it("should work with different step types", () => {
-    const { rerender } = render(<Instruction {...defaultProps} />)
+    const { rerender } = render(<InstructionField {...defaultProps} />)
 
-    rerender(<Instruction {...defaultProps} step="bodyInstructions" id={0} />)
+    rerender(
+      <InstructionField {...defaultProps} step="bodyInstructions" id={0} />
+    )
     expect(mockRegister).toHaveBeenCalledWith("bodyInstructions.0.text")
 
     rerender(
-      <Instruction {...defaultProps} step="coolDownInstructions" id={0} />
+      <InstructionField {...defaultProps} step="coolDownInstructions" id={0} />
     )
     expect(mockRegister).toHaveBeenCalledWith("coolDownInstructions.0.text")
   })

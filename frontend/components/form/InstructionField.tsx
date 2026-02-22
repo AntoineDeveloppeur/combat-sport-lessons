@@ -4,14 +4,19 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Lesson } from "@/types/index"
 
-interface InstructionProps {
+interface InstructionInputProps {
   step: "warmUpInstructions" | "bodyInstructions" | "coolDownInstructions"
   id: number
   errors: FieldErrors<Lesson>
   register: UseFormRegister<Lesson>
 }
 
-export function Instruction({ step, id, errors, register }: InstructionProps) {
+export default function InstructionInput({
+  step,
+  id,
+  errors,
+  register,
+}: InstructionInputProps) {
   return (
     <>
       <Field>

@@ -1,28 +1,18 @@
 "use client"
 
 import { useForm, UseFormRegister } from "react-hook-form"
-import {
-  Field,
-  FieldLabel,
-  FieldError,
-  FieldSet,
-  FieldLegend,
-} from "@/components/ui/field"
-import { Form } from "../../../components/Form"
-import { Button } from "@/components/ui/button"
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
+import { FieldSet, FieldLegend } from "@/components/ui/field"
+import { Form } from "../../../components/form/Form"
 import { sportList } from "@/data/sportList"
-import { Textarea } from "@/components/ui/textarea"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
-import TwoOptionRadioField from "@/components/TwoOptionRadioField"
-import { useSaveAndNavigate } from "@/hooks/useSaveAndNavigate"
+import TwoOptionRadioField from "@/components/form/TwoOptionRadioField"
 import { selectlesson } from "@/features/lesson/lessonSelectors"
 import { useAppSelector } from "@/store/hooks"
-import FormSaveAndNavigate from "@/components/FormSaveAndNavigate"
-import SportSelection from "@/components/SportSelection"
+import FormSaveAndNavigate from "@/components/form/FormSaveAndNavigate"
 import type { Lesson } from "@/types"
-import ObjectiveField from "@/components/ObjectiveField"
+import ObjectiveField from "@/components/form/ObjectiveField"
+import SelectField from "@/components/form/SelectField"
 
 export default function General() {
   const lesson = useAppSelector(selectlesson)
@@ -69,9 +59,12 @@ export default function General() {
         <FieldLegend className="mb-4 text-lg font-semibold">
           Général
         </FieldLegend>
-        <SportSelection
+        <SelectField
+          lessonKey="sport"
+          placeholder="Sélectionne un sport"
+          selectOptions={sportList}
+          register={register}
           errors={errors}
-          register={register as UseFormRegister<Lesson>}
         />
         <ObjectiveField
           errors={errors}

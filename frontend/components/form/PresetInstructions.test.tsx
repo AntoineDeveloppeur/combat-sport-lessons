@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react"
 import PresetInstructions from "./PresetInstructions"
 import { Lesson } from "@/types"
 
-vi.mock("@/components/Select", () => ({
+vi.mock("@/components/form/SelectField", () => ({
   default: ({
     lessonKey,
     placeholder,
@@ -27,7 +27,7 @@ vi.mock("@/components/Select", () => ({
   ),
 }))
 
-vi.mock("@/components/FormSaveAndNavigate", () => ({
+vi.mock("@/components/form/FormSaveAndNavigate", () => ({
   default: ({ handleSubmit, prev, next }: any) => (
     <div data-testid="form-save-navigate">
       <button data-testid="prev-button" data-route={prev}>

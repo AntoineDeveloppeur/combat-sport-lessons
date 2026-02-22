@@ -9,7 +9,7 @@ import { Lesson } from "@/types"
 
 vi.mock("@/hooks/useInstructionForm")
 
-vi.mock("@/components/FormSaveAndNavigate", () => ({
+vi.mock("@/components/form/FormSaveAndNavigate", () => ({
   default: ({ handleSubmit, prev, next }: any) => (
     <div data-testid="form-save-navigate">
       <button data-testid="prev-button" data-route={prev}>

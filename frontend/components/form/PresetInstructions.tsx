@@ -1,7 +1,7 @@
 "use client"
 
 import { FieldLegend } from "@/components/ui/field"
-import Select from "@/components/Select"
+import SelectField from "@/components/form/SelectField"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
 import { useForm } from "react-hook-form"
@@ -45,7 +45,7 @@ export default function PresetInstructions({
   return (
     <>
       <FieldLegend className="mb-4 text-lg font-semibold">{legend}</FieldLegend>
-      <Select
+      <SelectField
         lessonKey={lessonKey}
         placeholder={placeholder}
         selectOptions={selectOptions}

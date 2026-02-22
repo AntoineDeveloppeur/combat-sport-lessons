@@ -1,14 +1,14 @@
 "use client"
 
 import { FieldSet } from "@/components/ui/field"
-import { Form } from "@/components/Form"
+import { Form } from "@/components/form/Form"
 
 import { coolDownPresetTitles } from "@/data/coolDownPreset"
 
 import { selectlesson } from "@/features/lesson/lessonSelectors"
 import { useAppSelector } from "@/store/hooks"
-import PresetInstructions from "@/components/PresetInstructions"
-import CustomInstructions from "@/components/CustomInstructions"
+import PresetInstructions from "@/components/form/PresetInstructions"
+import CustomInstructions from "@/components/form/CustomInstructions"
 
 export default function Confirm() {
   const lesson = useAppSelector(selectlesson)

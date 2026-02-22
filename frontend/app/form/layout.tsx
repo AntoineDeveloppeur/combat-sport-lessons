@@ -1,4 +1,4 @@
-import { Stepper } from "@/components/Stepper"
+import { Stepper } from "@/components/form/Stepper"
 
 export default function Layout({
   children,

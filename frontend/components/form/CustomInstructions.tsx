@@ -2,7 +2,7 @@
 
 import { FieldLegend } from "@/components/ui/field"
 import { Button } from "@/components/ui/button"
-import { Instruction } from "@/components/Instruction"
+import InstructionField from "@/components/form/InstructionField"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
 import type { LessonInstructionKey } from "@/types"
 import FormSaveAndNavigate from "./FormSaveAndNavigate"
@@ -29,13 +29,13 @@ export default function CustomInstructions({
     <>
       <FieldLegend className="mb-4 text-lg font-semibold">{legend}</FieldLegend>
       {fields.map((_field, index) => (
-        <Instruction
+        <InstructionField
           step={lessonKey}
           id={index}
           key={index}
           errors={errors}
           register={register}
-        ></Instruction>
+        ></InstructionField>
       ))}
       <Button type="button" onClick={() => addInstruction()}>
         {" "}
