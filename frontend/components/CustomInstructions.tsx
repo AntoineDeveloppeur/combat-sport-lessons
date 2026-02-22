@@ -10,11 +10,15 @@ import FormSaveAndNavigate from "./FormSaveAndNavigate"
 interface CustomInstructionsProps {
   legend: string
   lessonKey: LessonInstructionKey
+  prev?: string
+  next?: string
 }
 
 export default function CustomInstructions({
   legend,
   lessonKey,
+  prev,
+  next,
 }: CustomInstructionsProps) {
   const { register, errors, fields, addInstruction, handleSubmit } =
     useInstructionForm({
@@ -39,8 +43,8 @@ export default function CustomInstructions({
       </Button>
       <FormSaveAndNavigate
         handleSubmit={handleSubmit}
-        prev="/form/general"
-        next="/form/corps"
+        prev={prev}
+        next={next}
       />
     </>
   )

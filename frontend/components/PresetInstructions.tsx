@@ -14,6 +14,8 @@ interface PresetInstructionsProps {
   placeholder: string
   selectOptions: string[]
   defaultValues: Lesson
+  prev?: string
+  next?: string
 }
 
 export default function PresetInstructions({
@@ -22,6 +24,8 @@ export default function PresetInstructions({
   placeholder,
   selectOptions,
   defaultValues,
+  prev,
+  next,
 }: PresetInstructionsProps) {
   const validationSchema = Yup.object().shape({
     [lessonKey]: Yup.string()
@@ -50,8 +54,8 @@ export default function PresetInstructions({
       />
       <FormSaveAndNavigate
         handleSubmit={handleSubmit}
-        prev="/form/general"
-        next="/form/corps"
+        prev={prev}
+        next={next}
       />
     </>
   )

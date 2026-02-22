@@ -1,45 +1,46 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Form } from "../../../components/Form"
-import { useInstructionForm } from "@/hooks/useInstructionForm"
-import { FieldSet, FieldLegend } from "@/components/ui/field"
-import { Instruction } from "@/components/Instruction"
+import { FieldSet } from "@/components/ui/field"
+import { Form } from "@/components/Form"
+
+import { coolDownPresetTitles } from "@/data/coolDownPreset"
+
+import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { useAppSelector } from "@/store/hooks"
+import PresetInstructions from "@/components/PresetInstructions"
+import CustomInstructions from "@/components/CustomInstructions"
 
 export default function Confirm() {
-  const { register, errors, fields, addInstruction, saveAndNavigate } =
-    useInstructionForm({
-      fieldName: "coolDownInstructions",
-    })
+  const lesson = useAppSelector(selectlesson)
+  const coolDownType = lesson.coolDown === "preset" ? "preset" : "custom"
+  const prevPage = "/form/corps"
+  const nextPage = "/form/calme"
 
   return (
     <Form>
       <FieldSet className="flex flex-col items-start w-[600px]">
-        <FieldLegend className="mb-4 text-lg font-semibold">
-          Retour au calme
-        </FieldLegend>
-        {fields.map((_field, index) => (
-          <Instruction
-            step="coolDownInstructions"
-            id={index}
-            key={index}
-            errors={errors}
-            register={register}
-          ></Instruction>
-        ))}
-        <Button type="button" onClick={() => addInstruction()}>
-          {" "}
-          Ajouter un champs
-        </Button>
-        <div className="flex justify-between w-full">
-          <Button type="button" onClick={() => saveAndNavigate("/form/corps")}>
-            {"<"} Previous
-          </Button>
-
-          <Button type="button" onClick={() => saveAndNavigate("/form/calme")}>
-            {">"} Next
-          </Button>
-        </div>
+        {coolDownType === "custom" && (
+          <CustomInstructions
+            legend="Retour au calme, écriver une suite d'instruction composés de texte et
+        d'une durée. Vous pouvez ajoutez autant d'instructions que
+        vous pouvez. Ajoutez une instruction avec le boutton &quot;ajouter une
+        instruction&quot;"
+            lessonKey="coolDownInstructions"
+            prev={prevPage}
+            next={nextPage}
+          />
+        )}
+        {coolDownType === "preset" && (
+          <PresetInstructions
+            legend="Trouvez le retour au calme qui est le plus adapté à votre séance"
+            lessonKey="coolDownPresetTitle"
+            placeholder="Sélectionne un retour au calme prédéfinis"
+            selectOptions={coolDownPresetTitles}
+            defaultValues={lesson}
+            prev={prevPage}
+            next={nextPage}
+          />
+        )}
       </FieldSet>
     </Form>
   )

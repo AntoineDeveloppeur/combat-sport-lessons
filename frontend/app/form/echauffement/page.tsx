@@ -2,9 +2,7 @@
 
 import { FieldSet } from "@/components/ui/field"
 import { Form } from "@/components/Form"
-
 import { warmUpPresetTitles } from "@/data/warmUpPreset"
-
 import { selectlesson } from "@/features/lesson/lessonSelectors"
 import { useAppSelector } from "@/store/hooks"
 import PresetInstructions from "@/components/PresetInstructions"
@@ -13,6 +11,8 @@ import CustomInstructions from "@/components/CustomInstructions"
 export default function WarmUp() {
   const lesson = useAppSelector(selectlesson)
   const warmUpType = lesson.warmUp === "preset" ? "preset" : "custom"
+  const prevPage = "/form/general"
+  const nextPage = "/form/corps"
 
   return (
     <Form>
@@ -24,15 +24,19 @@ export default function WarmUp() {
         vous pouvez. Ajoutez une instruction avec le boutton &quot;ajouter une
         instruction&quot;"
             lessonKey="warmUpInstructions"
+            prev={prevPage}
+            next={nextPage}
           />
         )}
         {warmUpType === "preset" && (
           <PresetInstructions
             legend="Trouvez l'échauffement qui est le plus adaptée à votre corps de séance"
-            lessonKey="warmUpInstructions"
+            lessonKey="warmUpPresetTitle"
             placeholder="Sélectionne un échauffement prédéfinis"
             selectOptions={warmUpPresetTitles}
             defaultValues={lesson}
+            prev={prevPage}
+            next={nextPage}
           />
         )}
       </FieldSet>
