@@ -1,6 +1,6 @@
 "use client"
 
-import { useForm } from "react-hook-form"
+import { useForm, UseFormRegister } from "react-hook-form"
 import {
   Field,
   FieldLabel,
@@ -19,6 +19,10 @@ import TwoOptionRadioField from "@/components/TwoOptionRadioField"
 import { useSaveAndNavigate } from "@/hooks/useSaveAndNavigate"
 import { selectlesson } from "@/features/lesson/lessonSelectors"
 import { useAppSelector } from "@/store/hooks"
+import FormSaveAndNavigate from "@/components/FormSaveAndNavigate"
+import SportSelection from "@/components/SportSelection"
+import type { Lesson } from "@/types"
+import ObjectiveField from "@/components/ObjectiveField"
 
 export default function General() {
   const lesson = useAppSelector(selectlesson)
@@ -59,36 +63,20 @@ export default function General() {
     mode: "onSubmit",
   })
 
-  const { saveAndNavigate } = useSaveAndNavigate(handleSubmit)
-
   return (
     <Form>
       <FieldSet className="flex flex-col items-start w-[600px]">
         <FieldLegend className="mb-4 text-lg font-semibold">
           Général
         </FieldLegend>
-        <Field>
-          <NativeSelect {...register("sport")}>
-            <NativeSelectOption value="">
-              Sélectionne un sport
-            </NativeSelectOption>
-            {sportList.map((sport) => (
-              <NativeSelectOption key={sport} value={sport}>
-                {sport}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
-          <FieldError>{errors?.sport?.message}</FieldError>
-        </Field>
-        <Field>
-          <FieldLabel htmlFor="objective">Objectif de la séance</FieldLabel>
-          <Textarea
-            id="objective"
-            {...register("objective")}
-            placeholder="Exemple : la séance va permettre d'améliorer la technique du coups de pied bas pour un public débutant"
-          ></Textarea>
-          <FieldError>{errors?.objective?.message}</FieldError>
-        </Field>
+        <SportSelection
+          errors={errors}
+          register={register as UseFormRegister<Lesson>}
+        />
+        <ObjectiveField
+          errors={errors}
+          register={register as UseFormRegister<Lesson>}
+        />
         <TwoOptionRadioField
           name="warmUp"
           legend="Pour l'échauffement ?"
@@ -109,12 +97,10 @@ export default function General() {
           setValue={setValue}
           errors={errors}
         />
-        <Button
-          type="button"
-          onClick={() => saveAndNavigate("/form/echauffement")}
-        >
-          {">"} Next
-        </Button>
+        <FormSaveAndNavigate
+          handleSubmit={handleSubmit}
+          next="/form/echauffement"
+        />
       </FieldSet>
     </Form>
   )
