@@ -10,7 +10,7 @@ export default function Body() {
       <FieldSet className="flex flex-col items-start w-[600px]">
         <CustomInstructions
           legend="Corps de séance"
-          lessonKey="bodyInstructions"
+          presetType="bodyInstructions"
           prev="/form/echauffement"
           next="/form/calme"
         />

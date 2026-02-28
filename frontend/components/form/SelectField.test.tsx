@@ -13,7 +13,7 @@ describe("Select", () => {
   }))
 
   const defaultProps = {
-    lessonKey: "sport" as keyof Lesson,
+    presetType: "sport" as keyof Lesson,
     placeholder: "Choose a sport",
     selectOptions: ["Boxing", "Judo", "Karate"],
     register: mockRegister,
@@ -52,8 +52,8 @@ describe("Select", () => {
     expect(options[3]).toHaveValue("Karate")
   })
 
-  it("should call register with correct lessonKey", () => {
-    render(<SelectField {...defaultProps} lessonKey="objective" />)
+  it("should call register with correct presetType", () => {
+    render(<SelectField {...defaultProps} presetType="objective" />)
     expect(mockRegister).toHaveBeenCalledWith("objective")
   })
 
@@ -75,11 +75,11 @@ describe("Select", () => {
     }
   })
 
-  it("should render with different lessonKey", () => {
+  it("should render with different presetType", () => {
     render(
       <SelectField
         {...defaultProps}
-        lessonKey="warmUpPresetTitle"
+        presetType="warmUpPresetTitle"
         placeholder="Select warm up"
         selectOptions={["Preset 1", "Preset 2"]}
       />
@@ -114,7 +114,7 @@ describe("Select", () => {
     expect(options[3]).toHaveAttribute("value", "Karate")
   })
 
-  it("should handle different error for different lessonKey", () => {
+  it("should handle different error for different presetType", () => {
     const errorsWithObjective: FieldErrors<Lesson> = {
       objective: { message: "Objective is required", type: "required" },
     }
@@ -122,7 +122,7 @@ describe("Select", () => {
     render(
       <SelectField
         {...defaultProps}
-        lessonKey="objective"
+        presetType="objective"
         errors={errorsWithObjective}
       />
     )
@@ -130,7 +130,7 @@ describe("Select", () => {
     expect(screen.getByText("Objective is required")).toBeInTheDocument()
   })
 
-  it("should not display error for different lessonKey", () => {
+  it("should not display error for different presetType", () => {
     const errorsWithSport: FieldErrors<Lesson> = {
       sport: { message: "Sport is required", type: "required" },
     }
@@ -138,7 +138,7 @@ describe("Select", () => {
     const { container } = render(
       <SelectField
         {...defaultProps}
-        lessonKey="objective"
+        presetType="objective"
         errors={errorsWithSport}
       />
     )

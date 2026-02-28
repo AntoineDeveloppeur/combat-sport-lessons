@@ -60,7 +60,7 @@ export default function General() {
           Général
         </FieldLegend>
         <SelectField
-          lessonKey="sport"
+          presetType="sport"
           placeholder="Sélectionne un sport"
           selectOptions={sportList}
           register={register}

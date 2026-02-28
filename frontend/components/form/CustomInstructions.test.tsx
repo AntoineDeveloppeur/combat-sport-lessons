@@ -47,7 +47,10 @@ describe("CustomInstructions", () => {
     })
 
     render(
-      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+      <CustomInstructions
+        legend="Test legend"
+        presetType="warmUpInstructions"
+      />
     )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
@@ -70,7 +73,10 @@ describe("CustomInstructions", () => {
     })
 
     render(
-      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+      <CustomInstructions
+        legend="Test legend"
+        presetType="warmUpInstructions"
+      />
     )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
@@ -92,7 +98,10 @@ describe("CustomInstructions", () => {
     })
 
     render(
-      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+      <CustomInstructions
+        legend="Test legend"
+        presetType="warmUpInstructions"
+      />
     )
 
     const addButton = screen.getByRole("button", { name: /ajouter un champs/i })
@@ -112,7 +121,10 @@ describe("CustomInstructions", () => {
     })
 
     render(
-      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+      <CustomInstructions
+        legend="Test legend"
+        presetType="warmUpInstructions"
+      />
     )
 
     const legend = document.querySelector("legend")
@@ -138,7 +150,10 @@ describe("CustomInstructions", () => {
     })
 
     render(
-      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+      <CustomInstructions
+        legend="Test legend"
+        presetType="warmUpInstructions"
+      />
     )
 
     expect(screen.getByText("Text is required")).toBeInTheDocument()
@@ -158,7 +173,10 @@ describe("CustomInstructions", () => {
     })
 
     render(
-      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+      <CustomInstructions
+        legend="Test legend"
+        presetType="warmUpInstructions"
+      />
     )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
@@ -176,7 +194,10 @@ describe("CustomInstructions", () => {
     })
 
     render(
-      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+      <CustomInstructions
+        legend="Test legend"
+        presetType="warmUpInstructions"
+      />
     )
 
     expect(mockRegister).toHaveBeenCalledWith("warmUpInstructions.0.text")
@@ -197,7 +218,7 @@ describe("CustomInstructions", () => {
     render(
       <CustomInstructions
         legend="Custom legend text"
-        lessonKey="warmUpInstructions"
+        presetType="warmUpInstructions"
       />
     )
 
@@ -215,7 +236,10 @@ describe("CustomInstructions", () => {
     })
 
     render(
-      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+      <CustomInstructions
+        legend="Test legend"
+        presetType="warmUpInstructions"
+      />
     )
 
     const addButton = screen.getByRole("button", { name: /ajouter un champs/i })
@@ -234,7 +258,7 @@ describe("CustomInstructions", () => {
     })
 
     render(
-      <CustomInstructions legend="Test legend" lessonKey="bodyInstructions" />
+      <CustomInstructions legend="Test legend" presetType="bodyInstructions" />
     )
 
     expect(useInstructionForm).toHaveBeenCalledWith({
@@ -258,7 +282,7 @@ describe("CustomInstructions", () => {
     render(
       <CustomInstructions
         legend="Test legend"
-        lessonKey="coolDownInstructions"
+        presetType="coolDownInstructions"
       />
     )
 
@@ -277,7 +301,10 @@ describe("CustomInstructions", () => {
     })
 
     render(
-      <CustomInstructions legend="Test legend" lessonKey="warmUpInstructions" />
+      <CustomInstructions
+        legend="Test legend"
+        presetType="warmUpInstructions"
+      />
     )
 
     expect(mockAddInstruction).not.toHaveBeenCalled()

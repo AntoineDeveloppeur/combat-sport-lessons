@@ -25,7 +25,7 @@ export default function Confirm() {
         d'une durée. Vous pouvez ajoutez autant d'instructions que
         vous pouvez. Ajoutez une instruction avec le boutton &quot;ajouter une
         instruction&quot;"
-            lessonKey="coolDownInstructions"
+            presetType="coolDownInstructions"
             prev={prevPage}
             next={nextPage}
           />
@@ -33,7 +33,7 @@ export default function Confirm() {
         {coolDownType === "preset" && (
           <PresetInstructions
             legend="Trouvez le retour au calme qui est le plus adapté à votre séance"
-            lessonKey="coolDownPresetTitle"
+            presetType="coolDownPresetTitle"
             placeholder="Sélectionne un retour au calme prédéfinis"
             selectOptions={coolDownPresetTitles}
             defaultValues={lesson}

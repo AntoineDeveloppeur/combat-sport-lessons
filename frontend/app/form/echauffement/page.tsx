@@ -23,7 +23,7 @@ export default function WarmUp() {
         d'une durée. Vous pouvez ajoutez autant d'instructions que
         vous pouvez. Ajoutez une instruction avec le boutton &quot;ajouter une
         instruction&quot;"
-            lessonKey="warmUpInstructions"
+            presetType="warmUpInstructions"
             prev={prevPage}
             next={nextPage}
           />
@@ -31,7 +31,7 @@ export default function WarmUp() {
         {warmUpType === "preset" && (
           <PresetInstructions
             legend="Trouvez l'échauffement qui est le plus adaptée à votre corps de séance"
-            lessonKey="warmUpPresetTitle"
+            presetType="warmUpPresetTitle"
             placeholder="Sélectionne un échauffement prédéfinis"
             selectOptions={warmUpPresetTitles}
             defaultValues={lesson}

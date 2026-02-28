@@ -10,7 +10,7 @@ import FormSaveAndNavigate from "./FormSaveAndNavigate"
 
 interface PresetInstructionsProps {
   legend: string
-  lessonKey: keyof Lesson
+  presetType: keyof Lesson
   placeholder: string
   selectOptions: string[]
   defaultValues: Lesson
@@ -20,7 +20,7 @@ interface PresetInstructionsProps {
 
 export default function PresetInstructions({
   legend,
-  lessonKey,
+  presetType,
   placeholder,
   selectOptions,
   defaultValues,
@@ -28,7 +28,7 @@ export default function PresetInstructions({
   next,
 }: PresetInstructionsProps) {
   const validationSchema = Yup.object().shape({
-    [lessonKey]: Yup.string()
+    [presetType]: Yup.string()
       .oneOf(selectOptions, "Veuillez choisir dans la liste")
       .required("Veuillez choisir l'échauffement"),
   })
@@ -46,7 +46,7 @@ export default function PresetInstructions({
     <>
       <FieldLegend className="mb-4 text-lg font-semibold">{legend}</FieldLegend>
       <SelectField
-        lessonKey={lessonKey}
+        presetType={presetType}
         placeholder={placeholder}
         selectOptions={selectOptions}
         register={register}

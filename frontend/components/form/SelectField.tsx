@@ -6,7 +6,7 @@ import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
 import { type Lesson } from "@/types"
 
 interface SelectProps {
-  lessonKey: keyof Lesson
+  presetType: keyof Lesson
   placeholder: string
   selectOptions: string[]
   register: UseFormRegister<T>
@@ -14,7 +14,7 @@ interface SelectProps {
 }
 
 export default function SelectField({
-  lessonKey,
+  presetType,
   placeholder,
   selectOptions,
   register,
@@ -22,7 +22,7 @@ export default function SelectField({
 }: SelectProps) {
   return (
     <Field>
-      <NativeSelect {...register(lessonKey)}>
+      <NativeSelect {...register(presetType)}>
         <NativeSelectOption value="">{placeholder}</NativeSelectOption>
         {selectOptions.map((option) => (
           <NativeSelectOption key={option} value={option}>
@@ -30,7 +30,7 @@ export default function SelectField({
           </NativeSelectOption>
         ))}
       </NativeSelect>
-      <FieldError>{errors?.[lessonKey]?.message}</FieldError>
+      <FieldError>{errors?.[presetType]?.message}</FieldError>
     </Field>
   )
 }

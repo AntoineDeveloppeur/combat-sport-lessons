@@ -9,20 +9,20 @@ import FormSaveAndNavigate from "./FormSaveAndNavigate"
 
 interface CustomInstructionsProps {
   legend: string
-  lessonKey: LessonInstructionKey
+  presetType: LessonInstructionKey
   prev?: string
   next?: string
 }
 
 export default function CustomInstructions({
   legend,
-  lessonKey,
+  presetType,
   prev,
   next,
 }: CustomInstructionsProps) {
   const { register, errors, fields, addInstruction, handleSubmit } =
     useInstructionForm({
-      fieldName: lessonKey,
+      fieldName: presetType,
     })
 
   return (
@@ -30,7 +30,7 @@ export default function CustomInstructions({
       <FieldLegend className="mb-4 text-lg font-semibold">{legend}</FieldLegend>
       {fields.map((_field, index) => (
         <InstructionField
-          step={lessonKey}
+          step={presetType}
           id={index}
           key={index}
           errors={errors}

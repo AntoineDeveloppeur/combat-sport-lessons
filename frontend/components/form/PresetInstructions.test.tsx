@@ -6,7 +6,7 @@ import { Lesson } from "@/types"
 
 vi.mock("@/components/form/SelectField", () => ({
   default: ({
-    lessonKey,
+    presetType,
     placeholder,
     selectOptions,
     register,
@@ -15,13 +15,13 @@ vi.mock("@/components/form/SelectField", () => ({
     <div data-testid="select-component">
       <input
         data-testid="select-input"
-        data-lessonkey={lessonKey}
+        data-presetType={presetType}
         data-placeholder={placeholder}
-        {...register(lessonKey)}
+        {...register(presetType)}
       />
       <div data-testid="select-options">{selectOptions.join(",")}</div>
-      {errors?.[lessonKey] && (
-        <span data-testid="select-error">{errors[lessonKey].message}</span>
+      {errors?.[presetType] && (
+        <span data-testid="select-error">{errors[presetType].message}</span>
       )}
     </div>
   ),
@@ -43,7 +43,7 @@ vi.mock("@/components/form/FormSaveAndNavigate", () => ({
 describe("PresetInstructions", () => {
   const defaultProps = {
     legend: "Choisissez votre échauffement",
-    lessonKey: "warmUpPresetTitle" as keyof Lesson,
+    presetType: "warmUpPresetTitle" as keyof Lesson,
     placeholder: "Sélectionnez un preset",
     selectOptions: ["Preset 1", "Preset 2", "Preset 3"],
     defaultValues: {} as Lesson,
@@ -74,11 +74,11 @@ describe("PresetInstructions", () => {
   })
 
   describe("Props passing to Select", () => {
-    it("should pass lessonKey prop to Select", () => {
+    it("should pass presetType prop to Select", () => {
       render(<PresetInstructions {...defaultProps} />)
 
       const input = screen.getByTestId("select-input")
-      expect(input).toHaveAttribute("data-lessonkey", "warmUpPresetTitle")
+      expect(input).toHaveAttribute("data-presetType", "warmUpPresetTitle")
     })
 
     it("should pass placeholder prop to Select", () => {
@@ -133,28 +133,34 @@ describe("PresetInstructions", () => {
     })
   })
 
-  describe("Dynamic lessonKey", () => {
-    it("should work with warmUpPresetTitle lessonKey", () => {
+  describe("Dynamic presetType", () => {
+    it("should work with warmUpPresetTitle presetType", () => {
       render(
-        <PresetInstructions {...defaultProps} lessonKey="warmUpPresetTitle" />
+        <PresetInstructions {...defaultProps} presetType="warmUpPresetTitle" />
       )
 
       const input = screen.getByTestId("select-input")
-      expect(input).toHaveAttribute("data-lessonkey", "warmUpPresetTitle")
+      expect(input).toHaveAttribute("data-presetType", "warmUpPresetTitle")
     })
 
-    it("should work with coolDownPresetTitle lessonKey", () => {
+    it("should work with coolDownPresetTitle presetType", () => {
       render(
-        <PresetInstructions {...defaultProps} lessonKey="coolDownPresetTitle" />
+        <PresetInstructions
+          {...defaultProps}
+          presetType="coolDownPresetTitle"
+        />
       )
 
       const input = screen.getByTestId("select-input")
-      expect(input).toHaveAttribute("data-lessonkey", "coolDownPresetTitle")
+      expect(input).toHaveAttribute("data-presetType", "coolDownPresetTitle")
     })
 
-    it("should create validation schema with dynamic lessonKey", () => {
+    it("should create validation schema with dynamic presetType", () => {
       render(
-        <PresetInstructions {...defaultProps} lessonKey="coolDownPresetTitle" />
+        <PresetInstructions
+          {...defaultProps}
+          presetType="coolDownPresetTitle"
+        />
       )
 
       const input = screen.getByTestId("select-input")
