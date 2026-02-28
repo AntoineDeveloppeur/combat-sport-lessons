@@ -34,7 +34,6 @@ export default function WarmUp() {
             presetType="warmUpPresetTitle"
             placeholder="Sélectionne un échauffement prédéfinis"
             selectOptions={warmUpPresetTitles}
-            defaultValues={lesson}
             prev={prevPage}
             next={nextPage}
           />

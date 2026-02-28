@@ -7,13 +7,14 @@ import * as Yup from "yup"
 import { useForm } from "react-hook-form"
 import { Lesson } from "@/types"
 import FormSaveAndNavigate from "./FormSaveAndNavigate"
+import { useAppSelector } from "@/store/hooks"
+import { selectlesson } from "@/features/lesson/lessonSelectors"
 
 interface PresetInstructionsProps {
   legend: string
   presetType: keyof Lesson
   placeholder: string
   selectOptions: string[]
-  defaultValues: Lesson
   prev?: string
   next?: string
 }
@@ -23,10 +24,11 @@ export default function PresetInstructions({
   presetType,
   placeholder,
   selectOptions,
-  defaultValues,
   prev,
   next,
 }: PresetInstructionsProps) {
+  const lesson = useAppSelector(selectlesson)
+
   const validationSchema = Yup.object().shape({
     [presetType]: Yup.string()
       .oneOf(selectOptions, "Veuillez choisir dans la liste")
@@ -38,7 +40,7 @@ export default function PresetInstructions({
     formState: { errors },
     handleSubmit,
   } = useForm<FormData>({
-    defaultValues: defaultValues as FormData,
+    defaultValues: lesson as FormData,
     resolver: yupResolver(validationSchema),
   })
 

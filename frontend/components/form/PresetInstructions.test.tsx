@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi } from "vitest"
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
+import { Provider } from "react-redux"
+import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
 import PresetInstructions from "./PresetInstructions"
 import { Lesson } from "@/types"
 
@@ -46,12 +48,11 @@ describe("PresetInstructions", () => {
     presetType: "warmUpPresetTitle" as keyof Lesson,
     placeholder: "Sélectionnez un preset",
     selectOptions: ["Preset 1", "Preset 2", "Preset 3"],
-    defaultValues: {} as Lesson,
   }
 
   describe("Rendering", () => {
     it("should render the legend with correct text", () => {
-      render(<PresetInstructions {...defaultProps} />)
+      renderWithProvider(<PresetInstructions {...defaultProps} />)
 
       expect(
         screen.getByText("Choisissez votre échauffement")
@@ -59,7 +60,7 @@ describe("PresetInstructions", () => {
     })
 
     it("should render the legend as a legend element", () => {
-      render(<PresetInstructions {...defaultProps} />)
+      renderWithProvider(<PresetInstructions {...defaultProps} />)
 
       const legend = document.querySelector("legend")
       expect(legend).toBeInTheDocument()
@@ -67,7 +68,7 @@ describe("PresetInstructions", () => {
     })
 
     it("should render the Select component", () => {
-      render(<PresetInstructions {...defaultProps} />)
+      renderWithProvider(<PresetInstructions {...defaultProps} />)
 
       expect(screen.getByTestId("select-component")).toBeInTheDocument()
     })
@@ -75,14 +76,14 @@ describe("PresetInstructions", () => {
 
   describe("Props passing to Select", () => {
     it("should pass presetType prop to Select", () => {
-      render(<PresetInstructions {...defaultProps} />)
+      renderWithProvider(<PresetInstructions {...defaultProps} />)
 
       const input = screen.getByTestId("select-input")
       expect(input).toHaveAttribute("data-presetType", "warmUpPresetTitle")
     })
 
     it("should pass placeholder prop to Select", () => {
-      render(<PresetInstructions {...defaultProps} />)
+      renderWithProvider(<PresetInstructions {...defaultProps} />)
 
       const input = screen.getByTestId("select-input")
       expect(input).toHaveAttribute(
@@ -92,21 +93,21 @@ describe("PresetInstructions", () => {
     })
 
     it("should pass selectOptions prop to Select", () => {
-      render(<PresetInstructions {...defaultProps} />)
+      renderWithProvider(<PresetInstructions {...defaultProps} />)
 
       const options = screen.getByTestId("select-options")
       expect(options).toHaveTextContent("Preset 1,Preset 2,Preset 3")
     })
 
     it("should pass register function to Select", () => {
-      render(<PresetInstructions {...defaultProps} />)
+      renderWithProvider(<PresetInstructions {...defaultProps} />)
 
       const input = screen.getByTestId("select-input")
       expect(input).toHaveAttribute("name", "warmUpPresetTitle")
     })
 
     it("should pass errors object to Select", () => {
-      render(<PresetInstructions {...defaultProps} />)
+      renderWithProvider(<PresetInstructions {...defaultProps} />)
 
       expect(screen.getByTestId("select-component")).toBeInTheDocument()
     })
@@ -114,20 +115,22 @@ describe("PresetInstructions", () => {
 
   describe("Validation Schema", () => {
     it("should create validation schema and pass register to Select", () => {
-      render(<PresetInstructions {...defaultProps} />)
+      renderWithProvider(<PresetInstructions {...defaultProps} />)
 
       const input = screen.getByTestId("select-input")
       expect(input).toHaveAttribute("name", "warmUpPresetTitle")
     })
 
     it("should pass errors object from useForm to Select", () => {
-      render(<PresetInstructions {...defaultProps} />)
+      renderWithProvider(<PresetInstructions {...defaultProps} />)
 
       expect(screen.getByTestId("select-component")).toBeInTheDocument()
     })
 
     it("should configure useForm with yupResolver", () => {
-      const { container } = render(<PresetInstructions {...defaultProps} />)
+      const { container } = renderWithProvider(
+        <PresetInstructions {...defaultProps} />
+      )
 
       expect(container).toBeInTheDocument()
     })
@@ -135,7 +138,7 @@ describe("PresetInstructions", () => {
 
   describe("Dynamic presetType", () => {
     it("should work with warmUpPresetTitle presetType", () => {
-      render(
+      renderWithProvider(
         <PresetInstructions {...defaultProps} presetType="warmUpPresetTitle" />
       )
 
@@ -144,7 +147,7 @@ describe("PresetInstructions", () => {
     })
 
     it("should work with coolDownPresetTitle presetType", () => {
-      render(
+      renderWithProvider(
         <PresetInstructions
           {...defaultProps}
           presetType="coolDownPresetTitle"
@@ -156,7 +159,7 @@ describe("PresetInstructions", () => {
     })
 
     it("should create validation schema with dynamic presetType", () => {
-      render(
+      renderWithProvider(
         <PresetInstructions
           {...defaultProps}
           presetType="coolDownPresetTitle"
@@ -168,36 +171,9 @@ describe("PresetInstructions", () => {
     })
   })
 
-  describe("Default values", () => {
-    it("should use defaultValues in useForm", () => {
-      const defaultValuesWithPreset: Lesson = {
-        warmUpPresetTitle: "Preset 1",
-      }
-
-      render(
-        <PresetInstructions
-          {...defaultProps}
-          defaultValues={defaultValuesWithPreset}
-        />
-      )
-
-      const input = screen.getByTestId("select-input")
-      expect(input).toHaveValue("Preset 1")
-    })
-
-    it("should work with empty defaultValues", () => {
-      render(
-        <PresetInstructions {...defaultProps} defaultValues={{} as Lesson} />
-      )
-
-      const input = screen.getByTestId("select-input")
-      expect(input).toHaveValue("")
-    })
-  })
-
   describe("Legend customization", () => {
     it("should display custom legend text", () => {
-      render(
+      renderWithProvider(
         <PresetInstructions
           {...defaultProps}
           legend="Texte personnalisé pour la légende"
@@ -210,13 +186,17 @@ describe("PresetInstructions", () => {
     })
 
     it("should update legend when prop changes", () => {
-      const { rerender } = render(
+      const { rerender, store } = renderWithProvider(
         <PresetInstructions {...defaultProps} legend="Premier texte" />
       )
 
       expect(screen.getByText("Premier texte")).toBeInTheDocument()
 
-      rerender(<PresetInstructions {...defaultProps} legend="Deuxième texte" />)
+      rerender(
+        <Provider store={store}>
+          <PresetInstructions {...defaultProps} legend="Deuxième texte" />
+        </Provider>
+      )
 
       expect(screen.queryByText("Premier texte")).not.toBeInTheDocument()
       expect(screen.getByText("Deuxième texte")).toBeInTheDocument()
@@ -227,7 +207,7 @@ describe("PresetInstructions", () => {
     it("should pass custom selectOptions to Select", () => {
       const customOptions = ["Option A", "Option B"]
 
-      render(
+      renderWithProvider(
         <PresetInstructions {...defaultProps} selectOptions={customOptions} />
       )
 
@@ -236,7 +216,7 @@ describe("PresetInstructions", () => {
     })
 
     it("should update selectOptions when prop changes", () => {
-      const { rerender } = render(
+      const { rerender, store } = renderWithProvider(
         <PresetInstructions
           {...defaultProps}
           selectOptions={["Option 1", "Option 2"]}
@@ -248,10 +228,12 @@ describe("PresetInstructions", () => {
       )
 
       rerender(
-        <PresetInstructions
-          {...defaultProps}
-          selectOptions={["Option A", "Option B", "Option C"]}
-        />
+        <Provider store={store}>
+          <PresetInstructions
+            {...defaultProps}
+            selectOptions={["Option A", "Option B", "Option C"]}
+          />
+        </Provider>
       )
 
       expect(screen.getByTestId("select-options")).toHaveTextContent(
