@@ -5,6 +5,8 @@ import { save } from "@/features/lesson/lessonSlice"
 import { useRouter } from "next/navigation"
 import { useAppDispatch } from "@/store/hooks"
 import { UseFormHandleSubmit, FieldValues } from "react-hook-form"
+import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { useAppSelector } from "@/store/hooks"
 
 interface FormSaveAndNavigateProps {
   handleSubmit: UseFormHandleSubmit<FieldValues>
@@ -19,6 +21,7 @@ export default function FormSaveAndNavigate({
 }: FormSaveAndNavigateProps) {
   const Router = useRouter()
   const dispatch = useAppDispatch()
+  const lesson = useAppSelector(selectlesson)
 
   const handleClick = async (route?: string) => {
     const success = await validateFormAndSaveToLesson()
@@ -31,6 +34,7 @@ export default function FormSaveAndNavigate({
     await handleSubmit((data) => {
       dispatch(save(data))
       success = true
+      console.log("lesson", lesson)
     })()
     return success
   }
