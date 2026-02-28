@@ -1,7 +1,7 @@
 import { jsPDF } from "jspdf"
 import { Lesson, InstructionType } from "@/types"
 
-export const buildPdf = (lesson: Lesson): void => {
+export const buildAndDownloadPdf = (lesson: Lesson): void => {
   const doc = new jsPDF()
 
   const pageWidth = doc.internal.pageSize.getWidth()
