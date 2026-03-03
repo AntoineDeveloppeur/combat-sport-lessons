@@ -7,7 +7,9 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
     "start": "node ./dist/src/presentation/server.js",
     "dev": "nodemon ./dist/src/presentation/server.js",
     "type:watch": "npx tsc --watch",
@@ -33,11 +35,13 @@
     "@types/pg": "^8.16.0",
     "@types/swagger-ui-express": "^4.1.8",
     "@types/yamljs": "^0.2.34",
+    "@vitest/ui": "^4.0.18",
     "eslint": "^9.39.2",
     "globals": "^16.5.0",
     "jiti": "^2.6.1",
     "prettier": "3.7.4",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.50.1"
+    "typescript-eslint": "^8.50.1",
+    "vitest": "^4.0.18"
   }
 }
