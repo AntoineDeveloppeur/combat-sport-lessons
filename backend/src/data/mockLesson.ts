@@ -1,6 +1,12 @@
-import { Lesson } from "@/types/index"
+import { Lesson } from "../domain/Entities/Lesson"
 
 export const mockLesson: Lesson = {
+  lessonId: 456,
+  title: "ouaiiiii",
+  sport: "Boxe",
+  objective: "dddddddddddddddddddddddddddddddddddd",
+  creationDate: new Date(),
+  userID: 123,
   bodyInstructions: [
     {
       sec: 23,
@@ -25,8 +31,6 @@ export const mockLesson: Lesson = {
       text: "ssssssssssssssssssssssssss",
     },
   ],
-  warmUp: "custom",
-  coolDown: "custom",
   coolDownInstructions: [
     {
       text: "",
@@ -34,6 +38,4 @@ export const mockLesson: Lesson = {
       sec: 0,
     },
   ],
-  sport: "Arnis",
-  objective: "dddddddddddddddddddddddddddddddddddd",
 }

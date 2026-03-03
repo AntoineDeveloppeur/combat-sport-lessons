@@ -1,11 +1,7 @@
-import { DurationStrict } from "./DurationStrict"
-
 export interface Instruction {
-  title?: string
-  mainContent: string
-  durationText?: string
-  durationNumber?: DurationStrict
-  objective?: string
+  text: string
+  min: number
+  sec: number
 }
 
 // duration could minutes of work or work + rest
