@@ -1,4 +1,9 @@
 import { defineConfig } from "vitest/config"
+import { fileURLToPath } from "url"
+import { dirname, join } from "path"
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 export default defineConfig({
   test: {
@@ -12,4 +17,5 @@ export default defineConfig({
       exclude: ["node_modules/", "dist/", "**/*.config.{js,ts}", "**/types/"],
     },
   },
+  root: join(__dirname, ".."),
 })

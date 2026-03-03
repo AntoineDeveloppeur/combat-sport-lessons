@@ -2,7 +2,7 @@ import { lessonRepository } from "../../domain/repositories/lessonRepository.js"
 import { Lesson } from "../../domain/Entities/Lesson.js"
 import { Pool } from "pg"
 import { mockLesson } from "../../data/mockLesson.js"
-import { dBtoEntityMapping } from "./DBtoEntityMapping.js"
+import { dBtoEntityMapping } from "./dBtoEntityMapping.js"
 
 export class PostSQLessonRepository implements lessonRepository {
   constructor(public readonly pool: Pool) {}
