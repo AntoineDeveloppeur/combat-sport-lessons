@@ -38,9 +38,6 @@ CREATE TABLE "instructions" (
   FOREIGN KEY (lesson_id) REFERENCES lessons(lesson_id) 
 );
 
--- Je vais créer les tables warmUpInstructions, bodyInstructions
-
-
 -- Fin de l'initialisation de la DB
 
 -- Ajout de données de base
@@ -51,7 +48,7 @@ VALUES (1,'Jennifer','jenniferDeRouen@gmail.com', 'fakeHash', 'user'),
 (3,'Julie','juliedu75000@free.li','fakehash','moderator');
 
 -- Insertion des 4 leçons
-INSERT INTO lessons(lesson_id, title, sport, objective, warmUp, coolDown, warmUpPresetTitle, coolDownPresetTitle, created_at, user_id)
+INSERT INTO lessons (lesson_id, title, sport, objective, "warmUp", "coolDown", "warmUpPresetTitle", "coolDownPresetTitle", created_at, user_id)
 VALUES 
 (1, 'Boxe débutant', 'Boxe', 'Apprendre les bases du jab', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, 1),
 (2, 'Judo avancé', 'Judo', 'Perfectionner les projections', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, 2),
@@ -59,7 +56,7 @@ VALUES
 (4, 'MMA cardio', 'MMA', 'Améliorer endurance et explosivité', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, 3);
 
 -- Instructions pour la leçon 1 (Boxe débutant)
-INSERT INTO instructions(instruction_id, title, text, type, min, sec, "order", lesson_id)
+INSERT INTO instructions (instruction_id, title, text, type, min, sec, "order", lesson_id)
 VALUES 
 -- WarmUp leçon 1
 (1, 'Jumping jacks', 'Échauffement cardio avec sauts écartés', 'warmUp', 3, 0, 1, 1),
