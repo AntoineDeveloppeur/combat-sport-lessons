@@ -9,10 +9,10 @@ const __dirname = dirname(__filename)
 
 export default defineConfig([
   {
-    ignores: ["**/dist/**", "**/node_modules/**"],
+    ignores: ["**/dist/**", "**/node_modules/**", "config/**"],
   },
   {
-    files: ["**/*.{ts,mts,cts}"],
+    files: ["src/**/*.{ts,mts,cts}"],
     languageOptions: {
       globals: globals.node,
       parserOptions: {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect } from "vitest"
 import { dBtoEntityMapping } from "./dBtoEntityMapping"
 
@@ -40,7 +41,7 @@ describe("dBtoEntityMapping", () => {
       mockLessonDB,
       emptyInstructionsDB,
       emptyInstructionsDB,
-      emptyInstructionsDB,
+      emptyInstructionsDB
     )
 
     expect(result.lessonId).toBe(1)
@@ -71,7 +72,7 @@ describe("dBtoEntityMapping", () => {
       mockLessonDB,
       createMockInstructionsDB(warmUpInstructions),
       createMockInstructionsDB(bodyInstructions),
-      createMockInstructionsDB(coolDownInstructions),
+      createMockInstructionsDB(coolDownInstructions)
     )
 
     expect(result.warmUpInstructions).toHaveLength(2)
@@ -90,7 +91,7 @@ describe("dBtoEntityMapping", () => {
       mockLessonDB,
       emptyInstructionsDB,
       emptyInstructionsDB,
-      emptyInstructionsDB,
+      emptyInstructionsDB
     )
 
     expect(result.sport).toBe("Karaté")
@@ -104,7 +105,7 @@ describe("dBtoEntityMapping", () => {
       mockLessonDB,
       emptyInstructionsDB,
       emptyInstructionsDB,
-      emptyInstructionsDB,
+      emptyInstructionsDB
     )
 
     expect(result.warmUpInstructions).toEqual([])
@@ -124,7 +125,7 @@ describe("dBtoEntityMapping", () => {
       mockLessonDB,
       createMockInstructionsDB(instructions),
       createMockInstructionsDB([]),
-      createMockInstructionsDB([]),
+      createMockInstructionsDB([])
     )
 
     expect(result.warmUpInstructions[0].min).toBe(1)

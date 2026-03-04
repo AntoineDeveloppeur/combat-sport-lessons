@@ -1,6 +1,6 @@
 {
   "backend/**/*.{js,ts}": [
-    "npx eslint --config backend/eslint.config.ts --fix",
+    "npx eslint --config backend/config/eslint.config.ts --fix",
     "npx prettier --config config/.prettierrc --write"
   ],
   "frontend/**/*.{js,jsx,ts,tsx,mjs}": [
