@@ -18,7 +18,8 @@ paths:
       tags:
         - Users
       summary: Créer un nouvel utilisateur
-      description: Enregistre un nouvel utilisateur dans la base de données PostgreSQL
+      description:
+        Enregistre un nouvel utilisateur dans la base de données PostgreSQL
       requestBody:
         required: true
         content:
@@ -63,7 +64,9 @@ paths:
       tags:
         - Users
       summary: Modifier le mot de passe
-      description: Met à jour le mot de passe d'un utilisateur après vérification du mot de passe actuel
+      description:
+        Met à jour le mot de passe d'un utilisateur après vérification du mot de
+        passe actuel
       requestBody:
         required: true
         content:
@@ -119,7 +122,9 @@ paths:
                 erreurUserIdNotFound:
                   summary: ID utilisateur non trouvé (erreur interne)
                   value:
-                    error: Erreur interne au serveur, veuillez contacter l'administrateur
+                    error:
+                      Erreur interne au serveur, veuillez contacter
+                      l'administrateur
 
 components:
   schemas:

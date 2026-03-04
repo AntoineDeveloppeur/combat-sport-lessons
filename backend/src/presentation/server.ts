@@ -30,7 +30,7 @@ app.use((req, _res, next) => {
 
 // Charger le fichier OpenAPI depuis le dossier source
 const swaggerDocument = YAML.load(
-  join(__dirname, "../../../src/presentation/swagger/openapi.yaml")
+  join(__dirname, "../presentation/swagger/openapi.yaml")
 )
 // Documentation Swagger UI
 app.use(
