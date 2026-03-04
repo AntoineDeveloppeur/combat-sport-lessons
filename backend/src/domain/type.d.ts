@@ -1,1 +1,3 @@
-export type Sport = "Karaté" | "Boxe" | "Boxe Française" | "Boxe Thaïlandaise"
+import { sportList } from "../../../frontend/data/sportList"
+
+export type Sport = (typeof sportList)[number]

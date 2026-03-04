@@ -11,6 +11,6 @@ export class Lesson {
     public readonly bodyInstructions: Instruction[],
     public readonly coolDownInstructions: Instruction[],
     public readonly creationDate: Date,
-    public readonly userID: number
+    public readonly userId: number,
   ) {}
 }

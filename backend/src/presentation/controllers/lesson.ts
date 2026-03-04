@@ -1,9 +1,9 @@
 import { getLesson } from "../../application/usecases/lesson/GetLesson.js"
-import { PostSQLessonRepository } from "../../infrastructure/postSQL/PostSQLLessonRepository.js"
+import { PostSQLLessonRepository } from "../../infrastructure/postSQL/PostSQLLessonRepository.js"
 import { Response, Request } from "express"
 import { pool } from "../../infrastructure/postSQL/postSQLPool.js"
 
-const postSQLessonRepository = new PostSQLessonRepository(pool)
+const postSQLessonRepository = new PostSQLLessonRepository(pool)
 
 export const lessonCtrl = {
   handleGet: async (req: Request, res: Response) => {

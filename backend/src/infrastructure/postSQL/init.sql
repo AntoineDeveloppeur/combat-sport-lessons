@@ -20,7 +20,7 @@ CREATE TABLE "lessons" (
   "coolDown" warmUpCoolDownMode_enum,
   "warmUpPresetTitle" varchar,
   "coolDownPresetTitle" varchar,
-  "created_at" timestamp,
+  "created_at" DEFAULT CURRENT_TIMESTAMP,
   "user_id" integer NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 

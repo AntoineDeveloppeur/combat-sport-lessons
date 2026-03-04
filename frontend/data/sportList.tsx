@@ -151,6 +151,6 @@ const unSortedSportList = [
   "Jeet Kune Do",
   "Kajukenbo",
   "American Kenpo",
-]
+] as const
 
 export const sportList = unSortedSportList.sort()

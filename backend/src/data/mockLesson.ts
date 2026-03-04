@@ -6,7 +6,7 @@ export const mockLesson: Lesson = {
   sport: "Boxe",
   objective: "dddddddddddddddddddddddddddddddddddd",
   creationDate: new Date(),
-  userID: 123,
+  userId: 123,
   bodyInstructions: [
     {
       sec: 23,
