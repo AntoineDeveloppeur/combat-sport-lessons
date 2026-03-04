@@ -17,7 +17,7 @@
     "prettier": "npx prettier . --write",
     "db:start": "docker-compose up",
     "db:stop": "docker-compose down",
-    "db:reset": "docker-compose down -v && docker-compose up -d"
+    "db:reset": "docker-compose down -v && docker-compose up"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
