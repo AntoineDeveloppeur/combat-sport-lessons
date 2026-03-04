@@ -3,9 +3,13 @@ import { Lesson } from "@/types"
 
 export const lessonApi = createApi({
   reducerPath: "lessonApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000/" }),
   tagTypes: ["Lesson"],
   endpoints: (builder) => ({
+    getLesson: builder.query<{ lesson: Lesson }, number>({
+      query: (id) => `/lessons/${id}`,
+      providesTags: ["Lesson"],
+    }),
     saveLesson: builder.mutation<Lesson, Lesson>({
       query: (lesson) => ({
         url: "/lessons",
@@ -17,4 +21,4 @@ export const lessonApi = createApi({
   }),
 })
 
-export const { useSaveLessonMutation } = lessonApi
+export const { useGetLessonQuery, useSaveLessonMutation } = lessonApi

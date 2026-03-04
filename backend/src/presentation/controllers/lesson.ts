@@ -11,7 +11,7 @@ export const lessonCtrl = {
     const lessonId = Number(req.params.id)
     try {
       const lesson = await getLesson(lessonId, postSQLessonRepository)
-      return res.status(200).json({ message: lesson, error: lessonId })
+      return res.status(200).json({ lesson })
     } catch (error) {
       // différent cas d'erreur à écrire par la suite
       // exemple l'id n'existe pas

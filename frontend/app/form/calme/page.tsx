@@ -11,6 +11,7 @@ import PresetInstructions from "@/components/form/PresetInstructions"
 import CustomInstructions from "@/components/form/CustomInstructions"
 import DownLoadPdfButton from "@/components/form/DownLoadPdfButton"
 import SendLessonToBackend from "@/components/form/SendLessonToBackend"
+import FetchLessonFromBackend from "@/components/form/FetchLessonFromBackend"
 
 export default function Confirm() {
   const lesson = useAppSelector(selectlesson)
@@ -47,6 +48,7 @@ export default function Confirm() {
       </Form>
       <DownLoadPdfButton />
       <SendLessonToBackend />
+      <FetchLessonFromBackend />
     </>
   )
 }

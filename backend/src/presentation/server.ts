@@ -1,4 +1,5 @@
 import express from "express"
+import cors from "cors"
 import userRoutes from "./routes/users.js"
 import lessonRoutes from "./routes/lesson.js"
 import swaggerUi from "swagger-ui-express"
@@ -12,6 +13,14 @@ const __dirname = dirname(__filename)
 const app = express()
 
 const port = 4000
+
+// Middleware CORS pour autoriser les requêtes du frontend
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://localhost:3001"], // Ports Next.js
+    credentials: true,
+  })
+)
 
 // Middleware permettant de comprendre le format json
 app.use(express.json())
