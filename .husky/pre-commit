@@ -1,1 +1,5 @@
 npx lint-staged --config ./config/.lintstagedrc.json
+
+# npm run test:integration || exit 1
+ 
+# echo "✅ Tous les tests passés !"
