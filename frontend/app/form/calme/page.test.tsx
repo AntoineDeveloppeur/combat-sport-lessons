@@ -11,6 +11,20 @@ vi.mock("next/navigation", () => ({
   }),
 }))
 
+// Crée les objets STABLES une seule fois
+const mockQueryResult = {
+  data: { lesson: { title: "Leçon test" } },
+  isLoading: false,
+  error: null,
+}
+
+const mockMutationResult = [vi.fn(), { isLoading: false, error: null }]
+
+vi.mock("@/store/api/lessonApi", () => ({
+  useGetLessonQuery: () => mockQueryResult, // Toujours le même objet
+  useSaveLessonMutation: () => mockMutationResult, // Toujours le même objet
+}))
+
 describe("Confirm page (Retour au calme)", () => {
   beforeEach(() => {
     mockPush.mockClear()
