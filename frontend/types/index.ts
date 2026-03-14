@@ -6,7 +6,9 @@ export interface InstructionType {
 
 // None of the properties are mandatory to allow futur incomplete saving
 export interface Lesson {
+  id?: number
   sport?: string
+  title?: string
   objective?: string
   warmUp?: "custom" | "preset"
   coolDown?: "custom" | "preset"
@@ -15,6 +17,9 @@ export interface Lesson {
   coolDownInstructions?: InstructionType[]
   warmUpPresetTitle?: string
   coolDownPresetTitle?: string
+  createdAt?: Date
+  duration?: number
+  author?: string
 }
 
 export type LessonInstructionKey =

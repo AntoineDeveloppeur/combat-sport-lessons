@@ -2,6 +2,7 @@ export interface Instruction {
   text: string
   min: number
   sec: number
+  order?: number
 }
 
 // duration could minutes of work or work + rest

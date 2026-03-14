@@ -10,6 +10,9 @@ export const lessonApi = createApi({
       query: (id) => `/lessons/${id}`,
       providesTags: ["Lesson"],
     }),
+    getAllLessons: builder.query<{ lessons: Lesson[] }, void>({
+      query: () => "/lessons",
+    }),
     saveLesson: builder.mutation<Lesson, Lesson>({
       query: (lesson) => ({
         url: "/lessons",
@@ -21,4 +24,8 @@ export const lessonApi = createApi({
   }),
 })
 
-export const { useGetLessonQuery, useSaveLessonMutation } = lessonApi
+export const {
+  useGetLessonQuery,
+  useSaveLessonMutation,
+  useGetAllLessonsQuery,
+} = lessonApi

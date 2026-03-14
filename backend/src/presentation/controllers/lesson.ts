@@ -1,4 +1,5 @@
 import { getLesson } from "../../application/usecases/lesson/GetLesson.js"
+import { getAllLessons } from "../../application/usecases/lesson/GetAllLessons.js"
 import { PostSQLLessonRepository } from "../../infrastructure/postSQL/PostSQLLessonRepository.js"
 import { Response, Request } from "express"
 import { pool } from "../../infrastructure/postSQL/postSQLPool.js"
@@ -17,6 +18,14 @@ export const lessonCtrl = {
       // exemple l'id n'existe pas
       console.log(error)
       return res.status(400).json({ error: "mauvaise requête" })
+    }
+  },
+  handleGetAll: async (__req: Request, res: Response) => {
+    try {
+      const lessons = await getAllLessons(postSQLessonRepository)
+      res.status(200).json({ lessons })
+    } catch (error) {
+      res.status(500).json({ error })
     }
   },
 }

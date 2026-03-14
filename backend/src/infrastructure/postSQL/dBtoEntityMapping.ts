@@ -1,7 +1,7 @@
 import { Lesson } from "../../domain/Entities/Lesson.js"
 import type { Sport } from "../../domain/type.js"
 // Types "bruts" de la base de données
-interface LessonDBRow {
+export interface LessonDBRow {
   lesson_id: number
   title: string
   sport: string
@@ -14,7 +14,7 @@ interface LessonDBRow {
   user_id: number
 }
 
-interface InstructionDBRow {
+export interface InstructionDBRow {
   instruction_id: number
   title: string
   text: string
@@ -26,7 +26,7 @@ interface InstructionDBRow {
 }
 
 // Types de résultat PostgreSQL
-interface PostgreSQLResult<T> {
+export interface PostgreSQLResult<T> {
   rows: T[]
 }
 
@@ -34,7 +34,7 @@ export const dBtoEntityMapping = (
   lessonDB: PostgreSQLResult<LessonDBRow>,
   warmUpInstructionsDB: PostgreSQLResult<InstructionDBRow>,
   bodyInstructionsDB: PostgreSQLResult<InstructionDBRow>,
-  coolDownInstructionsDB: PostgreSQLResult<InstructionDBRow>,
+  coolDownInstructionsDB: PostgreSQLResult<InstructionDBRow>
 ): Lesson => {
   const { lesson_id, user_id, created_at, sport, ...rest } = lessonDB.rows[0]
   const lesson = {

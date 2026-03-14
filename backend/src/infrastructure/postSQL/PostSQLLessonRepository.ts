@@ -2,6 +2,7 @@ import { lessonRepository } from "../../domain/repositories/lessonRepository.js"
 import { Lesson } from "../../domain/Entities/Lesson.js"
 import { Pool } from "pg"
 import { dBtoEntityMapping } from "./dBtoEntityMapping.js"
+import { dbtoEntityMappingGetAll } from "./dbtoEntityMappingGetAll.js"
 
 export class PostSQLLessonRepository implements lessonRepository {
   constructor(public readonly pool: Pool) {}
@@ -32,7 +33,21 @@ export class PostSQLLessonRepository implements lessonRepository {
       lessonDB,
       warmUpInstructionsDB,
       bodyInstructionsDB,
-      coolDownInstructionsDB,
+      coolDownInstructionsDB
     )
+  }
+  // il faut que je récupère les instructions liées au lessons pour en faire un objet
+  async getAll(): Promise<Lesson[]> {
+    const query = `
+      SELECT l.lesson_id, l.title, l.sport, l.objective, l.created_at, l.user_id, i.text, i.type, i.min, i.sec, i.order 
+      FROM lessons l
+      LEFT JOIN instructions i
+      ON l.lesson_id = i.lesson_id
+      ORDER by l.lesson_id
+    `
+    const lessonDB = await this.pool.query(query)
+
+    console.log("lessonDBgetAll", lessonDB.rows)
+    return dbtoEntityMappingGetAll(lessonDB)
   }
 }

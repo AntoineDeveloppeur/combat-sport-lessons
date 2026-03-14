@@ -7,10 +7,10 @@ export class Lesson {
     public readonly title: string,
     public readonly sport: Sport,
     public readonly objective: string,
-    public readonly warmUpInstructions: Instruction[],
-    public readonly bodyInstructions: Instruction[],
-    public readonly coolDownInstructions: Instruction[],
+    public warmUpInstructions: Instruction[],
+    public bodyInstructions: Instruction[],
+    public coolDownInstructions: Instruction[],
     public readonly creationDate: Date,
-    public readonly userId: number,
+    public readonly userId: number
   ) {}
 }

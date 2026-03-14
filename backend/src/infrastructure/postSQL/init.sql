@@ -35,7 +35,7 @@ CREATE TABLE "instructions" (
   "sec" integer,
   "order" integer NOT NULL,
   "lesson_id" integer NOT NULL,
-  FOREIGN KEY (lesson_id) REFERENCES lessons(lesson_id) 
+  FOREIGN KEY (lesson_id) REFERENCES lessons(lesson_id) ON DELETE CASCADE
 );
 
 -- Fin de l'initialisation de la DB
