@@ -20,9 +20,7 @@ export default function FetchLessonFromBackend() {
   useEffect(() => {
     if (data?.lesson) {
       dispatch(save(data.lesson))
-      console.log("Données reçues:", data.lesson)
     }
-    console.log("État actuel:", { data, isLoading, error })
   }, [data, isLoading, error])
 
   return (

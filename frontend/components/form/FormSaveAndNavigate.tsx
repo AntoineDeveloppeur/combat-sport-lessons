@@ -34,7 +34,6 @@ export default function FormSaveAndNavigate({
     await handleSubmit((data) => {
       dispatch(save(data))
       success = true
-      console.log("lesson", lesson)
     })()
     return success
   }
