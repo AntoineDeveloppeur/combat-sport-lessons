@@ -1,5 +1,6 @@
 npx lint-staged --config ./config/.lintstagedrc.json
 
+# integration test is long, it isn't worth the time of every commit
 # npm run test:integration || exit 1
  
 # echo "✅ Tous les tests passés !"

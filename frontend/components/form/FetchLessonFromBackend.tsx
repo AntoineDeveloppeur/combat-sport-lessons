@@ -8,13 +8,15 @@ export default function FetchLessonFromBackend() {
   const dispatch = useAppDispatch()
 
   const { data, isLoading, error } = useGetLessonQuery(1, {
-    skip: !shouldFetch, // Ne pas exécuter la query si shouldFetch est false
+    skip: !shouldFetch,
   })
 
   const handleClick = () => {
-    setShouldFetch(true) // Déclenche la requête
+    setShouldFetch(true)
   }
 
+  // Save in lesson state if data from backend is fetch
+  // This will update UI with fetch informations
   useEffect(() => {
     if (data?.lesson) {
       dispatch(save(data.lesson))
