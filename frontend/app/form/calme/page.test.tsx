@@ -22,7 +22,7 @@ const mockMutationResult = [vi.fn(), { isLoading: false, error: null }]
 
 vi.mock("@/store/api/lessonApi", () => ({
   useGetLessonQuery: () => mockQueryResult, // Toujours le même objet
-  useSaveLessonMutation: () => mockMutationResult, // Toujours le même objet
+  usePostLessonMutation: () => mockMutationResult, // Toujours le même objet
 }))
 
 describe("Confirm page (Retour au calme)", () => {
