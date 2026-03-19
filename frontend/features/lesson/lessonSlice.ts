@@ -23,6 +23,7 @@ export const lessonSlice = createSlice({
   reducers: {
     save: (state, action: PayloadAction<Lesson>) => {
       state.value = action.payload
+      // calculate duration
     },
   },
 })
