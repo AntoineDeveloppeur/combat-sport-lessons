@@ -1,8 +1,7 @@
 import { lessonRepository } from "../../domain/repositories/lessonRepository.js"
 import { Lesson } from "../../domain/Entities/Lesson.js"
 import { Pool } from "pg"
-import { dBtoEntityMapping } from "./dBtoEntityMapping.js"
-import { dbtoEntityMappingGetAll } from "./dbtoEntityMappingGetAll.js"
+import * as lessonMapper from "./lessonMapper.js"
 
 export class PostSQLLessonRepository implements lessonRepository {
   constructor(public readonly pool: Pool) {}
@@ -29,7 +28,7 @@ export class PostSQLLessonRepository implements lessonRepository {
       lessonId,
       "coolDown",
     ])
-    return dBtoEntityMapping(
+    return lessonMapper.mapOne(
       lessonDB,
       warmUpInstructionsDB,
       bodyInstructionsDB,
@@ -47,7 +46,6 @@ export class PostSQLLessonRepository implements lessonRepository {
     `
     const lessonDB = await this.pool.query(query)
 
-    console.log("lessonDBgetAll", lessonDB.rows)
-    return dbtoEntityMappingGetAll(lessonDB)
+    return lessonMapper.mapMany(lessonDB)
   }
 }
