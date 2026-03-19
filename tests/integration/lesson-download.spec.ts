@@ -3,8 +3,6 @@ import { test, expect } from "@playwright/test"
 test("should download lesson when clicking button", async ({ page }) => {
   await page.goto("/form/calme")
 
-  await page.waitForSelector('button:has-text("Récupérer la lesson")')
-
   await expect(
     page.locator('button:has-text("Récupérer la lesson")'),
   ).toBeEnabled()
