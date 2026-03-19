@@ -13,6 +13,7 @@ import FormSaveAndNavigate from "@/components/form/FormSaveAndNavigate"
 import type { Lesson } from "@/types"
 import ObjectiveField from "@/components/form/ObjectiveField"
 import SelectField from "@/components/form/SelectField"
+import TitleField from "@/components/form/TitleField"
 
 export default function General() {
   const lesson = useAppSelector(selectlesson)
@@ -25,6 +26,10 @@ export default function General() {
       .min(20, "L'objectif doit contenir au moins 20 caractères")
       .max(500, "L'objectif ne peut pas dépasser 500 caractères")
       .required("Veuillez décrire l'objectif de la séance"),
+    title: Yup.string()
+      .min(3, "Le titre doit contenir au moins 3 caractères")
+      .max(50, "Le titre ne pas contenir plus de 50 caractères")
+      .required("Le titre est obligatoire"),
     warmUp: Yup.string()
       .oneOf(
         ["custom", "preset"],
@@ -65,6 +70,10 @@ export default function General() {
           selectOptions={sportList}
           register={register}
           errors={errors}
+        />
+        <TitleField
+          errors={errors}
+          register={register as UseFormRegister<Lesson>}
         />
         <ObjectiveField
           errors={errors}

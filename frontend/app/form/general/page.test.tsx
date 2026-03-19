@@ -85,6 +85,11 @@ describe("General page", () => {
       objectiveTextarea,
       "Un objectif valide avec plus de 20 caractères pour cette séance"
     )
+    const titleInput = screen.getByPlaceholderText(
+      /Exemple : défense contre coups de pied médian/i
+    )
+
+    await user.type(titleInput, "titre valide de plus de 3 caractères")
 
     const nextButton = screen.getByRole("button", { name: /next/i })
     await user.click(nextButton)
