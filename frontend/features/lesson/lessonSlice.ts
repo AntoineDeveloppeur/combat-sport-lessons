@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import type { Lesson } from "@/types"
 import { defaultValues } from "@/data/instructionDefaultValues"
+import { calculateLessonDuration } from "@/utils/calculateLessonDuration"
 
 export interface LessonState {
   value: Lesson
@@ -22,8 +23,9 @@ export const lessonSlice = createSlice({
   initialState,
   reducers: {
     save: (state, action: PayloadAction<Lesson>) => {
-      state.value = action.payload
-      // calculate duration
+      const lesson = action.payload
+      const duration = calculateLessonDuration(lesson)
+      state.value = { ...lesson, duration }
     },
   },
 })
