@@ -15,7 +15,6 @@ export interface LessonDBRow {
 
 export interface InstructionDBRow {
   instruction_id: number
-  title: string
   text: string
   type: string
   min: number

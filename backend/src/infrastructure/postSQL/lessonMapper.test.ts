@@ -6,7 +6,6 @@ import type { Sport } from "../../domain/type"
 
 const createMockInstruction = (id: number, type: string, order: number) => ({
   instruction_id: id,
-  title: `Instruction ${id}`,
   text: `Texte ${id}`,
   type,
   min: 1,
