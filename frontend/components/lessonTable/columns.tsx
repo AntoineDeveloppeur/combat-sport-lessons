@@ -33,7 +33,11 @@ export const columns: ColumnDef<Lesson>[] = [
       )
     },
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("title")}</div>
+      return (
+        <div className="font-medium">
+          {row.getValue("title") || "pas de titre"}
+        </div>
+      )
     },
   },
   {
@@ -68,7 +72,8 @@ export const columns: ColumnDef<Lesson>[] = [
     accessorKey: "objective",
     header: "Objectif",
     cell: ({ row }) => {
-      const objective = row.getValue("objective") as string
+      const objective =
+        (row.getValue("objective") as string) || "pas d'objectif"
       const truncated =
         objective.length > 50
           ? objective.substring(0, objective.lastIndexOf(" ", 50)) + "..."
