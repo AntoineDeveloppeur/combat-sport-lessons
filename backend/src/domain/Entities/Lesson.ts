@@ -3,7 +3,7 @@ import { Instruction } from "./Instructions"
 
 export class Lesson {
   constructor(
-    public readonly lessonId: number,
+    public readonly lessonId: string,
     public readonly title: string,
     public readonly sport: Sport,
     public readonly objective: string,
@@ -11,6 +11,6 @@ export class Lesson {
     public bodyInstructions: Instruction[],
     public coolDownInstructions: Instruction[],
     public readonly creationDate: Date,
-    public readonly userId: number
+    public readonly userId: string
   ) {}
 }

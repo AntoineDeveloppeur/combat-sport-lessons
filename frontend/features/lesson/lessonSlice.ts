@@ -15,6 +15,7 @@ const initialState: LessonState = {
     warmUpInstructions: defaultValues,
     bodyInstructions: defaultValues,
     coolDownInstructions: defaultValues,
+    userId: "userId123",
   },
 }
 

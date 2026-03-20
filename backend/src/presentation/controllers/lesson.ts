@@ -3,13 +3,15 @@ import { getAllLessons } from "../../application/usecases/lesson/GetAllLessons.j
 import { PostSQLLessonRepository } from "../../infrastructure/postSQL/PostSQLLessonRepository.js"
 import { Response, Request } from "express"
 import { pool } from "../../infrastructure/postSQL/postSQLPool.js"
+import { postLesson } from "../../application/usecases/lesson/PostLessons.js"
+import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGenerator.js"
 
 const postSQLessonRepository = new PostSQLLessonRepository(pool)
 
 export const lessonCtrl = {
   handleGet: async (req: Request, res: Response) => {
     // Vérifier que les données existe dans body sera fait plus tard
-    const lessonId = Number(req.params.id)
+    const lessonId = req.params.id
     try {
       const lesson = await getLesson(lessonId, postSQLessonRepository)
       return res.status(200).json({ lesson })
@@ -24,6 +26,18 @@ export const lessonCtrl = {
     try {
       const lessons = await getAllLessons(postSQLessonRepository)
       res.status(200).json({ lessons })
+    } catch (error) {
+      res.status(500).json({ error })
+    }
+  },
+  handlePost: async (req: Request, res: Response) => {
+    try {
+      await postLesson(
+        req.body,
+        postSQLessonRepository,
+        new RandomUUIDGenerator()
+      )
+      res.status(201).json({ message: "succès" })
     } catch (error) {
       res.status(500).json({ error })
     }

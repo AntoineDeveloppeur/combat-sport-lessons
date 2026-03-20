@@ -1,12 +1,12 @@
 import { Lesson } from "../domain/Entities/Lesson"
 
 export const mockLesson: Lesson = {
-  lessonId: 456,
+  lessonId: "lessonId123",
   title: "ouaiiiii",
   sport: "Boxe",
   objective: "dddddddddddddddddddddddddddddddddddd",
   creationDate: new Date(),
-  userId: 123,
+  userId: "userId456",
   bodyInstructions: [
     {
       sec: 23,

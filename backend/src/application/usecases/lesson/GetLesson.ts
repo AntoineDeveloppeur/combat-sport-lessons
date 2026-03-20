@@ -1,7 +1,7 @@
 import { lessonRepository } from "../../../domain/repositories/lessonRepository"
 
 export async function getLesson(
-  lessonId: number,
+  lessonId: string,
   lessonRepository: lessonRepository
 ) {
   // je regarde si la lesson existe ? ou je la récupère directement

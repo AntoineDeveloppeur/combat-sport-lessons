@@ -44,7 +44,7 @@ describe("lessonSlice", () => {
 
       const state = lessonSlice.reducer(initialState, save(newLesson))
 
-      expect(state.value).toEqual(newLesson)
+      expect(state.value).toEqual({ ...newLesson, duration: 19 })
     })
 
     it("should save a partial lesson", () => {
@@ -57,7 +57,7 @@ describe("lessonSlice", () => {
 
       const state = lessonSlice.reducer(initialState, save(partialLesson))
 
-      expect(state.value).toEqual(partialLesson)
+      expect(state.value).toEqual({ ...partialLesson, duration: 0 })
       expect(state.value.sport).toBe("Boxing")
       expect(state.value.objective).toBe("Build endurance")
     })
@@ -135,7 +135,7 @@ describe("lessonSlice", () => {
 
       const state = lessonSlice.reducer(initialState, save(minimalLesson))
 
-      expect(state.value).toEqual({})
+      expect(state.value).toEqual({ duration: 0 })
     })
   })
 

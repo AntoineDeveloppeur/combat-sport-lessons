@@ -1,35 +1,35 @@
 import { Sport } from "../../domain/type"
 
 export interface LessonDBRow {
-  lesson_id: number
+  lesson_id: string
   title: string
   sport: string
   objective: string
-  warmUp: string
-  coolDown: string
-  warmUpPresetTitle: string | null
-  coolDownPresetTitle: string | null
+  warm_up: string
+  cool_down: string
+  warm_up_preset_title: string | null
+  cool_down_preset_title: string | null
   created_at: string
-  user_id: number
+  user_id: string
 }
 
 export interface InstructionDBRow {
-  instruction_id: number
+  instruction_id: string
   text: string
   type: string
   min: number
   sec: number
   order: number
-  lesson_id: number
+  lesson_id: string
 }
 
 export interface LessonDBwithInstructionRow {
-  lesson_id: number
+  lesson_id: string
   title: string
   sport: Sport
   objective: string
   created_at: Date
-  user_id: number
+  user_id: string
   text: string
   type: string
   min: number

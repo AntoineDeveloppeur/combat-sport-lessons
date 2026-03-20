@@ -11,20 +11,20 @@ const createMockInstruction = (id: number, type: string, order: number) => ({
   min: 1,
   sec: 0,
   order,
-  lesson_id: 1,
+  lesson_id: "lessonId123",
 })
 
 const createMockLesson = (sport: string = "Boxe") => ({
-  lesson_id: 1,
+  lesson_id: "lessonId123",
   title: "Test Lesson",
   sport,
   objective: "Test Objective",
-  warmUp: "custom",
-  coolDown: "custom",
-  warmUpPresetTitle: null,
-  coolDownPresetTitle: null,
+  warm_up: "custom",
+  cool_down: "custom",
+  warm_up_preset_title: null,
+  cool_down_preset_title: null,
   created_at: "2026-03-03T13:09:51.605Z",
-  user_id: 1,
+  user_id: "userId123",
 })
 
 const createMockDBResult = <T>(data: T) => ({ rows: [data] })
@@ -33,10 +33,10 @@ const createMockInstructionsDB = (instructions: any[]) => ({
 })
 
 const createLessonRow = (
-  lessonId: number,
+  lessonId: string,
   title: string,
   sport: Sport,
-  userId: number,
+  userId: string,
   text: string,
   type: string,
   min: number,
@@ -67,11 +67,11 @@ describe("mapOne", () => {
       emptyInstructionsDB
     )
 
-    expect(result.lessonId).toBe(1)
+    expect(result.lessonId).toBe("lessonId123")
     expect(result.title).toBe("Test Lesson")
     expect(result.sport).toBe("Boxe")
     expect(result.objective).toBe("Test Objective")
-    expect(result.userId).toBe(1)
+    expect(result.userId).toBe("userId123")
     expect(result.creationDate).toBeInstanceOf(Date)
     expect(result.creationDate.toISOString()).toBe("2026-03-03T13:09:51.605Z")
     expect(result.warmUpInstructions).toEqual([])
@@ -160,8 +160,8 @@ describe("mapOne", () => {
 describe("addInstructions", () => {
   it("should add first coolDown instruction to lesson", () => {
     const lesson = {
-      lessonId: 1,
-      userId: 1,
+      lessonId: "lessonId123",
+      userId: "userId123",
       title: "Boxe débutant",
       objective: "Apprendre les bases",
       creationDate: new Date("2026-01-01"),
@@ -169,10 +169,10 @@ describe("addInstructions", () => {
     }
 
     const instructionRow = createLessonRow(
-      1,
+      "lessonId123",
       "Boxe débutant",
       "Boxe" as Sport,
-      1,
+      "userId123",
       "Étirements bras",
       "coolDown",
       3,
@@ -188,8 +188,8 @@ describe("addInstructions", () => {
 
   it("should append instruction to existing array", () => {
     const lesson = {
-      lessonId: 1,
-      userId: 1,
+      lessonId: "lessonId123",
+      userId: "userId123",
       title: "Boxe débutant",
       objective: "Apprendre les bases",
       creationDate: new Date("2026-01-01"),
@@ -198,10 +198,10 @@ describe("addInstructions", () => {
     }
 
     const instructionRow = createLessonRow(
-      1,
+      "lessonId123",
       "Boxe débutant",
       "Boxe" as Sport,
-      1,
+      "userId123",
       "Rotations épaules",
       "warmUp",
       2,
@@ -221,8 +221,8 @@ describe("addInstructions", () => {
 
   it("should handle body instructions", () => {
     const lesson = {
-      lessonId: 1,
-      userId: 1,
+      lessonId: "lessonId123",
+      userId: "userId123",
       title: "Boxe débutant",
       objective: "Apprendre les bases",
       creationDate: new Date("2026-01-01"),
@@ -230,10 +230,10 @@ describe("addInstructions", () => {
     }
 
     const instructionRow = createLessonRow(
-      1,
+      "lessonId123",
       "Boxe débutant",
       "Boxe" as Sport,
-      1,
+      "userId123",
       "Technique du jab",
       "body",
       5,
@@ -253,30 +253,30 @@ describe("mapMany", () => {
     const lessonDB = {
       rows: [
         createLessonRow(
-          1,
+          "lessonId123",
           "Boxe débutant",
           "Boxe" as Sport,
-          1,
+          "userId123",
           "Jumping jacks",
           "warmUp",
           3,
           1
         ),
         createLessonRow(
-          1,
+          "lessonId123",
           "Boxe débutant",
           "Boxe" as Sport,
-          1,
+          "userId123",
           "Technique du jab",
           "body",
           5,
           1
         ),
         createLessonRow(
-          1,
+          "lessonId123",
           "Boxe débutant",
           "Boxe" as Sport,
-          1,
+          "userId123",
           "Étirements",
           "coolDown",
           3,
@@ -288,7 +288,7 @@ describe("mapMany", () => {
     const result = lessonMapper.mapMany(lessonDB)
 
     expect(result).toHaveLength(1)
-    expect(result[0].lessonId).toBe(1)
+    expect(result[0].lessonId).toBe("lessonId123")
     expect(result[0].warmUpInstructions).toHaveLength(1)
     expect(result[0].bodyInstructions).toHaveLength(1)
     expect(result[0].coolDownInstructions).toHaveLength(1)
@@ -298,70 +298,70 @@ describe("mapMany", () => {
     const lessonDB = {
       rows: [
         createLessonRow(
-          1,
+          "lessonId123",
           "Boxe débutant",
           "Boxe" as Sport,
-          1,
+          "userId123",
           "Jumping jacks",
           "warmUp",
           3,
           1
         ),
         createLessonRow(
-          1,
+          "lessonId123",
           "Boxe débutant",
           "Boxe" as Sport,
-          1,
+          "userId123",
           "Rotations",
           "warmUp",
           2,
           2
         ),
         createLessonRow(
-          1,
+          "lessonId123",
           "Boxe débutant",
           "Boxe" as Sport,
-          1,
+          "userId123",
           "Jab",
           "body",
           5,
           1
         ),
         createLessonRow(
-          2,
+          "lessonId456",
           "Judo avancé",
           "Judo" as Sport,
-          2,
+          "userId456",
           "Course légère",
           "warmUp",
           3,
           1
         ),
         createLessonRow(
-          2,
+          "lessonId456",
           "Judo avancé",
           "Judo" as Sport,
-          2,
+          "userId456",
           "O-goshi",
           "body",
           6,
           1
         ),
         createLessonRow(
-          2,
+          "lessonId456",
           "Judo avancé",
           "Judo" as Sport,
-          2,
+          "userId456",
           "Seoi-nage",
           "body",
           6,
           2
         ),
         createLessonRow(
-          3,
+          "lessonId789",
           "Karaté kata",
           "Karaté" as Sport,
-          1,
+          "userId123",
           "Kihon",
           "warmUp",
           5,
@@ -374,17 +374,17 @@ describe("mapMany", () => {
 
     expect(result).toHaveLength(3)
 
-    expect(result[0].lessonId).toBe(1)
+    expect(result[0].lessonId).toBe("lessonId123")
     expect(result[0].title).toBe("Boxe débutant")
     expect(result[0].warmUpInstructions).toHaveLength(2)
     expect(result[0].bodyInstructions).toHaveLength(1)
 
-    expect(result[1].lessonId).toBe(2)
+    expect(result[1].lessonId).toBe("lessonId456")
     expect(result[1].title).toBe("Judo avancé")
     expect(result[1].warmUpInstructions).toHaveLength(1)
     expect(result[1].bodyInstructions).toHaveLength(2)
 
-    expect(result[2].lessonId).toBe(3)
+    expect(result[2].lessonId).toBe("lessonId789")
     expect(result[2].title).toBe("Karaté kata")
     expect(result[2].warmUpInstructions).toHaveLength(1)
   })
@@ -399,30 +399,30 @@ describe("mapMany", () => {
     const lessonDB = {
       rows: [
         createLessonRow(
-          1,
+          "lessonId123",
           "Boxe",
           "Boxe" as Sport,
-          1,
+          "userId123",
           "Instruction 3",
           "body",
           5,
           3
         ),
         createLessonRow(
-          1,
+          "lessonId123",
           "Boxe",
           "Boxe" as Sport,
-          1,
+          "userId123",
           "Instruction 1",
           "body",
           5,
           1
         ),
         createLessonRow(
-          1,
+          "lessonId123",
           "Boxe",
           "Boxe" as Sport,
-          1,
+          "userId123",
           "Instruction 2",
           "body",
           5,
@@ -441,8 +441,26 @@ describe("mapMany", () => {
   it("should handle lesson with only one type of instructions", () => {
     const lessonDB = {
       rows: [
-        createLessonRow(1, "Boxe", "Boxe" as Sport, 1, "Jab", "body", 5, 1),
-        createLessonRow(1, "Boxe", "Boxe" as Sport, 1, "Direct", "body", 5, 2),
+        createLessonRow(
+          "1",
+          "Boxe",
+          "Boxe" as Sport,
+          "userId123",
+          "Jab",
+          "body",
+          5,
+          1
+        ),
+        createLessonRow(
+          "1",
+          "Boxe",
+          "Boxe" as Sport,
+          "userId123",
+          "Direct",
+          "body",
+          5,
+          2
+        ),
       ],
     }
 

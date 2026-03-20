@@ -9,5 +9,8 @@ router.get("/:id", (req: Request, res: Response) => {
 router.get("/", (req: Request, res: Response) => {
   lessonCtrl.handleGetAll(req, res)
 })
+router.post("/", (req: Request, res: Response) => {
+  lessonCtrl.handlePost(req, res)
+})
 
 export default router

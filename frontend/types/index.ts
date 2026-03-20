@@ -6,7 +6,7 @@ export interface InstructionType {
 
 // None of the properties are mandatory to allow futur incomplete saving
 export interface Lesson {
-  id?: number
+  id?: string
   sport?: string
   title?: string
   objective?: string
@@ -20,6 +20,7 @@ export interface Lesson {
   createdAt?: Date
   duration?: number
   author?: string
+  userId?: string
 }
 
 export type LessonInstructionKey =
