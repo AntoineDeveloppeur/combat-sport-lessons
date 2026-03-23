@@ -2,7 +2,7 @@
 
 import { useForm, UseFormRegister } from "react-hook-form"
 import { FieldSet, FieldLegend } from "@/components/ui/field"
-import { Form } from "../../../components/form/Form"
+import { Form } from "@/components/form/Form"
 import { sportList } from "@/data/sportList"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"

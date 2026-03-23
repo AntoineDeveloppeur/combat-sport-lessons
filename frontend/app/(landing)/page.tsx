@@ -5,20 +5,17 @@ import { HeroSection } from "@/components/landing/HeroSection"
 import { DiscoverSection } from "@/components/landing/DiscoverSection"
 import { SignupSection } from "@/components/landing/SignupSection"
 import { Footer } from "@/components/landing/Footer"
-import { AppProvider } from "./provider"
 
 export default function LandingPage() {
   return (
-    <AppProvider>
-      <div className="min-h-screen bg-black">
-        <Header />
-        <main>
-          <HeroSection />
-          <DiscoverSection />
-          <SignupSection />
-        </main>
-        <Footer />
-      </div>
-    </AppProvider>
+    <div className="min-h-screen bg-black">
+      <Header />
+      <main>
+        <HeroSection />
+        <DiscoverSection />
+        <SignupSection />
+      </main>
+      <Footer />
+    </div>
   )
 }
