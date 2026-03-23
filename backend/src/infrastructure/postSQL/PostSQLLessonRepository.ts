@@ -4,6 +4,7 @@ import { Pool } from "pg"
 import * as lessonMapper from "./lessonMapper.js"
 import { IdGenerator } from "../../domain/services/IdGenerator.js"
 import { buildInstructionsQuery } from "./buildInstructionsQuery.js"
+import { LessonIdNotFound } from "../../domain/errors/LessonIdNotFound.js"
 
 export class PostSQLLessonRepository implements lessonRepository {
   constructor(public readonly pool: Pool) {}
@@ -13,6 +14,9 @@ export class PostSQLLessonRepository implements lessonRepository {
       SELECT * FROM lessons WHERE lesson_id = $1
     `
     const lessonDB = await this.pool.query(query, [lessonId])
+    if (lessonDB.rows.length === 0) {
+      throw new LessonIdNotFound(lessonId)
+    }
 
     // récupère les différentes instructions
     const queryInstructions = `
