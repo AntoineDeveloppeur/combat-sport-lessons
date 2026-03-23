@@ -5,6 +5,7 @@ import * as lessonMapper from "./lessonMapper.js"
 import { IdGenerator } from "../../domain/services/IdGenerator.js"
 import { buildInstructionsQuery } from "./buildInstructionsQuery.js"
 import { LessonIdNotFound } from "../../domain/errors/LessonIdNotFound.js"
+import { LessonTransactionError } from "../../domain/errors/LessonTransactionError.js"
 
 export class PostSQLLessonRepository implements lessonRepository {
   constructor(public readonly pool: Pool) {}
@@ -93,7 +94,7 @@ export class PostSQLLessonRepository implements lessonRepository {
       await this.pool.query("COMMIT")
     } catch (error) {
       await this.pool.query("ROLLBACK")
-      throw error
+      throw new LessonTransactionError(lesson, error as Error)
     }
   }
 }

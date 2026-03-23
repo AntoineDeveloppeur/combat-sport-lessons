@@ -5,6 +5,8 @@ import { Response, Request } from "express"
 import { pool } from "../../infrastructure/postSQL/postSQLPool.js"
 import { postLesson } from "../../application/usecases/lesson/PostLessons.js"
 import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGenerator.js"
+import { LessonTransactionError } from "../../domain/errors/LessonTransactionError.js"
+import { LessonIdNotFound } from "../../domain/errors/LessonIdNotFound.js"
 
 const postSQLessonRepository = new PostSQLLessonRepository(pool)
 
@@ -16,18 +18,20 @@ export const lessonCtrl = {
       const lesson = await getLesson(lessonId, postSQLessonRepository)
       return res.status(200).json({ lesson })
     } catch (error) {
-      // différent cas d'erreur à écrire par la suite
-      // exemple l'id n'existe pas
       console.log(error)
-      return res.status(400).json({ error: "mauvaise requête" })
+      if (error instanceof LessonIdNotFound) {
+        return res.status(error.status).json({ error: error.message })
+      }
+      return res.status(500).json({ error: "Erreur Interne du serveur" })
     }
   },
   handleGetAll: async (__req: Request, res: Response) => {
     try {
       const lessons = await getAllLessons(postSQLessonRepository)
-      res.status(200).json({ lessons })
+      return res.status(200).json({ lessons })
     } catch (error) {
-      res.status(500).json({ error })
+      console.error(error)
+      return res.status(500).json({ error })
     }
   },
   handlePost: async (req: Request, res: Response) => {
@@ -37,9 +41,15 @@ export const lessonCtrl = {
         postSQLessonRepository,
         new RandomUUIDGenerator()
       )
-      res.status(201).json({ message: "succès" })
+      return res.status(201).json({ message: "succès" })
     } catch (error) {
-      res.status(500).json({ error })
+      console.error(error)
+      if (error instanceof LessonTransactionError) {
+        return res
+          .status(500)
+          .json({ message: "L'enregistrement de la lesson a échoué" })
+      }
+      return res.status(500).json({ error: "Erreur Interne du serveur" })
     }
   },
 }
