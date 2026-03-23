@@ -8,6 +8,9 @@ export default function SendLessonToBackend() {
   const [postLesson, { isLoading, error }] = usePostLessonMutation()
   const handleClick = async () => {
     await postLesson(lesson)
+    if (!error) {
+      alert("Lesson Enregistrée")
+    }
   }
   return (
     <>
