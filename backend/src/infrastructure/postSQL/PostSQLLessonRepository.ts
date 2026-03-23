@@ -70,13 +70,12 @@ export class PostSQLLessonRepository implements lessonRepository {
       cool_down,
       warm_up_preset_title,
       cool_down_preset_title,
-      lesson.creationDate,
       userId,
     ]
 
     const queryLesson = `
-      INSERT INTO lessons (lesson_id, title, sport, objective, warm_up, cool_down, warm_up_preset_title, cool_down_preset_title, created_at, user_id)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      INSERT INTO lessons (lesson_id, title, sport, objective, warm_up, cool_down, warm_up_preset_title, cool_down_preset_title, user_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     `
 
     const [queryInstructions, paramsInstructions] = buildInstructionsQuery(
