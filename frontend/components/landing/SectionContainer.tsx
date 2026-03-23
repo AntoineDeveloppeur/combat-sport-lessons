@@ -14,7 +14,7 @@ export function SectionContainer({
   children,
   backgroundImage,
   backgroundColor = "black",
-  imageOpacity = 0.4,
+  imageOpacity = 1,
 }: SectionContainerProps) {
   const bgColor =
     backgroundColor === "black" ? "bg-black text-white" : "bg-white text-black"

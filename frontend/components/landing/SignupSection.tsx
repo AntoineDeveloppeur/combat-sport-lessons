@@ -27,7 +27,7 @@ const benefits = [
 
 export function SignupSection() {
   return (
-    <SectionContainer backgroundImage="/3.webp" backgroundColor="black">
+    <SectionContainer backgroundColor="black">
       <div className="max-w-4xl mx-auto text-center space-y-8">
         <SectionTitle
           title="Prêt à créer vos propres cours ?"
@@ -50,7 +50,7 @@ export function SignupSection() {
           <Link href="/signup">
             <Button
               size="lg"
-              className="bg-white text-black hover:bg-white/90 font-bold text-xl px-12 py-6"
+              className="bg-white text-black hover:bg-white/90 font-bold text-base md:text-xl px-8 md:px-12 py-4 md:py-6 whitespace-normal"
             >
               Commencer maintenant - C&apos;est gratuit
             </Button>
