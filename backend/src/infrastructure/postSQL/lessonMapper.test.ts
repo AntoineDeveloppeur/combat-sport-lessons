@@ -82,14 +82,14 @@ describe("mapOne", () => {
   it("should map instructions to correct categories", () => {
     const mockLessonDB = createMockDBResult(createMockLesson())
     const warmUpInstructions = [
-      createMockInstruction(1, "warmUp", 1),
-      createMockInstruction(2, "warmUp", 2),
+      createMockInstruction(1, "warm_up", 1),
+      createMockInstruction(2, "warm_up", 2),
     ]
     const bodyInstructions = [
       createMockInstruction(3, "body", 1),
       createMockInstruction(4, "body", 2),
     ]
-    const coolDownInstructions = [createMockInstruction(5, "coolDown", 1)]
+    const coolDownInstructions = [createMockInstruction(5, "cool_down", 1)]
 
     const result = lessonMapper.mapOne(
       mockLessonDB,
@@ -139,9 +139,9 @@ describe("mapOne", () => {
   it("should preserve instruction order", () => {
     const mockLessonDB = createMockDBResult(createMockLesson())
     const instructions = [
-      createMockInstruction(3, "warmUp", 3),
-      createMockInstruction(1, "warmUp", 1),
-      createMockInstruction(2, "warmUp", 2),
+      createMockInstruction(3, "warm_up", 3),
+      createMockInstruction(1, "warm_up", 1),
+      createMockInstruction(2, "warm_up", 2),
     ]
 
     const result = lessonMapper.mapOne(
@@ -174,7 +174,7 @@ describe("addInstructions", () => {
       "Boxe" as Sport,
       "userId123",
       "Étirements bras",
-      "coolDown",
+      "cool_down",
       3,
       1
     )
@@ -203,7 +203,7 @@ describe("addInstructions", () => {
       "Boxe" as Sport,
       "userId123",
       "Rotations épaules",
-      "warmUp",
+      "warm_up",
       2,
       2
     )
@@ -258,7 +258,7 @@ describe("mapMany", () => {
           "Boxe" as Sport,
           "userId123",
           "Jumping jacks",
-          "warmUp",
+          "warm_up",
           3,
           1
         ),
@@ -278,7 +278,7 @@ describe("mapMany", () => {
           "Boxe" as Sport,
           "userId123",
           "Étirements",
-          "coolDown",
+          "cool_down",
           3,
           1
         ),
@@ -303,7 +303,7 @@ describe("mapMany", () => {
           "Boxe" as Sport,
           "userId123",
           "Jumping jacks",
-          "warmUp",
+          "warm_up",
           3,
           1
         ),
@@ -313,7 +313,7 @@ describe("mapMany", () => {
           "Boxe" as Sport,
           "userId123",
           "Rotations",
-          "warmUp",
+          "warm_up",
           2,
           2
         ),
@@ -333,7 +333,7 @@ describe("mapMany", () => {
           "Judo" as Sport,
           "userId456",
           "Course légère",
-          "warmUp",
+          "warm_up",
           3,
           1
         ),
@@ -363,7 +363,7 @@ describe("mapMany", () => {
           "Karaté" as Sport,
           "userId123",
           "Kihon",
-          "warmUp",
+          "warm_up",
           5,
           1
         ),

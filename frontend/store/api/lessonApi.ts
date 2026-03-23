@@ -6,7 +6,7 @@ export const lessonApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL }),
   tagTypes: ["Lesson"],
   endpoints: (builder) => ({
-    getLesson: builder.query<{ lesson: Lesson }, number>({
+    getLesson: builder.query<{ lesson: Lesson }, string>({
       query: (id) => `/lessons/${id}`,
       providesTags: ["Lesson"],
     }),

@@ -76,8 +76,8 @@ export const addInstructions = (
     >
   > = {
     body: "bodyInstructions",
-    warmUp: "warmUpInstructions",
-    coolDown: "coolDownInstructions",
+    warm_up: "warmUpInstructions",
+    cool_down: "coolDownInstructions",
   }
 
   const instructionKey = instructionTypeMap[type]

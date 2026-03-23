@@ -7,9 +7,12 @@ export default function FetchLessonFromBackend() {
   const [shouldFetch, setShouldFetch] = useState(false)
   const dispatch = useAppDispatch()
 
-  const { data, isLoading, error } = useGetLessonQuery(1, {
-    skip: !shouldFetch,
-  })
+  const { data, isLoading, error } = useGetLessonQuery(
+    "550e8400-e29b-41d4-a716-446655440011",
+    {
+      skip: !shouldFetch,
+    }
+  )
 
   const handleClick = () => {
     setShouldFetch(true)
