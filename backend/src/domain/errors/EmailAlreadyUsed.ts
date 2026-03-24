@@ -1,6 +1,10 @@
 export class EmailAlreadyUsed extends Error {
-  status: number = 400
+  status: number = 409
+  log: { logMessage: string; email: string }
   constructor(email: string) {
-    super(`${email} est déjà utilisé`)
+    const publicMessage = "Cet email est déjà utilisé"
+    const logMessage = `Tentative d'inscription avec un email déjà existant: ${email}`
+    super(publicMessage)
+    this.log = { logMessage, email }
   }
 }

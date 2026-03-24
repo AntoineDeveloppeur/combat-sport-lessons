@@ -1,8 +1,10 @@
 export class DurationTooLow extends Error {
   status: number = 400
+  log: { logMessage: string; duration: number; minDuration: number }
   constructor(duration: number, minDuration: number) {
-    super(
-      `La durée de l'entraînement est trop courte.  Durée minimale ${minDuration} minutes, Durée donnée : ${duration} minutes`
-    )
+    const publicMessage = `Durée minimale non atteinte. Min: ${minDuration} minutes, Donnée: ${duration} minutes`
+    const logMessage = `Durée minimale non atteinte. Min: ${minDuration} minutes, Donnée: ${duration} minutes`
+    super(publicMessage)
+    this.log = { logMessage, duration, minDuration }
   }
 }

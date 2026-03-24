@@ -18,10 +18,11 @@ export const lessonCtrl = {
       const lesson = await getLesson(lessonId, postSQLessonRepository)
       return res.status(200).json({ lesson })
     } catch (error) {
-      console.log(error)
       if (error instanceof LessonIdNotFound) {
+        console.error(error.log)
         return res.status(error.status).json({ error: error.message })
       }
+      console.error(error)
       return res.status(500).json({ error: "Erreur Interne du serveur" })
     }
   },
@@ -31,7 +32,7 @@ export const lessonCtrl = {
       return res.status(200).json({ lessons })
     } catch (error) {
       console.error(error)
-      return res.status(500).json({ error })
+      return res.status(500).json({ error: "Erreur Interne du serveur" })
     }
   },
   handlePost: async (req: Request, res: Response) => {
@@ -39,12 +40,12 @@ export const lessonCtrl = {
       await postLesson(
         req.body,
         postSQLessonRepository,
-        new RandomUUIDGenerator()
+        new RandomUUIDGenerator(),
       )
       return res.status(201).json({ message: "succès" })
     } catch (error) {
       if (error instanceof LessonTransactionError) {
-        console.error(error.log)
+        console.error(error.log, error.cause)
         return res.status(error.status).json({ message: error.message })
       }
       console.error(error)

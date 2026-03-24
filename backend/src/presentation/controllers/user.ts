@@ -22,11 +22,12 @@ const userCtrl = {
         req.body as unknown as CreateUserRequest, // Mettre en place un validateur de donnée
         postSQLUserRepository,
         randomUUIDGenerator,
-        bcryptPasswordHasher
+        bcryptPasswordHasher,
       )
       return res.status(201).json({ message: "utilisateur créé avec succès" })
     } catch (error) {
       if (error instanceof EmailAlreadyUsed) {
+        console.error(error.log)
         return res.status(error.status).json({ error: error.message })
       }
       console.error(error)
@@ -40,23 +41,25 @@ const userCtrl = {
         req.body.currentPassword,
         req.body.newPassword,
         postSQLUserRepository,
-        bcryptPasswordHasher
+        bcryptPasswordHasher,
       )
       return res
         .status(200)
         .json({ message: "mot de passe modifié avec succès" })
     } catch (error) {
       if (error instanceof EmailNotFound) {
+        console.error(error.log)
         return res.status(error.status).json({ error: error.message })
       }
       if (error instanceof UserIdNotFound) {
-        console.log(error)
+        console.error(error.log)
         return res.status(error.status).json({
           error:
             "Erreur interne au serveur, veuillez contacter l'administrateur",
         })
       }
       if (error instanceof IncorrectCurrentPassword) {
+        console.error(error.log)
         return res.status(error.status).json({ error: error.message })
       }
       console.error(error)
