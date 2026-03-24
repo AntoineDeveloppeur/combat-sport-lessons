@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "module": "ES2020",
+    "target": "es2022",
+    "module": "ES2022",
     "moduleResolution": "bundler",
+    "lib": ["ES2022"],
     "outDir": "../dist",
     "rootDir": "../src",
     "allowSyntheticDefaultImports": true,
