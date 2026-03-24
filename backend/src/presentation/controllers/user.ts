@@ -10,10 +10,16 @@ import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGen
 import { BcryptPasswordHasher } from "../../infrastructure/services/BcryptPasswordHasher.js"
 import { pool } from "../../infrastructure/postSQL/postSQLPool.js"
 import { UserIdNotFound } from "../../domain/errors/UserIdNotFound.js"
+import { login } from "../../application/usecases/login.js"
+import { JwtTokenManager } from "../../infrastructure/services/JwtTokenManager.js"
 
 const postSQLUserRepository = new PostSQLUserRepository(pool)
 const randomUUIDGenerator = new RandomUUIDGenerator()
 const bcryptPasswordHasher = new BcryptPasswordHasher()
+const jwtTokenManager = new JwtTokenManager(
+  process.env.JWT_SECRET || "your-secret-key",
+  "24h",
+)
 
 const userCtrl = {
   handleCreateUser: async (req: Request, res: Response) => {
@@ -64,6 +70,29 @@ const userCtrl = {
       }
       console.error("Unexpected Error:", error)
       return res.status(500).json({ error: "Erreur interne du serveur" })
+    }
+  },
+  handleLogin: async (req: Request, res: Response) => {
+    try {
+      const token = await login(
+        req.body.email,
+        req.body.password,
+        bcryptPasswordHasher,
+        postSQLUserRepository,
+        jwtTokenManager,
+      )
+      return res.status(200).json({ token })
+    } catch (error) {
+      if (error instanceof EmailNotFound) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof UserIdNotFound) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      console.error(error)
+      return res.status(401).json({ error: "Identifiants incorrects" })
     }
   },
 }

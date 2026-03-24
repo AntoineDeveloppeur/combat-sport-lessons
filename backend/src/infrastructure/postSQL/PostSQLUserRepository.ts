@@ -47,4 +47,12 @@ export class PostSQLUserRepository implements UserRepository {
     }
     return result.rows[0].id
   }
+  async login(email: string, hash: string): Promise<boolean> {
+    const query = `
+      SELECT user_id FROM users WHERE email = $1 AND hash = $2
+    `
+    const data = await this.pool.query(query, [email, hash])
+    if (data.rows.length !== 0) return true
+    return false
+  }
 }

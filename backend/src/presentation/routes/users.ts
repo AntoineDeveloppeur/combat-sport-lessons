@@ -10,4 +10,8 @@ router.patch("/password", async (req: Request, res: Response) => {
   await userCtrl.handleUpdatePassword(req, res)
 })
 
+router.post("/login", async (req: Request, res: Response) => {
+  await userCtrl.handleLogin(req, res)
+})
+
 export default router

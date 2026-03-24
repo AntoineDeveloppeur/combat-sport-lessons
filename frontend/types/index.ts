@@ -29,3 +29,8 @@ export type LessonInstructionKey =
   | "coolDownInstructions"
 
 export type Preset = Record<string, InstructionType[]>
+
+export interface Login {
+  email: string
+  password: string
+}

@@ -6,4 +6,5 @@ export interface UserRepository {
   getHash(id: string): Promise<string>
   updatePassword(id: string, hashedPassword: string): Promise<void>
   findUserId(email: string): Promise<string>
+  login(email: string, hash: string): Promise<boolean>
 }
