@@ -43,12 +43,11 @@ export const lessonCtrl = {
       )
       return res.status(201).json({ message: "succès" })
     } catch (error) {
-      console.error(error)
       if (error instanceof LessonTransactionError) {
-        return res
-          .status(500)
-          .json({ message: "L'enregistrement de la lesson a échoué" })
+        console.error(error.log)
+        return res.status(error.status).json({ message: error.message })
       }
+      console.error(error)
       return res.status(500).json({ error: "Erreur Interne du serveur" })
     }
   },

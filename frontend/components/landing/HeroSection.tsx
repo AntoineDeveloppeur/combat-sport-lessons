@@ -25,9 +25,7 @@ export function HeroSection() {
     <SectionContainer backgroundImage="/1.webp" backgroundColor="black">
       <div className="max-w-4xl mx-auto text-center space-y-8">
         <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-          Créez et Partagez vos
-          <br />
-          <span className="text-white/90">Cours de Combat</span>
+          Créez et Partagez vos Cours de Sport de Combat
         </h1>
 
         <p className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed">
