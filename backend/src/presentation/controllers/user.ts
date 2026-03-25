@@ -17,8 +17,8 @@ const postSQLUserRepository = new PostSQLUserRepository(pool)
 const randomUUIDGenerator = new RandomUUIDGenerator()
 const bcryptPasswordHasher = new BcryptPasswordHasher()
 const jwtTokenManager = new JwtTokenManager(
-  process.env.JWT_SECRET || "your-secret-key",
-  "24h",
+  process.env.JWT_SECRET as string,
+  "24h"
 )
 
 const userCtrl = {
@@ -28,7 +28,7 @@ const userCtrl = {
         req.body as unknown as CreateUserRequest, // Mettre en place un validateur de donnée
         postSQLUserRepository,
         randomUUIDGenerator,
-        bcryptPasswordHasher,
+        bcryptPasswordHasher
       )
       return res.status(201).json({ message: "utilisateur créé avec succès" })
     } catch (error) {
@@ -47,7 +47,7 @@ const userCtrl = {
         req.body.currentPassword,
         req.body.newPassword,
         postSQLUserRepository,
-        bcryptPasswordHasher,
+        bcryptPasswordHasher
       )
       return res
         .status(200)
@@ -79,17 +79,15 @@ const userCtrl = {
         req.body.password,
         bcryptPasswordHasher,
         postSQLUserRepository,
-        jwtTokenManager,
+        jwtTokenManager
       )
       return res.status(200).json({ token })
     } catch (error) {
       if (error instanceof EmailNotFound) {
         console.error(error.log)
-        return res.status(error.status).json({ error: error.message })
       }
       if (error instanceof UserIdNotFound) {
         console.error(error.log)
-        return res.status(error.status).json({ error: error.message })
       }
       console.error(error)
       return res.status(401).json({ error: "Identifiants incorrects" })
