@@ -30,7 +30,7 @@ const userCtrl = {
         console.error(error.log)
         return res.status(error.status).json({ error: error.message })
       }
-      console.error(error)
+      console.error("Unexpected Error:", error)
       return res.status(500).json({ error: "Erreur interne au serveur" })
     }
   },
@@ -62,7 +62,7 @@ const userCtrl = {
         console.error(error.log)
         return res.status(error.status).json({ error: error.message })
       }
-      console.error(error)
+      console.error("Unexpected Error:", error)
       return res.status(500).json({ error: "Erreur interne du serveur" })
     }
   },

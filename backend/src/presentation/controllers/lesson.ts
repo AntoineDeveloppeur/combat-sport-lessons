@@ -22,7 +22,7 @@ export const lessonCtrl = {
         console.error(error.log)
         return res.status(error.status).json({ error: error.message })
       }
-      console.error(error)
+      console.error("Unexpected Error:", error)
       return res.status(500).json({ error: "Erreur Interne du serveur" })
     }
   },
@@ -31,7 +31,7 @@ export const lessonCtrl = {
       const lessons = await getAllLessons(postSQLessonRepository)
       return res.status(200).json({ lessons })
     } catch (error) {
-      console.error(error)
+      console.error("Unexpected Error:", error)
       return res.status(500).json({ error: "Erreur Interne du serveur" })
     }
   },
@@ -48,7 +48,7 @@ export const lessonCtrl = {
         console.error(error.log, error.cause)
         return res.status(error.status).json({ message: error.message })
       }
-      console.error(error)
+      console.error("Unexpected Error:", error)
       return res.status(500).json({ error: "Erreur Interne du serveur" })
     }
   },
