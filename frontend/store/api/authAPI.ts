@@ -1,4 +1,4 @@
-import { Login } from "@/types"
+import type { Login, SignUp } from "@/types"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const authApi = createApi({
@@ -11,10 +11,18 @@ export const authApi = createApi({
       query: (login) => ({
         url: "/login",
         method: "POST",
+
         body: login,
+      }),
+    }),
+    signUp: builder.mutation<{ token: string }, SignUp>({
+      query: (signUp) => ({
+        url: "/sign-up",
+        method: "POST",
+        body: signUp,
       }),
     }),
   }),
 })
 
-export const { useLoginMutation } = authApi
+export const { useLoginMutation, useSignUpMutation } = authApi

@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { FieldErrors, UseFormRegister } from "react-hook-form"
 import { Field, FieldError, FieldLabel } from "../ui/field"
 import { Input } from "../ui/input"
-import type { Login } from "@/types"
 
 interface PasswordFieldProps {
-  register: UseFormRegister<Login>
-  errors: FieldErrors<Login>
+  register: UseFormRegister<any>
+  errors: FieldErrors<any>
   showForgotPassword?: boolean
 }
 
@@ -27,11 +28,7 @@ export function PasswordField({
           </a>
         )}
       </div>
-      <Input
-        id="password"
-        type="password"
-        {...register("password")}
-      />
+      <Input id="password" type="password" {...register("password")} />
       <FieldError>{errors?.password?.message}</FieldError>
     </Field>
   )

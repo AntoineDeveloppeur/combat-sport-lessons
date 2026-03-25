@@ -1,10 +1,12 @@
 import { lessonSlice } from "@/features/lesson/lessonSlice"
 import { configureStore } from "@reduxjs/toolkit"
 import { lessonApi } from "./api/lessonApi"
+import { authApi } from "./api/authAPI"
 export const store = configureStore({
   reducer: {
     lesson: lessonSlice.reducer,
     [lessonApi.reducerPath]: lessonApi.reducer, // Ajoute le reducer de l'API
+    [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(lessonApi.middleware), // Ajoute le middleware

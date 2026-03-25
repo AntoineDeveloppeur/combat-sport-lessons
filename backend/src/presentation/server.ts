@@ -34,6 +34,7 @@ app.use((req, _res, next) => {
   console.log(
     `${req.method} ${fullUrl} - Origin: ${origin} - ${new Date().toISOString()}`
   )
+  console.log({ body: req.body })
   next()
 })
 

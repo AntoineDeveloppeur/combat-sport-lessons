@@ -66,25 +66,25 @@ export default function Page() {
                   errors={errors}
                   showForgotPassword={true}
                 />
-                <div className="flex flex-col gap-3">
-                  <Button type="submit">
-                    {isLoading ? "Chargement" : "Se connecter"}
-                  </Button>
-                  {error && (
-                    <p className="text-center font-medium red text-sm text-[red]">
-                      Il y a une erreur veuillez vous connecter autrement ou
-                      créer un compte
-                    </p>
-                  )}
-                  <Button variant="outline" type="button">
-                    Se connecter avec Google
-                  </Button>
-                  <p className="text-center text-sm">
-                    Vous n&apos;avez pas de compte ?{" "}
-                    <Link href="/sign-up">S&apos;inscrire</Link>
-                  </p>
-                </div>
               </FieldGroup>
+              <div className="flex flex-col gap-3 pt-8">
+                <Button type="submit">
+                  {isLoading ? "Chargement" : "Se connecter"}
+                </Button>
+                {error && (
+                  <p className="text-center font-medium red text-sm text-[red]">
+                    Il y a une erreur veuillez vous connecter autrement ou créer
+                    un compte
+                  </p>
+                )}
+                <Button variant="outline" type="button">
+                  Se connecter avec Google
+                </Button>
+                <p className="text-center text-sm">
+                  Vous n&apos;avez pas de compte ?{" "}
+                  <Link href="/sign-up">S&apos;inscrire</Link>
+                </p>
+              </div>
             </Form>
           </CardContent>
         </Card>

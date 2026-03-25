@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import jwt from "jsonwebtoken"
 import { TokenManager } from "../../domain/services/TokenManager.js"
 
@@ -17,8 +15,8 @@ export class JwtTokenManager implements TokenManager {
       jwt.sign(
         { userId },
         this.secret,
-        { expiresIn: this.expiresIn } as any,
-        (error: any, token: any) => {
+        { expiresIn: this.expiresIn } as Record<string, unknown>,
+        (error: unknown, token: unknown) => {
           if (error || !token) {
             reject(new Error("Erreur lors de la génération du token"))
           } else {
@@ -31,7 +29,7 @@ export class JwtTokenManager implements TokenManager {
 
   async verifyToken(token: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      jwt.verify(token, this.secret, (error: Error | null, decoded: any) => {
+      jwt.verify(token, this.secret, (error: unknown, decoded: unknown) => {
         if (error) {
           reject(new Error("Token invalide ou expiré"))
         } else {
