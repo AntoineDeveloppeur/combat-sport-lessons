@@ -1,15 +1,15 @@
 import { lessonSlice } from "@/features/lesson/lessonSlice"
 import { configureStore } from "@reduxjs/toolkit"
-import { authApi } from "./api/authAPI"
+import { userApi } from "./api/userAPI"
 import { lessonApi } from "./api/lessonApi"
 export const store = configureStore({
   reducer: {
     lesson: lessonSlice.reducer,
     [lessonApi.reducerPath]: lessonApi.reducer, // Ajoute le reducer de l'API
-    [authApi.reducerPath]: authApi.reducer, // Ajoute le reducer de l'API Auth
+    [userApi.reducerPath]: userApi.reducer, // Ajoute le reducer de l'API user
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(lessonApi.middleware, authApi.middleware), // Ajoute les middlewares
+    getDefaultMiddleware().concat(lessonApi.middleware, userApi.middleware), // Ajoute les middlewares
 })
 
 export type AppStore = typeof store

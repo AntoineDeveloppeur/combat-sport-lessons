@@ -18,7 +18,7 @@ import { PasswordField } from "@/components/lessonForm/PasswordField"
 import { ConfirmPasswordField } from "@/components/lessonForm/ConfirmPasswordField"
 import { NameField } from "@/components/lessonForm/NameField"
 import Link from "next/link"
-import { useSignUpMutation } from "@/store/api/authAPI"
+import { useSignUpMutation } from "@/store/api/userAPI"
 
 export default function SignUp() {
   const validationSchema = Yup.object().shape({

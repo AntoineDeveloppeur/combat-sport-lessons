@@ -16,7 +16,7 @@ import { Form } from "@/components/lessonForm/Form"
 import { EmailField } from "@/components/lessonForm/EmailField"
 import { PasswordField } from "@/components/lessonForm/PasswordField"
 import Link from "next/link"
-import { useLoginMutation } from "@/store/api/authAPI"
+import { useLoginMutation } from "@/store/api/userAPI"
 
 export default function Page() {
   const validationSchema = Yup.object().shape({

@@ -1,8 +1,8 @@
 import type { Login, SignUp } from "@/types"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
-export const authApi = createApi({
-  reducerPath: "authApi",
+export const userApi = createApi({
+  reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL}/users`,
   }),
@@ -25,4 +25,4 @@ export const authApi = createApi({
   }),
 })
 
-export const { useLoginMutation, useSignUpMutation } = authApi
+export const { useLoginMutation, useSignUpMutation } = userApi

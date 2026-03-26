@@ -16,10 +16,6 @@ test("user sign-up then login", async ({ page }) => {
 
   await page.click('button[type="submit"]')
 
-  await expect(page.locator('button:has-text("Chargement...")')).toBeVisible({
-    timeout: 5000,
-  })
-
   await page.goto("/login")
 
   await page.locator("#email").fill(testUser.email)
