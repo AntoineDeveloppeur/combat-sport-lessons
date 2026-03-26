@@ -18,11 +18,15 @@ export class JwtTokenManager implements TokenManager {
         { expiresIn: this.expiresIn } as Record<string, unknown>,
         (error: unknown, token: unknown) => {
           if (error || !token) {
-            reject(new Error("Erreur lors de la génération du token"))
+            reject(
+              new Error("Erreur lors de la génération du token", {
+                cause: error,
+              }),
+            )
           } else {
             resolve(token as string)
           }
-        }
+        },
       )
     })
   }

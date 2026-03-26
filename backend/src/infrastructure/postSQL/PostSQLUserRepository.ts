@@ -10,12 +10,12 @@ export class PostSQLUserRepository implements UserRepository {
     this.pool = pool
   }
   async create(user: User): Promise<void> {
-    const { id, name, email, hash, accessRight } = user
+    const { id, name, email, hash, role } = user
     const query = `
-      INSERT INTO users (id, name, email, hash, access_right)
+      INSERT INTO users (user_id, username, email, hash, role)
       VALUES ($1,$2,$3,$4,$5)
     `
-    await this.pool.query(query, [id, name, email, hash, accessRight])
+    await this.pool.query(query, [id, name, email, hash, role])
   }
   async isEmailAlreadyUsed(email: string): Promise<boolean> {
     const query = `SELECT EXISTS(SELECT 1 FROM users WHERE email = $1) as exists`
@@ -23,8 +23,9 @@ export class PostSQLUserRepository implements UserRepository {
     return result.rows[0].exists
   }
   async getHash(id: string): Promise<string> {
-    const query = `SELECT hash FROM users WHERE id = $1`
+    const query = `SELECT hash FROM users WHERE user_id = $1`
     const result = await this.pool.query(query, [id])
+    console.log("result de getHash :", result.rows)
     if (result.rows.length === 0) {
       throw new UserIdNotFound(id)
     }
@@ -39,13 +40,14 @@ export class PostSQLUserRepository implements UserRepository {
     }
   }
   async findUserId(email: string): Promise<string> {
-    const query = `SELECT id FROM users WHERE email = $1`
+    const query = `SELECT user_id FROM users WHERE email = $1`
     const result = await this.pool.query(query, [email])
+    console.log("result de findUserId :", result.rows)
 
     if (result.rows.length === 0) {
       throw new EmailNotFound(email)
     }
-    return result.rows[0].id
+    return result.rows[0].user_id
   }
   async login(email: string, hash: string): Promise<boolean> {
     const query = `

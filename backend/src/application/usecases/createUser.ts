@@ -9,10 +9,10 @@ export async function createUser(
   createUserRequest: CreateUserRequest,
   userRepository: UserRepository,
   idGenerator: IdGenerator,
-  passwordHasher: PasswordHasher
+  passwordHasher: PasswordHasher,
 ) {
   const emailAlreadyUsed = await userRepository.isEmailAlreadyUsed(
-    createUserRequest.email
+    createUserRequest.email,
   )
   if (emailAlreadyUsed) {
     throw new EmailAlreadyUsed(createUserRequest.email)
@@ -23,6 +23,7 @@ export async function createUser(
     name: createUserRequest.name,
     email: createUserRequest.email,
     hash: hash,
+    role: "user",
   })
   await userRepository.create(user)
 }

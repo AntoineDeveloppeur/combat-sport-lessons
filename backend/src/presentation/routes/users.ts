@@ -2,7 +2,7 @@ import express, { Request, Response } from "express"
 import userCtrl from "../controllers/user.js"
 const router = express.Router()
 
-router.post("/", async (req: Request, res: Response) => {
+router.post("/sign-up", async (req: Request, res: Response) => {
   await userCtrl.handleCreateUser(req, res)
 })
 

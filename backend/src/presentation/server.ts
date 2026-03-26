@@ -1,3 +1,5 @@
+import "../config/env.js"
+
 import express from "express"
 import cors from "cors"
 import userRoutes from "./routes/users.js"
@@ -19,7 +21,7 @@ app.use(
   cors({
     origin: ["http://localhost:3000", "http://localhost:3001"], // Ports Next.js
     credentials: true,
-  })
+  }),
 )
 
 // Middleware permettant de comprendre le format json
@@ -32,7 +34,7 @@ app.use((req, _res, next) => {
   const fullUrl = `${req.protocol}://${req.get("host")}${req.url}`
   const origin = req.get("Origin") || req.get("Referer") || "Direct access"
   console.log(
-    `${req.method} ${fullUrl} - Origin: ${origin} - ${new Date().toISOString()}`
+    `${req.method} ${fullUrl} - Origin: ${origin} - ${new Date().toISOString()}`,
   )
   console.log({ body: req.body })
   next()
@@ -40,7 +42,7 @@ app.use((req, _res, next) => {
 
 // Charger le fichier OpenAPI depuis le dossier source
 const swaggerDocument = YAML.load(
-  join(__dirname, "../presentation/swagger/openapi.yaml")
+  join(__dirname, "../presentation/swagger/openapi.yaml"),
 )
 // Documentation Swagger UI
 app.use(
@@ -49,7 +51,7 @@ app.use(
   swaggerUi.setup(swaggerDocument, {
     customCss: ".swagger-ui .topbar { display: none }",
     customSiteTitle: "Repository Pattern API",
-  })
+  }),
 )
 // Export de la spec OpenAPI en JSON (pour import Postman)
 app.get("/api-docs.json", (_req, res) => {
