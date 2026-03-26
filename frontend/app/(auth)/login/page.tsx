@@ -41,7 +41,7 @@ export default function Page() {
     mode: "onSubmit",
   })
 
-  const [login, { isLoading, error }] = useLoginMutation()
+  const [login, { isLoading, error, isSuccess }] = useLoginMutation()
 
   const onValid = async (data: FormData) => {
     await login(data)
@@ -75,6 +75,11 @@ export default function Page() {
                   <p className="text-center font-medium red text-sm text-[red]">
                     Il y a une erreur veuillez vous connecter autrement ou créer
                     un compte
+                  </p>
+                )}
+                {isSuccess && (
+                  <p className="text-center font-medium text-sm text-green-600">
+                    Connexion réussie ! Bienvenue.
                   </p>
                 )}
                 <Button variant="outline" type="button">
