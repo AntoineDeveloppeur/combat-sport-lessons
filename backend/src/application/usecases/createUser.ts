@@ -6,22 +6,20 @@ import { IdGenerator } from "../../domain/services/IdGenerator.js"
 import { PasswordHasher } from "../../domain/services/PasswordHasher.js"
 
 export async function createUser(
-  createUserRequest: CreateUserRequest,
+  req: CreateUserRequest,
   userRepository: UserRepository,
   idGenerator: IdGenerator,
-  passwordHasher: PasswordHasher,
+  passwordHasher: PasswordHasher
 ) {
-  const emailAlreadyUsed = await userRepository.isEmailAlreadyUsed(
-    createUserRequest.email,
-  )
+  const emailAlreadyUsed = await userRepository.isEmailAlreadyUsed(req.email)
   if (emailAlreadyUsed) {
-    throw new EmailAlreadyUsed(createUserRequest.email)
+    throw new EmailAlreadyUsed(req.email)
   }
-  const hash = await passwordHasher.hash(createUserRequest.password)
+  const hash = await passwordHasher.hash(req.password)
   const user = new User({
     id: idGenerator.generate(),
-    name: createUserRequest.name,
-    email: createUserRequest.email,
+    name: req.name,
+    email: req.email,
     hash: hash,
     role: "user",
   })

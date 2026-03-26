@@ -1,0 +1,42 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - navigation [ref=e4]:
+      - list [ref=e5]:
+        - listitem [ref=e6]:
+          - link "Général" [ref=e7] [cursor=pointer]:
+            - /url: /form/general
+        - listitem [ref=e8]:
+          - link "Échauffement" [ref=e9] [cursor=pointer]:
+            - /url: /form/echauffement
+        - listitem [ref=e10]:
+          - link "Corps de séance" [ref=e11] [cursor=pointer]:
+            - /url: /form/corps
+        - listitem [ref=e12]:
+          - link "Retour au calme" [ref=e13] [cursor=pointer]:
+            - /url: /form/calme
+    - group "Retour au calme, écriver une suite d'instruction composés de texte et d'une durée. Vous pouvez ajoutez autant d'instructions que vous pouvez. Ajoutez une instruction avec le boutton \"ajouter une instruction\"" [ref=e15]:
+      - generic [ref=e16]: Retour au calme, écriver une suite d'instruction composés de texte et d'une durée. Vous pouvez ajoutez autant d'instructions que vous pouvez. Ajoutez une instruction avec le boutton "ajouter une instruction"
+      - group [ref=e17]:
+        - generic [ref=e18]: Instruction n°1
+        - textbox [ref=e19]
+      - group [ref=e20]:
+        - spinbutton [ref=e21]: "1"
+        - generic [ref=e22]: min
+        - spinbutton [ref=e23]: "0"
+        - generic [ref=e24]: sec
+      - button "Ajouter un champs" [ref=e25]
+      - generic [ref=e26]:
+        - button "< Prev" [ref=e27]
+        - button "> Next" [ref=e28]
+    - button "Télécharge la lesson" [ref=e29]
+    - button "Sauvegarder la lesson" [ref=e30]
+    - generic [ref=e31]:
+      - button "Récupérer la lesson" [ref=e32]
+      - paragraph [ref=e33]: "Erreur :"
+  - button "Open Next.js Dev Tools" [ref=e39] [cursor=pointer]:
+    - img [ref=e40]
+  - alert [ref=e43]
+```
