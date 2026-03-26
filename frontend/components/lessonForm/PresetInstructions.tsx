@@ -1,7 +1,7 @@
 "use client"
 
 import { FieldLegend } from "@/components/ui/field"
-import SelectField from "@/components/form/SelectField"
+import SelectField from "@/components/lessonForm/SelectField"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
 import { useForm } from "react-hook-form"

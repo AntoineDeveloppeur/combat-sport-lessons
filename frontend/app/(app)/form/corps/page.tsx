@@ -1,8 +1,8 @@
 "use client"
 
 import { FieldSet } from "@/components/ui/field"
-import { Form } from "@/components/form/Form"
-import CustomInstructions from "@/components/form/CustomInstructions"
+import { Form } from "@/components/lessonForm/Form"
+import CustomInstructions from "@/components/lessonForm/CustomInstructions"
 
 export default function Body() {
   return (

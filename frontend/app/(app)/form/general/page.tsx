@@ -2,18 +2,18 @@
 
 import { useForm, UseFormRegister } from "react-hook-form"
 import { FieldSet, FieldLegend } from "@/components/ui/field"
-import { Form } from "@/components/form/Form"
+import { Form } from "@/components/lessonForm/Form"
 import { sportList } from "@/data/sportList"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
-import TwoOptionRadioField from "@/components/form/TwoOptionRadioField"
+import TwoOptionRadioField from "@/components/lessonForm/TwoOptionRadioField"
 import { selectlesson } from "@/features/lesson/lessonSelectors"
 import { useAppSelector } from "@/store/hooks"
-import FormSaveAndNavigate from "@/components/form/FormSaveAndNavigate"
+import FormSaveAndNavigate from "@/components/lessonForm/FormSaveAndNavigate"
 import type { Lesson } from "@/types"
-import ObjectiveField from "@/components/form/ObjectiveField"
-import SelectField from "@/components/form/SelectField"
-import TitleField from "@/components/form/TitleField"
+import ObjectiveField from "@/components/lessonForm/ObjectiveField"
+import SelectField from "@/components/lessonForm/SelectField"
+import TitleField from "@/components/lessonForm/TitleField"
 
 export default function General() {
   const lesson = useAppSelector(selectlesson)

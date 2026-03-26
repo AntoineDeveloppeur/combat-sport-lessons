@@ -2,7 +2,7 @@
 
 import { FieldLegend } from "@/components/ui/field"
 import { Button } from "@/components/ui/button"
-import InstructionField from "@/components/form/InstructionField"
+import InstructionField from "@/components/lessonForm/InstructionField"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
 import type { LessonInstructionKey } from "@/types"
 import FormSaveAndNavigate from "./FormSaveAndNavigate"

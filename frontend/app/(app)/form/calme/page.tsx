@@ -1,17 +1,17 @@
 "use client"
 
 import { FieldSet } from "@/components/ui/field"
-import { Form } from "@/components/form/Form"
+import { Form } from "@/components/lessonForm/Form"
 
 import { coolDownPresetTitles } from "@/data/coolDownPreset"
 
 import { selectlesson } from "@/features/lesson/lessonSelectors"
 import { useAppSelector } from "@/store/hooks"
-import PresetInstructions from "@/components/form/PresetInstructions"
-import CustomInstructions from "@/components/form/CustomInstructions"
-import DownLoadPdfButton from "@/components/form/DownLoadPdfButton"
-import SendLessonToBackend from "@/components/form/SendLessonToBackend"
-import FetchLessonFromBackend from "@/components/form/FetchLessonFromBackend"
+import PresetInstructions from "@/components/lessonForm/PresetInstructions"
+import CustomInstructions from "@/components/lessonForm/CustomInstructions"
+import DownLoadPdfButton from "@/components/lessonForm/DownLoadPdfButton"
+import SendLessonToBackend from "@/components/lessonForm/SendLessonToBackend"
+import FetchLessonFromBackend from "@/components/lessonForm/FetchLessonFromBackend"
 
 export default function Confirm() {
   const lesson = useAppSelector(selectlesson)

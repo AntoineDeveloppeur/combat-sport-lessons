@@ -6,7 +6,7 @@ import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
 import PresetInstructions from "./PresetInstructions"
 import { Lesson } from "@/types"
 
-vi.mock("@/components/form/SelectField", () => ({
+vi.mock("@/components/lessonForm/SelectField", () => ({
   default: ({
     presetType,
     placeholder,
@@ -29,7 +29,7 @@ vi.mock("@/components/form/SelectField", () => ({
   ),
 }))
 
-vi.mock("@/components/form/FormSaveAndNavigate", () => ({
+vi.mock("@/components/lessonForm/FormSaveAndNavigate", () => ({
   default: ({ handleSubmit, prev, next }: any) => (
     <div data-testid="form-save-navigate">
       <button data-testid="prev-button" data-route={prev}>
