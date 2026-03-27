@@ -20,6 +20,8 @@ import { NameField } from "@/components/lessonForm/NameField"
 import Link from "next/link"
 import { useSignUpMutation } from "@/store/api/userAPI"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/hooks/useAuth"
+import { useEffect } from "react"
 
 export default function SignUp() {
   const validationSchema = Yup.object().shape({
@@ -51,14 +53,21 @@ export default function SignUp() {
     mode: "onSubmit",
   })
 
-  const [signUp, { isLoading, error }] = useSignUpMutation()
-
+  const [signUp, { isLoading, error, isSuccess, data: signUpData }] =
+    useSignUpMutation()
+  const { login: saveAuth } = useAuth()
   const router = useRouter()
 
   const onValid = async (data: FormData) => {
     await signUp(data)
-    router.push("/lessons")
   }
+
+  useEffect(() => {
+    if (isSuccess && signUpData) {
+      saveAuth(signUpData.token, signUpData.userId)
+      router.push("/lessons/user")
+    }
+  }, [isSuccess, signUpData, saveAuth, router])
 
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">

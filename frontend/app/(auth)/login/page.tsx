@@ -19,6 +19,9 @@ import Link from "next/link"
 import { useLoginMutation } from "@/store/api/userAPI"
 import { getErrorMessage } from "@/utils/getErrorMessage"
 import { BackendError } from "@/types"
+import { useAuth } from "@/hooks/useAuth"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function Page() {
   const validationSchema = Yup.object().shape({
@@ -43,12 +46,22 @@ export default function Page() {
     mode: "onSubmit",
   })
 
-  const [login, { isLoading, error, isSuccess }] = useLoginMutation()
+  const [login, { isLoading, error, isSuccess, data: loginData }] =
+    useLoginMutation()
   const errorMessage = getErrorMessage(error as BackendError)
+  const { login: saveAuth } = useAuth()
+  const router = useRouter()
 
   const onValid = async (data: FormData) => {
     await login(data)
   }
+
+  useEffect(() => {
+    if (isSuccess && loginData) {
+      saveAuth(loginData.token, loginData.userId)
+      router.push("/lessons/user")
+    }
+  }, [isSuccess, loginData, saveAuth, router])
 
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">

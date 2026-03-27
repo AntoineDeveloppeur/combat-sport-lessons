@@ -1,20 +1,20 @@
 "use client"
 
-import { LessonTable } from "@/components/lessonTable/LessonTable"
-import { useGetAllLessonsQuery } from "@/store/api/lessonApi"
+import { useAuth } from "@/hooks/useAuth"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function LessonsPage() {
-  const { data, isLoading } = useGetAllLessonsQuery()
+  const { isAuthenticated } = useAuth()
+  const router = useRouter()
 
-  return (
-    <div className="container mx-auto py-10">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Mes Lessons</h1>
-        <p className="text-muted-foreground mt-2">
-          Gérez et consultez toutes vos lessons de combat
-        </p>
-      </div>
-      {!isLoading && data?.lessons && <LessonTable data={data.lessons} />}
-    </div>
-  )
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/lessons/user")
+    } else {
+      router.push("/lessons/visitor")
+    }
+  }, [isAuthenticated, router])
+
+  return null
 }

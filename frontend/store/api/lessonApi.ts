@@ -21,6 +21,29 @@ export const lessonApi = createApi({
       }),
       invalidatesTags: ["Lesson"],
     }),
+    deleteLesson: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/lessons/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Lesson"],
+    }),
+    updateLesson: builder.mutation<Lesson, { id: string; lesson: Lesson }>({
+      query: ({ id, lesson }) => ({
+        url: `/lessons/${id}`,
+        method: "PUT",
+        body: lesson,
+      }),
+      invalidatesTags: ["Lesson"],
+    }),
+    duplicateLesson: builder.mutation<Lesson, Lesson>({
+      query: (lesson) => ({
+        url: "/lessons",
+        method: "POST",
+        body: { ...lesson, id: undefined, title: `${lesson.title} (copie)` },
+      }),
+      invalidatesTags: ["Lesson"],
+    }),
   }),
 })
 
@@ -28,4 +51,7 @@ export const {
   useGetLessonQuery,
   usePostLessonMutation,
   useGetAllLessonsQuery,
+  useDeleteLessonMutation,
+  useUpdateLessonMutation,
+  useDuplicateLessonMutation,
 } = lessonApi

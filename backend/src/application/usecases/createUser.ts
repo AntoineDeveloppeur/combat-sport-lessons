@@ -10,18 +10,20 @@ export async function createUser(
   userRepository: UserRepository,
   idGenerator: IdGenerator,
   passwordHasher: PasswordHasher
-) {
+): Promise<string> {
   const emailAlreadyUsed = await userRepository.isEmailAlreadyUsed(req.email)
   if (emailAlreadyUsed) {
     throw new EmailAlreadyUsed(req.email)
   }
   const hash = await passwordHasher.hash(req.password)
+  const userId = idGenerator.generate()
   const user = new User({
-    id: idGenerator.generate(),
+    id: userId,
     name: req.name,
     email: req.email,
     hash: hash,
     role: "user",
   })
   await userRepository.create(user)
+  return userId
 }

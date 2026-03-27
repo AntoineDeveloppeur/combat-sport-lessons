@@ -7,7 +7,7 @@ export const userApi = createApi({
     baseUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL}/users`,
   }),
   endpoints: (builder) => ({
-    login: builder.mutation<{ token: string }, Login>({
+    login: builder.mutation<{ token: string; userId: string }, Login>({
       query: (login) => ({
         url: "/login",
         method: "POST",
@@ -15,7 +15,7 @@ export const userApi = createApi({
         body: login,
       }),
     }),
-    signUp: builder.mutation<{ token: string }, SignUp>({
+    signUp: builder.mutation<{ token: string; userId: string }, SignUp>({
       query: (signUp) => ({
         url: "/sign-up",
         method: "POST",

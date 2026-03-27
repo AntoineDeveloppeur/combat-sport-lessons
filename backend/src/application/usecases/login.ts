@@ -7,8 +7,8 @@ export async function login(
   password: string,
   passwordHasher: PasswordHasher,
   userRepository: UserRepository,
-  tokenManager: TokenManager,
-): Promise<string> {
+  tokenManager: TokenManager
+): Promise<{ token: string; userId: string }> {
   const userId = await userRepository.findUserId(email)
   const hash = await userRepository.getHash(userId)
   const isCredentialCorrect = await passwordHasher.verify(password, hash)
@@ -18,5 +18,5 @@ export async function login(
   }
 
   const token = await tokenManager.generateToken(userId)
-  return token
+  return { token, userId }
 }

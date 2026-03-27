@@ -14,7 +14,7 @@ import {
 import { IconLayoutColumns, IconChevronDown } from "@tabler/icons-react"
 
 import { Lesson } from "@/types"
-import { columns } from "./columns"
+import { getColumns } from "./columns"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -34,9 +34,21 @@ import {
 
 interface LessonTableProps {
   data: Lesson[]
+  userId?: string
+  showActions?: boolean
+  onEdit?: (lessonId: string) => void
+  onDelete?: (lessonId: string) => void
+  onDuplicate?: (lesson: Lesson) => void
 }
 
-export function LessonTable({ data }: LessonTableProps) {
+export function LessonTable({
+  data,
+  userId,
+  showActions = false,
+  onEdit,
+  onDelete,
+  onDuplicate,
+}: LessonTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -44,6 +56,11 @@ export function LessonTable({ data }: LessonTableProps) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [globalFilter, setGlobalFilter] = React.useState("")
+
+  const columns = React.useMemo(
+    () => getColumns({ showActions, userId, onEdit, onDelete, onDuplicate }),
+    [showActions, userId, onEdit, onDelete, onDuplicate]
+  )
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
