@@ -40,3 +40,9 @@ export interface SignUp {
   email: string
   password: string
 }
+
+export interface BackendError {
+  data: {
+    error: string
+  }
+}

@@ -17,6 +17,8 @@ import { EmailField } from "@/components/lessonForm/EmailField"
 import { PasswordField } from "@/components/lessonForm/PasswordField"
 import Link from "next/link"
 import { useLoginMutation } from "@/store/api/userAPI"
+import { getErrorMessage } from "@/utils/getErrorMessage"
+import { BackendError } from "@/types"
 
 export default function Page() {
   const validationSchema = Yup.object().shape({
@@ -42,6 +44,7 @@ export default function Page() {
   })
 
   const [login, { isLoading, error, isSuccess }] = useLoginMutation()
+  const errorMessage = getErrorMessage(error as BackendError)
 
   const onValid = async (data: FormData) => {
     await login(data)
@@ -73,8 +76,7 @@ export default function Page() {
                 </Button>
                 {error && (
                   <p className="text-center font-medium red text-sm text-[red]">
-                    Il y a une erreur veuillez vous connecter autrement ou créer
-                    un compte
+                    {errorMessage}
                   </p>
                 )}
                 {isSuccess && (
