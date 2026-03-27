@@ -37,26 +37,6 @@ export function Footer() {
             <p>
               Image par{" "}
               <a
-                href="https://pixabay.com/fr/users/harutmovsisyan-2839589/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1514845"
-                className="hover:text-white/70 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Harut Movsisyan
-              </a>{" "}
-              de{" "}
-              <a
-                href="https://pixabay.com/fr//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1514845"
-                className="hover:text-white/70 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Pixabay
-              </a>
-            </p>
-            <p>
-              Image par{" "}
-              <a
                 href="https://pixabay.com/fr/users/pranongcreative-4130073/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3897488"
                 className="hover:text-white/70 underline"
                 target="_blank"
@@ -87,26 +67,6 @@ export function Footer() {
               de{" "}
               <a
                 href="https://pixabay.com/fr//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1842466"
-                className="hover:text-white/70 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Pixabay
-              </a>
-            </p>
-            <p>
-              Image par{" "}
-              <a
-                href="https://pixabay.com/fr/users/mickeylit-611797/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=8509963"
-                className="hover:text-white/70 underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Mickey Mikolauskas
-              </a>{" "}
-              de{" "}
-              <a
-                href="https://pixabay.com/fr//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=8509963"
                 className="hover:text-white/70 underline"
                 target="_blank"
                 rel="noopener noreferrer"

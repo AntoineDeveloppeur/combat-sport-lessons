@@ -27,7 +27,7 @@ export function DiscoverSection() {
   return (
     <SectionContainer
       id="discover"
-      backgroundImage="/2.webp"
+      backgroundImage="/boxe.webp"
       backgroundColor="white"
       imageOpacity={0.1}
     >

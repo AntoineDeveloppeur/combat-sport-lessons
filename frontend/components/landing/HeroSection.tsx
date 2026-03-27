@@ -22,7 +22,7 @@ const features = [
 
 export function HeroSection() {
   return (
-    <SectionContainer backgroundImage="/1.webp" backgroundColor="black">
+    <SectionContainer backgroundImage="/mma.webp" backgroundColor="black">
       <div className="max-w-4xl mx-auto text-center space-y-8">
         <h1 className="text-5xl md:text-7xl font-bold leading-tight">
           Créez et Partagez vos Cours de Sport de Combat
