@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken"
 import { TokenManager } from "../../domain/services/TokenManager.js"
+import { TokenGenerationError } from "../../domain/errors/TokenGenerationError.js"
 
 export class JwtTokenManager implements TokenManager {
   private secret: string
@@ -18,15 +19,11 @@ export class JwtTokenManager implements TokenManager {
         { expiresIn: this.expiresIn } as Record<string, unknown>,
         (error: unknown, token: unknown) => {
           if (error || !token) {
-            reject(
-              new Error("Erreur lors de la génération du token", {
-                cause: error,
-              }),
-            )
+            reject(new TokenGenerationError(userId, error as Error))
           } else {
             resolve(token as string)
           }
-        },
+        }
       )
     })
   }
