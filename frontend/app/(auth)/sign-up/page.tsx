@@ -20,7 +20,7 @@ import { NameField } from "@/components/lessonForm/NameField"
 import Link from "next/link"
 import { useSignUpMutation } from "@/store/api/userAPI"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/hooks/useAuth"
+import { useAuth } from "@/contexts/AuthContext"
 import { useEffect } from "react"
 
 export default function SignUp() {

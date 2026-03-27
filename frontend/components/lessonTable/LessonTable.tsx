@@ -39,6 +39,7 @@ interface LessonTableProps {
   onEdit?: (lessonId: string) => void
   onDelete?: (lessonId: string) => void
   onDuplicate?: (lesson: Lesson) => void
+  onRowClick?: (lesson: Lesson) => void
 }
 
 export function LessonTable({
@@ -48,6 +49,7 @@ export function LessonTable({
   onEdit,
   onDelete,
   onDuplicate,
+  onRowClick,
 }: LessonTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -116,7 +118,8 @@ export function LessonTable({
                     {column.id === "sport" && "Sport"}
                     {column.id === "objective" && "Objectif"}
                     {column.id === "duration" && "Durée"}
-                    {column.id === "createdAt" && "Créée"}
+                    {column.id === "creationDate" && "Créée"}
+                    {column.id === "actions" && "Actions"}
                   </DropdownMenuCheckboxItem>
                 )
               })}
@@ -150,6 +153,10 @@ export function LessonTable({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => onRowClick?.(row.original)}
+                  className={
+                    onRowClick ? "cursor-pointer hover:bg-muted/50" : ""
+                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

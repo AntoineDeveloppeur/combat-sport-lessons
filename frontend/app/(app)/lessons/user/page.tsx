@@ -6,9 +6,9 @@ import {
   useDeleteLessonMutation,
   useDuplicateLessonMutation,
 } from "@/store/api/lessonApi"
-import { useAuth } from "@/hooks/useAuth"
+import { useAuth } from "@/contexts/AuthContext"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { LessonFilters } from "@/components/lessonTable/LessonFilters"
 import { Lesson } from "@/types"
 
@@ -19,12 +19,6 @@ export default function LessonsUserPage() {
   const [activeFilter, setActiveFilter] = useState<"all" | "mine">("all")
   const [deleteLesson] = useDeleteLessonMutation()
   const [duplicateLesson] = useDuplicateLessonMutation()
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/lessons/visitor")
-    }
-  }, [isAuthenticated, router])
 
   const filteredLessons = (() => {
     if (!data?.lessons) return []
@@ -67,9 +61,9 @@ export default function LessonsUserPage() {
   return (
     <div className="container mx-auto py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Mes Lessons</h1>
+        <h1 className="text-3xl font-bold">Leçons de sport de combat</h1>
         <p className="text-muted-foreground mt-2">
-          Gérez et consultez toutes vos lessons de combat
+          Gérez et consultez toutes les leçons
         </p>
       </div>
 

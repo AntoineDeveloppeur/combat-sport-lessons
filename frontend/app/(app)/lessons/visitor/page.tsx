@@ -4,27 +4,24 @@ import { LessonTable } from "@/components/lessonTable/LessonTable"
 import { useGetAllLessonsQuery } from "@/store/api/lessonApi"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { useAuth } from "@/hooks/useAuth"
+import { useAuth } from "@/contexts/AuthContext"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { buildAndDownloadPdf } from "@/utils/buildAndDownloadPdf"
+import { Lesson } from "@/types"
 
 export default function LessonsVisitorPage() {
   const { data, isLoading } = useGetAllLessonsQuery()
-  const { isAuthenticated } = useAuth()
-  const router = useRouter()
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/lessons/user")
-    }
-  }, [isAuthenticated, router])
+  const handleRowClick = (lesson: Lesson) => {
+    buildAndDownloadPdf(lesson)
+  }
 
   return (
     <div className="container mx-auto py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Découvrez les Lessons</h1>
+        <h1 className="text-3xl font-bold">Leçons de sports de combat</h1>
         <p className="text-muted-foreground mt-2">
-          Consultez toutes les lessons de combat disponibles
+          Consultez toutes les lessons disponibles
         </p>
       </div>
 
@@ -35,7 +32,11 @@ export default function LessonsVisitorPage() {
       </div>
 
       {!isLoading && data?.lessons && (
-        <LessonTable data={data.lessons} showActions={false} />
+        <LessonTable
+          data={data.lessons}
+          showActions={false}
+          onRowClick={handleRowClick}
+        />
       )}
     </div>
   )
