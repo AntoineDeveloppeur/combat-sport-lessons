@@ -19,6 +19,7 @@ import { ConfirmPasswordField } from "@/components/lessonForm/ConfirmPasswordFie
 import { NameField } from "@/components/lessonForm/NameField"
 import Link from "next/link"
 import { useSignUpMutation } from "@/store/api/userAPI"
+import { useRouter } from "next/navigation"
 
 export default function SignUp() {
   const validationSchema = Yup.object().shape({
@@ -52,8 +53,11 @@ export default function SignUp() {
 
   const [signUp, { isLoading, error }] = useSignUpMutation()
 
+  const router = useRouter()
+
   const onValid = async (data: FormData) => {
     await signUp(data)
+    router.push("/lessons")
   }
 
   return (
