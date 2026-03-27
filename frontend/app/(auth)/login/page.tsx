@@ -84,7 +84,11 @@ export default function Page() {
                     Connexion réussie ! Bienvenue.
                   </p>
                 )}
-                <Button variant="outline" type="button">
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={() => alert("Pas disponible pour le moment")}
+                >
                   Se connecter avec Google
                 </Button>
                 <p className="text-center text-sm">

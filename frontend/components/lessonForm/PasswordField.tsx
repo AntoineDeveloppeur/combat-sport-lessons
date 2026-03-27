@@ -3,7 +3,7 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form"
 import { Field, FieldError, FieldLabel } from "../ui/field"
 import { Input } from "../ui/input"
-
+import Link from "next/link"
 interface PasswordFieldProps {
   register: UseFormRegister<any>
   errors: FieldErrors<any>
@@ -20,12 +20,12 @@ export function PasswordField({
       <div className="flex items-center">
         <FieldLabel htmlFor="password">Mot de passe</FieldLabel>
         {showForgotPassword && (
-          <a
-            href="#"
+          <Link
+            href="/404"
             className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
           >
             Mot de passe oublié ?
-          </a>
+          </Link>
         )}
       </div>
       <Input id="password" type="password" {...register("password")} />
