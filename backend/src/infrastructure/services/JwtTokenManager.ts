@@ -28,7 +28,7 @@ export class JwtTokenManager implements TokenManager {
     })
   }
 
-  async verifyToken(token: string): Promise<string> {
+  async getUserIdFromToken(token: string): Promise<string> {
     return new Promise((resolve, reject) => {
       jwt.verify(token, this.secret, (error: unknown, decoded: unknown) => {
         if (error) {

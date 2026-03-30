@@ -7,6 +7,7 @@ import { postLesson } from "../../application/usecases/lesson/postLesson.js"
 import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGenerator.js"
 import { LessonTransactionError } from "../../domain/errors/LessonTransactionError.js"
 import { LessonIdNotFound } from "../../domain/errors/LessonIdNotFound.js"
+import { JwtTokenManager } from "../../infrastructure/services/JwtTokenManager.js"
 
 const postSQLessonRepository = new PostSQLLessonRepository(pool)
 
@@ -38,9 +39,11 @@ export const lessonCtrl = {
   handlePost: async (req: Request, res: Response) => {
     try {
       await postLesson(
-        req.body,
+        req.body.lesson,
+        req.body.token,
+        new JwtTokenManager(process.env.JWT_SECRET as string),
         postSQLessonRepository,
-        new RandomUUIDGenerator(),
+        new RandomUUIDGenerator()
       )
       return res.status(201).json({ message: "succès" })
     } catch (error) {

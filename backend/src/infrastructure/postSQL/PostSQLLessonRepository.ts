@@ -54,9 +54,12 @@ export class PostSQLLessonRepository implements lessonRepository {
 
     return lessonMapper.mapMany(lessonDB)
   }
-  async save(lesson: Lesson, IdGenerator: IdGenerator): Promise<void> {
+  async save(
+    lesson: Lesson,
+    userId: string,
+    IdGenerator: IdGenerator
+  ): Promise<void> {
     const lessonId = IdGenerator.generate()
-    const userId = "550e8400-e29b-41d4-a716-446655440001"
     const warm_up = "custom"
     const cool_down = "custom"
     const warm_up_preset_title = null

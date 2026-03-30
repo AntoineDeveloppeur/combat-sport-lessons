@@ -13,11 +13,11 @@ export const lessonApi = createApi({
     getAllLessons: builder.query<{ lessons: Lesson[] }, void>({
       query: () => "/lessons",
     }),
-    postLesson: builder.mutation<Lesson, Lesson>({
-      query: (lesson) => ({
+    postLesson: builder.mutation<Lesson, { lesson: Lesson; token: string }>({
+      query: ({ lesson, token }) => ({
         url: "/lessons",
         method: "POST",
-        body: lesson,
+        body: { lesson, token },
       }),
       invalidatesTags: ["Lesson"],
     }),
