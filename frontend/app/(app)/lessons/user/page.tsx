@@ -55,7 +55,7 @@ export default function LessonsUserPage() {
   }
 
   if (!isAuthenticated) {
-    return null
+    router.push("/login")
   }
 
   return (

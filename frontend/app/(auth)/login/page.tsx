@@ -52,16 +52,6 @@ export default function Page() {
   const { login: saveAuth } = useAuth()
   const router = useRouter()
 
-  // const onValid = async (data: FormData) => {
-  //   await login(data)
-  //   if (isSuccess) {
-  //     saveAuth(loginData.token, loginData.userId)
-  //     setTimeout(() => {
-  //       router.push("/lessons")
-  //     }, 1000) // délai en millisecondes (1000ms = 1 seconde)
-  //   }
-  // }
-
   const onValid = async (data: FormData) => {
     await login(data)
   }
