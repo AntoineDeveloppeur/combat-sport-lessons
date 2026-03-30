@@ -8,6 +8,7 @@ import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGen
 import { LessonTransactionError } from "../../domain/errors/LessonTransactionError.js"
 import { LessonIdNotFound } from "../../domain/errors/LessonIdNotFound.js"
 import { JwtTokenManager } from "../../infrastructure/services/JwtTokenManager.js"
+import { TokenInvalid } from "../../domain/errors/TokenInvalid.js"
 
 const postSQLessonRepository = new PostSQLLessonRepository(pool)
 
@@ -49,6 +50,10 @@ export const lessonCtrl = {
     } catch (error) {
       if (error instanceof LessonTransactionError) {
         console.error(error.log, error.cause)
+        return res.status(error.status).json({ message: error.message })
+      }
+      if (error instanceof TokenInvalid) {
+        console.error(error.logMessage, error.cause)
         return res.status(error.status).json({ message: error.message })
       }
       console.error("Unexpected Error:", error)

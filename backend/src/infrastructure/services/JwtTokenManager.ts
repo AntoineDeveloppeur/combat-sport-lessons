@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
 import { TokenManager } from "../../domain/services/TokenManager.js"
 import { TokenGenerationError } from "../../domain/errors/TokenGenerationError.js"
+import { TokenInvalid } from "../../domain/errors/TokenInvalid.js"
 
 export class JwtTokenManager implements TokenManager {
   private secret: string
@@ -32,7 +33,7 @@ export class JwtTokenManager implements TokenManager {
     return new Promise((resolve, reject) => {
       jwt.verify(token, this.secret, (error: unknown, decoded: unknown) => {
         if (error) {
-          reject(new Error("Token invalide ou expiré"))
+          reject(new TokenInvalid(token, error as Error))
         } else {
           const payload = decoded as { userId: string }
           resolve(payload.userId)
