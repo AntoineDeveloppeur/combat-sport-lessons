@@ -32,6 +32,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { buildAndDownloadPdf } from "@/utils/buildAndDownloadPdf"
+import { useState, useMemo } from "react"
 
 interface LessonTableProps {
   data: Lesson[]
@@ -47,15 +48,12 @@ export function LessonTable({
   userId,
   showActions = false,
 }: LessonTableProps) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [globalFilter, setGlobalFilter] = React.useState("")
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [globalFilter, setGlobalFilter] = useState("")
 
-  const columns = React.useMemo(
+  const columns = useMemo(
     () => getColumns({ showActions, userId }),
     [showActions, userId]
   )
