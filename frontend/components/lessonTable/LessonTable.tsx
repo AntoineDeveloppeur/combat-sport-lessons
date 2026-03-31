@@ -31,6 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { buildAndDownloadPdf } from "@/utils/buildAndDownloadPdf"
 
 interface LessonTableProps {
   data: Lesson[]
@@ -39,17 +40,12 @@ interface LessonTableProps {
   onEdit?: (lessonId: string) => void
   onDelete?: (lessonId: string) => void
   onDuplicate?: (lesson: Lesson) => void
-  onRowClick?: (lesson: Lesson) => void
 }
 
 export function LessonTable({
   data,
   userId,
   showActions = false,
-  onEdit,
-  onDelete,
-  onDuplicate,
-  onRowClick,
 }: LessonTableProps) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -60,9 +56,13 @@ export function LessonTable({
   const [globalFilter, setGlobalFilter] = React.useState("")
 
   const columns = React.useMemo(
-    () => getColumns({ showActions, userId, onEdit, onDelete, onDuplicate }),
-    [showActions, userId, onEdit, onDelete, onDuplicate]
+    () => getColumns({ showActions, userId }),
+    [showActions, userId]
   )
+
+  const handleRowClick = (lesson: Lesson) => {
+    buildAndDownloadPdf(lesson)
+  }
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
@@ -153,10 +153,8 @@ export function LessonTable({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => onRowClick?.(row.original)}
-                  className={
-                    onRowClick ? "cursor-pointer hover:bg-muted/50" : ""
-                  }
+                  onClick={() => handleRowClick(row.original)}
+                  className="cursor-pointer hover:bg-muted/50"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

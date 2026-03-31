@@ -32,11 +32,7 @@ export default function LessonsVisitorPage() {
       </div>
 
       {!isLoading && data?.lessons && (
-        <LessonTable
-          data={data.lessons}
-          showActions={false}
-          onRowClick={handleRowClick}
-        />
+        <LessonTable data={data.lessons} showActions={false} />
       )}
     </div>
   )

@@ -15,9 +15,6 @@ import { LessonActions } from "./LessonActions"
 interface ColumnsConfig {
   showActions?: boolean
   userId?: string
-  onEdit?: (lessonId: string) => void
-  onDelete?: (lessonId: string) => void
-  onDuplicate?: (lesson: Lesson) => void
 }
 
 export const getColumns = (config: ColumnsConfig = {}): ColumnDef<Lesson>[] => {
@@ -170,15 +167,7 @@ export const getColumns = (config: ColumnsConfig = {}): ColumnDef<Lesson>[] => {
       cell: ({ row }) => {
         const lesson = row.original
         const isOwner = lesson.userId === config.userId
-        return (
-          <LessonActions
-            lesson={lesson}
-            isOwner={isOwner}
-            onEdit={config.onEdit}
-            onDelete={config.onDelete}
-            onDuplicate={config.onDuplicate}
-          />
-        )
+        return <LessonActions lesson={lesson} isOwner={isOwner} />
       },
     })
   }
