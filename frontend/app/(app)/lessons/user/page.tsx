@@ -8,7 +8,7 @@ import {
 } from "@/store/api/lessonApi"
 import { useAuth } from "@/contexts/AuthContext"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { LessonFilters } from "@/components/lessonTable/LessonFilters"
 import { Lesson } from "@/types"
 
@@ -20,15 +20,13 @@ export default function LessonsUserPage() {
   const [deleteLesson] = useDeleteLessonMutation()
   const [duplicateLesson] = useDuplicateLessonMutation()
 
-  const filteredLessons = (() => {
+  const filteredLessons = useMemo(() => {
     if (!data?.lessons) return []
-
     if (activeFilter === "mine") {
       return data.lessons.filter((lesson) => lesson.userId === userId)
     }
-
     return data.lessons
-  })()
+  }, [data, activeFilter, userId])
 
   const handleEdit = (lessonId: string) => {
     router.push(`/form/${lessonId}`)
