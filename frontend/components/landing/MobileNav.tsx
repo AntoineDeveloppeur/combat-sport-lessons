@@ -50,7 +50,7 @@ export function MobileNav() {
               Se connecter
             </Button>
           </Link>
-          <Link href="/signup" onClick={() => setIsOpen(false)}>
+          <Link href="/sign-up" onClick={() => setIsOpen(false)}>
             <Button
               variant="ghost"
               className="w-full justify-start text-white hover:bg-white/10 hover:text-white text-lg"

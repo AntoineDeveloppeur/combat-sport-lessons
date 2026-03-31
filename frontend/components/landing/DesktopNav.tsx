@@ -20,7 +20,7 @@ export function DesktopNav() {
           Se connecter
         </Button>
       </Link>
-      <Link href="/signup">
+      <Link href="/sign-up">
         <Button className="bg-white text-black hover:bg-white/90 font-bold">
           S&apos;inscrire
         </Button>
