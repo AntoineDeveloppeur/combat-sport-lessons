@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation"
 import { useState, useMemo } from "react"
 import { LessonFilters } from "@/components/lessonTable/LessonFilters"
 import { Lesson } from "@/types"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function LessonsUserPage() {
   const { data, isLoading } = useGetAllLessonsQuery()
@@ -64,11 +66,15 @@ export default function LessonsUserPage() {
           Gérez et consultez toutes les leçons
         </p>
       </div>
-
-      <LessonFilters
-        activeFilter={activeFilter}
-        onFilterChange={setActiveFilter}
-      />
+      <div className="flex flex-row justify-between">
+        <LessonFilters
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+        />
+        <Button variant="outline" asChild>
+          <Link href="/form/general">Créer une leçon</Link>
+        </Button>
+      </div>
 
       {!isLoading && (
         <LessonTable
