@@ -67,7 +67,8 @@ export default function SignUp() {
       saveAuth(signUpData.token, signUpData.userId)
       router.push("/lessons/user")
     }
-  }, [isSuccess, signUpData, saveAuth, router])
+    /* eslint-disable-next-line react-hooks/exhaustive-deps*/
+  }, [isSuccess, signUpData])
 
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
