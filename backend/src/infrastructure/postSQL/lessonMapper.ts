@@ -11,14 +11,16 @@ export const mapOne = (
   lessonDB: PostgreSQLResult<LessonDBRow>,
   warmUpInstructionsDB: PostgreSQLResult<InstructionDBRow>,
   bodyInstructionsDB: PostgreSQLResult<InstructionDBRow>,
-  coolDownInstructionsDB: PostgreSQLResult<InstructionDBRow>
+  coolDownInstructionsDB: PostgreSQLResult<InstructionDBRow>,
 ): Lesson => {
-  const { lesson_id, user_id, created_at, sport, ...rest } = lessonDB.rows[0]
+  const { lesson_id, user_id, created_at, sport, is_public, ...rest } =
+    lessonDB.rows[0]
   const lesson = {
     lessonId: lesson_id,
     userId: user_id,
     creationDate: new Date(created_at),
     sport: sport as Sport,
+    isPublic: is_public,
     ...rest,
     warmUpInstructions: warmUpInstructionsDB.rows,
     bodyInstructions: bodyInstructionsDB.rows,
@@ -28,7 +30,7 @@ export const mapOne = (
 }
 
 export const mapMany = (
-  lessonsDB: PostgreSQLResult<LessonDBwithInstructionRow>
+  lessonsDB: PostgreSQLResult<LessonDBwithInstructionRow>,
 ): Lesson[] => {
   const map = new Map()
 
@@ -36,8 +38,15 @@ export const mapMany = (
     const lessonMap = map.get(lessonDB.lesson_id)
 
     if (!lessonMap) {
-      const { lesson_id, user_id, title, sport, objective, created_at } =
-        lessonDB
+      const {
+        lesson_id,
+        user_id,
+        title,
+        sport,
+        objective,
+        created_at,
+        is_public,
+      } = lessonDB
       const lessonTemp = {
         lessonId: lesson_id,
         userId: user_id,
@@ -45,6 +54,7 @@ export const mapMany = (
         objective,
         creationDate: new Date(created_at),
         sport: sport as Sport,
+        isPublic: is_public,
       }
       const lessonForMap = addInstructions(lessonTemp, lessonDB)
       map.set(lessonDB.lesson_id, lessonForMap)
@@ -63,7 +73,7 @@ export const mapMany = (
 
 export const addInstructions = (
   lesson: Partial<Lesson>,
-  lessonDBwithInstructionRow: LessonDBwithInstructionRow
+  lessonDBwithInstructionRow: LessonDBwithInstructionRow,
 ): Partial<Lesson> => {
   const res: Partial<Lesson> = { ...lesson }
   const { text, type, min, sec, order } = lessonDBwithInstructionRow

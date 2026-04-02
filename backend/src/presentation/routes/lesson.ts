@@ -12,5 +12,8 @@ router.get("/", (req: Request, res: Response) => {
 router.post("/", (req: Request, res: Response) => {
   lessonCtrl.handlePost(req, res)
 })
+router.patch("/:id/visibility", (req: Request, res: Response) => {
+  lessonCtrl.handleToggleVisibility(req, res)
+})
 
 export default router

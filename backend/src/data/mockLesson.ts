@@ -7,6 +7,7 @@ export const mockLesson: Lesson = {
   objective: "dddddddddddddddddddddddddddddddddddd",
   creationDate: new Date(),
   userId: "userId456",
+  isPublic: false,
   bodyInstructions: [
     {
       sec: 23,

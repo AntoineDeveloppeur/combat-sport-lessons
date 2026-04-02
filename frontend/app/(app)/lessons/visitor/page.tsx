@@ -4,17 +4,15 @@ import { LessonTable } from "@/components/lessonTable/LessonTable"
 import { useGetAllLessonsQuery } from "@/store/api/lessonApi"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { useAuth } from "@/contexts/AuthContext"
-import { useRouter } from "next/navigation"
-import { buildAndDownloadPdf } from "@/utils/buildAndDownloadPdf"
-import { Lesson } from "@/types"
+import { useMemo } from "react"
 
 export default function LessonsVisitorPage() {
   const { data, isLoading } = useGetAllLessonsQuery()
 
-  const handleRowClick = (lesson: Lesson) => {
-    buildAndDownloadPdf(lesson)
-  }
+  const publicLessons = useMemo(() => {
+    if (!data?.lessons) return []
+    return data.lessons.filter((lesson) => lesson.isPublic === true)
+  }, [data])
 
   return (
     <div className="container mx-auto py-10">
@@ -31,8 +29,11 @@ export default function LessonsVisitorPage() {
         </Link>
       </div>
 
-      {!isLoading && data?.lessons && (
-        <LessonTable data={data.lessons} showActions={false} />
+      {!isLoading && (
+        <LessonTable
+          data={publicLessons}
+          showActions={false}
+        />
       )}
     </div>
   )

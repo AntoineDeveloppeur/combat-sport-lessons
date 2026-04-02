@@ -9,8 +9,11 @@ import { LessonTransactionError } from "../../domain/errors/LessonTransactionErr
 import { LessonIdNotFound } from "../../domain/errors/LessonIdNotFound.js"
 import { JwtTokenManager } from "../../infrastructure/services/JwtTokenManager.js"
 import { TokenInvalid } from "../../domain/errors/TokenInvalid.js"
+import { toggleLessonVisibility } from "../../application/usecases/lesson/toggleLessonVisibility.js"
+import { NotOwner } from "../../domain/errors/NotOwner.js"
 
 const postSQLessonRepository = new PostSQLLessonRepository(pool)
+const jwtTokenManager = new JwtTokenManager(process.env.JWT_SECRET as string)
 
 export const lessonCtrl = {
   handleGet: async (req: Request, res: Response) => {
@@ -42,9 +45,9 @@ export const lessonCtrl = {
       await postLesson(
         req.body.lesson,
         req.body.token,
-        new JwtTokenManager(process.env.JWT_SECRET as string),
+        jwtTokenManager,
         postSQLessonRepository,
-        new RandomUUIDGenerator()
+        new RandomUUIDGenerator(),
       )
       return res.status(201).json({ message: "succès" })
     } catch (error) {
@@ -55,6 +58,31 @@ export const lessonCtrl = {
       if (error instanceof TokenInvalid) {
         console.error(error.logMessage, error.cause)
         return res.status(error.status).json({ message: error.message })
+      }
+      console.error("Unexpected Error:", error)
+      return res.status(500).json({ error: "Erreur Interne du serveur" })
+    }
+  },
+  handleToggleVisibility: async (req: Request, res: Response) => {
+    try {
+      const lessonId = req.params.id
+      const token = req.body.token
+      const userId = await jwtTokenManager.getUserIdFromToken(token)
+
+      await toggleLessonVisibility(lessonId, userId, postSQLessonRepository)
+      return res.status(200).json({ message: "Visibilité mise à jour" })
+    } catch (error) {
+      if (error instanceof TokenInvalid) {
+        console.error(error.logMessage, error.cause)
+        return res.status(error.status).json({ message: error.message })
+      }
+      if (error instanceof LessonIdNotFound) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof NotOwner) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
       }
       console.error("Unexpected Error:", error)
       return res.status(500).json({ error: "Erreur Interne du serveur" })

@@ -12,6 +12,7 @@ export const lessonApi = createApi({
     }),
     getAllLessons: builder.query<{ lessons: Lesson[] }, void>({
       query: () => "/lessons",
+      providesTags: ["Lesson"],
     }),
     postLesson: builder.mutation<Lesson, { lesson: Lesson; token: string }>({
       query: ({ lesson, token }) => ({
@@ -40,7 +41,22 @@ export const lessonApi = createApi({
       query: (lesson) => ({
         url: "/lessons",
         method: "POST",
-        body: { ...lesson, id: undefined, title: `${lesson.title} (copie)` },
+        body: {
+          ...lesson,
+          lessonId: undefined,
+          title: `${lesson.title} (copie)`,
+        },
+      }),
+      invalidatesTags: ["Lesson"],
+    }),
+    toggleLessonVisibility: builder.mutation<
+      void,
+      { lessonId: string; token: string }
+    >({
+      query: ({ lessonId, token }) => ({
+        url: `/lessons/${lessonId}/visibility`,
+        method: "PATCH",
+        body: { token },
       }),
       invalidatesTags: ["Lesson"],
     }),
@@ -54,4 +70,5 @@ export const {
   useDeleteLessonMutation,
   useUpdateLessonMutation,
   useDuplicateLessonMutation,
+  useToggleLessonVisibilityMutation,
 } = lessonApi

@@ -4,9 +4,9 @@ export interface InstructionType {
   sec: number
 }
 
-// None of the properties are mandatory to allow futur incomplete saving
+// None of the properties are mandatory to allow futur incomplete DB saving
 export interface Lesson {
-  id?: string
+  lessonId?: string
   sport?: string
   title?: string
   objective?: string
@@ -21,6 +21,7 @@ export interface Lesson {
   duration?: number
   author?: string
   userId?: string
+  isPublic?: boolean
 }
 
 export type LessonInstructionKey =

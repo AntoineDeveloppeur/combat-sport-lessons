@@ -10,22 +10,24 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 export default function LessonsUserPage() {
-  const { data, isLoading } = useGetAllLessonsQuery()
   const { isAuthenticated, userId } = useAuth()
   const router = useRouter()
+  if (!isAuthenticated) {
+    router.push("/login")
+  }
+
+  const { data, isLoading } = useGetAllLessonsQuery()
+
   const [activeFilter, setActiveFilter] = useState<"all" | "mine">("all")
 
   const filteredLessons = useMemo(() => {
     if (!data?.lessons) return []
     if (activeFilter === "mine") {
       return data.lessons.filter((lesson) => lesson.userId === userId)
+    } else {
+      return data.lessons.filter((lesson) => lesson.isPublic === true)
     }
-    return data.lessons
   }, [data, activeFilter, userId])
-
-  if (!isAuthenticated) {
-    router.push("/login")
-  }
 
   return (
     <div className="container mx-auto py-10">
@@ -40,7 +42,10 @@ export default function LessonsUserPage() {
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}
         />
-        <Button variant="outline" asChild>
+        <Button
+          variant="outline"
+          asChild
+        >
           <Link href="/form/general">Créer une leçon</Link>
         </Button>
       </div>

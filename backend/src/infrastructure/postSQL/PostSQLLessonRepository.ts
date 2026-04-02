@@ -39,12 +39,12 @@ export class PostSQLLessonRepository implements lessonRepository {
       lessonDB,
       warmUpInstructionsDB,
       bodyInstructionsDB,
-      coolDownInstructionsDB
+      coolDownInstructionsDB,
     )
   }
   async getAll(): Promise<Lesson[]> {
     const query = `
-      SELECT l.lesson_id, l.title, l.sport, l.objective, l.created_at, l.user_id, i.text, i.type, i.min, i.sec, i.order 
+      SELECT l.lesson_id, l.title, l.sport, l.objective, l.created_at, l.user_id, l.is_public, i.text, i.type, i.min, i.sec, i.order 
       FROM lessons l
       LEFT JOIN instructions i
       ON l.lesson_id = i.lesson_id
@@ -57,13 +57,14 @@ export class PostSQLLessonRepository implements lessonRepository {
   async save(
     lesson: Lesson,
     userId: string,
-    IdGenerator: IdGenerator
+    IdGenerator: IdGenerator,
   ): Promise<void> {
     const lessonId = IdGenerator.generate()
     const warm_up = "custom"
     const cool_down = "custom"
     const warm_up_preset_title = null
     const cool_down_preset_title = null
+    const is_public = false
     const paramsLesson = [
       lessonId,
       lesson.title,
@@ -74,11 +75,12 @@ export class PostSQLLessonRepository implements lessonRepository {
       warm_up_preset_title,
       cool_down_preset_title,
       userId,
+      is_public,
     ]
 
     const queryLesson = `
-      INSERT INTO lessons (lesson_id, title, sport, objective, warm_up, cool_down, warm_up_preset_title, cool_down_preset_title, user_id)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      INSERT INTO lessons (lesson_id, title, sport, objective, warm_up, cool_down, warm_up_preset_title, cool_down_preset_title, user_id, is_public)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     `
 
     const [queryInstructions, paramsInstructions] = buildInstructionsQuery(
@@ -86,7 +88,7 @@ export class PostSQLLessonRepository implements lessonRepository {
       lesson.bodyInstructions,
       lesson.coolDownInstructions,
       lessonId,
-      IdGenerator
+      IdGenerator,
     )
 
     await this.pool.query("BEGIN")
@@ -98,5 +100,14 @@ export class PostSQLLessonRepository implements lessonRepository {
       await this.pool.query("ROLLBACK")
       throw new LessonTransactionError(lesson, error as Error)
     }
+  }
+
+  async updateVisibility(lessonId: string, isPublic: boolean): Promise<void> {
+    const query = `
+      UPDATE lessons
+      SET is_public = $1
+      WHERE lesson_id = $2
+    `
+    await this.pool.query(query, [isPublic, lessonId])
   }
 }

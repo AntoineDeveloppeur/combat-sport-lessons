@@ -5,4 +5,5 @@ export interface lessonRepository {
   get(lessonId: string): Promise<Lesson>
   getAll(): Promise<Lesson[]>
   save(lesson: Lesson, userId: string, IdGenerator: IdGenerator): Promise<void>
+  updateVisibility(lessonId: string, isPublic: boolean): Promise<void>
 }

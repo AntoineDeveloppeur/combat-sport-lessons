@@ -22,6 +22,7 @@ CREATE TABLE "lessons" (
   "cool_down_preset_title" varchar,
   "created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
   "user_id" uuid NOT NULL,
+  "is_public" boolean DEFAULT FALSE,
   FOREIGN KEY (user_id) REFERENCES users(user_id)
 
 );
@@ -47,12 +48,12 @@ VALUES ('550e8400-e29b-41d4-a716-446655440001','Jennifer','jenniferDeRouen@gmail
 ('550e8400-e29b-41d4-a716-446655440003','Julie','juliedu75000@free.li','fakehash','moderator');
 
 -- Insertion des 4 leçons
-INSERT INTO lessons (lesson_id, title, sport, objective, "warm_up", "cool_down", "warm_up_preset_title", "cool_down_preset_title", created_at, user_id)
+INSERT INTO lessons (lesson_id, title, sport, objective, "warm_up", "cool_down", "warm_up_preset_title", "cool_down_preset_title", created_at, user_id, is_public)
 VALUES 
-('550e8400-e29b-41d4-a716-446655440011', 'Boxe débutant', 'Boxe', 'Apprendre les bases du jab', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440001'),
-('550e8400-e29b-41d4-a716-446655440012', 'Judo avancé', 'Judo', 'Perfectionner les projections', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440002'),
-('550e8400-e29b-41d4-a716-446655440013', 'Karaté kata', 'Karaté', 'Maîtriser le kata Heian Shodan', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440001'),
-('550e8400-e29b-41d4-a716-446655440014', 'MMA cardio', 'MMA', 'Améliorer endurance et explosivité', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440003');
+('550e8400-e29b-41d4-a716-446655440011', 'Boxe débutant', 'Boxe', 'Apprendre les bases du jab', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440001', TRUE),
+('550e8400-e29b-41d4-a716-446655440012', 'Judo avancé', 'Judo', 'Perfectionner les projections', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440002', TRUE),
+('550e8400-e29b-41d4-a716-446655440013', 'Karaté kata', 'Karaté', 'Maîtriser le kata Heian Shodan', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440001', TRUE),
+('550e8400-e29b-41d4-a716-446655440014', 'MMA cardio', 'MMA', 'Améliorer endurance et explosivité', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440003', TRUE);
 
 -- Instructions pour la leçon 1 (Boxe débutant)
 INSERT INTO instructions (instruction_id, text, type, min, sec, "order", lesson_id)

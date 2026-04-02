@@ -2,7 +2,7 @@ import { Lesson } from "@/types"
 
 export const mockLessons: Lesson[] = [
   {
-    id: 1,
+    lessonId: "1",
     title: "Technique de base - Jab et Direct",
     sport: "Boxe",
     objective:
@@ -12,7 +12,7 @@ export const mockLessons: Lesson[] = [
     author: "Coach Martin",
   },
   {
-    id: 2,
+    lessonId: "2",
     title: "Enchaînements avancés",
     sport: "Boxe",
     objective:
@@ -22,7 +22,7 @@ export const mockLessons: Lesson[] = [
     author: "Coach Martin",
   },
   {
-    id: 3,
+    lessonId: "3",
     title: "Cardio et endurance",
     sport: "MMA",
     objective:
@@ -32,7 +32,7 @@ export const mockLessons: Lesson[] = [
     author: "Coach Sarah",
   },
   {
-    id: 4,
+    lessonId: "4",
     title: "Transitions debout-sol",
     sport: "MMA",
     objective:
@@ -42,7 +42,7 @@ export const mockLessons: Lesson[] = [
     author: "Coach Sarah",
   },
   {
-    id: 5,
+    lessonId: "5",
     title: "Kicks de base - Mae Geri",
     sport: "Karaté",
     objective:
@@ -52,7 +52,7 @@ export const mockLessons: Lesson[] = [
     author: "Sensei Tanaka",
   },
   {
-    id: 6,
+    lessonId: "6",
     title: "Kata Heian Shodan",
     sport: "Karaté",
     objective:
@@ -62,7 +62,7 @@ export const mockLessons: Lesson[] = [
     author: "Sensei Tanaka",
   },
   {
-    id: 7,
+    lessonId: "7",
     title: "Défense et esquives",
     sport: "Boxe",
     objective:
@@ -72,7 +72,7 @@ export const mockLessons: Lesson[] = [
     author: "Coach Martin",
   },
   {
-    id: 8,
+    lessonId: "8",
     title: "Grappling et soumissions",
     sport: "MMA",
     objective:
@@ -82,7 +82,7 @@ export const mockLessons: Lesson[] = [
     author: "Coach Sarah",
   },
   {
-    id: 9,
+    lessonId: "9",
     title: "Kumite - Combat libre",
     sport: "Karaté",
     objective:
@@ -92,7 +92,7 @@ export const mockLessons: Lesson[] = [
     author: "Sensei Tanaka",
   },
   {
-    id: 10,
+    lessonId: "10",
     title: "Conditionnement physique",
     sport: "Boxe",
     objective:

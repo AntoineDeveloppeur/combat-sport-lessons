@@ -11,6 +11,7 @@ export interface LessonDBRow {
   cool_down_preset_title: string | null
   created_at: string
   user_id: string
+  is_public: boolean
 }
 
 export interface InstructionDBRow {
@@ -30,6 +31,7 @@ export interface LessonDBwithInstructionRow {
   objective: string
   created_at: Date
   user_id: string
+  is_public: boolean
   text: string
   type: string
   min: number
