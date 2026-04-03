@@ -1,10 +1,10 @@
-import { lessonSlice } from "@/features/lesson/lessonSlice"
+import { lessonFormSlice } from "@/features/lessonForm/lessonFormSlice"
 import { configureStore } from "@reduxjs/toolkit"
 import { userApi } from "./api/userAPI"
 import { lessonApi } from "./api/lessonApi"
 export const store = configureStore({
   reducer: {
-    lesson: lessonSlice.reducer,
+    lessonForm: lessonFormSlice.reducer,
     [lessonApi.reducerPath]: lessonApi.reducer, // Ajoute le reducer de l'API
     [userApi.reducerPath]: userApi.reducer, // Ajoute le reducer de l'API user
   },

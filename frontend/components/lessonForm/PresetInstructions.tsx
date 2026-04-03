@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { Lesson } from "@/types"
 import FormSaveAndNavigate from "./FormSaveAndNavigate"
 import { useAppSelector } from "@/store/hooks"
-import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { selectLessonForm } from "@/features/lessonForm/lessonFormSelectors"
 
 interface PresetInstructionsProps {
   legend: string
@@ -27,7 +27,7 @@ export default function PresetInstructions({
   prev,
   next,
 }: PresetInstructionsProps) {
-  const lesson = useAppSelector(selectlesson)
+  const lesson = useAppSelector(selectLessonForm)
 
   const validationSchema = Yup.object().shape({
     [presetType]: Yup.string()

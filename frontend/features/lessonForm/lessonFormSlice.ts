@@ -4,11 +4,11 @@ import type { Lesson } from "@/types"
 import { defaultValues } from "@/data/instructionDefaultValues"
 import { calculateLessonDuration } from "@/utils/calculateLessonDuration"
 
-export interface LessonState {
+export interface LessonFormState {
   value: Lesson
 }
 
-const initialState: LessonState = {
+const initialState: LessonFormState = {
   value: {
     warmUp: "custom",
     coolDown: "custom",
@@ -18,8 +18,8 @@ const initialState: LessonState = {
   },
 }
 
-export const lessonSlice = createSlice({
-  name: "lesson",
+export const lessonFormSlice = createSlice({
+  name: "lessonForm",
   initialState,
   reducers: {
     save: (state, action: PayloadAction<Lesson>) => {
@@ -30,4 +30,4 @@ export const lessonSlice = createSlice({
   },
 })
 
-export const { save } = lessonSlice.actions
+export const { save } = lessonFormSlice.actions

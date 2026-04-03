@@ -3,13 +3,13 @@
 import { FieldSet } from "@/components/ui/field"
 import { Form } from "@/components/lessonForm/Form"
 import { warmUpPresetTitles } from "@/data/warmUpPreset"
-import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { selectLessonForm } from "@/features/lessonForm/lessonFormSelectors"
 import { useAppSelector } from "@/store/hooks"
 import PresetInstructions from "@/components/lessonForm/PresetInstructions"
 import CustomInstructions from "@/components/lessonForm/CustomInstructions"
 
 export default function WarmUp() {
-  const lesson = useAppSelector(selectlesson)
+  const lesson = useAppSelector(selectLessonForm)
   const warmUpType = lesson.warmUp === "preset" ? "preset" : "custom"
   const prevPage = "/form/general"
   const nextPage = "/form/corps"

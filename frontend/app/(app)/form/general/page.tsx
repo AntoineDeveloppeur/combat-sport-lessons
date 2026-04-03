@@ -7,7 +7,7 @@ import { sportList } from "@/data/sportList"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
 import TwoOptionRadioField from "@/components/lessonForm/TwoOptionRadioField"
-import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { selectLessonForm } from "@/features/lessonForm/lessonFormSelectors"
 import { useAppSelector } from "@/store/hooks"
 import FormSaveAndNavigate from "@/components/lessonForm/FormSaveAndNavigate"
 import type { Lesson } from "@/types"
@@ -16,7 +16,7 @@ import SelectField from "@/components/lessonForm/SelectField"
 import TitleField from "@/components/lessonForm/TitleField"
 
 export default function General() {
-  const lesson = useAppSelector(selectlesson)
+  const lesson = useAppSelector(selectLessonForm)
 
   const validationSchema = Yup.object().shape({
     sport: Yup.string()

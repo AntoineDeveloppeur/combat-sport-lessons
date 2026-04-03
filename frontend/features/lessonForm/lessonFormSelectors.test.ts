@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest"
-import { selectlesson } from "./lessonSelectors"
+import { selectLessonForm } from "./lessonFormSelectors"
 import type { RootState } from "@/store"
 import type { Lesson } from "@/types"
 
-describe("lessonSelectors", () => {
-  describe("selectlesson", () => {
-    it("should select the lesson value from state", () => {
+describe("lessonFormSelectors", () => {
+  describe("selectLessonForm", () => {
+    it("should select the lesson form value from state", () => {
       const mockLesson: Lesson = {
         sport: "Boxing",
         objective: "Improve stamina",
@@ -17,12 +17,12 @@ describe("lessonSelectors", () => {
       }
 
       const state: RootState = {
-        lesson: {
+        lessonForm: {
           value: mockLesson,
         },
       }
 
-      const result = selectlesson(state)
+      const result = selectLessonForm(state)
 
       expect(result).toEqual(mockLesson)
     })
@@ -34,12 +34,12 @@ describe("lessonSelectors", () => {
       }
 
       const state: RootState = {
-        lesson: {
+        lessonForm: {
           value: mockLesson,
         },
       }
 
-      const result = selectlesson(state)
+      const result = selectLessonForm(state)
 
       expect(result).toEqual(mockLesson)
     })
@@ -50,17 +50,17 @@ describe("lessonSelectors", () => {
       }
 
       const state: RootState = {
-        lesson: {
+        lessonForm: {
           value: mockLesson,
         },
       }
 
-      const result = selectlesson(state)
+      const result = selectLessonForm(state)
 
       expect(result).toBe(mockLesson)
     })
 
-    it("should select lesson with all instruction arrays", () => {
+    it("should select lesson form with all instruction arrays", () => {
       const mockLesson: Lesson = {
         warmUp: "custom",
         coolDown: "custom",
@@ -76,12 +76,12 @@ describe("lessonSelectors", () => {
       }
 
       const state: RootState = {
-        lesson: {
+        lessonForm: {
           value: mockLesson,
         },
       }
 
-      const result = selectlesson(state)
+      const result = selectLessonForm(state)
 
       expect(result.warmUpInstructions).toHaveLength(2)
       expect(result.bodyInstructions).toHaveLength(2)

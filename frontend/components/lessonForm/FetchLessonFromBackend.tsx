@@ -2,7 +2,7 @@ import { Button } from "../ui/button"
 import { useState, useEffect } from "react"
 import { useGetLessonQuery } from "@/store/api/lessonApi"
 import { useAppDispatch } from "@/store/hooks"
-import { save } from "@/features/lesson/lessonSlice"
+import { save } from "@/features/lessonForm/lessonFormSlice"
 export default function FetchLessonFromBackend() {
   const [shouldFetch, setShouldFetch] = useState(false)
   const dispatch = useAppDispatch()

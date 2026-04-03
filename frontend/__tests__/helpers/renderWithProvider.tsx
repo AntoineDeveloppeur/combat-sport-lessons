@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react"
 import { Provider } from "react-redux"
 import { configureStore } from "@reduxjs/toolkit"
-import { lessonSlice } from "@/features/lesson/lessonSlice"
+import { lessonFormSlice } from "@/features/lessonForm/lessonFormSlice"
 import { Lesson } from "@/types"
 import { defaultValues } from "@/data/instructionDefaultValues"
 
@@ -11,7 +11,7 @@ export const renderWithProvider = (
 ) => {
   // Créer un état initial pour le store de test
   const preloadedState = {
-    lesson: {
+    lessonForm: {
       value: lesson || {
         warmUp: "custom",
         coolDown: "custom",
@@ -25,7 +25,7 @@ export const renderWithProvider = (
   // Créer un store de test avec l'état initial personnalisé
   const mockStore = configureStore({
     reducer: {
-      lesson: lessonSlice.reducer,
+      lessonForm: lessonFormSlice.reducer,
     },
     preloadedState,
   })
@@ -38,7 +38,7 @@ export const renderWithProvider = (
 
 export const createWrapper = (lesson?: Lesson) => {
   const preloadedState = {
-    lesson: {
+    lessonForm: {
       value: lesson || {
         warmUp: "custom",
         coolDown: "custom",
@@ -51,7 +51,7 @@ export const createWrapper = (lesson?: Lesson) => {
 
   const mockStore = configureStore({
     reducer: {
-      lesson: lessonSlice.reducer,
+      lessonForm: lessonFormSlice.reducer,
     },
     preloadedState,
   })

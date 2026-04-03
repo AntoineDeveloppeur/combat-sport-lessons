@@ -1,11 +1,11 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { save } from "@/features/lesson/lessonSlice"
+import { save } from "@/features/lessonForm/lessonFormSlice"
 import { useRouter } from "next/navigation"
 import { useAppDispatch } from "@/store/hooks"
 import { UseFormHandleSubmit, FieldValues } from "react-hook-form"
-import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { selectLessonForm } from "@/features/lessonForm/lessonFormSelectors"
 import { useAppSelector } from "@/store/hooks"
 
 interface FormSaveAndNavigateProps {
@@ -21,7 +21,7 @@ export default function FormSaveAndNavigate({
 }: FormSaveAndNavigateProps) {
   const Router = useRouter()
   const dispatch = useAppDispatch()
-  const lesson = useAppSelector(selectlesson)
+  const lesson = useAppSelector(selectLessonForm)
 
   const handleClick = async (route?: string) => {
     const success = await validateFormAndSaveToLesson()

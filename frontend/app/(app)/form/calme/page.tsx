@@ -5,7 +5,7 @@ import { Form } from "@/components/lessonForm/Form"
 
 import { coolDownPresetTitles } from "@/data/coolDownPreset"
 
-import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { selectLessonForm } from "@/features/lessonForm/lessonFormSelectors"
 import { useAppSelector } from "@/store/hooks"
 import PresetInstructions from "@/components/lessonForm/PresetInstructions"
 import CustomInstructions from "@/components/lessonForm/CustomInstructions"
@@ -14,7 +14,7 @@ import SendLessonToBackend from "@/components/lessonForm/SendLessonToBackend"
 import FetchLessonFromBackend from "@/components/lessonForm/FetchLessonFromBackend"
 
 export default function Confirm() {
-  const lesson = useAppSelector(selectlesson)
+  const lesson = useAppSelector(selectLessonForm)
   const coolDownType = lesson.coolDown === "preset" ? "preset" : "custom"
   const prevPage = "/form/corps"
   const nextPage = "/form/calme"

@@ -4,7 +4,7 @@ import * as Yup from "yup"
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
 import { getYupValidationSchema } from "@/utils/getInstructionYupValidationSchema"
 import { useInstructionFieldArray } from "./useInstructionFieldArray"
-import { selectlesson } from "@/features/lesson/lessonSelectors"
+import { selectLessonForm } from "@/features/lessonForm/lessonFormSelectors"
 import { useAppSelector } from "@/store/hooks"
 import type { LessonInstructionKey } from "@/types"
 
@@ -26,7 +26,7 @@ export function useInstructionForm({
   const validationSchema = getYupValidationSchema(fieldName)
   type FormData = Yup.InferType<typeof validationSchema>
 
-  const lesson = useAppSelector(selectlesson)
+  const lesson = useAppSelector(selectLessonForm)
 
   const {
     handleSubmit,

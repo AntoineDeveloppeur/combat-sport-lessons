@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest"
-import { lessonSlice, save } from "./lessonSlice"
+import { lessonFormSlice, save } from "./lessonFormSlice"
 import type { Lesson } from "@/types"
 
-describe("lessonSlice", () => {
+describe("lessonFormSlice", () => {
   describe("reducer", () => {
     it("should return the initial state", () => {
-      const state = lessonSlice.reducer(undefined, { type: "unknown" })
+      const state = lessonFormSlice.reducer(undefined, { type: "unknown" })
 
       expect(state.value).toHaveProperty("warmUp", "custom")
       expect(state.value).toHaveProperty("coolDown", "custom")
@@ -15,7 +15,7 @@ describe("lessonSlice", () => {
     })
 
     it("should have correct initial instruction arrays", () => {
-      const state = lessonSlice.reducer(undefined, { type: "unknown" })
+      const state = lessonFormSlice.reducer(undefined, { type: "unknown" })
 
       expect(state.value.warmUpInstructions).toHaveLength(1)
       expect(state.value.bodyInstructions).toHaveLength(1)
@@ -30,7 +30,9 @@ describe("lessonSlice", () => {
 
   describe("save action", () => {
     it("should save a complete lesson", () => {
-      const initialState = lessonSlice.reducer(undefined, { type: "unknown" })
+      const initialState = lessonFormSlice.reducer(undefined, {
+        type: "unknown",
+      })
 
       const newLesson: Lesson = {
         sport: "Karate",
@@ -42,20 +44,22 @@ describe("lessonSlice", () => {
         coolDownInstructions: [{ text: "Stretching", min: 3, sec: 0 }],
       }
 
-      const state = lessonSlice.reducer(initialState, save(newLesson))
+      const state = lessonFormSlice.reducer(initialState, save(newLesson))
 
       expect(state.value).toEqual({ ...newLesson, duration: 19 })
     })
 
     it("should save a partial lesson", () => {
-      const initialState = lessonSlice.reducer(undefined, { type: "unknown" })
+      const initialState = lessonFormSlice.reducer(undefined, {
+        type: "unknown",
+      })
 
       const partialLesson: Lesson = {
         sport: "Boxing",
         objective: "Build endurance",
       }
 
-      const state = lessonSlice.reducer(initialState, save(partialLesson))
+      const state = lessonFormSlice.reducer(initialState, save(partialLesson))
 
       expect(state.value).toEqual({ ...partialLesson, duration: 0 })
       expect(state.value.sport).toBe("Boxing")
@@ -68,7 +72,7 @@ describe("lessonSlice", () => {
         warmUp: "custom",
       }
 
-      let state = lessonSlice.reducer(undefined, save(firstLesson))
+      let state = lessonFormSlice.reducer(undefined, save(firstLesson))
       expect(state.value.sport).toBe("Judo")
 
       const secondLesson: Lesson = {
@@ -76,14 +80,16 @@ describe("lessonSlice", () => {
         warmUp: "preset",
       }
 
-      state = lessonSlice.reducer(state, save(secondLesson))
+      state = lessonFormSlice.reducer(state, save(secondLesson))
 
       expect(state.value.sport).toBe("Taekwondo")
       expect(state.value.warmUp).toBe("preset")
     })
 
     it("should save lesson with empty instruction arrays", () => {
-      const initialState = lessonSlice.reducer(undefined, { type: "unknown" })
+      const initialState = lessonFormSlice.reducer(undefined, {
+        type: "unknown",
+      })
 
       const lessonWithEmptyArrays: Lesson = {
         warmUp: "custom",
@@ -93,7 +99,7 @@ describe("lessonSlice", () => {
         coolDownInstructions: [],
       }
 
-      const state = lessonSlice.reducer(
+      const state = lessonFormSlice.reducer(
         initialState,
         save(lessonWithEmptyArrays)
       )
@@ -104,7 +110,9 @@ describe("lessonSlice", () => {
     })
 
     it("should save lesson with multiple instructions", () => {
-      const initialState = lessonSlice.reducer(undefined, { type: "unknown" })
+      const initialState = lessonFormSlice.reducer(undefined, {
+        type: "unknown",
+      })
 
       const lessonWithMultipleInstructions: Lesson = {
         warmUp: "custom",
@@ -115,7 +123,7 @@ describe("lessonSlice", () => {
         ],
       }
 
-      const state = lessonSlice.reducer(
+      const state = lessonFormSlice.reducer(
         initialState,
         save(lessonWithMultipleInstructions)
       )
@@ -129,11 +137,13 @@ describe("lessonSlice", () => {
     })
 
     it("should handle lesson with only required fields", () => {
-      const initialState = lessonSlice.reducer(undefined, { type: "unknown" })
+      const initialState = lessonFormSlice.reducer(undefined, {
+        type: "unknown",
+      })
 
       const minimalLesson: Lesson = {}
 
-      const state = lessonSlice.reducer(initialState, save(minimalLesson))
+      const state = lessonFormSlice.reducer(initialState, save(minimalLesson))
 
       expect(state.value).toEqual({ duration: 0 })
     })
@@ -141,7 +151,7 @@ describe("lessonSlice", () => {
 
   describe("slice configuration", () => {
     it("should have correct slice name", () => {
-      expect(lessonSlice.name).toBe("lesson")
+      expect(lessonFormSlice.name).toBe("lessonForm")
     })
 
     it("should export save action", () => {
@@ -153,7 +163,7 @@ describe("lessonSlice", () => {
       const lesson: Lesson = { sport: "MMA" }
       const action = save(lesson)
 
-      expect(action.type).toBe("lesson/save")
+      expect(action.type).toBe("lessonForm/save")
       expect(action.payload).toEqual(lesson)
     })
   })
