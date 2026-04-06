@@ -192,7 +192,8 @@ frontend/
 
 ### Backend Tests (Vitest)
 
-- Unit tests for use cases and domain logic
+- Unit tests for use cases and domain logic are in the same folder than the tested module
+- E2E tests are in src/**test**/
 - Test files: `*.test.ts` or `*.spec.ts`
 - Mock repositories and services using interfaces
 - Run: `cd backend && npm run test`

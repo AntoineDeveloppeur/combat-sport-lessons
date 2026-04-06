@@ -1,5 +1,5 @@
 export class TokenInvalid extends Error {
-  status: number = 401
+  status: number = 403
   logMessage: string
   constructor(token: string, error: Error) {
     const publicMessage =

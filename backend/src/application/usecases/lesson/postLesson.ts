@@ -8,8 +8,9 @@ export async function postLesson(
   token: string,
   tokenManager: TokenManager,
   lessonRepository: lessonRepository,
-  idGenerator: IdGenerator
-) {
+  idGenerator: IdGenerator,
+): Promise<string> {
   const userId = await tokenManager.getUserIdFromToken(token)
-  await lessonRepository.save(lesson, userId, idGenerator)
+  const lessonId = await lessonRepository.save(lesson, userId, idGenerator)
+  return lessonId
 }

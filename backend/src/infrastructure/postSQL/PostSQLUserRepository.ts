@@ -32,7 +32,7 @@ export class PostSQLUserRepository implements UserRepository {
     return result.rows[0].hash
   }
   async updatePassword(id: string, hash: string): Promise<void> {
-    const query = `UPDATE users SET hash = $1 WHERE id = $2`
+    const query = `UPDATE users SET hash = $1 WHERE user_id = $2`
     const result = await this.pool.query(query, [hash, id])
 
     if (result.rowCount === 0) {

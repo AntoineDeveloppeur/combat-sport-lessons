@@ -58,7 +58,7 @@ export class PostSQLLessonRepository implements lessonRepository {
     lesson: Lesson,
     userId: string,
     IdGenerator: IdGenerator,
-  ): Promise<void> {
+  ): Promise<string> {
     const lessonId = IdGenerator.generate()
     const warm_up = "custom"
     const cool_down = "custom"
@@ -96,6 +96,7 @@ export class PostSQLLessonRepository implements lessonRepository {
       await this.pool.query(queryLesson, paramsLesson)
       await this.pool.query(queryInstructions, paramsInstructions)
       await this.pool.query("COMMIT")
+      return lessonId
     } catch (error) {
       await this.pool.query("ROLLBACK")
       throw new LessonTransactionError(lesson, error as Error)

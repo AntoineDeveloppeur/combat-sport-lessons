@@ -8,18 +8,18 @@ import { updatePassword } from "../../application/usecases/updatePassword.js"
 import { CreateUserRequest } from "../../application/dto/CreateUserRequest.js"
 import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGenerator.js"
 import { BcryptPasswordHasher } from "../../infrastructure/services/BcryptPasswordHasher.js"
-import { pool } from "../../infrastructure/postSQL/postSQLPool.js"
+import { getPool } from "../../infrastructure/postSQL/poolFactory.js"
 import { UserIdNotFound } from "../../domain/errors/UserIdNotFound.js"
 import { login } from "../../application/usecases/login.js"
 import { JwtTokenManager } from "../../infrastructure/services/JwtTokenManager.js"
 import { TokenGenerationError } from "../../domain/errors/TokenGenerationError.js"
 
-const postSQLUserRepository = new PostSQLUserRepository(pool)
+const postSQLUserRepository = new PostSQLUserRepository(getPool())
 const randomUUIDGenerator = new RandomUUIDGenerator()
 const bcryptPasswordHasher = new BcryptPasswordHasher()
 const jwtTokenManager = new JwtTokenManager(
   process.env.JWT_SECRET as string,
-  "24h"
+  "24h",
 )
 
 const userCtrl = {
@@ -29,7 +29,7 @@ const userCtrl = {
         req.body as unknown as CreateUserRequest, // Mettre en place un validateur de donnée
         postSQLUserRepository,
         randomUUIDGenerator,
-        bcryptPasswordHasher
+        bcryptPasswordHasher,
       )
       const token = await jwtTokenManager.generateToken(userId)
       return res.status(201).json({ token, userId })
@@ -53,7 +53,7 @@ const userCtrl = {
         req.body.currentPassword,
         req.body.newPassword,
         postSQLUserRepository,
-        bcryptPasswordHasher
+        bcryptPasswordHasher,
       )
       return res
         .status(200)
@@ -85,7 +85,7 @@ const userCtrl = {
         req.body.password,
         bcryptPasswordHasher,
         postSQLUserRepository,
-        jwtTokenManager
+        jwtTokenManager,
       )
       return res.status(200).json({ token, userId })
     } catch (error) {
@@ -95,9 +95,11 @@ const userCtrl = {
       }
       if (error instanceof EmailNotFound) {
         console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
       }
       if (error instanceof UserIdNotFound) {
         console.error(error.log)
+        return res.status(500).json({ error: "Erreur interne du serveur" })
       }
       console.error(error)
       return res.status(401).json({ error: "Identifiants incorrects" })
