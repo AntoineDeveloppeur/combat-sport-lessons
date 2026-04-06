@@ -64,9 +64,9 @@ paths:
       tags:
         - Users
       summary: Modifier le mot de passe
-      description:
-        Met à jour le mot de passe d'un utilisateur après vérification du mot de
-        passe actuel
+      description: |
+        Met à jour le mot de passe d'un utilisateur après vérification du mot
+        de passe actuel
       requestBody:
         required: true
         content:
@@ -104,7 +104,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
               example:
-                error: l'ancien mot de passe donné est incorrect
+                error: "l'ancien mot de passe donné est incorrect"
         "500":
           description: Erreur interne du serveur
           content:
@@ -122,7 +122,7 @@ paths:
                 erreurUserIdNotFound:
                   summary: ID utilisateur non trouvé (erreur interne)
                   value:
-                    error:
+                    error: >
                       Erreur interne au serveur, veuillez contacter
                       l'administrateur
 
@@ -137,17 +137,17 @@ components:
       properties:
         name:
           type: string
-          description: Nom complet de l'utilisateur
+          description: "Nom complet de l'utilisateur"
           example: John Doe
         email:
           type: string
           format: email
-          description: Adresse email unique de l'utilisateur
+          description: "Adresse email unique de l'utilisateur"
           example: john.doe@example.com
         password:
           type: string
           format: password
-          description: Mot de passe de l'utilisateur (minimum 8 caractères)
+          description: "Mot de passe de l'utilisateur (minimum 8 caractères)"
           example: SecurePass123!
 
     UpdatePasswordRequest:
@@ -160,7 +160,7 @@ components:
         email:
           type: string
           format: email
-          description: Email de l'utilisateur
+          description: "Email de l'utilisateur"
           example: john.doe@example.com
         currentPassword:
           type: string
@@ -178,4 +178,4 @@ components:
       properties:
         error:
           type: string
-          description: Message d'erreur
+          description: "Message d'erreur"

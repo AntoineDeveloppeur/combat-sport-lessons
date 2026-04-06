@@ -11,6 +11,11 @@ export default defineConfig({
     environment: "node",
     include: ["src/**/*.{test,spec}.{js,ts}"],
     exclude: ["node_modules", "dist"],
+    testTimeout: 10000,
+    hookTimeout: 10000,
+    pool: "forks",
+    fileParallelism: false,
+    maxConcurrency: 1,
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],

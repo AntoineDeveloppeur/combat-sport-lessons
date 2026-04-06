@@ -2,7 +2,7 @@ import { getLesson } from "../../application/usecases/lesson/getLesson.js"
 import { getAllLessons } from "../../application/usecases/lesson/getAllLessons.js"
 import { PostSQLLessonRepository } from "../../infrastructure/postSQL/PostSQLLessonRepository.js"
 import { Response, Request } from "express"
-import { pool } from "../../infrastructure/postSQL/postSQLPool.js"
+import { getPool } from "../../infrastructure/postSQL/poolFactory.js"
 import { postLesson } from "../../application/usecases/lesson/postLesson.js"
 import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGenerator.js"
 import { LessonTransactionError } from "../../domain/errors/LessonTransactionError.js"
@@ -12,7 +12,7 @@ import { TokenInvalid } from "../../domain/errors/TokenInvalid.js"
 import { toggleLessonVisibility } from "../../application/usecases/lesson/toggleLessonVisibility.js"
 import { NotOwner } from "../../domain/errors/NotOwner.js"
 
-const postSQLessonRepository = new PostSQLLessonRepository(pool)
+const postSQLessonRepository = new PostSQLLessonRepository(getPool())
 const jwtTokenManager = new JwtTokenManager(process.env.JWT_SECRET as string)
 
 export const lessonCtrl = {
@@ -42,14 +42,14 @@ export const lessonCtrl = {
   },
   handlePost: async (req: Request, res: Response) => {
     try {
-      await postLesson(
+      const lessonId = await postLesson(
         req.body.lesson,
         req.body.token,
         jwtTokenManager,
         postSQLessonRepository,
         new RandomUUIDGenerator(),
       )
-      return res.status(201).json({ message: "succès" })
+      return res.status(201).json({ message: "succès", lessonId })
     } catch (error) {
       if (error instanceof LessonTransactionError) {
         console.error(error.log, error.cause)

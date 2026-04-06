@@ -7,22 +7,36 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=repository_pattern_db
-    ports: 
+    ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./src/infrastructure/postSQL/init.sql:/docker-entrypoint-initdb.d/init.sql
+  postgres_test:
+    image: postgres:16
+    container_name: repository_pattern_test_db
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=repository_pattern_test_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+      - ./src/infrastructure/postSQL/init.test.sql:/docker-entrypoint-initdb.d/init.test.sql
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
     restart: always
     ports:
-      - "8888:80" # Expose Web UI to port 8888
+      - "8888:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: password
     volumes:
-      - pgadmin_data:/var/lib/pgadmin # Docker managed volume
-volumes: 
+      - pgadmin_data:/var/lib/pgadmin
+volumes:
   postgres_data:
+  postgres_test_data:
   pgadmin_data:

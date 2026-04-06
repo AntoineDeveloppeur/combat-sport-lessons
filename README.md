@@ -1,6 +1,7 @@
 # 🏗️ Repository Pattern API
 
-> Une API REST démontrant l'implémentation du Repository Pattern avec TypeScript, PostgreSQL et une architecture hexagonale.
+> Une API REST démontrant l'implémentation du Repository Pattern avec
+> TypeScript, PostgreSQL et une architecture hexagonale.
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-Express-green.svg)](https://expressjs.com/)
@@ -13,9 +14,11 @@
 
 Ce projet est un exercice d'apprentissage approfondi visant à maîtriser :
 
-- **Le Repository Pattern** : abstraction de la couche de persistance pour une meilleure testabilité et maintenabilité
+- **Le Repository Pattern** : abstraction de la couche de persistance pour une
+  meilleure testabilité et maintenabilité
 - **SQL natif** : écriture de requêtes SQL brutes avec PostgreSQL (sans ORM)
-- **Architecture hexagonale** : séparation stricte entre domaine, application et infrastructure
+- **Architecture hexagonale** : séparation stricte entre domaine, application et
+  infrastructure
 - **TypeScript avancé** : interfaces, injection de dépendances et typage fort
 
 ## 🚀 Testez l'API
@@ -45,9 +48,11 @@ npm run dev
 
 ### 🎉 Accédez à Swagger
 
-Ouvrez votre navigateur : **[http://localhost:4000/api-docs](http://localhost:4000/api-docs)**
+Ouvrez votre navigateur :
+**[http://localhost:4000/api-docs](http://localhost:4000/api-docs)**
 
-Vous pouvez immédiatement tester les endpoints avec l'interface interactive ! Vous pouvez
+Vous pouvez immédiatement tester les endpoints avec l'interface interactive !
+Vous pouvez
 
 - Créer un utilisateur
 - Modifier le mot de passe
@@ -106,7 +111,8 @@ Tous les contrats (repositories, services) sont dans `src/domain/` :
 
 ### 3. Gestion d'erreurs centralisée
 
-- Classes custom dans `src/domain/errors/` (ex: `EmailNotFound`, `EmailAlreadyExists`)
+- Classes custom dans `src/domain/errors/` (ex: `EmailNotFound`,
+  `EmailAlreadyExists`)
 - Chaque erreur encapsule son message et son code HTTP
 - Un seul bloc `try/catch` dans les contrôleurs pour gérer toutes les erreurs
 
@@ -121,7 +127,8 @@ Tous les contrats (repositories, services) sont dans `src/domain/` :
 
 ## 🗄️ Base de données
 
-La base de données est initialisée avec des **utilisateurs fictifs** pour faciliter les tests.
+La base de données est initialisée avec des **utilisateurs fictifs** pour
+faciliter les tests.
 
 ---
 
@@ -133,3 +140,17 @@ La base de données est initialisée avec des **utilisateurs fictifs** pour faci
 - **Hachage** : bcrypt
 - **Documentation** : Swagger UI + OpenAPI
 - **Outils** : ESLint, Prettier, Nodemon
+
+## 📦 Tests
+
+### backend
+
+Il est nécessaire pour lancer les tests que la base de donnée SQL test soit
+fonctionnelle
+
+```
+cd backend | npm run db:reset
+autre terminal
+cd backend | npm run test
+
+```

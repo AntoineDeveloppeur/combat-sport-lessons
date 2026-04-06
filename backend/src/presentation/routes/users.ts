@@ -6,7 +6,7 @@ router.post("/sign-up", async (req: Request, res: Response) => {
   await userCtrl.handleCreateUser(req, res)
 })
 
-router.patch("/password", async (req: Request, res: Response) => {
+router.put("/password", async (req: Request, res: Response) => {
   await userCtrl.handleUpdatePassword(req, res)
 })
 
