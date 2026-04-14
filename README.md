@@ -150,7 +150,11 @@ fonctionnelle
 
 ```
 cd backend | npm run db:reset
-autre terminal
+```
+
+Dans un autre terminal
+
+```
 cd backend | npm run test
 
 ```
