@@ -37,15 +37,14 @@ export const lessonApi = createApi({
       }),
       invalidatesTags: ["Lesson"],
     }),
-    duplicateLesson: builder.mutation<Lesson, Lesson>({
-      query: (lesson) => ({
-        url: "/lessons",
+    duplicateLesson: builder.mutation<
+      { lesson: Lesson },
+      { lessonId: string; token: string }
+    >({
+      query: ({ lessonId, token }) => ({
+        url: `/lessons/${lessonId}/duplicate`,
         method: "POST",
-        body: {
-          ...lesson,
-          lessonId: undefined,
-          title: `${lesson.title} (copie)`,
-        },
+        body: { token },
       }),
       invalidatesTags: ["Lesson"],
     }),

@@ -4,6 +4,7 @@ import { PostSQLLessonRepository } from "../../infrastructure/postSQL/PostSQLLes
 import { Response, Request } from "express"
 import { getPool } from "../../infrastructure/postSQL/poolFactory.js"
 import { postLesson } from "../../application/usecases/lesson/postLesson.js"
+import { duplicateLesson } from "../../application/usecases/lesson/duplicateLesson.js"
 import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGenerator.js"
 import { LessonTransactionError } from "../../domain/errors/LessonTransactionError.js"
 import { DuplicateLessonTitle } from "../../domain/errors/DuplicateLessonTitle.js"
@@ -87,6 +88,41 @@ export const lessonCtrl = {
       }
       if (error instanceof NotOwner) {
         console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      console.error("Unexpected Error:", error)
+      return res.status(500).json({ error: "Erreur Interne du serveur" })
+    }
+  },
+  handleDuplicate: async (req: Request, res: Response) => {
+    try {
+      const lessonId = req.params.id
+      const token = req.body.token
+
+      const duplicatedLesson = await duplicateLesson(
+        lessonId,
+        token,
+        jwtTokenManager,
+        postSQLessonRepository,
+        new RandomUUIDGenerator()
+      )
+
+      return res.status(201).json({ lesson: duplicatedLesson })
+    } catch (error) {
+      if (error instanceof LessonIdNotFound) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof NotOwner) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof TokenInvalid) {
+        console.error(error.logMessage, error.cause)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof LessonTransactionError) {
+        console.error(error.log, error.cause)
         return res.status(error.status).json({ error: error.message })
       }
       console.error("Unexpected Error:", error)

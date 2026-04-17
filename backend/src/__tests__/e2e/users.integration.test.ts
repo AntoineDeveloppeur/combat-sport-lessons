@@ -5,7 +5,7 @@ import { cleanDatabase, closeTestDatabase } from "./setup.js"
 
 let testCounter = 0
 
-describe("Users E2E", () => {
+describe("Users integration tests", () => {
   afterAll(async () => {
     await closeTestDatabase()
   })

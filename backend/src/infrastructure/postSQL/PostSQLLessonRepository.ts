@@ -39,7 +39,7 @@ export class PostSQLLessonRepository implements lessonRepository {
       lessonDB,
       warmUpInstructionsDB,
       bodyInstructionsDB,
-      coolDownInstructionsDB,
+      coolDownInstructionsDB
     )
   }
   async getAll(): Promise<Lesson[]> {
@@ -57,7 +57,7 @@ export class PostSQLLessonRepository implements lessonRepository {
   async save(
     lesson: Lesson,
     userId: string,
-    IdGenerator: IdGenerator,
+    IdGenerator: IdGenerator
   ): Promise<string> {
     const lessonId = IdGenerator.generate()
     const warm_up = "custom"
@@ -88,7 +88,7 @@ export class PostSQLLessonRepository implements lessonRepository {
       lesson.bodyInstructions,
       lesson.coolDownInstructions,
       lessonId,
-      IdGenerator,
+      IdGenerator
     )
 
     await this.pool.query("BEGIN")
@@ -110,5 +110,72 @@ export class PostSQLLessonRepository implements lessonRepository {
       WHERE lesson_id = $2
     `
     await this.pool.query(query, [isPublic, lessonId])
+  }
+
+  async duplicate(
+    lessonId: string,
+    userId: string,
+    idGenerator: IdGenerator
+  ): Promise<Lesson> {
+    const sourceLesson = await this.get(lessonId)
+
+    const baseTitle = sourceLesson.title
+    const titleQuery = `
+      SELECT title FROM lessons 
+      WHERE title LIKE $1 AND user_id = $2
+      ORDER BY title
+    `
+    const existingTitles = await this.pool.query(titleQuery, [
+      `${baseTitle}%`,
+      userId,
+    ])
+
+    let newTitle = `${baseTitle} (copie)`
+    if (existingTitles.rows.length > 0) {
+      const titles = existingTitles.rows.map((row) => row.title)
+      let counter = 1
+      while (titles.includes(newTitle)) {
+        counter++
+        newTitle = `${baseTitle} (copie ${counter})`
+      }
+    }
+
+    const newLessonId = idGenerator.generate()
+    const queryLesson = `
+      INSERT INTO lessons (lesson_id, title, sport, objective, warm_up, cool_down, warm_up_preset_title, cool_down_preset_title, user_id, is_public)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    `
+    const paramsLesson = [
+      newLessonId,
+      newTitle,
+      sourceLesson.sport,
+      sourceLesson.objective,
+      "custom",
+      "custom",
+      null,
+      null,
+      userId,
+      false,
+    ]
+
+    const [queryInstructions, paramsInstructions] = buildInstructionsQuery(
+      sourceLesson.warmUpInstructions,
+      sourceLesson.bodyInstructions,
+      sourceLesson.coolDownInstructions,
+      newLessonId,
+      idGenerator
+    )
+
+    await this.pool.query("BEGIN")
+    try {
+      await this.pool.query(queryLesson, paramsLesson)
+      await this.pool.query(queryInstructions, paramsInstructions)
+      await this.pool.query("COMMIT")
+
+      return await this.get(newLessonId)
+    } catch (error) {
+      await this.pool.query("ROLLBACK")
+      throw new LessonTransactionError(sourceLesson, error as Error)
+    }
   }
 }

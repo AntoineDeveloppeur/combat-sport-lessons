@@ -7,7 +7,12 @@ export interface lessonRepository {
   save(
     lesson: Lesson,
     userId: string,
-    IdGenerator: IdGenerator,
+    IdGenerator: IdGenerator
   ): Promise<string>
   updateVisibility(lessonId: string, isPublic: boolean): Promise<void>
+  duplicate(
+    lessonId: string,
+    userId: string,
+    idGenerator: IdGenerator
+  ): Promise<Lesson>
 }

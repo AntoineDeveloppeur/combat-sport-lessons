@@ -47,11 +47,24 @@ export function LessonActions({ lesson, isOwner }: LessonActionsProps) {
 
   const [duplicateLesson] = useDuplicateLessonMutation()
   const handleDuplicate = async () => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+      alert("Vous devez être connecté pour dupliquer une leçon")
+      return
+    }
     try {
-      await duplicateLesson(lesson).unwrap()
+      await duplicateLesson({
+        lessonId: lesson.lessonId as string,
+        token,
+      }).unwrap()
+      alert("Leçon dupliquée avec succès ! Disponible dans 'Mes leçons'")
     } catch (error) {
       console.error("Erreur lors de la duplication:", error)
-      alert("Erreur lors de la duplication de la lesson")
+      const errorMessage =
+        error && typeof error === "object" && "data" in error
+          ? (error.data as { error?: string })?.error
+          : undefined
+      alert(errorMessage || "Erreur lors de la duplication de la leçon")
     }
   }
 
@@ -76,10 +89,7 @@ export function LessonActions({ lesson, isOwner }: LessonActionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-        >
+        <Button variant="ghost" size="sm">
           <IconDots className="size-4" />
         </Button>
       </DropdownMenuTrigger>

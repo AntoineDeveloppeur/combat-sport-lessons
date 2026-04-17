@@ -15,5 +15,8 @@ router.post("/", (req: Request, res: Response) => {
 router.patch("/:id/visibility", (req: Request, res: Response) => {
   lessonCtrl.handleToggleVisibility(req, res)
 })
+router.post("/:id/duplicate", (req: Request, res: Response) => {
+  lessonCtrl.handleDuplicate(req, res)
+})
 
 export default router

@@ -92,7 +92,7 @@ describe("Lessons integration tests", () => {
 
     test("retourne 404 si lesson non trouvée", async () => {
       const response = await request(app).get(
-        "/lessons/550e8400-e29b-41d4-a716-446655440999",
+        "/lessons/550e8400-e29b-41d4-a716-446655440999"
       )
 
       expect(response.status).toBe(404)
@@ -253,6 +253,122 @@ describe("Lessons integration tests", () => {
     test("retourne 401 si token invalide", async () => {
       const response = await request(app)
         .patch("/lessons/550e8400-e29b-41d4-a716-446655440999/visibility")
+        .send({ token: "invalid_token" })
+
+      expect(response.status).toBe(403)
+    })
+  })
+
+  describe("POST /lessons/:id/duplicate", () => {
+    test("duplique une lesson avec succès", async () => {
+      const lesson = {
+        title: "Leçon originale",
+        sport: "Boxe",
+        objective: "Test duplication",
+        warmUpInstructions: [
+          { text: "Échauffement", min: 5, sec: 0, order: 1 },
+        ],
+        bodyInstructions: [{ text: "Exercice", min: 10, sec: 0, order: 1 }],
+        coolDownInstructions: [
+          { text: "Retour au calme", min: 3, sec: 0, order: 1 },
+        ],
+      }
+
+      const createResponse = await request(app)
+        .post("/lessons")
+        .send({ lesson, token: userToken })
+      const originalLessonId = createResponse.body.lessonId
+
+      const duplicateResponse = await request(app)
+        .post(`/lessons/${originalLessonId}/duplicate`)
+        .send({ token: userToken })
+
+      expect(duplicateResponse.status).toBe(201)
+      expect(duplicateResponse.body.lesson).toBeDefined()
+      expect(duplicateResponse.body.lesson.title).toBe(
+        "Leçon originale (copie)"
+      )
+      expect(duplicateResponse.body.lesson.isPublic).toBe(false)
+      expect(duplicateResponse.body.lesson.sport).toBe("Boxe")
+      expect(duplicateResponse.body.lesson.warmUpInstructions).toHaveLength(1)
+      expect(duplicateResponse.body.lesson.bodyInstructions).toHaveLength(1)
+      expect(duplicateResponse.body.lesson.coolDownInstructions).toHaveLength(1)
+    })
+
+    test("gère les titres en conflit avec (copie 2), (copie 3)", async () => {
+      const lesson = {
+        title: "Leçon test",
+        sport: "Karaté",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const createResponse = await request(app)
+        .post("/lessons")
+        .send({ lesson, token: userToken })
+      const lessonId = createResponse.body.lessonId
+
+      const duplicate1 = await request(app)
+        .post(`/lessons/${lessonId}/duplicate`)
+        .send({ token: userToken })
+      expect(duplicate1.body.lesson.title).toBe("Leçon test (copie)")
+
+      const duplicate2 = await request(app)
+        .post(`/lessons/${lessonId}/duplicate`)
+        .send({ token: userToken })
+      expect(duplicate2.body.lesson.title).toBe("Leçon test (copie 2)")
+
+      const duplicate3 = await request(app)
+        .post(`/lessons/${lessonId}/duplicate`)
+        .send({ token: userToken })
+      expect(duplicate3.body.lesson.title).toBe("Leçon test (copie 3)")
+    })
+
+    test("retourne 404 si lesson n'existe pas", async () => {
+      const response = await request(app)
+        .post("/lessons/550e8400-e29b-41d4-a716-446655440999/duplicate")
+        .send({ token: userToken })
+
+      expect(response.status).toBe(404)
+      expect(response.body.error).toBeDefined()
+    })
+
+    test("permet à un autre utilisateur de dupliquer une leçon", async () => {
+      const lesson = {
+        title: "Leçon partagée",
+        sport: "MMA",
+        objective: "Test duplication par autre utilisateur",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const createResponse = await request(app)
+        .post("/lessons")
+        .send({ lesson, token: userToken })
+      const lessonId = createResponse.body.lessonId
+
+      const otherUserResponse = await request(app).post("/users/sign-up").send({
+        name: "OtherUser2",
+        email: "other2@example.com",
+        password: "password",
+      })
+      const otherToken = otherUserResponse.body.token
+
+      const response = await request(app)
+        .post(`/lessons/${lessonId}/duplicate`)
+        .send({ token: otherToken })
+
+      expect(response.status).toBe(201)
+      expect(response.body.lesson).toBeDefined()
+      expect(response.body.lesson.title).toBe("Leçon partagée (copie)")
+    })
+
+    test("retourne 403 si token invalide", async () => {
+      const response = await request(app)
+        .post("/lessons/550e8400-e29b-41d4-a716-446655440999/duplicate")
         .send({ token: "invalid_token" })
 
       expect(response.status).toBe(403)
