@@ -3,7 +3,7 @@ import request from "supertest"
 import { app } from "../../presentation/app.js"
 import { cleanDatabase, closeTestDatabase } from "./setup.js"
 
-describe("Lessons E2E", () => {
+describe("Lessons integration tests", () => {
   let userToken: string
 
   beforeEach(async () => {
@@ -92,7 +92,7 @@ describe("Lessons E2E", () => {
 
     test("retourne 404 si lesson non trouvée", async () => {
       const response = await request(app).get(
-        "/lessons/550e8400-e29b-41d4-a716-446655440999"
+        "/lessons/550e8400-e29b-41d4-a716-446655440999",
       )
 
       expect(response.status).toBe(404)

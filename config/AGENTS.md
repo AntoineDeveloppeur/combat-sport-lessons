@@ -89,9 +89,9 @@ npm run test:coverage
 
 ```bash
 # From root directory
-npm run test:integration
-npm run test:integration:ui
-npm run test:integration:debug
+npm run test:e2e
+npm run test:e2e:ui
+npm run test:e2e:debug
 ```
 
 ---
@@ -193,7 +193,7 @@ frontend/
 ### Backend Tests (Vitest)
 
 - Unit tests for use cases and domain logic are in the same folder than the tested module
-- E2E tests are in src/**test**/
+- Integration tests are in src/**test**/
 - Test files: `*.test.ts` or `*.spec.ts`
 - Mock repositories and services using interfaces
 - Run: `cd backend && npm run test`
@@ -208,7 +208,7 @@ frontend/
 
 - Located in `tests/integration/`
 - Test critical user flows (sign-up, login, lesson creation)
-- Run from root: `npm run test:integration`
+- Run from root: `npm run test:e2e`
 
 ---
 
