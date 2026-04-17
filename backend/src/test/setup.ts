@@ -1,4 +1,4 @@
-import { testPool } from "../../infrastructure/postSQL/testPool.js"
+import { testPool } from "../infrastructure/postSQL/testPool.js"
 
 export async function cleanDatabase() {
   await testPool.query("TRUNCATE TABLE instructions CASCADE")

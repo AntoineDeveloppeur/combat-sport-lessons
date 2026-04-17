@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeEach, afterAll } from "vitest"
 import request from "supertest"
-import { app } from "../../presentation/app.js"
+import { app } from "../presentation/app.js"
 import { cleanDatabase, closeTestDatabase } from "./setup.js"
 
 let testCounter = 0
