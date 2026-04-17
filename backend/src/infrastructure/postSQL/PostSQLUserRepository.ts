@@ -22,6 +22,11 @@ export class PostSQLUserRepository implements UserRepository {
     const result = await this.pool.query(query, [email])
     return result.rows[0].exists
   }
+  async isUsernameAlreadyUsed(username: string): Promise<boolean> {
+    const query = `SELECT EXISTS(SELECT 1 FROM users WHERE username = $1) as exists`
+    const result = await this.pool.query(query, [username])
+    return result.rows[0].exists
+  }
   async getHash(id: string): Promise<string> {
     const query = `SELECT hash FROM users WHERE user_id = $1`
     const result = await this.pool.query(query, [id])

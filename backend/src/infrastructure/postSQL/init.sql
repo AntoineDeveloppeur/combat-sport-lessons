@@ -4,8 +4,8 @@ CREATE TYPE warm_up_cool_down_mode_enum AS ENUM ('custom','preset');
 
 CREATE TABLE "users" (
   "user_id" uuid PRIMARY KEY,
-  "username" varchar,
-  "email" VARCHAR(50),
+  "username" varchar UNIQUE NOT NULL,
+  "email" VARCHAR(50) UNIQUE NOT NULL,
   "hash" varchar,
   "role" role_enum,
   "created_at" timestamp DEFAULT CURRENT_TIMESTAMP
@@ -13,7 +13,7 @@ CREATE TABLE "users" (
 
 CREATE TABLE "lessons" (
   "lesson_id" uuid PRIMARY KEY,
-  "title" varchar,
+  "title" varchar UNIQUE NOT NULL,
   "sport" varchar,
   "objective" varchar,
   "warm_up" warm_up_cool_down_mode_enum,

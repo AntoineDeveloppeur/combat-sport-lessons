@@ -6,6 +6,7 @@ import { getPool } from "../../infrastructure/postSQL/poolFactory.js"
 import { postLesson } from "../../application/usecases/lesson/postLesson.js"
 import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGenerator.js"
 import { LessonTransactionError } from "../../domain/errors/LessonTransactionError.js"
+import { DuplicateLessonTitle } from "../../domain/errors/DuplicateLessonTitle.js"
 import { LessonIdNotFound } from "../../domain/errors/LessonIdNotFound.js"
 import { JwtTokenManager } from "../../infrastructure/services/JwtTokenManager.js"
 import { TokenInvalid } from "../../domain/errors/TokenInvalid.js"
@@ -47,13 +48,17 @@ export const lessonCtrl = {
         req.body.token,
         jwtTokenManager,
         postSQLessonRepository,
-        new RandomUUIDGenerator(),
+        new RandomUUIDGenerator()
       )
       return res.status(201).json({ message: "succès", lessonId })
     } catch (error) {
       if (error instanceof LessonTransactionError) {
         console.error(error.log, error.cause)
         return res.status(error.status).json({ message: error.message })
+      }
+      if (error instanceof DuplicateLessonTitle) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
       }
       if (error instanceof TokenInvalid) {
         console.error(error.logMessage, error.cause)

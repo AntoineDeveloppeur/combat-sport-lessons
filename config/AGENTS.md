@@ -212,6 +212,115 @@ frontend/
 
 ---
 
+## Critical Checklists
+
+### When Adding a Custom Error Class
+
+**ALWAYS complete ALL these steps:**
+
+1. ✅ Create the error class in `domain/errors/[ErrorName].ts`
+   - Must extend `Error`
+   - Must have `status: number` property
+   - Must have `log` property with relevant context
+   - Must call `super()` with public message
+
+2. ✅ **Update the controller** in `presentation/controllers/`
+   - Import the new error class
+   - Add `if (error instanceof [ErrorName])` block in catch
+   - Log the error: `console.error(error.log)`
+   - Return appropriate response: `res.status(error.status).json({ error: error.message })`
+
+3. ✅ Create/update tests for the use case
+   - Test that the error is thrown in the correct scenario
+   - Use `expect(...).rejects.toThrow([ErrorName])`
+
+**Example:**
+
+```typescript
+// 1. domain/errors/DuplicateUsername.ts
+export class DuplicateUsername extends Error {
+  status: number = 409
+  log: { logMessage: string; username: string }
+  constructor(username: string) {
+    const publicMessage = "Ce nom d'utilisateur est déjà utilisé"
+    super(publicMessage)
+    this.log = { logMessage: `Duplicate username: ${username}`, username }
+  }
+}
+
+// 2. presentation/controllers/user.ts
+import { DuplicateUsername } from "../../domain/errors/DuplicateUsername.js"
+
+catch (error) {
+  if (error instanceof DuplicateUsername) {
+    console.error(error.log)
+    return res.status(error.status).json({ error: error.message })
+  }
+}
+
+// 3. Test
+await expect(
+  createUser(...)
+).rejects.toThrow(DuplicateUsername)
+```
+
+### When Adding a Method to a Repository Interface
+
+**ALWAYS complete ALL these steps:**
+
+1. ✅ Add method to the interface in `domain/repositories/`
+
+   ```typescript
+   export interface UserRepository {
+     isUsernameAlreadyUsed(username: string): Promise<boolean>
+   }
+   ```
+
+2. ✅ **Implement the method** in `infrastructure/postSQL/`
+
+   ```typescript
+   async isUsernameAlreadyUsed(username: string): Promise<boolean> {
+     const query = `SELECT EXISTS(SELECT 1 FROM users WHERE username = $1) as exists`
+     const result = await this.pool.query(query, [username])
+     return result.rows[0].exists
+   }
+   ```
+
+3. ✅ **Update ALL existing tests** that mock this repository
+   - Add the new method to mock objects: `isUsernameAlreadyUsed: vi.fn().mockResolvedValue(false)`
+   - Tests will fail with TypeScript errors if you forget this step
+
+**Example:**
+
+```typescript
+// Before: Test will FAIL after adding isUsernameAlreadyUsed to interface
+const mockUserRepository: Partial<UserRepository> = {
+  isEmailAlreadyUsed: vi.fn().mockResolvedValue(false),
+  create: vi.fn().mockResolvedValue(undefined),
+}
+
+// After: Test will PASS
+const mockUserRepository: Partial<UserRepository> = {
+  isEmailAlreadyUsed: vi.fn().mockResolvedValue(false),
+  isUsernameAlreadyUsed: vi.fn().mockResolvedValue(false), // ✅ Added
+  create: vi.fn().mockResolvedValue(undefined),
+}
+```
+
+### When Adding Database Constraints (UNIQUE, NOT NULL, etc.)
+
+**ALWAYS complete ALL these steps:**
+
+1. ✅ Update `init.sql` with the constraint
+2. ✅ Create corresponding custom error class
+3. ✅ Update repository interface with validation method
+4. ✅ Implement validation in PostgreSQL repository
+5. ✅ Update use case to check constraint before saving
+6. ✅ Update controller to handle the error
+7. ✅ Update all test mocks for the repository
+
+---
+
 ## Common Patterns
 
 ### Error Handling (Backend)

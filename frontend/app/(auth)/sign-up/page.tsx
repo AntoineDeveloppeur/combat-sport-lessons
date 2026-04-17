@@ -94,8 +94,7 @@ export default function SignUp() {
                 </Button>
                 {error && (
                   <p className="text-center font-medium red text-sm text-[red]">
-                    Il y a une erreur dans la création du compte, essayez à
-                    nouveau plus tard
+                    {error.data?.error}
                   </p>
                 )}
                 <Button variant="outline" type="button">

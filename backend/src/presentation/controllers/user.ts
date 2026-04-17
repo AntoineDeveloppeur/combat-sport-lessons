@@ -3,6 +3,7 @@ import { Response, Request } from "express"
 import { PostSQLUserRepository } from "../../infrastructure/postSQL/PostSQLUserRepository.js"
 import { EmailNotFound } from "../../domain/errors/EmailNotFound.js"
 import { EmailAlreadyUsed } from "../../domain/errors/EmailAlreadyUsed.js"
+import { DuplicateUsername } from "../../domain/errors/DuplicateUsername.js"
 import { IncorrectCurrentPassword } from "../../domain/errors/IncorrectCurrentPassword.js"
 import { updatePassword } from "../../application/usecases/updatePassword.js"
 import { CreateUserRequest } from "../../application/dto/CreateUserRequest.js"
@@ -19,7 +20,7 @@ const randomUUIDGenerator = new RandomUUIDGenerator()
 const bcryptPasswordHasher = new BcryptPasswordHasher()
 const jwtTokenManager = new JwtTokenManager(
   process.env.JWT_SECRET as string,
-  "24h",
+  "24h"
 )
 
 const userCtrl = {
@@ -29,12 +30,16 @@ const userCtrl = {
         req.body as unknown as CreateUserRequest, // Mettre en place un validateur de donnée
         postSQLUserRepository,
         randomUUIDGenerator,
-        bcryptPasswordHasher,
+        bcryptPasswordHasher
       )
       const token = await jwtTokenManager.generateToken(userId)
       return res.status(201).json({ token, userId })
     } catch (error) {
       if (error instanceof EmailAlreadyUsed) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof DuplicateUsername) {
         console.error(error.log)
         return res.status(error.status).json({ error: error.message })
       }
@@ -53,7 +58,7 @@ const userCtrl = {
         req.body.currentPassword,
         req.body.newPassword,
         postSQLUserRepository,
-        bcryptPasswordHasher,
+        bcryptPasswordHasher
       )
       return res
         .status(200)
@@ -85,7 +90,7 @@ const userCtrl = {
         req.body.password,
         bcryptPasswordHasher,
         postSQLUserRepository,
-        jwtTokenManager,
+        jwtTokenManager
       )
       return res.status(200).json({ token, userId })
     } catch (error) {
