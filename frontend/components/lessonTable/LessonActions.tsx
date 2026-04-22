@@ -17,6 +17,8 @@ import {
   useToggleLessonVisibilityMutation,
 } from "@/store/api/lessonApi"
 import { useRouter } from "next/navigation"
+import { useAppDispatch } from "@/store/hooks"
+import { save } from "@/features/lessonForm/lessonFormSlice"
 
 interface LessonActionsProps {
   lesson: Lesson
@@ -29,18 +31,33 @@ export function LessonActions({ lesson, isOwner }: LessonActionsProps) {
   }
 
   const router = useRouter()
+  const dispatch = useAppDispatch()
   const handleEdit = () => {
-    router.push(`/form/${lesson.lessonId}`)
+    dispatch(save(lesson))
+    router.push("/form/general")
   }
 
   const [deleteLesson] = useDeleteLessonMutation()
   const handleDelete = async () => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+      alert("Vous devez être connecté pour supprimer une leçon")
+      return
+    }
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette lesson ?")) {
       try {
-        await deleteLesson(lesson.lessonId as string).unwrap()
+        await deleteLesson({
+          lessonId: lesson.lessonId as string,
+          token,
+        }).unwrap()
+        alert("Leçon supprimée avec succès")
       } catch (error) {
         console.error("Erreur lors de la suppression:", error)
-        alert("Erreur lors de la suppression de la lesson")
+        const errorMessage =
+          error && typeof error === "object" && "data" in error
+            ? (error.data as { error?: string })?.error
+            : undefined
+        alert(errorMessage || "Erreur lors de la suppression de la leçon")
       }
     }
   }
@@ -89,7 +106,10 @@ export function LessonActions({ lesson, isOwner }: LessonActionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm">
+        <Button
+          variant="ghost"
+          size="sm"
+        >
           <IconDots className="size-4" />
         </Button>
       </DropdownMenuTrigger>

@@ -32,6 +32,8 @@ export interface LessonDBwithInstructionRow {
   created_at: Date
   user_id: string
   is_public: boolean
+  warm_up: "custom" | "preset"
+  cool_down: "custom" | "preset"
   text: string
   type: string
   min: number

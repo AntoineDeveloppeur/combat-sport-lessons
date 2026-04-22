@@ -6,6 +6,7 @@ import { IdGenerator } from "../../domain/services/IdGenerator.js"
 import { buildInstructionsQuery } from "./buildInstructionsQuery.js"
 import { LessonIdNotFound } from "../../domain/errors/LessonIdNotFound.js"
 import { LessonTransactionError } from "../../domain/errors/LessonTransactionError.js"
+import { NotOwner } from "../../domain/errors/NotOwner.js"
 
 export class PostSQLLessonRepository implements lessonRepository {
   constructor(public readonly pool: Pool) {}
@@ -176,6 +177,76 @@ export class PostSQLLessonRepository implements lessonRepository {
     } catch (error) {
       await this.pool.query("ROLLBACK")
       throw new LessonTransactionError(sourceLesson, error as Error)
+    }
+  }
+
+  async delete(lessonId: string, userId: string): Promise<void> {
+    const lesson = await this.get(lessonId)
+
+    if (lesson.userId !== userId) {
+      throw new NotOwner(userId, lessonId)
+    }
+
+    const query = `
+      DELETE FROM lessons WHERE lesson_id = $1
+    `
+    await this.pool.query(query, [lessonId])
+  }
+
+  async titleExistsGlobally(
+    title: string,
+    excludeLessonId?: string
+  ): Promise<boolean> {
+    const query = excludeLessonId
+      ? `SELECT EXISTS(SELECT 1 FROM lessons WHERE title = $1 AND lesson_id != $2)`
+      : `SELECT EXISTS(SELECT 1 FROM lessons WHERE title = $1)`
+
+    const params = excludeLessonId ? [title, excludeLessonId] : [title]
+    const result = await this.pool.query(query, params)
+
+    return result.rows[0].exists
+  }
+
+  async update(
+    lessonId: string,
+    lesson: Lesson,
+    idGenerator: IdGenerator
+  ): Promise<Lesson> {
+    const queryLesson = `
+      UPDATE lessons 
+      SET title = $1, sport = $2, objective = $3
+      WHERE lesson_id = $4
+    `
+    const paramsLesson = [
+      lesson.title,
+      lesson.sport,
+      lesson.objective,
+      lessonId,
+    ]
+
+    const deleteInstructionsQuery = `
+      DELETE FROM instructions WHERE lesson_id = $1
+    `
+
+    const [queryInstructions, paramsInstructions] = buildInstructionsQuery(
+      lesson.warmUpInstructions,
+      lesson.bodyInstructions,
+      lesson.coolDownInstructions,
+      lessonId,
+      idGenerator
+    )
+
+    await this.pool.query("BEGIN")
+    try {
+      await this.pool.query(queryLesson, paramsLesson)
+      await this.pool.query(deleteInstructionsQuery, [lessonId])
+      await this.pool.query(queryInstructions, paramsInstructions)
+      await this.pool.query("COMMIT")
+
+      return await this.get(lessonId)
+    } catch (error) {
+      await this.pool.query("ROLLBACK")
+      throw new LessonTransactionError(lesson, error as Error)
     }
   }
 }

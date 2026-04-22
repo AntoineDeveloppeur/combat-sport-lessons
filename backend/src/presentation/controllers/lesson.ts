@@ -5,6 +5,8 @@ import { Response, Request } from "express"
 import { getPool } from "../../infrastructure/postSQL/poolFactory.js"
 import { postLesson } from "../../application/usecases/lesson/postLesson.js"
 import { duplicateLesson } from "../../application/usecases/lesson/duplicateLesson.js"
+import { deleteLesson } from "../../application/usecases/lesson/deleteLesson.js"
+import { updateLesson } from "../../application/usecases/lesson/updateLesson.js"
 import { RandomUUIDGenerator } from "../../infrastructure/services/RandomUUIDGenerator.js"
 import { LessonTransactionError } from "../../domain/errors/LessonTransactionError.js"
 import { DuplicateLessonTitle } from "../../domain/errors/DuplicateLessonTitle.js"
@@ -49,7 +51,7 @@ export const lessonCtrl = {
         req.body.token,
         jwtTokenManager,
         postSQLessonRepository,
-        new RandomUUIDGenerator()
+        new RandomUUIDGenerator(),
       )
       return res.status(201).json({ message: "succès", lessonId })
     } catch (error) {
@@ -104,7 +106,7 @@ export const lessonCtrl = {
         token,
         jwtTokenManager,
         postSQLessonRepository,
-        new RandomUUIDGenerator()
+        new RandomUUIDGenerator(),
       )
 
       return res.status(201).json({ lesson: duplicatedLesson })
@@ -119,6 +121,77 @@ export const lessonCtrl = {
       }
       if (error instanceof TokenInvalid) {
         console.error(error.logMessage, error.cause)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof LessonTransactionError) {
+        console.error(error.log, error.cause)
+        return res.status(error.status).json({ error: error.message })
+      }
+      console.error("Unexpected Error:", error)
+      return res.status(500).json({ error: "Erreur Interne du serveur" })
+    }
+  },
+  handleDelete: async (req: Request, res: Response) => {
+    try {
+      const lessonId = req.params.id
+      const token = req.body.token
+
+      await deleteLesson(
+        lessonId,
+        token,
+        jwtTokenManager,
+        postSQLessonRepository,
+      )
+
+      return res.status(200).json({ message: "Leçon supprimée avec succès" })
+    } catch (error) {
+      if (error instanceof LessonIdNotFound) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof NotOwner) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof TokenInvalid) {
+        console.error(error.logMessage, error.cause)
+        return res.status(error.status).json({ error: error.message })
+      }
+      console.error("Unexpected Error:", error)
+      return res.status(500).json({ error: "Erreur Interne du serveur" })
+    }
+  },
+  handleUpdate: async (req: Request, res: Response) => {
+    try {
+      const lessonId = req.params.id
+      const lesson = req.body.lesson
+      const token = req.body.token
+
+      const updatedLesson = await updateLesson(
+        lessonId,
+        lesson,
+        token,
+        jwtTokenManager,
+        postSQLessonRepository,
+        new RandomUUIDGenerator(),
+      )
+
+      return res.status(200).json({ lesson: updatedLesson })
+    } catch (error) {
+      if (error instanceof LessonIdNotFound) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof NotOwner) {
+        console.error(error.log)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof TokenInvalid) {
+        console.error(error.logMessage, error.cause)
+        return res.status(error.status).json({ error: error.message })
+      }
+      if (error instanceof DuplicateLessonTitle) {
+        console.error(error.log)
         return res.status(error.status).json({ error: error.message })
       }
       if (error instanceof LessonTransactionError) {

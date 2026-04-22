@@ -184,6 +184,69 @@ describe("Lessons integration tests", () => {
       expect(allLessons.body.lessons).toHaveLength(1)
       expect(allLessons.body.lessons[0].warmUpInstructions).toHaveLength(2)
     })
+
+    test("retourne 409 si le titre existe déjà globalement", async () => {
+      const lesson1 = {
+        title: "Titre unique global",
+        sport: "Boxe",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      await request(app)
+        .post("/lessons")
+        .send({ lesson: lesson1, token: userToken })
+
+      const lesson2 = {
+        title: "Titre unique global",
+        sport: "Karaté",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const response = await request(app)
+        .post("/lessons")
+        .send({ lesson: lesson2, token: userToken })
+
+      expect(response.status).toBe(409)
+      expect(response.body.error).toBeDefined()
+    })
+
+    test("permet de créer une leçon avec un titre différent", async () => {
+      const lesson1 = {
+        title: "Titre A",
+        sport: "Boxe",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const lesson2 = {
+        title: "Titre B",
+        sport: "Karaté",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const response1 = await request(app)
+        .post("/lessons")
+        .send({ lesson: lesson1, token: userToken })
+
+      const response2 = await request(app)
+        .post("/lessons")
+        .send({ lesson: lesson2, token: userToken })
+
+      expect(response1.status).toBe(201)
+      expect(response2.status).toBe(201)
+      expect(response1.body.lessonId).not.toBe(response2.body.lessonId)
+    })
   })
 
   describe("PATCH /lessons/:id/visibility", () => {
@@ -372,6 +435,407 @@ describe("Lessons integration tests", () => {
         .send({ token: "invalid_token" })
 
       expect(response.status).toBe(403)
+    })
+  })
+
+  describe("DELETE /lessons/:id", () => {
+    test("supprime une leçon avec succès si owner", async () => {
+      const lesson = {
+        title: "Leçon à supprimer",
+        sport: "Boxe",
+        objective: "Test suppression",
+        warmUpInstructions: [
+          { text: "Échauffement", min: 5, sec: 0, order: 1 },
+        ],
+        bodyInstructions: [{ text: "Exercice", min: 10, sec: 0, order: 1 }],
+        coolDownInstructions: [
+          { text: "Retour au calme", min: 3, sec: 0, order: 1 },
+        ],
+      }
+
+      const createResponse = await request(app)
+        .post("/lessons")
+        .send({ lesson, token: userToken })
+      const lessonId = createResponse.body.lessonId
+
+      const deleteResponse = await request(app)
+        .delete(`/lessons/${lessonId}`)
+        .send({ token: userToken })
+
+      expect(deleteResponse.status).toBe(200)
+      expect(deleteResponse.body.message).toBe("Leçon supprimée avec succès")
+
+      const getResponse = await request(app).get(`/lessons/${lessonId}`)
+      expect(getResponse.status).toBe(404)
+    })
+
+    test("retourne 404 si leçon n'existe pas", async () => {
+      const response = await request(app)
+        .delete("/lessons/550e8400-e29b-41d4-a716-446655440999")
+        .send({ token: userToken })
+
+      expect(response.status).toBe(404)
+      expect(response.body.error).toBeDefined()
+    })
+
+    test("retourne 403 si utilisateur n'est pas owner", async () => {
+      const lesson = {
+        title: "Leçon d'un autre utilisateur",
+        sport: "Karaté",
+        objective: "Test ownership",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const createResponse = await request(app)
+        .post("/lessons")
+        .send({ lesson, token: userToken })
+      const lessonId = createResponse.body.lessonId
+
+      const otherUserResponse = await request(app).post("/users/sign-up").send({
+        name: "OtherUser3",
+        email: "other3@example.com",
+        password: "password",
+      })
+      const otherToken = otherUserResponse.body.token
+
+      const deleteResponse = await request(app)
+        .delete(`/lessons/${lessonId}`)
+        .send({ token: otherToken })
+
+      expect(deleteResponse.status).toBe(403)
+      expect(deleteResponse.body.error).toBeDefined()
+    })
+
+    test("retourne 403 si token invalide", async () => {
+      const response = await request(app)
+        .delete("/lessons/550e8400-e29b-41d4-a716-446655440999")
+        .send({ token: "invalid_token" })
+
+      expect(response.status).toBe(403)
+    })
+
+    test("vérifie que les instructions sont supprimées (CASCADE)", async () => {
+      const lesson = {
+        title: "Leçon avec instructions",
+        sport: "MMA",
+        objective: "Test CASCADE",
+        warmUpInstructions: [
+          { text: "Warm 1", min: 1, sec: 0, order: 1 },
+          { text: "Warm 2", min: 2, sec: 0, order: 2 },
+        ],
+        bodyInstructions: [
+          { text: "Body 1", min: 5, sec: 0, order: 1 },
+          { text: "Body 2", min: 5, sec: 0, order: 2 },
+        ],
+        coolDownInstructions: [{ text: "Cool 1", min: 1, sec: 0, order: 1 }],
+      }
+
+      const createResponse = await request(app)
+        .post("/lessons")
+        .send({ lesson, token: userToken })
+      const lessonId = createResponse.body.lessonId
+
+      await request(app)
+        .patch(`/lessons/${lessonId}/visibility`)
+        .send({ token: userToken })
+
+      const beforeDelete = await request(app).get(`/lessons/${lessonId}`)
+      expect(beforeDelete.status).toBe(200)
+      expect(beforeDelete.body.lesson.warmUpInstructions).toHaveLength(2)
+      expect(beforeDelete.body.lesson.bodyInstructions).toHaveLength(2)
+      expect(beforeDelete.body.lesson.coolDownInstructions).toHaveLength(1)
+
+      await request(app)
+        .delete(`/lessons/${lessonId}`)
+        .send({ token: userToken })
+
+      const afterDelete = await request(app).get(`/lessons/${lessonId}`)
+      expect(afterDelete.status).toBe(404)
+    })
+  })
+
+  describe("PUT /lessons/:id", () => {
+    test("met à jour une leçon avec succès si owner", async () => {
+      const lesson = {
+        title: "Leçon originale",
+        sport: "Boxe",
+        objective: "Objectif original",
+        warmUpInstructions: [{ text: "Warm 1", min: 5, sec: 0, order: 1 }],
+        bodyInstructions: [{ text: "Body 1", min: 10, sec: 0, order: 1 }],
+        coolDownInstructions: [{ text: "Cool 1", min: 3, sec: 0, order: 1 }],
+      }
+
+      const createResponse = await request(app)
+        .post("/lessons")
+        .send({ lesson, token: userToken })
+      const lessonId = createResponse.body.lessonId
+
+      const updatedLesson = {
+        title: "Leçon mise à jour",
+        sport: "Karaté",
+        objective: "Objectif modifié",
+        warmUpInstructions: [
+          { text: "New Warm 1", min: 3, sec: 0, order: 1 },
+          { text: "New Warm 2", min: 2, sec: 0, order: 2 },
+        ],
+        bodyInstructions: [{ text: "New Body 1", min: 15, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const updateResponse = await request(app)
+        .put(`/lessons/${lessonId}`)
+        .send({ lesson: updatedLesson, token: userToken })
+
+      expect(updateResponse.status).toBe(200)
+      expect(updateResponse.body.lesson.title).toBe("Leçon mise à jour")
+      expect(updateResponse.body.lesson.sport).toBe("Karaté")
+      expect(updateResponse.body.lesson.objective).toBe("Objectif modifié")
+      expect(updateResponse.body.lesson.warmUpInstructions).toHaveLength(2)
+      expect(updateResponse.body.lesson.bodyInstructions).toHaveLength(1)
+      expect(updateResponse.body.lesson.coolDownInstructions).toHaveLength(0)
+    })
+
+    test("met à jour le titre, sport, objective, et instructions", async () => {
+      const lesson = {
+        title: "Test Update",
+        sport: "MMA",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Original", min: 5, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const createResponse = await request(app)
+        .post("/lessons")
+        .send({ lesson, token: userToken })
+      const lessonId = createResponse.body.lessonId
+
+      const updatedLesson = {
+        title: "Updated Test",
+        sport: "Judo",
+        objective: "Updated objective",
+        warmUpInstructions: [{ text: "Warm", min: 5, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: "Updated 1", min: 10, sec: 0, order: 1 },
+          { text: "Updated 2", min: 5, sec: 0, order: 2 },
+        ],
+        coolDownInstructions: [{ text: "Cool", min: 2, sec: 0, order: 1 }],
+      }
+
+      const updateResponse = await request(app)
+        .put(`/lessons/${lessonId}`)
+        .send({ lesson: updatedLesson, token: userToken })
+
+      expect(updateResponse.status).toBe(200)
+      const result = updateResponse.body.lesson
+      expect(result.title).toBe("Updated Test")
+      expect(result.sport).toBe("Judo")
+      expect(result.objective).toBe("Updated objective")
+      expect(result.warmUpInstructions[0].text).toBe("Warm")
+      expect(result.bodyInstructions).toHaveLength(2)
+      expect(result.coolDownInstructions[0].text).toBe("Cool")
+    })
+
+    test("retourne 404 si leçon n'existe pas", async () => {
+      const lesson = {
+        title: "Test",
+        sport: "Boxe",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const response = await request(app)
+        .put("/lessons/550e8400-e29b-41d4-a716-446655440999")
+        .send({ lesson, token: userToken })
+
+      expect(response.status).toBe(404)
+      expect(response.body.error).toBeDefined()
+    })
+
+    test("retourne 403 si utilisateur n'est pas owner", async () => {
+      const lesson = {
+        title: "Leçon d'un autre",
+        sport: "Boxe",
+        objective: "Test ownership",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const createResponse = await request(app)
+        .post("/lessons")
+        .send({ lesson, token: userToken })
+      const lessonId = createResponse.body.lessonId
+
+      const otherUserResponse = await request(app).post("/users/sign-up").send({
+        name: "OtherUser4",
+        email: "other4@example.com",
+        password: "password",
+      })
+      const otherToken = otherUserResponse.body.token
+
+      const updatedLesson = {
+        title: "Tentative de modification",
+        sport: "Karaté",
+        objective: "Hack",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Hack", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const updateResponse = await request(app)
+        .put(`/lessons/${lessonId}`)
+        .send({ lesson: updatedLesson, token: otherToken })
+
+      expect(updateResponse.status).toBe(403)
+      expect(updateResponse.body.error).toBeDefined()
+    })
+
+    test("retourne 403 si token invalide", async () => {
+      const lesson = {
+        title: "Test",
+        sport: "Boxe",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const response = await request(app)
+        .put("/lessons/550e8400-e29b-41d4-a716-446655440999")
+        .send({ lesson, token: "invalid_token" })
+
+      expect(response.status).toBe(403)
+    })
+
+    test("retourne 409 si le nouveau titre existe déjà", async () => {
+      const lesson1 = {
+        title: "Titre existant",
+        sport: "Boxe",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const lesson2 = {
+        title: "Titre différent",
+        sport: "Karaté",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      await request(app)
+        .post("/lessons")
+        .send({ lesson: lesson1, token: userToken })
+
+      const createResponse2 = await request(app)
+        .post("/lessons")
+        .send({ lesson: lesson2, token: userToken })
+      const lessonId2 = createResponse2.body.lessonId
+
+      const updatedLesson = {
+        title: "Titre existant",
+        sport: "MMA",
+        objective: "Updated",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const updateResponse = await request(app)
+        .put(`/lessons/${lessonId2}`)
+        .send({ lesson: updatedLesson, token: userToken })
+
+      expect(updateResponse.status).toBe(409)
+      expect(updateResponse.body.error).toBeDefined()
+    })
+
+    test("permet de mettre à jour une leçon en gardant le même titre", async () => {
+      const lesson = {
+        title: "Titre constant",
+        sport: "Boxe",
+        objective: "Objectif original",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 5, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const createResponse = await request(app)
+        .post("/lessons")
+        .send({ lesson, token: userToken })
+      const lessonId = createResponse.body.lessonId
+
+      const updatedLesson = {
+        title: "Titre constant",
+        sport: "Karaté",
+        objective: "Objectif modifié",
+        warmUpInstructions: [
+          { text: "Nouveau warm", min: 3, sec: 0, order: 1 },
+        ],
+        bodyInstructions: [{ text: "Test", min: 5, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const updateResponse = await request(app)
+        .put(`/lessons/${lessonId}`)
+        .send({ lesson: updatedLesson, token: userToken })
+
+      expect(updateResponse.status).toBe(200)
+      expect(updateResponse.body.lesson.title).toBe("Titre constant")
+      expect(updateResponse.body.lesson.sport).toBe("Karaté")
+      expect(updateResponse.body.lesson.objective).toBe("Objectif modifié")
+    })
+
+    test("permet de mettre à jour vers un nouveau titre unique", async () => {
+      const lesson1 = {
+        title: "Titre A",
+        sport: "Boxe",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const lesson2 = {
+        title: "Titre B",
+        sport: "Karaté",
+        objective: "Test",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      await request(app)
+        .post("/lessons")
+        .send({ lesson: lesson1, token: userToken })
+
+      const createResponse2 = await request(app)
+        .post("/lessons")
+        .send({ lesson: lesson2, token: userToken })
+      const lessonId2 = createResponse2.body.lessonId
+
+      const updatedLesson = {
+        title: "Titre C nouveau",
+        sport: "MMA",
+        objective: "Updated",
+        warmUpInstructions: [],
+        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [],
+      }
+
+      const updateResponse = await request(app)
+        .put(`/lessons/${lessonId2}`)
+        .send({ lesson: updatedLesson, token: userToken })
+
+      expect(updateResponse.status).toBe(200)
+      expect(updateResponse.body.lesson.title).toBe("Titre C nouveau")
     })
   })
 })

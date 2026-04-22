@@ -38,6 +38,7 @@ describe("postLesson use case", () => {
       "user-123",
       false
     )
+    mockLessonRepository.titleExistsGlobally = vi.fn().mockResolvedValue(false)
 
     const lessonId = await postLesson(
       lesson,
@@ -69,9 +70,7 @@ describe("postLesson use case", () => {
       false
     )
 
-    mockLessonRepository.save = vi
-      .fn()
-      .mockRejectedValue(new DuplicateLessonTitle("Titre existant"))
+    mockLessonRepository.titleExistsGlobally = vi.fn().mockResolvedValue(true)
 
     await expect(
       postLesson(

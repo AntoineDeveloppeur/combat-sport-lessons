@@ -18,5 +18,11 @@ router.patch("/:id/visibility", (req: Request, res: Response) => {
 router.post("/:id/duplicate", (req: Request, res: Response) => {
   lessonCtrl.handleDuplicate(req, res)
 })
+router.delete("/:id", (req: Request, res: Response) => {
+  lessonCtrl.handleDelete(req, res)
+})
+router.put("/:id", (req: Request, res: Response) => {
+  lessonCtrl.handleUpdate(req, res)
+})
 
 export default router

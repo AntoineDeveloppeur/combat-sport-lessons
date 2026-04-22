@@ -11,6 +11,14 @@ vi.mock("next/navigation", () => ({
   }),
 }))
 
+const mockMutationResult = [vi.fn(), { isLoading: false, error: null }]
+const mockUpdateMutationResult = [vi.fn(), { isLoading: false, error: null }]
+
+vi.mock("@/store/api/lessonApi", () => ({
+  usePostLessonMutation: () => mockMutationResult,
+  useUpdateLessonMutation: () => mockUpdateMutationResult,
+}))
+
 describe("Body page", () => {
   beforeEach(() => {
     mockPush.mockClear()
@@ -39,7 +47,7 @@ describe("Body page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/l'instruction doit contenir au moins 3 caractères/i)
+        screen.getByText(/l'instruction doit contenir au moins 3 caractères/i),
       ).toBeInTheDocument()
     })
 
@@ -58,7 +66,7 @@ describe("Body page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/l'instruction doit contenir au moins 3 caractères/i)
+        screen.getByText(/l'instruction doit contenir au moins 3 caractères/i),
       ).toBeInTheDocument()
     })
 
@@ -82,7 +90,7 @@ describe("Body page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/les minutes ne peuvent pas dépasser 90/i)
+        screen.getByText(/les minutes ne peuvent pas dépasser 90/i),
       ).toBeInTheDocument()
     })
 
@@ -106,7 +114,7 @@ describe("Body page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/les secondes ne peuvent pas dépasser 59/i)
+        screen.getByText(/les secondes ne peuvent pas dépasser 59/i),
       ).toBeInTheDocument()
     })
 

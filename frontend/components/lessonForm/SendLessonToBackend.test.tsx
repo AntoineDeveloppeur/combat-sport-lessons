@@ -6,9 +6,14 @@ import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
 import type { Lesson } from "@/types"
 
 const mockPush = vi.fn()
-const mockPostLesson = vi.fn(() =>
-  Promise.resolve({ unwrap: () => Promise.resolve({}) }),
-)
+const mockUnwrap = vi.fn(() => Promise.resolve({}))
+const mockPostLesson = vi.fn(() => ({
+  unwrap: mockUnwrap,
+}))
+const mockUpdateUnwrap = vi.fn(() => Promise.resolve({}))
+const mockUpdateLesson = vi.fn(() => ({
+  unwrap: mockUpdateUnwrap,
+}))
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
@@ -24,6 +29,13 @@ vi.mock("@/store/api/lessonApi", () => ({
       error: undefined,
     },
   ],
+  useUpdateLessonMutation: () => [
+    mockUpdateLesson,
+    {
+      isLoading: false,
+      error: undefined,
+    },
+  ],
 }))
 
 describe("SendLessonToBackend", () => {
@@ -31,13 +43,15 @@ describe("SendLessonToBackend", () => {
     vi.clearAllMocks()
     localStorage.clear()
     global.alert = vi.fn()
+    mockUnwrap.mockResolvedValue({ lessonId: "test-id" })
+    mockUpdateUnwrap.mockResolvedValue({ lessonId: "test-id" })
   })
 
   it("should render save button when not loading and no error", () => {
     renderWithProvider(<SendLessonToBackend />)
 
     expect(
-      screen.getByRole("button", { name: /sauvegarder la lesson/i }),
+      screen.getByRole("button", { name: /sauvegarder la leçon/i })
     ).toBeInTheDocument()
   })
 
@@ -46,7 +60,7 @@ describe("SendLessonToBackend", () => {
     renderWithProvider(<SendLessonToBackend />)
 
     const button = screen.getByRole("button", {
-      name: /sauvegarder la lesson/i,
+      name: /sauvegarder la leçon/i,
     })
     await user.click(button)
 
@@ -65,12 +79,10 @@ describe("SendLessonToBackend", () => {
       coolDown: "custom",
     }
 
-    mockPostLesson.mockResolvedValue({ unwrap: vi.fn().mockResolvedValue({}) })
-
     renderWithProvider(<SendLessonToBackend />, mockLesson)
 
     const button = screen.getByRole("button", {
-      name: /sauvegarder la lesson/i,
+      name: /sauvegarder la leçon/i,
     })
     await user.click(button)
 
@@ -89,18 +101,22 @@ describe("SendLessonToBackend", () => {
     const user = userEvent.setup()
     localStorage.setItem("token", "test-token")
 
-    mockPostLesson.mockResolvedValue({ unwrap: vi.fn().mockResolvedValue({}) })
-
     renderWithProvider(<SendLessonToBackend />)
 
     const button = screen.getByRole("button", {
-      name: /sauvegarder la lesson/i,
+      name: /sauvegarder la leçon/i,
     })
     await user.click(button)
 
-    await waitFor(() => {
-      expect(global.alert).toHaveBeenCalledWith("Lesson Enregistrée")
-    })
+    await waitFor(
+      () => {
+        expect(global.alert).toHaveBeenCalledWith(
+          "Leçon enregistrée avec succès"
+        )
+      },
+      { timeout: 3000 }
+    )
+    expect(mockPush).toHaveBeenCalledWith("/lessons/user")
   })
 
   it("should be accessible", () => {

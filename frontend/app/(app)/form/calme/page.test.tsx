@@ -19,10 +19,12 @@ const mockQueryResult = {
 }
 
 const mockMutationResult = [vi.fn(), { isLoading: false, error: null }]
+const mockUpdateMutationResult = [vi.fn(), { isLoading: false, error: null }]
 
 vi.mock("@/store/api/lessonApi", () => ({
   useGetLessonQuery: () => mockQueryResult, // Toujours le même objet
   usePostLessonMutation: () => mockMutationResult, // Toujours le même objet
+  useUpdateLessonMutation: () => mockUpdateMutationResult, // Toujours le même objet
 }))
 
 describe("Confirm page (Retour au calme)", () => {
@@ -53,7 +55,7 @@ describe("Confirm page (Retour au calme)", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/l'instruction doit contenir au moins 3 caractères/i)
+        screen.getByText(/l'instruction doit contenir au moins 3 caractères/i),
       ).toBeInTheDocument()
     })
 
@@ -72,7 +74,7 @@ describe("Confirm page (Retour au calme)", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/l'instruction doit contenir au moins 3 caractères/i)
+        screen.getByText(/l'instruction doit contenir au moins 3 caractères/i),
       ).toBeInTheDocument()
     })
 
@@ -96,7 +98,7 @@ describe("Confirm page (Retour au calme)", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/les minutes ne peuvent pas dépasser 90/i)
+        screen.getByText(/les minutes ne peuvent pas dépasser 90/i),
       ).toBeInTheDocument()
     })
 
@@ -120,7 +122,7 @@ describe("Confirm page (Retour au calme)", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/les secondes ne peuvent pas dépasser 59/i)
+        screen.getByText(/les secondes ne peuvent pas dépasser 59/i),
       ).toBeInTheDocument()
     })
 

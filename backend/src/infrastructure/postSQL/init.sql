@@ -50,9 +50,9 @@ VALUES ('550e8400-e29b-41d4-a716-446655440001','Jennifer','jenniferDeRouen@gmail
 -- Insertion des 4 leçons
 INSERT INTO lessons (lesson_id, title, sport, objective, "warm_up", "cool_down", "warm_up_preset_title", "cool_down_preset_title", created_at, user_id, is_public)
 VALUES 
-('550e8400-e29b-41d4-a716-446655440011', 'Boxe débutant', 'Boxe', 'Apprendre les bases du jab', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440001', TRUE),
+('550e8400-e29b-41d4-a716-446655440011', 'Boxe débutant', 'Boxe anglaise', 'Apprendre les bases du jab', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440001', TRUE),
 ('550e8400-e29b-41d4-a716-446655440012', 'Judo avancé', 'Judo', 'Perfectionner les projections', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440002', TRUE),
-('550e8400-e29b-41d4-a716-446655440013', 'Karaté kata', 'Karaté', 'Maîtriser le kata Heian Shodan', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440001', TRUE),
+('550e8400-e29b-41d4-a716-446655440013', 'Karaté kata', 'Karaté Ashihara', 'Maîtriser le kata Heian Shodan', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440001', TRUE),
 ('550e8400-e29b-41d4-a716-446655440014', 'MMA cardio', 'MMA', 'Améliorer endurance et explosivité', 'custom', 'custom', NULL, NULL, CURRENT_TIMESTAMP, '550e8400-e29b-41d4-a716-446655440003', TRUE);
 
 -- Instructions pour la leçon 1 (Boxe débutant)

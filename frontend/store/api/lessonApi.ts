@@ -22,18 +22,22 @@ export const lessonApi = createApi({
       }),
       invalidatesTags: ["Lesson"],
     }),
-    deleteLesson: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `/lessons/${id}`,
+    deleteLesson: builder.mutation<void, { lessonId: string; token: string }>({
+      query: ({ lessonId, token }) => ({
+        url: `/lessons/${lessonId}`,
         method: "DELETE",
+        body: { token },
       }),
       invalidatesTags: ["Lesson"],
     }),
-    updateLesson: builder.mutation<Lesson, { id: string; lesson: Lesson }>({
-      query: ({ id, lesson }) => ({
-        url: `/lessons/${id}`,
+    updateLesson: builder.mutation<
+      { lesson: Lesson },
+      { lessonId: string; lesson: Lesson; token: string }
+    >({
+      query: ({ lessonId, lesson, token }) => ({
+        url: `/lessons/${lessonId}`,
         method: "PUT",
-        body: lesson,
+        body: { lesson, token },
       }),
       invalidatesTags: ["Lesson"],
     }),

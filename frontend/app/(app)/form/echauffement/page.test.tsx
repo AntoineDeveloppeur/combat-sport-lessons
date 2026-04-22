@@ -9,6 +9,14 @@ vi.mock("next/navigation", () => ({
   }),
 }))
 
+const mockMutationResult = [vi.fn(), { isLoading: false, error: null }]
+const mockUpdateMutationResult = [vi.fn(), { isLoading: false, error: null }]
+
+vi.mock("@/store/api/lessonApi", () => ({
+  usePostLessonMutation: () => mockMutationResult,
+  useUpdateLessonMutation: () => mockUpdateMutationResult,
+}))
+
 vi.mock("@/data/warmUpPreset", () => ({
   warmUpPresetTitles: ["shadowBoxing", "course à pied"],
 }))
@@ -36,7 +44,7 @@ describe("WarmUp page", () => {
     renderWithProvider(<WarmUp />, { warmUp: "preset" })
 
     expect(
-      screen.getByText(/Sélectionne un échauffement prédéfinis/i)
+      screen.getByText(/Sélectionne un échauffement prédéfinis/i),
     ).toBeInTheDocument()
   })
   it("with preset: render all preset warmUp ", async () => {

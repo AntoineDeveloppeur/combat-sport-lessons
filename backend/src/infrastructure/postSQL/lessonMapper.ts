@@ -13,14 +13,24 @@ export const mapOne = (
   bodyInstructionsDB: PostgreSQLResult<InstructionDBRow>,
   coolDownInstructionsDB: PostgreSQLResult<InstructionDBRow>,
 ): Lesson => {
-  const { lesson_id, user_id, created_at, sport, is_public, ...rest } =
-    lessonDB.rows[0]
+  const {
+    lesson_id,
+    user_id,
+    created_at,
+    sport,
+    is_public,
+    warm_up,
+    cool_down,
+    ...rest
+  } = lessonDB.rows[0]
   const lesson = {
     lessonId: lesson_id,
     userId: user_id,
     creationDate: new Date(created_at),
     sport: sport as Sport,
     isPublic: is_public,
+    warmUp: warm_up,
+    coolDown: cool_down,
     ...rest,
     warmUpInstructions: warmUpInstructionsDB.rows,
     bodyInstructions: bodyInstructionsDB.rows,
@@ -46,6 +56,8 @@ export const mapMany = (
         objective,
         created_at,
         is_public,
+        warm_up,
+        cool_down,
       } = lessonDB
       const lessonTemp = {
         lessonId: lesson_id,
@@ -55,6 +67,8 @@ export const mapMany = (
         creationDate: new Date(created_at),
         sport: sport as Sport,
         isPublic: is_public,
+        warmUp: warm_up,
+        coolDown: cool_down,
       }
       const lessonForMap = addInstructions(lessonTemp, lessonDB)
       map.set(lessonDB.lesson_id, lessonForMap)

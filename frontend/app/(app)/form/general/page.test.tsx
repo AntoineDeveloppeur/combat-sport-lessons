@@ -11,6 +11,14 @@ vi.mock("next/navigation", () => ({
   }),
 }))
 
+const mockMutationResult = [vi.fn(), { isLoading: false, error: null }]
+const mockUpdateMutationResult = [vi.fn(), { isLoading: false, error: null }]
+
+vi.mock("@/store/api/lessonApi", () => ({
+  usePostLessonMutation: () => mockMutationResult,
+  useUpdateLessonMutation: () => mockUpdateMutationResult,
+}))
+
 describe("General page", () => {
   beforeEach(() => {
     mockPush.mockClear()
@@ -21,11 +29,11 @@ describe("General page", () => {
     renderWithProvider(<General />)
 
     const objectiveTextarea = screen.getByPlaceholderText(
-      /exemple : la séance va permettre/i
+      /exemple : la séance va permettre/i,
     )
     await user.type(
       objectiveTextarea,
-      "Un objectif valide avec plus de 20 caractères"
+      "Un objectif valide avec plus de 20 caractères",
     )
 
     const nextButton = screen.getByRole("button", { name: /next/i })
@@ -55,7 +63,7 @@ describe("General page", () => {
     await user.selectOptions(sportSelect, "Judo")
 
     const objectiveTextarea = screen.getByPlaceholderText(
-      /exemple : la séance va permettre/i
+      /exemple : la séance va permettre/i,
     )
     await user.type(objectiveTextarea, "Trop court")
 
@@ -64,7 +72,7 @@ describe("General page", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/l'objectif doit contenir au moins 20 caractères/i)
+        screen.getByText(/l'objectif doit contenir au moins 20 caractères/i),
       ).toBeInTheDocument()
     })
 
@@ -79,14 +87,14 @@ describe("General page", () => {
     await user.selectOptions(sportSelect, "Judo")
 
     const objectiveTextarea = screen.getByPlaceholderText(
-      /exemple : la séance va permettre/i
+      /exemple : la séance va permettre/i,
     )
     await user.type(
       objectiveTextarea,
-      "Un objectif valide avec plus de 20 caractères pour cette séance"
+      "Un objectif valide avec plus de 20 caractères pour cette séance",
     )
     const titleInput = screen.getByPlaceholderText(
-      /Exemple : défense contre coups de pied médian/i
+      /Exemple : défense contre coups de pied médian/i,
     )
 
     await user.type(titleInput, "titre valide de plus de 3 caractères")
