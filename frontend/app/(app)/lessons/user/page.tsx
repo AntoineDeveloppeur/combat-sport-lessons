@@ -8,10 +8,14 @@ import { useState, useMemo } from "react"
 import { LessonFilters } from "@/components/lessonTable/LessonFilters"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { useAppDispatch } from "@/store/hooks"
+import { reset } from "@/features/lessonForm/lessonFormSlice"
 
 export default function LessonsUserPage() {
   const { isAuthenticated, userId } = useAuth()
   const router = useRouter()
+  const dispatch = useAppDispatch()
+
   if (!isAuthenticated) {
     router.push("/login")
   }
@@ -29,6 +33,10 @@ export default function LessonsUserPage() {
     }
   }, [data, activeFilter, userId])
 
+  const handleCreateLesson = () => {
+    dispatch(reset())
+  }
+
   return (
     <div className="container mx-auto py-10">
       <div className="mb-8">
@@ -42,11 +50,10 @@ export default function LessonsUserPage() {
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}
         />
-        <Button
-          variant="outline"
-          asChild
-        >
-          <Link href="/form/general">Créer une leçon</Link>
+        <Button variant="outline" asChild>
+          <Link href="/form/general" onClick={handleCreateLesson}>
+            Créer une leçon
+          </Link>
         </Button>
       </div>
 

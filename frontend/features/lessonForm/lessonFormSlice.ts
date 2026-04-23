@@ -27,7 +27,10 @@ export const lessonFormSlice = createSlice({
       const duration = calculateLessonDuration(lesson)
       state.value = { ...lesson, duration }
     },
+    reset: (state) => {
+      state.value = initialState.value
+    },
   },
 })
 
-export const { save } = lessonFormSlice.actions
+export const { save, reset } = lessonFormSlice.actions

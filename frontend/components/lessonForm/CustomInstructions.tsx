@@ -4,14 +4,16 @@ import { FieldLegend } from "@/components/ui/field"
 import { Button } from "@/components/ui/button"
 import InstructionField from "@/components/lessonForm/InstructionField"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
-import type { LessonInstructionKey } from "@/types"
+import type { LessonInstructionKey, Lesson } from "@/types"
 import FormSaveAndNavigate from "./FormSaveAndNavigate"
+import { useEffect } from "react"
 
 interface CustomInstructionsProps {
   legend: string
   presetType: LessonInstructionKey
   prev?: string
   next?: string
+  onGetValues?: (getValuesFn: () => Lesson) => void
 }
 
 export default function CustomInstructions({
@@ -19,11 +21,26 @@ export default function CustomInstructions({
   presetType,
   prev,
   next,
+  onGetValues,
 }: CustomInstructionsProps) {
-  const { register, errors, fields, addInstruction, handleSubmit } =
-    useInstructionForm({
-      fieldName: presetType,
-    })
+  const {
+    register,
+    errors,
+    fields,
+    addInstruction,
+    removeLastInstruction,
+    handleSubmit,
+    getValues,
+  } = useInstructionForm({
+    fieldName: presetType,
+  })
+
+  useEffect(() => {
+    if (onGetValues) {
+      onGetValues(getValues)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getValues])
 
   return (
     <>
@@ -35,9 +52,22 @@ export default function CustomInstructions({
           key={index}
           errors={errors}
           register={register}
+          getValues={getValues}
         ></InstructionField>
       ))}
-      <Button type="button" onClick={() => addInstruction()}>
+      <Button
+        type="button"
+        variant="secondary"
+        onClick={() => removeLastInstruction()}
+      >
+        {" "}
+        Supprimer le dernier champs
+      </Button>
+      <Button
+        type="button"
+        variant="secondary"
+        onClick={() => addInstruction()}
+      >
         {" "}
         Ajouter un champs
       </Button>

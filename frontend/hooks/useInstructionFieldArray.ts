@@ -5,6 +5,7 @@ import { defaultValues } from "@/data/instructionDefaultValues"
 
 interface UseInstructionFieldArrayReturn {
   addInstruction: () => void
+  removeLastInstruction: () => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fields: FieldArrayWithId<any, string, "id">[]
 }
@@ -27,6 +28,12 @@ export function useInstructionFieldArray(
     setInstructionCount((prev) => prev + 1)
   }
 
+  const removeLastInstruction = () => {
+    if (instructionCount > 1) {
+      setInstructionCount((prev) => prev - 1)
+    }
+  }
+
   useEffect(() => {
     const newVal = instructionCount
     const oldVal = fields.length
@@ -41,5 +48,5 @@ export function useInstructionFieldArray(
     }
   }, [instructionCount, append, remove, fields.length])
 
-  return { addInstruction, fields }
+  return { addInstruction, removeLastInstruction, fields }
 }

@@ -16,126 +16,124 @@ describe("Stepper", () => {
     expect(nav).toBeInTheDocument()
   })
 
-  it("should render all four navigation links", () => {
+  it("should render all four navigation steps", () => {
     vi.mocked(usePathname).mockReturnValue("/form/general")
     render(<Stepper />)
 
-    const links = screen.getAllByRole("link")
-    expect(links).toHaveLength(4)
+    expect(screen.getByText("Général")).toBeInTheDocument()
+    expect(screen.getByText("Échauffement")).toBeInTheDocument()
+    expect(screen.getByText("Corps de séance")).toBeInTheDocument()
+    expect(screen.getByText("Retour au calme")).toBeInTheDocument()
   })
 
-  it("should render 'Général' link with correct href", () => {
+  it("should render 'Général' step", () => {
     vi.mocked(usePathname).mockReturnValue("/form/general")
     render(<Stepper />)
 
-    const generalLink = screen.getByRole("link", { name: "Général" })
-    expect(generalLink).toBeInTheDocument()
-    expect(generalLink).toHaveAttribute("href", "/form/general")
+    const generalStep = screen.getByText("Général")
+    expect(generalStep).toBeInTheDocument()
   })
 
-  it("should render 'Échauffement' link with correct href", () => {
+  it("should render 'Échauffement' step", () => {
     vi.mocked(usePathname).mockReturnValue("/form/general")
     render(<Stepper />)
 
-    const echauffementLink = screen.getByRole("link", { name: "Échauffement" })
-    expect(echauffementLink).toBeInTheDocument()
-    expect(echauffementLink).toHaveAttribute("href", "/form/echauffement")
+    const echauffementStep = screen.getByText("Échauffement")
+    expect(echauffementStep).toBeInTheDocument()
   })
 
-  it("should render 'Corps de séance' link with correct href", () => {
+  it("should render 'Corps de séance' step", () => {
     vi.mocked(usePathname).mockReturnValue("/form/general")
     render(<Stepper />)
 
-    const corpsLink = screen.getByRole("link", { name: "Corps de séance" })
-    expect(corpsLink).toBeInTheDocument()
-    expect(corpsLink).toHaveAttribute("href", "/form/corps")
+    const corpsStep = screen.getByText("Corps de séance")
+    expect(corpsStep).toBeInTheDocument()
   })
 
-  it("should render 'Retour au calme' link with correct href", () => {
+  it("should render 'Retour au calme' step", () => {
     vi.mocked(usePathname).mockReturnValue("/form/general")
     render(<Stepper />)
 
-    const calmeLink = screen.getByRole("link", { name: "Retour au calme" })
-    expect(calmeLink).toBeInTheDocument()
-    expect(calmeLink).toHaveAttribute("href", "/form/calme")
+    const calmeStep = screen.getByText("Retour au calme")
+    expect(calmeStep).toBeInTheDocument()
   })
 
   it("should highlight 'Général' when on /form/general", () => {
     vi.mocked(usePathname).mockReturnValue("/form/general")
     render(<Stepper />)
 
-    const generalLink = screen.getByRole("link", { name: "Général" })
-    expect(generalLink).toHaveClass("font-bold", "text-blue-600")
+    const generalStep = screen.getByText("Général")
+    expect(generalStep).toHaveClass("font-bold", "text-blue-600")
   })
 
   it("should not highlight 'Échauffement' when on /form/general", () => {
     vi.mocked(usePathname).mockReturnValue("/form/general")
     render(<Stepper />)
 
-    const echauffementLink = screen.getByRole("link", { name: "Échauffement" })
-    expect(echauffementLink).toHaveClass("font-medium", "text-gray-600")
-    expect(echauffementLink).not.toHaveClass("font-bold", "text-blue-600")
+    const echauffementStep = screen.getByText("Échauffement")
+    expect(echauffementStep).toHaveClass("font-medium", "text-gray-600")
+    expect(echauffementStep).not.toHaveClass("font-bold", "text-blue-600")
   })
 
   it("should highlight 'Échauffement' when on /form/echauffement", () => {
     vi.mocked(usePathname).mockReturnValue("/form/echauffement")
     render(<Stepper />)
 
-    const echauffementLink = screen.getByRole("link", { name: "Échauffement" })
-    expect(echauffementLink).toHaveClass("font-bold", "text-blue-600")
+    const echauffementStep = screen.getByText("Échauffement")
+    expect(echauffementStep).toHaveClass("font-bold", "text-blue-600")
   })
 
   it("should not highlight 'Général' when on /form/echauffement", () => {
     vi.mocked(usePathname).mockReturnValue("/form/echauffement")
     render(<Stepper />)
 
-    const generalLink = screen.getByRole("link", { name: "Général" })
-    expect(generalLink).toHaveClass("font-medium", "text-gray-600")
-    expect(generalLink).not.toHaveClass("font-bold", "text-blue-600")
+    const generalStep = screen.getByText("Général")
+    expect(generalStep).toHaveClass("font-medium", "text-gray-600")
+    expect(generalStep).not.toHaveClass("font-bold", "text-blue-600")
   })
 
   it("should highlight 'Corps de séance' when on /form/corps", () => {
     vi.mocked(usePathname).mockReturnValue("/form/corps")
     render(<Stepper />)
 
-    const corpsLink = screen.getByRole("link", { name: "Corps de séance" })
-    expect(corpsLink).toHaveClass("font-bold", "text-blue-600")
+    const corpsStep = screen.getByText("Corps de séance")
+    expect(corpsStep).toHaveClass("font-bold", "text-blue-600")
   })
 
-  it("should not highlight other links when on /form/corps", () => {
+  it("should not highlight other steps when on /form/corps", () => {
     vi.mocked(usePathname).mockReturnValue("/form/corps")
     render(<Stepper />)
 
-    const generalLink = screen.getByRole("link", { name: "Général" })
-    const echauffementLink = screen.getByRole("link", { name: "Échauffement" })
-    const calmeLink = screen.getByRole("link", { name: "Retour au calme" })
+    const generalStep = screen.getByText("Général")
+    const echauffementStep = screen.getByText("Échauffement")
+    const calmeStep = screen.getByText("Retour au calme")
 
-    expect(generalLink).toHaveClass("font-medium", "text-gray-600")
-    expect(echauffementLink).toHaveClass("font-medium", "text-gray-600")
-    expect(calmeLink).toHaveClass("font-medium", "text-gray-600")
+    expect(generalStep).toHaveClass("font-medium", "text-gray-600")
+    expect(echauffementStep).toHaveClass("font-medium", "text-gray-600")
+    expect(calmeStep).toHaveClass("font-medium", "text-gray-600")
   })
 
   it("should highlight 'Retour au calme' when on /form/calme", () => {
     vi.mocked(usePathname).mockReturnValue("/form/calme")
     render(<Stepper />)
 
-    const calmeLink = screen.getByRole("link", { name: "Retour au calme" })
-    expect(calmeLink).toHaveClass("font-bold", "text-blue-600")
+    const calmeStep = screen.getByText("Retour au calme")
+    expect(calmeStep).toHaveClass("font-bold", "text-blue-600")
   })
 
-  it("should not highlight any link when on different path", () => {
+  it("should not highlight any step when on different path", () => {
     vi.mocked(usePathname).mockReturnValue("/other/path")
     render(<Stepper />)
 
-    const generalLink = screen.getByRole("link", { name: "Général" })
-    const echauffementLink = screen.getByRole("link", { name: "Échauffement" })
-    const corpsLink = screen.getByRole("link", { name: "Corps de séance" })
-    const calmeLink = screen.getByRole("link", { name: "Retour au calme" })
+    const generalStep = screen.getByText("Général")
+    const echauffementStep = screen.getByText("Échauffement")
+    const corpsStep = screen.getByText("Corps de séance")
+    const calmeStep = screen.getByText("Retour au calme")
 
-    expect(generalLink).toHaveClass("font-medium", "text-gray-600")
-    expect(echauffementLink).toHaveClass("font-medium", "text-gray-600")
-    expect(corpsLink).toHaveClass("font-medium", "text-gray-600")
-    expect(calmeLink).toHaveClass("font-medium", "text-gray-600")
+    expect(generalStep).toHaveClass("font-medium", "text-gray-600")
+    expect(echauffementStep).toHaveClass("font-medium", "text-gray-600")
+    expect(corpsStep).toHaveClass("font-medium", "text-gray-600")
+    expect(calmeStep).toHaveClass("font-medium", "text-gray-600")
   })
 
   it("should render an ordered list", () => {
@@ -158,25 +156,25 @@ describe("Stepper", () => {
     vi.mocked(usePathname).mockReturnValue("/form/echauffement")
     render(<Stepper />)
 
-    const activeLink = screen.getByRole("link", { name: "Échauffement" })
-    const inactiveLink = screen.getByRole("link", { name: "Général" })
+    const activeStep = screen.getByText("Échauffement")
+    const inactiveStep = screen.getByText("Général")
 
-    expect(activeLink.className).toContain("font-bold")
-    expect(activeLink.className).toContain("text-blue-600")
-    expect(inactiveLink.className).toContain("font-medium")
-    expect(inactiveLink.className).toContain("text-gray-600")
+    expect(activeStep.className).toContain("font-bold")
+    expect(activeStep.className).toContain("text-blue-600")
+    expect(inactiveStep.className).toContain("font-medium")
+    expect(inactiveStep.className).toContain("text-gray-600")
   })
 
-  it("should only highlight one link at a time", () => {
+  it("should only highlight one step at a time", () => {
     vi.mocked(usePathname).mockReturnValue("/form/corps")
-    render(<Stepper />)
+    const { container } = render(<Stepper />)
 
-    const links = screen.getAllByRole("link")
-    const highlightedLinks = links.filter((link) =>
-      link.className.includes("font-bold text-blue-600")
+    const steps = container.querySelectorAll("p")
+    const highlightedSteps = Array.from(steps).filter((step) =>
+      step.className.includes("font-bold text-blue-600"),
     )
 
-    expect(highlightedLinks).toHaveLength(1)
-    expect(highlightedLinks[0]).toHaveTextContent("Corps de séance")
+    expect(highlightedSteps).toHaveLength(1)
+    expect(highlightedSteps[0]).toHaveTextContent("Corps de séance")
   })
 })

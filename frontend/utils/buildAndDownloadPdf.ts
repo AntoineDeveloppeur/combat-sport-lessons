@@ -23,7 +23,7 @@ export const buildAndDownloadPdf = (lesson: Lesson): void => {
   doc.setFont("helvetica", "normal")
   const objectiveLines = doc.splitTextToSize(
     `Objectif : ${lesson.objective || "Non spécifié"}`,
-    contentWidth - 10
+    contentWidth - 10,
   )
   doc.text(objectiveLines, margin + 5, yPosition)
   yPosition += 25
@@ -34,7 +34,7 @@ export const buildAndDownloadPdf = (lesson: Lesson): void => {
 
   const addSection = (
     title: string,
-    instructions?: InstructionType[]
+    instructions?: InstructionType[],
   ): void => {
     if (yPosition > pageHeight - 30) {
       doc.addPage()
@@ -60,7 +60,7 @@ export const buildAndDownloadPdf = (lesson: Lesson): void => {
 
       const instructionLines = doc.splitTextToSize(
         instruction.text || "",
-        columnWidth - 10
+        columnWidth - 10,
       )
 
       const lineHeight = 7
@@ -79,17 +79,11 @@ export const buildAndDownloadPdf = (lesson: Lesson): void => {
     })
   }
 
-  if (lesson.warmUp === "custom" && lesson.warmUpInstructions) {
-    addSection("Échauffement", lesson.warmUpInstructions)
-  }
+  addSection("Échauffement", lesson.warmUpInstructions)
 
-  if (lesson.bodyInstructions) {
-    addSection("Corps de séance", lesson.bodyInstructions)
-  }
+  addSection("Corps de séance", lesson.bodyInstructions)
 
-  if (lesson.coolDown === "custom" && lesson.coolDownInstructions) {
-    addSection("Retour au calme", lesson.coolDownInstructions)
-  }
+  addSection("Retour au calme", lesson.coolDownInstructions)
 
   doc.save("lesson.pdf")
 }

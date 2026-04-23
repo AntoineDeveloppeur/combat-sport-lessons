@@ -16,10 +16,15 @@ describe("DownLoadPdfButton", () => {
   })
 
   it("should render button with correct text", () => {
-    renderWithProvider(<DownLoadPdfButton />)
+    const mockGetFormValues = vi.fn<() => Lesson>(() => ({
+      warmUp: "custom",
+      coolDown: "custom",
+    }))
+
+    renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)
 
     expect(
-      screen.getByRole("button", { name: /télécharge la lesson/i }),
+      screen.getByRole("button", { name: /voir la leçon/i })
     ).toBeInTheDocument()
   })
 
@@ -33,20 +38,23 @@ describe("DownLoadPdfButton", () => {
       coolDown: "custom",
     }
 
-    renderWithProvider(<DownLoadPdfButton />, mockLesson)
+    const mockGetFormValues = vi.fn(() => mockLesson)
 
-    const button = screen.getByRole("button", { name: /télécharge la lesson/i })
+    renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)
+
+    const button = screen.getByRole("button", { name: /voir la leçon/i })
     await user.click(button)
 
+    expect(mockGetFormValues).toHaveBeenCalledTimes(1)
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledTimes(
-      1,
+      1
     )
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledWith(
       expect.objectContaining({
         sport: "Karate",
         title: "Test Lesson",
         objective: "Test objective",
-      }),
+      })
     )
   })
 
@@ -57,13 +65,16 @@ describe("DownLoadPdfButton", () => {
       coolDown: "custom",
     }
 
-    renderWithProvider(<DownLoadPdfButton />, minimalLesson)
+    const mockGetFormValues = vi.fn(() => minimalLesson)
+
+    renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)
 
     const button = screen.getByRole("button")
     await user.click(button)
 
+    expect(mockGetFormValues).toHaveBeenCalledTimes(1)
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledTimes(
-      1,
+      1
     )
   })
 
@@ -84,24 +95,35 @@ describe("DownLoadPdfButton", () => {
       duration: 1410,
     }
 
-    renderWithProvider(<DownLoadPdfButton />, completeLesson)
+    const mockGetFormValues = vi.fn(() => completeLesson)
+
+    renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)
 
     const button = screen.getByRole("button")
     await user.click(button)
 
+    expect(mockGetFormValues).toHaveBeenCalledTimes(1)
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledWith(
       expect.objectContaining({
         sport: "Boxing",
         warmUpInstructions: expect.arrayContaining([
           expect.objectContaining({ text: "Warm up 1" }),
         ]),
-      }),
+      })
     )
   })
 
   it("should handle multiple clicks", async () => {
     const user = userEvent.setup()
-    renderWithProvider(<DownLoadPdfButton />)
+    const mockGetFormValues = vi.fn(
+      () =>
+        ({
+          warmUp: "custom",
+          coolDown: "custom",
+        }) as Lesson
+    )
+
+    renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)
 
     const button = screen.getByRole("button")
 
@@ -109,13 +131,22 @@ describe("DownLoadPdfButton", () => {
     await user.click(button)
     await user.click(button)
 
+    expect(mockGetFormValues).toHaveBeenCalledTimes(3)
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledTimes(
-      3,
+      3
     )
   })
 
   it("should be accessible", () => {
-    renderWithProvider(<DownLoadPdfButton />)
+    const mockGetFormValues = vi.fn(
+      () =>
+        ({
+          warmUp: "custom",
+          coolDown: "custom",
+        }) as Lesson
+    )
+
+    renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)
 
     const button = screen.getByRole("button")
     expect(button).toBeEnabled()

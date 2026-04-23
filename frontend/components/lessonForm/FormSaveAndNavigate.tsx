@@ -5,8 +5,6 @@ import { save } from "@/features/lessonForm/lessonFormSlice"
 import { useRouter } from "next/navigation"
 import { useAppDispatch } from "@/store/hooks"
 import { UseFormHandleSubmit, FieldValues } from "react-hook-form"
-import { selectLessonForm } from "@/features/lessonForm/lessonFormSelectors"
-import { useAppSelector } from "@/store/hooks"
 
 interface FormSaveAndNavigateProps {
   handleSubmit: UseFormHandleSubmit<FieldValues>
@@ -21,7 +19,6 @@ export default function FormSaveAndNavigate({
 }: FormSaveAndNavigateProps) {
   const Router = useRouter()
   const dispatch = useAppDispatch()
-  const lesson = useAppSelector(selectLessonForm)
 
   const handleClick = async (route?: string) => {
     const success = await validateFormAndSaveToLesson()
@@ -39,15 +36,15 @@ export default function FormSaveAndNavigate({
   }
 
   return (
-    <div className="flex justify-between w-full">
+    <div className="flex justify-end gap-4 w-full">
       {prev && (
         <Button type="button" onClick={async () => await handleClick(prev)}>
-          {"<"} Prev
+          {"<"} Retour
         </Button>
       )}
       {next && (
         <Button type="button" onClick={async () => await handleClick(next)}>
-          {">"} Next
+          Suivant {">"}
         </Button>
       )}
     </div>

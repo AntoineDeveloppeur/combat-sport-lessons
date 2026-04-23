@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi, beforeEach } from "vitest"
-import { render, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import CustomInstructions from "./CustomInstructions"
+import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
 import { UseFormRegister, FieldErrors } from "react-hook-form"
 import { Lesson } from "@/types"
@@ -43,10 +44,10 @@ describe("CustomInstructions", () => {
       fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
@@ -69,10 +70,10 @@ describe("CustomInstructions", () => {
       ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
@@ -94,10 +95,10 @@ describe("CustomInstructions", () => {
       fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
@@ -117,10 +118,10 @@ describe("CustomInstructions", () => {
       fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
@@ -146,10 +147,10 @@ describe("CustomInstructions", () => {
       fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
@@ -169,10 +170,10 @@ describe("CustomInstructions", () => {
       ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
@@ -190,10 +191,10 @@ describe("CustomInstructions", () => {
       fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
@@ -212,10 +213,10 @@ describe("CustomInstructions", () => {
       fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Custom legend text"
         presetType="warmUpInstructions"
@@ -232,10 +233,10 @@ describe("CustomInstructions", () => {
       fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
@@ -254,10 +255,10 @@ describe("CustomInstructions", () => {
       fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions legend="Test legend" presetType="bodyInstructions" />
     )
 
@@ -276,10 +277,10 @@ describe("CustomInstructions", () => {
       ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="coolDownInstructions"
@@ -297,10 +298,10 @@ describe("CustomInstructions", () => {
       fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
-      saveAndNavigate: vi.fn(),
+      getValues: vi.fn(),
     })
 
-    render(
+    renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"

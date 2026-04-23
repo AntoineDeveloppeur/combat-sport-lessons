@@ -40,7 +40,7 @@ export default function PresetInstructions({
     formState: { errors },
     handleSubmit,
   } = useForm<FormData>({
-    defaultValues: lesson as FormData,
+    defaultValues: structuredClone(lesson) as FormData,
     resolver: yupResolver(validationSchema),
   })
 

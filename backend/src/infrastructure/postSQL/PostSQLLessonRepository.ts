@@ -45,7 +45,7 @@ export class PostSQLLessonRepository implements lessonRepository {
   }
   async getAll(): Promise<Lesson[]> {
     const query = `
-      SELECT l.lesson_id, l.title, l.sport, l.objective, l.created_at, l.user_id, l.is_public, i.text, i.type, i.min, i.sec, i.order 
+      SELECT l.lesson_id, l.title, l.sport, l.objective, l.created_at, l.user_id, l.is_public, l.warm_up,l.cool_down, i.text, i.type, i.min, i.sec, i.order 
       FROM lessons l
       LEFT JOIN instructions i
       ON l.lesson_id = i.lesson_id

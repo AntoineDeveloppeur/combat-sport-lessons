@@ -30,41 +30,53 @@ describe("FormSaveAndNavigate", () => {
         handleSubmit={mockHandleSubmit}
         prev="/prev"
         next="/next"
-      />
+      />,
     )
     const div = container.querySelector("div")
-    expect(div).toHaveClass("flex", "justify-between", "w-full")
+    expect(div).toHaveClass("flex", "justify-end", "gap-4", "w-full")
   })
 
-  it("should render Prev button when prev prop is provided", () => {
+  it("should render Retour button when prev prop is provided", () => {
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        prev="/prev"
+      />,
     )
-    const prevButton = screen.getByRole("button", { name: /prev/i })
+    const prevButton = screen.getByRole("button", { name: /retour/i })
     expect(prevButton).toBeInTheDocument()
   })
 
-  it("should render Next button when next prop is provided", () => {
+  it("should render Suivant button when next prop is provided", () => {
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        next="/next"
+      />,
     )
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     expect(nextButton).toBeInTheDocument()
   })
 
-  it("should not render Prev button when prev prop is not provided", () => {
+  it("should not render Retour button when prev prop is not provided", () => {
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        next="/next"
+      />,
     )
-    const prevButton = screen.queryByRole("button", { name: /prev/i })
+    const prevButton = screen.queryByRole("button", { name: /retour/i })
     expect(prevButton).not.toBeInTheDocument()
   })
 
-  it("should not render Next button when next prop is not provided", () => {
+  it("should not render Suivant button when next prop is not provided", () => {
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        prev="/prev"
+      />,
     )
-    const nextButton = screen.queryByRole("button", { name: /next/i })
+    const nextButton = screen.queryByRole("button", { name: /suivant/i })
     expect(nextButton).not.toBeInTheDocument()
   })
 
@@ -74,10 +86,10 @@ describe("FormSaveAndNavigate", () => {
         handleSubmit={mockHandleSubmit}
         prev="/prev"
         next="/next"
-      />
+      />,
     )
-    expect(screen.getByRole("button", { name: /prev/i })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: /next/i })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: /retour/i })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: /suivant/i })).toBeInTheDocument()
   })
 
   it("should render no buttons when no props are provided", () => {
@@ -86,160 +98,187 @@ describe("FormSaveAndNavigate", () => {
     expect(buttons).toHaveLength(0)
   })
 
-  it("should have type button on Prev button", () => {
+  it("should have type button on Retour button", () => {
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        prev="/prev"
+      />,
     )
-    const prevButton = screen.getByRole("button", { name: /prev/i })
+    const prevButton = screen.getByRole("button", { name: /retour/i })
     expect(prevButton).toHaveAttribute("type", "button")
   })
 
-  it("should have type button on Next button", () => {
+  it("should have type button on Suivant button", () => {
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        next="/next"
+      />,
     )
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     expect(nextButton).toHaveAttribute("type", "button")
   })
 
-  it("should call handleSubmit when Prev button is clicked", async () => {
+  it("should call handleSubmit when Retour button is clicked", async () => {
     const user = userEvent.setup()
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        prev="/prev"
+      />,
     )
-    const prevButton = screen.getByRole("button", { name: /prev/i })
+    const prevButton = screen.getByRole("button", { name: /retour/i })
 
     await user.click(prevButton)
 
     expect(mockHandleSubmit).toHaveBeenCalled()
   })
 
-  it("should call handleSubmit when Next button is clicked", async () => {
+  it("should call handleSubmit when Suivant button is clicked", async () => {
     const user = userEvent.setup()
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        next="/next"
+      />,
     )
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
 
     await user.click(nextButton)
 
     expect(mockHandleSubmit).toHaveBeenCalled()
   })
 
-  it("should navigate to prev route when Prev button is clicked", async () => {
+  it("should navigate to prev route when Retour button is clicked", async () => {
     const user = userEvent.setup()
     renderWithProvider(
       <FormSaveAndNavigate
         handleSubmit={mockHandleSubmit}
         prev="/form/general"
-      />
+      />,
     )
-    const prevButton = screen.getByRole("button", { name: /prev/i })
+    const prevButton = screen.getByRole("button", { name: /retour/i })
 
     await user.click(prevButton)
 
     expect(mockPush).toHaveBeenCalledWith("/form/general")
   })
 
-  it("should navigate to next route when Next button is clicked", async () => {
+  it("should navigate to next route when Suivant button is clicked", async () => {
     const user = userEvent.setup()
     renderWithProvider(
       <FormSaveAndNavigate
         handleSubmit={mockHandleSubmit}
         next="/form/echauffement"
-      />
+      />,
     )
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
 
     await user.click(nextButton)
 
     expect(mockPush).toHaveBeenCalledWith("/form/echauffement")
   })
 
-  it("should dispatch save action when Prev button is clicked and validation succeeds", async () => {
+  it("should dispatch save action when Retour button is clicked and validation succeeds", async () => {
     const user = userEvent.setup()
     const customHandleSubmit = vi.fn((onValid) => async () => {
       onValid({ test: "data" })
     })
 
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={customHandleSubmit} prev="/prev" />
+      <FormSaveAndNavigate
+        handleSubmit={customHandleSubmit}
+        prev="/prev"
+      />,
     )
-    const prevButton = screen.getByRole("button", { name: /prev/i })
+    const prevButton = screen.getByRole("button", { name: /retour/i })
 
     await user.click(prevButton)
 
     expect(customHandleSubmit).toHaveBeenCalled()
   })
 
-  it("should dispatch save action when Next button is clicked and validation succeeds", async () => {
+  it("should dispatch save action when Suivant button is clicked and validation succeeds", async () => {
     const user = userEvent.setup()
     const customHandleSubmit = vi.fn((onValid) => async () => {
       onValid({ test: "data" })
     })
 
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={customHandleSubmit} next="/next" />
+      <FormSaveAndNavigate
+        handleSubmit={customHandleSubmit}
+        next="/next"
+      />,
     )
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
 
     await user.click(nextButton)
 
     expect(customHandleSubmit).toHaveBeenCalled()
   })
 
-  it("should display < symbol in Prev button", () => {
+  it("should display < symbol in Retour button", () => {
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        prev="/prev"
+      />,
     )
-    const prevButton = screen.getByRole("button", { name: /prev/i })
+    const prevButton = screen.getByRole("button", { name: /retour/i })
     expect(prevButton).toHaveTextContent("<")
   })
 
-  it("should display > symbol in Next button", () => {
+  it("should display > symbol in Suivant button", () => {
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        next="/next"
+      />,
     )
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     expect(nextButton).toHaveTextContent(">")
   })
 
-  it("should navigate with correct route for Prev when validation succeeds", async () => {
+  it("should navigate with correct route for Retour when validation succeeds", async () => {
     const user = userEvent.setup()
     renderWithProvider(
       <FormSaveAndNavigate
         handleSubmit={mockHandleSubmit}
         prev="/custom/route"
-      />
+      />,
     )
-    const prevButton = screen.getByRole("button", { name: /prev/i })
+    const prevButton = screen.getByRole("button", { name: /retour/i })
 
     await user.click(prevButton)
 
     expect(mockPush).toHaveBeenCalledWith("/custom/route")
   })
 
-  it("should navigate with correct route for Next when validation succeeds", async () => {
+  it("should navigate with correct route for Suivant when validation succeeds", async () => {
     const user = userEvent.setup()
     renderWithProvider(
       <FormSaveAndNavigate
         handleSubmit={mockHandleSubmit}
         next="/another/route"
-      />
+      />,
     )
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
 
     await user.click(nextButton)
 
     expect(mockPush).toHaveBeenCalledWith("/another/route")
   })
 
-  it("should handle multiple clicks on Prev button", async () => {
+  it("should handle multiple clicks on Retour button", async () => {
     const user = userEvent.setup()
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        prev="/prev"
+      />,
     )
-    const prevButton = screen.getByRole("button", { name: /prev/i })
+    const prevButton = screen.getByRole("button", { name: /retour/i })
 
     await user.click(prevButton)
     await user.click(prevButton)
@@ -249,12 +288,15 @@ describe("FormSaveAndNavigate", () => {
     expect(mockPush).toHaveBeenCalledTimes(3)
   })
 
-  it("should handle multiple clicks on Next button", async () => {
+  it("should handle multiple clicks on Suivant button", async () => {
     const user = userEvent.setup()
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
+      <FormSaveAndNavigate
+        handleSubmit={mockHandleSubmit}
+        next="/next"
+      />,
     )
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
 
     await user.click(nextButton)
     await user.click(nextButton)
@@ -263,16 +305,19 @@ describe("FormSaveAndNavigate", () => {
     expect(mockPush).toHaveBeenCalledTimes(2)
   })
 
-  it("should not navigate when validation fails on Prev button click", async () => {
+  it("should not navigate when validation fails on Retour button click", async () => {
     const user = userEvent.setup()
     const failingHandleSubmit = vi.fn(() => async () => {
       // onValid callback is never called, simulating validation failure
     })
 
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={failingHandleSubmit} prev="/prev" />
+      <FormSaveAndNavigate
+        handleSubmit={failingHandleSubmit}
+        prev="/prev"
+      />,
     )
-    const prevButton = screen.getByRole("button", { name: /prev/i })
+    const prevButton = screen.getByRole("button", { name: /retour/i })
 
     await user.click(prevButton)
 
@@ -280,16 +325,19 @@ describe("FormSaveAndNavigate", () => {
     expect(mockPush).not.toHaveBeenCalled()
   })
 
-  it("should not navigate when validation fails on Next button click", async () => {
+  it("should not navigate when validation fails on Suivant button click", async () => {
     const user = userEvent.setup()
     const failingHandleSubmit = vi.fn(() => async () => {
       // onValid callback is never called, simulating validation failure
     })
 
     renderWithProvider(
-      <FormSaveAndNavigate handleSubmit={failingHandleSubmit} next="/next" />
+      <FormSaveAndNavigate
+        handleSubmit={failingHandleSubmit}
+        next="/next"
+      />,
     )
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
 
     await user.click(nextButton)
 

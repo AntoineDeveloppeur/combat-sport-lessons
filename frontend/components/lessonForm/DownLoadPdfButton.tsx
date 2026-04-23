@@ -1,14 +1,25 @@
-import { selectLessonForm } from "@/features/lessonForm/lessonFormSelectors"
-import { useAppSelector } from "@/store/hooks"
+"use client"
+
+import { useAppDispatch } from "@/store/hooks"
 import { buildAndDownloadPdf } from "@/utils/buildAndDownloadPdf"
 import { Button } from "../ui/button"
+import { save } from "@/features/lessonForm/lessonFormSlice"
+import type { Lesson } from "@/types"
 
-export default function DownLoadPdfButton() {
-  const lesson = useAppSelector(selectLessonForm)
+interface DownLoadPdfButtonProps {
+  getFormValues: () => Lesson
+}
+
+export default function DownLoadPdfButton({
+  getFormValues,
+}: DownLoadPdfButtonProps) {
+  const dispatch = useAppDispatch()
 
   const handleClick = () => {
-    buildAndDownloadPdf(lesson)
+    const currentLesson = getFormValues()
+    dispatch(save(currentLesson))
+    buildAndDownloadPdf(currentLesson)
   }
 
-  return <Button onClick={handleClick}>Télécharge la lesson</Button>
+  return <Button onClick={handleClick}>voir la leçon</Button>
 }

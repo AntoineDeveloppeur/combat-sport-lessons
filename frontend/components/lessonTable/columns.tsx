@@ -161,7 +161,7 @@ export const getColumns = (config: ColumnsConfig = {}): ColumnDef<Lesson>[] => {
   ]
 
   if (config.showActions && config.userId) {
-    baseColumns.push({
+    baseColumns.unshift({
       id: "actions",
       header: "Actions",
       cell: ({ row }) => {

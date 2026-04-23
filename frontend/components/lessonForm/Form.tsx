@@ -6,7 +6,11 @@ type FormProps = FormHTMLAttributes<HTMLFormElement> & {
 
 export const Form = ({ children, ...props }: FormProps) => {
   return (
-    <form className="w-full" {...props} noValidate>
+    <form
+      className="w-full mb-8"
+      {...props}
+      noValidate
+    >
       {children}
     </form>
   )

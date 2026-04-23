@@ -54,7 +54,7 @@ export default function General() {
     formState: { errors },
   } = useForm<GeneralFormData>({
     resolver: yupResolver(validationSchema),
-    defaultValues: lesson,
+    defaultValues: structuredClone(lesson),
     mode: "onSubmit",
   })
 
@@ -83,8 +83,8 @@ export default function General() {
           name="warmUp"
           legend="Pour l'échauffement ?"
           title1="J'écris moi-même l'échauffement"
-          title2="Je sélectionne un échauffement tout fait"
-          subtitle2="la sélection sera proposée plus tard"
+          title2="Fonctionnalité pas encore disponible"
+          subtitle2=""
           watch={watch}
           setValue={setValue}
           errors={errors}
@@ -93,8 +93,8 @@ export default function General() {
           name="coolDown"
           legend="Pour le retour au calme ou les étirements"
           title1="Je les écris moi-même"
-          title2="Je sélectionne une fin de séance toute faite"
-          subtitle2="la sélection sera proposée plus tard"
+          title2="Fonctionnalité pas encore disponible"
+          subtitle2=""
           watch={watch}
           setValue={setValue}
           errors={errors}

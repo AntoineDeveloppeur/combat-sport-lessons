@@ -1,7 +1,11 @@
 import { useForm, FieldErrors, FieldArrayWithId } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"
-import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form"
+import {
+  UseFormHandleSubmit,
+  UseFormRegister,
+  UseFormGetValues,
+} from "react-hook-form"
 import { getYupValidationSchema } from "@/utils/getInstructionYupValidationSchema"
 import { useInstructionFieldArray } from "./useInstructionFieldArray"
 import { selectLessonForm } from "@/features/lessonForm/lessonFormSelectors"
@@ -18,6 +22,8 @@ interface UseInstructionReturn {
   errors: FieldErrors<T>
   fields: FieldArrayWithId<T, string, "id">[]
   addInstruction: () => void
+  removeLastInstruction: () => void
+  getValues: UseFormGetValues<T>
 }
 
 export function useInstructionForm({
@@ -33,16 +39,14 @@ export function useInstructionForm({
     register,
     formState: { errors },
     control,
+    getValues,
   } = useForm<FormData>({
-    defaultValues: lesson,
+    defaultValues: structuredClone(lesson),
     resolver: yupResolver(validationSchema),
   })
 
-  const { addInstruction, fields } = useInstructionFieldArray(
-    lesson,
-    fieldName,
-    control
-  )
+  const { addInstruction, removeLastInstruction, fields } =
+    useInstructionFieldArray(lesson, fieldName, control)
 
   return {
     handleSubmit,
@@ -50,5 +54,7 @@ export function useInstructionForm({
     errors,
     fields,
     addInstruction,
+    removeLastInstruction,
+    getValues,
   }
 }

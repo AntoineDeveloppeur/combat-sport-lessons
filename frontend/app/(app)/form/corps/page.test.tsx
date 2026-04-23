@@ -42,7 +42,7 @@ describe("Body page", () => {
     const user = userEvent.setup()
     renderWithProvider(<Body />)
 
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     await user.click(nextButton)
 
     await waitFor(() => {
@@ -61,7 +61,7 @@ describe("Body page", () => {
     const textareas = screen.getAllByRole("textbox")
     await user.type(textareas[0], "ab")
 
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     await user.click(nextButton)
 
     await waitFor(() => {
@@ -85,7 +85,7 @@ describe("Body page", () => {
     await user.clear(minInput)
     await user.type(minInput, "95")
 
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     await user.click(nextButton)
 
     await waitFor(() => {
@@ -109,7 +109,7 @@ describe("Body page", () => {
     await user.clear(secInput)
     await user.type(secInput, "65")
 
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     await user.click(nextButton)
 
     await waitFor(() => {
@@ -134,7 +134,7 @@ describe("Body page", () => {
     await user.clear(spinbuttons[1])
     await user.type(spinbuttons[1], "30")
 
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     await user.click(nextButton)
 
     await waitFor(() => {

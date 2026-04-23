@@ -36,7 +36,7 @@ describe("General page", () => {
       "Un objectif valide avec plus de 20 caractères",
     )
 
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     await user.click(nextButton)
 
     expect(mockPush).not.toHaveBeenCalled()
@@ -49,7 +49,7 @@ describe("General page", () => {
     const sportSelect = screen.getByRole("combobox")
     await user.selectOptions(sportSelect, "Judo")
 
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     await user.click(nextButton)
 
     expect(mockPush).not.toHaveBeenCalled()
@@ -67,7 +67,7 @@ describe("General page", () => {
     )
     await user.type(objectiveTextarea, "Trop court")
 
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     await user.click(nextButton)
 
     await waitFor(() => {
@@ -99,7 +99,7 @@ describe("General page", () => {
 
     await user.type(titleInput, "titre valide de plus de 3 caractères")
 
-    const nextButton = screen.getByRole("button", { name: /next/i })
+    const nextButton = screen.getByRole("button", { name: /suivant/i })
     await user.click(nextButton)
 
     await waitFor(() => {

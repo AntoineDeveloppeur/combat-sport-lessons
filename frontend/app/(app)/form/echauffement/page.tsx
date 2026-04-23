@@ -19,10 +19,8 @@ export default function WarmUp() {
       <FieldSet className="flex flex-col items-start w-[600px]">
         {warmUpType === "custom" && (
           <CustomInstructions
-            legend="Échauffement, écriver une suite d'instruction composés de texte et
-        d'une durée. Vous pouvez ajoutez autant d'instructions que
-        vous pouvez. Ajoutez une instruction avec le boutton &quot;ajouter une
-        instruction&quot;"
+            legend="L’échauffement permet d’augmenter progressivement le rythme cardiaque, de chauffer les muscles, de lubrifier les articulations, de préparer le système nerveux et d’améliorer la concentration.
+Pour en tirer tous les bénéfices, il est recommandé d’y consacrer au minimum 15 minutes."
             presetType="warmUpInstructions"
             prev={prevPage}
             next={nextPage}

@@ -9,7 +9,7 @@ export default function Body() {
     <Form>
       <FieldSet className="flex flex-col items-start w-[600px]">
         <CustomInstructions
-          legend="Corps de séance"
+          legend="Le corps de séance est le moment clé de ton entraînement : c’est ici que tu développes les techniques, la condition physique et les automatismes."
           presetType="bodyInstructions"
           prev="/form/echauffement"
           next="/form/calme"
