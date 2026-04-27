@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { describe, it, expect, vi } from "vitest"
+import { describe, it, expect, vi, beforeEach } from "vitest"
 import { renderHook, act } from "@testing-library/react"
 import { useInstructionFieldArray } from "./useInstructionFieldArray"
 import { Lesson } from "@/types"
 import { Control } from "react-hook-form"
+import { createTiptapJSON } from "@/utils/tiptapHelpers"
 import { defaultValues } from "@/data/instructionDefaultValues"
 
 vi.mock("react-hook-form", async () => {
@@ -16,7 +17,7 @@ vi.mock("react-hook-form", async () => {
 })
 
 vi.mock("@/data/instructionDefaultValues", () => ({
-  defaultValues: [{ text: "", min: 1, sec: 0 }],
+  defaultValues: [{ text: { type: "doc", content: [] }, min: 1, sec: 0 }],
 }))
 
 const { useFieldArray } = await import("react-hook-form")
@@ -33,15 +34,15 @@ describe("useInstructionFieldArray", () => {
   it("should initialize with lesson field length", () => {
     const lesson: Lesson = {
       warmUpInstructions: [
-        { text: "Instruction 1", min: 1, sec: 0 },
-        { text: "Instruction 2", min: 2, sec: 0 },
+        { text: createTiptapJSON("Instruction 1"), min: 1, sec: 0 },
+        { text: createTiptapJSON("Instruction 2"), min: 2, sec: 0 },
       ],
     }
 
     vi.mocked(useFieldArray).mockReturnValue({
       fields: [
-        { id: "1", text: "Instruction 1", min: 1, sec: 0 },
-        { id: "2", text: "Instruction 2", min: 2, sec: 0 },
+        { id: "1", text: createTiptapJSON("Instruction 1"), min: 1, sec: 0 },
+        { id: "2", text: createTiptapJSON("Instruction 2"), min: 2, sec: 0 },
       ] as any,
       append: mockAppend,
       remove: mockRemove,
@@ -54,7 +55,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
     )
 
     expect(result.current.fields).toHaveLength(2)
@@ -76,7 +77,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
     )
 
     expect(useFieldArray).toHaveBeenCalledWith({
@@ -87,11 +88,15 @@ describe("useInstructionFieldArray", () => {
 
   it("should call append when addInstruction is called", () => {
     const lesson: Lesson = {
-      warmUpInstructions: [{ text: "Instruction 1", min: 1, sec: 0 }],
+      warmUpInstructions: [
+        { text: createTiptapJSON("Instruction 1"), min: 1, sec: 0 },
+      ],
     }
 
     vi.mocked(useFieldArray).mockReturnValue({
-      fields: [{ id: "1", text: "Instruction 1", min: 1, sec: 0 }] as any,
+      fields: [
+        { id: "1", text: createTiptapJSON("Instruction 1"), min: 1, sec: 0 },
+      ] as any,
       append: mockAppend,
       remove: mockRemove,
       prepend: vi.fn(),
@@ -103,7 +108,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result, rerender } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
     )
 
     act(() => {
@@ -112,8 +117,8 @@ describe("useInstructionFieldArray", () => {
 
     vi.mocked(useFieldArray).mockReturnValue({
       fields: [
-        { id: "1", text: "Instruction 1", min: 1, sec: 0 },
-        { id: "2", text: "", min: 1, sec: 0 },
+        { id: "1", text: createTiptapJSON("Instruction 1"), min: 1, sec: 0 },
+        { id: "2", text: createTiptapJSON(""), min: 1, sec: 0 },
       ] as any,
       append: mockAppend,
       remove: mockRemove,
@@ -132,11 +137,15 @@ describe("useInstructionFieldArray", () => {
 
   it("should append new instruction with default values", () => {
     const lesson: Lesson = {
-      bodyInstructions: [{ text: "Existing", min: 2, sec: 30 }],
+      bodyInstructions: [
+        { text: createTiptapJSON("Existing"), min: 2, sec: 30 },
+      ],
     }
 
     vi.mocked(useFieldArray).mockReturnValue({
-      fields: [{ id: "1", text: "Existing", min: 2, sec: 30 }] as any,
+      fields: [
+        { id: "1", text: createTiptapJSON("Existing"), min: 2, sec: 30 },
+      ] as any,
       append: mockAppend,
       remove: mockRemove,
       prepend: vi.fn(),
@@ -148,7 +157,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result, rerender } = renderHook(() =>
-      useInstructionFieldArray(lesson, "bodyInstructions", mockControl)
+      useInstructionFieldArray(lesson, "bodyInstructions", mockControl),
     )
 
     act(() => {
@@ -157,8 +166,8 @@ describe("useInstructionFieldArray", () => {
 
     vi.mocked(useFieldArray).mockReturnValue({
       fields: [
-        { id: "1", text: "Existing", min: 2, sec: 30 },
-        { id: "2", text: "", min: 1, sec: 0 },
+        { id: "1", text: createTiptapJSON("Existing"), min: 2, sec: 30 },
+        { id: "2", text: createTiptapJSON(""), min: 1, sec: 0 },
       ] as any,
       append: mockAppend,
       remove: mockRemove,
@@ -177,11 +186,15 @@ describe("useInstructionFieldArray", () => {
 
   it("should work with different field names", () => {
     const lesson: Lesson = {
-      coolDownInstructions: [{ text: "Cool down", min: 3, sec: 0 }],
+      coolDownInstructions: [
+        { text: createTiptapJSON("Cool down"), min: 3, sec: 0 },
+      ],
     }
 
     vi.mocked(useFieldArray).mockReturnValue({
-      fields: [{ id: "1", text: "Cool down", min: 3, sec: 0 }] as any,
+      fields: [
+        { id: "1", text: createTiptapJSON("Cool down"), min: 3, sec: 0 },
+      ] as any,
       append: mockAppend,
       remove: mockRemove,
       prepend: vi.fn(),
@@ -193,7 +206,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     renderHook(() =>
-      useInstructionFieldArray(lesson, "coolDownInstructions", mockControl)
+      useInstructionFieldArray(lesson, "coolDownInstructions", mockControl),
     )
 
     expect(useFieldArray).toHaveBeenCalledWith({
@@ -218,7 +231,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
     )
 
     expect(result.current.addInstruction).toBeInstanceOf(Function)
@@ -226,10 +239,12 @@ describe("useInstructionFieldArray", () => {
 
   it("should return fields array", () => {
     const lesson: Lesson = {
-      warmUpInstructions: [{ text: "Test", min: 1, sec: 0 }],
+      warmUpInstructions: [{ text: createTiptapJSON("Test"), min: 1, sec: 0 }],
     }
 
-    const mockFields = [{ id: "1", text: "Test", min: 1, sec: 0 }]
+    const mockFields = [
+      { id: "1", text: createTiptapJSON("Test"), min: 1, sec: 0 },
+    ]
 
     vi.mocked(useFieldArray).mockReturnValue({
       fields: mockFields as any,
@@ -244,7 +259,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
     )
 
     expect(result.current.fields).toEqual(mockFields)
@@ -252,10 +267,12 @@ describe("useInstructionFieldArray", () => {
 
   it("should handle multiple addInstruction calls", () => {
     const lesson: Lesson = {
-      warmUpInstructions: [{ text: "First", min: 1, sec: 0 }],
+      warmUpInstructions: [{ text: createTiptapJSON("First"), min: 1, sec: 0 }],
     }
 
-    let currentFields = [{ id: "1", text: "First", min: 1, sec: 0 }]
+    let currentFields = [
+      { id: "1", text: createTiptapJSON("First"), min: 1, sec: 0 },
+    ]
 
     vi.mocked(useFieldArray).mockImplementation(() => ({
       fields: currentFields as any,
@@ -270,21 +287,27 @@ describe("useInstructionFieldArray", () => {
     }))
 
     const { result, rerender } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
     )
 
     act(() => {
       result.current.addInstruction()
     })
 
-    currentFields = [...currentFields, { id: "2", text: "", min: 1, sec: 0 }]
+    currentFields = [
+      ...currentFields,
+      { id: "2", text: createTiptapJSON(""), min: 1, sec: 0 },
+    ]
     rerender()
 
     act(() => {
       result.current.addInstruction()
     })
 
-    currentFields = [...currentFields, { id: "3", text: "", min: 1, sec: 0 }]
+    currentFields = [
+      ...currentFields,
+      { id: "3", text: createTiptapJSON(""), min: 1, sec: 0 },
+    ]
     rerender()
 
     expect(mockAppend).toHaveBeenCalledTimes(2)
@@ -293,17 +316,17 @@ describe("useInstructionFieldArray", () => {
   it("should initialize instructionCount based on lesson field length", () => {
     const lesson: Lesson = {
       warmUpInstructions: [
-        { text: "1", min: 1, sec: 0 },
-        { text: "2", min: 1, sec: 0 },
-        { text: "3", min: 1, sec: 0 },
+        { text: createTiptapJSON("1"), min: 1, sec: 0 },
+        { text: createTiptapJSON("2"), min: 1, sec: 0 },
+        { text: createTiptapJSON("3"), min: 1, sec: 0 },
       ],
     }
 
     vi.mocked(useFieldArray).mockReturnValue({
       fields: [
-        { id: "1", text: "1", min: 1, sec: 0 },
-        { id: "2", text: "2", min: 1, sec: 0 },
-        { id: "3", text: "3", min: 1, sec: 0 },
+        { id: "1", text: createTiptapJSON("1"), min: 1, sec: 0 },
+        { id: "2", text: createTiptapJSON("2"), min: 1, sec: 0 },
+        { id: "3", text: createTiptapJSON("3"), min: 1, sec: 0 },
       ] as any,
       append: mockAppend,
       remove: mockRemove,
@@ -316,7 +339,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
     )
 
     expect(result.current.fields).toHaveLength(3)

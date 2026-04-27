@@ -29,7 +29,7 @@ CREATE TABLE "lessons" (
 
 CREATE TABLE "instructions" (
   "instruction_id" uuid PRIMARY KEY,
-  "text" varchar,
+  "text" jsonb,
   "type" instruction_enum,
   "min" integer,
   "sec" integer,

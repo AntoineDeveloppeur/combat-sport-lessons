@@ -11,6 +11,31 @@ vi.mock("next/navigation", () => ({
   }),
 }))
 
+vi.mock("@/components/lessonForm/RichTextEditor", () => ({
+  default: ({ content, onChange, onBlur }: any) => (
+    <textarea
+      data-testid="rich-text-editor"
+      defaultValue=""
+      onChange={(e) => {
+        const text = e.target.value
+        const tiptapJSON = text
+          ? {
+              type: "doc",
+              content: [
+                {
+                  type: "paragraph",
+                  content: [{ type: "text", text }],
+                },
+              ],
+            }
+          : { type: "doc", content: [] }
+        onChange(tiptapJSON)
+      }}
+      onBlur={onBlur}
+    />
+  ),
+}))
+
 const mockMutationResult = [vi.fn(), { isLoading: false, error: null }]
 const mockUpdateMutationResult = [vi.fn(), { isLoading: false, error: null }]
 

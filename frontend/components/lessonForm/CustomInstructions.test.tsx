@@ -7,16 +7,40 @@ import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
 import { UseFormRegister, FieldErrors } from "react-hook-form"
 import { Lesson } from "@/types"
+import { createTiptapJSON } from "@/utils/tiptapHelpers"
 
 vi.mock("@/hooks/useInstructionForm")
+
+vi.mock("react-hook-form", async () => {
+  const actual = await vi.importActual("react-hook-form")
+  return {
+    ...actual,
+    Controller: ({ render }: any) => {
+      const field = {
+        value: { type: "doc", content: [] },
+        onChange: vi.fn(),
+        onBlur: vi.fn(),
+        name: "test",
+        ref: vi.fn(),
+      }
+      return render({ field })
+    },
+  }
+})
 
 vi.mock("@/components/lessonForm/FormSaveAndNavigate", () => ({
   default: ({ handleSubmit, prev, next }: any) => (
     <div data-testid="form-save-navigate">
-      <button data-testid="prev-button" data-route={prev}>
+      <button
+        data-testid="prev-button"
+        data-route={prev}
+      >
         Prev
       </button>
-      <button data-testid="next-button" data-route={next}>
+      <button
+        data-testid="next-button"
+        data-route={next}
+      >
         Next
       </button>
     </div>
@@ -32,6 +56,60 @@ describe("CustomInstructions", () => {
   }))
 
   const mockAddInstruction = vi.fn()
+  const mockRemoveLastInstruction = vi.fn()
+  const mockControl = {
+    register: mockRegister,
+    unregister: vi.fn(),
+    getFieldState: vi.fn(),
+    _subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+    _subjects: {
+      values: {
+        subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+        unsubscribe: vi.fn(),
+      },
+      array: {
+        subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+        unsubscribe: vi.fn(),
+      },
+      state: {
+        subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+        unsubscribe: vi.fn(),
+      },
+    },
+    _options: {
+      shouldUnregister: false,
+    },
+    _executeSchema: vi.fn(),
+    _getWatch: vi.fn(),
+    _getDirty: vi.fn(),
+    _updateValid: vi.fn(),
+    _removeUnmounted: vi.fn(),
+    _formState: {
+      isDirty: false,
+      isSubmitting: false,
+      isSubmitted: false,
+      isSubmitSuccessful: false,
+      isValid: false,
+      isValidating: false,
+      errors: {},
+    },
+    _reset: vi.fn(),
+    _names: {
+      mount: new Set(),
+      unMount: new Set(),
+      array: new Set(),
+      watch: new Set(),
+    },
+    _state: {
+      mount: false,
+      action: false,
+      watch: false,
+    },
+    _fields: {},
+    _formValues: {},
+    _proxyFormState: {},
+    _defaultValues: {},
+  } as any
 
   beforeEach(() => {
     vi.clearAllMocks()
@@ -41,7 +119,9 @@ describe("CustomInstructions", () => {
     vi.mocked(useInstructionForm).mockReturnValue({
       register: mockRegister,
       errors: {} as FieldErrors<Lesson>,
-      fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
+      fields: [
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
+      ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
       getValues: vi.fn(),
@@ -51,7 +131,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />
+      />,
     )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
@@ -63,10 +143,10 @@ describe("CustomInstructions", () => {
       register: mockRegister,
       errors: {} as FieldErrors<Lesson>,
       fields: [
-        { id: "1", text: "", min: 1, sec: 0 },
-        { id: "2", text: "", min: 1, sec: 0 },
-        { id: "3", text: "", min: 1, sec: 0 },
-        { id: "4", text: "", min: 1, sec: 0 },
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
+        { id: "2", text: createTiptapJSON(""), min: 1, sec: 0 },
+        { id: "3", text: createTiptapJSON(""), min: 1, sec: 0 },
+        { id: "4", text: createTiptapJSON(""), min: 1, sec: 0 },
       ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
@@ -77,7 +157,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />
+      />,
     )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
@@ -92,7 +172,9 @@ describe("CustomInstructions", () => {
     vi.mocked(useInstructionForm).mockReturnValue({
       register: mockRegister,
       errors: {} as FieldErrors<Lesson>,
-      fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
+      fields: [
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
+      ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
       getValues: vi.fn(),
@@ -102,7 +184,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />
+      />,
     )
 
     const addButton = screen.getByRole("button", { name: /ajouter un champs/i })
@@ -115,7 +197,9 @@ describe("CustomInstructions", () => {
     vi.mocked(useInstructionForm).mockReturnValue({
       register: mockRegister,
       errors: {} as FieldErrors<Lesson>,
-      fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
+      fields: [
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
+      ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
       getValues: vi.fn(),
@@ -125,7 +209,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />
+      />,
     )
 
     const legend = document.querySelector("legend")
@@ -144,29 +228,8 @@ describe("CustomInstructions", () => {
     vi.mocked(useInstructionForm).mockReturnValue({
       register: mockRegister,
       errors: mockErrors,
-      fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
-      addInstruction: mockAddInstruction,
-      handleSubmit: vi.fn(),
-      getValues: vi.fn(),
-    })
-
-    renderWithProvider(
-      <CustomInstructions
-        legend="Test legend"
-        presetType="warmUpInstructions"
-      />
-    )
-
-    expect(screen.getByText("Text is required")).toBeInTheDocument()
-  })
-
-  it("index should be passed to Instruction", () => {
-    vi.mocked(useInstructionForm).mockReturnValue({
-      register: mockRegister,
-      errors: {} as FieldErrors<Lesson>,
       fields: [
-        { id: "1", text: "", min: 1, sec: 0 },
-        { id: "2", text: "", min: 1, sec: 0 },
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
       ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
@@ -177,7 +240,30 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />
+      />,
+    )
+
+    expect(screen.getByText("Text is required")).toBeInTheDocument()
+  })
+
+  it("index should be passed to Instruction", () => {
+    vi.mocked(useInstructionForm).mockReturnValue({
+      register: mockRegister,
+      errors: {} as FieldErrors<Lesson>,
+      fields: [
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
+        { id: "2", text: createTiptapJSON(""), min: 1, sec: 0 },
+      ] as unknown as any,
+      addInstruction: mockAddInstruction,
+      handleSubmit: vi.fn(),
+      getValues: vi.fn(),
+    })
+
+    renderWithProvider(
+      <CustomInstructions
+        legend="Test legend"
+        presetType="warmUpInstructions"
+      />,
     )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
@@ -188,29 +274,35 @@ describe("CustomInstructions", () => {
     vi.mocked(useInstructionForm).mockReturnValue({
       register: mockRegister,
       errors: {} as FieldErrors<Lesson>,
-      fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
+      fields: [
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
+      ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
       getValues: vi.fn(),
+      removeLastInstruction: mockRemoveLastInstruction,
+      control: mockControl,
     })
 
     renderWithProvider(
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />
+      />,
     )
 
-    expect(mockRegister).toHaveBeenCalledWith("warmUpInstructions.0.text")
     expect(mockRegister).toHaveBeenCalledWith("warmUpInstructions.0.min")
     expect(mockRegister).toHaveBeenCalledWith("warmUpInstructions.0.sec")
+    expect(mockRegister).not.toHaveBeenCalledWith("warmUpInstructions.0.text")
   })
 
   it("fieldLegend should display the legend prop", () => {
     vi.mocked(useInstructionForm).mockReturnValue({
       register: mockRegister,
       errors: {} as FieldErrors<Lesson>,
-      fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
+      fields: [
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
+      ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
       getValues: vi.fn(),
@@ -220,7 +312,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Custom legend text"
         presetType="warmUpInstructions"
-      />
+      />,
     )
 
     expect(screen.getByText("Custom legend text")).toBeInTheDocument()
@@ -230,7 +322,9 @@ describe("CustomInstructions", () => {
     vi.mocked(useInstructionForm).mockReturnValue({
       register: mockRegister,
       errors: {} as FieldErrors<Lesson>,
-      fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
+      fields: [
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
+      ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
       getValues: vi.fn(),
@@ -240,7 +334,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />
+      />,
     )
 
     const addButton = screen.getByRole("button", { name: /ajouter un champs/i })
@@ -252,14 +346,19 @@ describe("CustomInstructions", () => {
     vi.mocked(useInstructionForm).mockReturnValue({
       register: mockRegister,
       errors: {} as FieldErrors<Lesson>,
-      fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
+      fields: [
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
+      ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
       getValues: vi.fn(),
     })
 
     renderWithProvider(
-      <CustomInstructions legend="Test legend" presetType="bodyInstructions" />
+      <CustomInstructions
+        legend="Test legend"
+        presetType="bodyInstructions"
+      />,
     )
 
     expect(useInstructionForm).toHaveBeenCalledWith({
@@ -272,8 +371,35 @@ describe("CustomInstructions", () => {
       register: mockRegister,
       errors: {} as FieldErrors<Lesson>,
       fields: [
-        { id: "1", text: "", min: 1, sec: 0 },
-        { id: "2", text: "", min: 1, sec: 0 },
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
+        { id: "2", text: createTiptapJSON(""), min: 1, sec: 0 },
+      ] as unknown as any,
+      addInstruction: mockAddInstruction,
+      handleSubmit: vi.fn(),
+      getValues: vi.fn(),
+      removeLastInstruction: mockRemoveLastInstruction,
+      control: mockControl,
+    })
+
+    renderWithProvider(
+      <CustomInstructions
+        legend="Test legend"
+        presetType="coolDownInstructions"
+      />,
+    )
+
+    expect(mockRegister).toHaveBeenCalledWith("coolDownInstructions.0.min")
+    expect(mockRegister).toHaveBeenCalledWith("coolDownInstructions.1.min")
+    expect(mockRegister).not.toHaveBeenCalledWith("coolDownInstructions.0.text")
+    expect(mockRegister).not.toHaveBeenCalledWith("coolDownInstructions.1.text")
+  })
+
+  it("should not call addInstruction on initial render", () => {
+    vi.mocked(useInstructionForm).mockReturnValue({
+      register: mockRegister,
+      errors: {} as FieldErrors<Lesson>,
+      fields: [
+        { id: "1", text: createTiptapJSON(""), min: 1, sec: 0 },
       ] as unknown as any,
       addInstruction: mockAddInstruction,
       handleSubmit: vi.fn(),
@@ -283,29 +409,8 @@ describe("CustomInstructions", () => {
     renderWithProvider(
       <CustomInstructions
         legend="Test legend"
-        presetType="coolDownInstructions"
-      />
-    )
-
-    expect(mockRegister).toHaveBeenCalledWith("coolDownInstructions.0.text")
-    expect(mockRegister).toHaveBeenCalledWith("coolDownInstructions.1.text")
-  })
-
-  it("should not call addInstruction on initial render", () => {
-    vi.mocked(useInstructionForm).mockReturnValue({
-      register: mockRegister,
-      errors: {} as FieldErrors<Lesson>,
-      fields: [{ id: "1", text: "", min: 1, sec: 0 }] as unknown as any,
-      addInstruction: mockAddInstruction,
-      handleSubmit: vi.fn(),
-      getValues: vi.fn(),
-    })
-
-    renderWithProvider(
-      <CustomInstructions
-        legend="Test legend"
         presetType="warmUpInstructions"
-      />
+      />,
     )
 
     expect(mockAddInstruction).not.toHaveBeenCalled()

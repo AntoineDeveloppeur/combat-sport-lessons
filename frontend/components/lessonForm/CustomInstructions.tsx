@@ -31,6 +31,7 @@ export default function CustomInstructions({
     removeLastInstruction,
     handleSubmit,
     getValues,
+    control,
   } = useInstructionForm({
     fieldName: presetType,
   })
@@ -53,7 +54,8 @@ export default function CustomInstructions({
           errors={errors}
           register={register}
           getValues={getValues}
-        ></InstructionField>
+          control={control}
+        />
       ))}
       <Button
         type="button"

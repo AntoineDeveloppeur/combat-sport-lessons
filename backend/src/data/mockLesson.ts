@@ -1,4 +1,5 @@
 import { Lesson } from "../domain/Entities/Lesson"
+import { createTiptapJSON } from "../utils/tiptapHelpers.js"
 
 export const mockLesson: Lesson = {
   lessonId: "lessonId123",
@@ -12,29 +13,31 @@ export const mockLesson: Lesson = {
     {
       sec: 23,
       min: 1,
-      text: "ddddddddddd",
+      text: createTiptapJSON("ddddddddddd"),
     },
     {
       sec: 50,
       min: 3,
-      text: "qxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      text: createTiptapJSON("qxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
     },
   ],
   warmUpInstructions: [
     {
-      text: "ddddddddd ddddddddddddddddddddd dddddddddddddddddddd ddddddddddddddddddddddddd sssssssssssssss ssssssssss ssssss s s sssssssssssssss ssssssssssssssssssssssssssss s",
+      text: createTiptapJSON(
+        "ddddddddd ddddddddddddddddddddd dddddddddddddddddddd ddddddddddddddddddddddddd sssssssssssssss ssssssssss ssssss s s sssssssssssssss ssssssssssssssssssssssssssss s",
+      ),
       min: 1,
       sec: 0,
     },
     {
       sec: 0,
       min: 2,
-      text: "ssssssssssssssssssssssssss",
+      text: createTiptapJSON("ssssssssssssssssssssssssss"),
     },
   ],
   coolDownInstructions: [
     {
-      text: "",
+      text: createTiptapJSON(""),
       min: 1,
       sec: 0,
     },

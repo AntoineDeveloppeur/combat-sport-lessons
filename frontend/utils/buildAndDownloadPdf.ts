@@ -1,5 +1,6 @@
 import { jsPDF } from "jspdf"
 import { Lesson, InstructionType } from "@/types"
+import { tiptapToPlainText } from "./tiptapToPlainText"
 
 export const buildAndDownloadPdf = (lesson: Lesson): void => {
   const doc = new jsPDF()
@@ -58,8 +59,9 @@ export const buildAndDownloadPdf = (lesson: Lesson): void => {
     instructions.forEach((instruction) => {
       const timeText = `${instruction.min}:${instruction.sec.toString().padStart(2, "0")}`
 
+      const plainText = tiptapToPlainText(instruction.text)
       const instructionLines = doc.splitTextToSize(
-        instruction.text || "",
+        plainText || "",
         columnWidth - 10,
       )
 

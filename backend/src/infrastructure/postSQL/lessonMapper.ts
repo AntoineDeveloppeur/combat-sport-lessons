@@ -1,11 +1,16 @@
 import { Lesson } from "../../domain/Entities/Lesson.js"
 import type { Sport } from "../../domain/type.js"
+import type { TiptapJSON } from "../../domain/Entities/Instructions.js"
 import type {
   LessonDBRow,
   InstructionDBRow,
   LessonDBwithInstructionRow,
   PostgreSQLResult,
 } from "./types.js"
+
+const parseInstructionText = (text: string | TiptapJSON): TiptapJSON => {
+  return typeof text === "string" ? JSON.parse(text) : text
+}
 
 export const mapOne = (
   lessonDB: PostgreSQLResult<LessonDBRow>,
@@ -32,9 +37,18 @@ export const mapOne = (
     warmUp: warm_up,
     coolDown: cool_down,
     ...rest,
-    warmUpInstructions: warmUpInstructionsDB.rows,
-    bodyInstructions: bodyInstructionsDB.rows,
-    coolDownInstructions: coolDownInstructionsDB.rows,
+    warmUpInstructions: warmUpInstructionsDB.rows.map((row) => ({
+      ...row,
+      text: parseInstructionText(row.text),
+    })),
+    bodyInstructions: bodyInstructionsDB.rows.map((row) => ({
+      ...row,
+      text: parseInstructionText(row.text),
+    })),
+    coolDownInstructions: coolDownInstructionsDB.rows.map((row) => ({
+      ...row,
+      text: parseInstructionText(row.text),
+    })),
   }
   return lesson
 }
@@ -106,10 +120,16 @@ export const addInstructions = (
 
   const instructionKey = instructionTypeMap[type]
   if (instructionKey) {
+    const parsedInstruction = {
+      text: parseInstructionText(text),
+      min,
+      sec,
+      order,
+    }
     if (res[instructionKey]) {
-      res[instructionKey].push({ text, min, sec, order })
+      res[instructionKey].push(parsedInstruction)
     } else {
-      res[instructionKey] = [{ text, min, sec, order }]
+      res[instructionKey] = [parsedInstruction]
     }
   }
 

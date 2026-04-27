@@ -29,7 +29,7 @@ CREATE TABLE "lessons" (
 
 CREATE TABLE "instructions" (
   "instruction_id" uuid PRIMARY KEY,
-  "text" varchar,
+  "text" jsonb,
   "type" instruction_enum,
   "min" integer,
   "sec" integer,
@@ -59,57 +59,57 @@ VALUES
 INSERT INTO instructions (instruction_id, text, type, min, sec, "order", lesson_id)
 VALUES 
 -- WarmUp leçon 1
-('550e8400-e29b-41d4-a716-446655440101', 'Échauffement cardio avec sauts écartés', 'warm_up', 3, 0, 1, '550e8400-e29b-41d4-a716-446655440011'),
-('550e8400-e29b-41d4-a716-446655440102', 'Rotations circulaires des épaules avant/arrière', 'warm_up', 2, 0, 2, '550e8400-e29b-41d4-a716-446655440011'),
-('550e8400-e29b-41d4-a716-446655440103', 'Mouvements de boxe sans force', 'warm_up', 2, 30, 3, '550e8400-e29b-41d4-a716-446655440011'),
+('550e8400-e29b-41d4-a716-446655440101', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Échauffement cardio avec sauts écartés"}]}]}', 'warm_up', 3, 0, 1, '550e8400-e29b-41d4-a716-446655440011'),
+('550e8400-e29b-41d4-a716-446655440102', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Rotations circulaires des épaules avant/arrière"}]}]}', 'warm_up', 2, 0, 2, '550e8400-e29b-41d4-a716-446655440011'),
+('550e8400-e29b-41d4-a716-446655440103', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Mouvements de boxe sans force"}]}]}', 'warm_up', 2, 30, 3, '550e8400-e29b-41d4-a716-446655440011'),
 -- Body leçon 1
-('550e8400-e29b-41d4-a716-446655440104', 'Pratiquer le jab sur sac de frappe', 'body', 5, 0, 1, '550e8400-e29b-41d4-a716-446655440011'),
-('550e8400-e29b-41d4-a716-446655440105', 'Enchaîner jab et direct', 'body', 5, 0, 2, '550e8400-e29b-41d4-a716-446655440011'),
-('550e8400-e29b-41d4-a716-446655440106', 'Exercices avec partenaire aux pattes d''ours', 'body', 8, 0, 3, '550e8400-e29b-41d4-a716-446655440011'),
+('550e8400-e29b-41d4-a716-446655440104', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Pratiquer le jab sur sac de frappe"}]}]}', 'body', 5, 0, 1, '550e8400-e29b-41d4-a716-446655440011'),
+('550e8400-e29b-41d4-a716-446655440105', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Enchaîner jab et direct"}]}]}', 'body', 5, 0, 2, '550e8400-e29b-41d4-a716-446655440011'),
+('550e8400-e29b-41d4-a716-446655440106', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Exercices avec partenaire aux pattes d''ours"}]}]}', 'body', 8, 0, 3, '550e8400-e29b-41d4-a716-446655440011'),
 -- CoolDown leçon 1
-('550e8400-e29b-41d4-a716-446655440107', 'Marche sur place pour ralentir le rythme cardiaque', 'cool_down', 2, 0, 1, '550e8400-e29b-41d4-a716-446655440011'),
-('550e8400-e29b-41d4-a716-446655440108', 'Étirer triceps et épaules', 'cool_down', 3, 0, 2, '550e8400-e29b-41d4-a716-446655440011');
+('550e8400-e29b-41d4-a716-446655440107', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Marche sur place pour ralentir le rythme cardiaque"}]}]}', 'cool_down', 2, 0, 1, '550e8400-e29b-41d4-a716-446655440011'),
+('550e8400-e29b-41d4-a716-446655440108', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Étirer triceps et épaules"}]}]}', 'cool_down', 3, 0, 2, '550e8400-e29b-41d4-a716-446655440011');
 
 -- Instructions pour la leçon 2 (Judo avancé)
 INSERT INTO instructions(instruction_id, text, type, min, sec, "order", lesson_id)
 VALUES 
 -- WarmUp leçon 2
-('550e8400-e29b-41d4-a716-446655440201', 'Jogging autour du tatami', 'warm_up', 3, 0, 1, '550e8400-e29b-41d4-a716-446655440012'),
-('550e8400-e29b-41d4-a716-446655440202', 'Pratique des chutes avant et arrière', 'warm_up', 4, 0, 2, '550e8400-e29b-41d4-a716-446655440012'),
+('550e8400-e29b-41d4-a716-446655440201', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Jogging autour du tatami"}]}]}', 'warm_up', 3, 0, 1, '550e8400-e29b-41d4-a716-446655440012'),
+('550e8400-e29b-41d4-a716-446655440202', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Pratique des chutes avant et arrière"}]}]}', 'warm_up', 4, 0, 2, '550e8400-e29b-41d4-a716-446655440012'),
 -- Body leçon 2
-('550e8400-e29b-41d4-a716-446655440203', 'Répétition du grand fauchage de hanche', 'body', 6, 0, 1, '550e8400-e29b-41d4-a716-446655440012'),
-('550e8400-e29b-41d4-a716-446655440204', 'Travail de la projection par-dessus épaule', 'body', 6, 0, 2, '550e8400-e29b-41d4-a716-446655440012'),
-('550e8400-e29b-41d4-a716-446655440205', 'Combat libre contrôlé', 'body', 10, 0, 3, '550e8400-e29b-41d4-a716-446655440012'),
+('550e8400-e29b-41d4-a716-446655440203', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Répétition du grand fauchage de hanche"}]}]}', 'body', 6, 0, 1, '550e8400-e29b-41d4-a716-446655440012'),
+('550e8400-e29b-41d4-a716-446655440204', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Travail de la projection par-dessus épaule"}]}]}', 'body', 6, 0, 2, '550e8400-e29b-41d4-a716-446655440012'),
+('550e8400-e29b-41d4-a716-446655440205', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Combat libre contrôlé"}]}]}', 'body', 10, 0, 3, '550e8400-e29b-41d4-a716-446655440012'),
 -- CoolDown leçon 2
-('550e8400-e29b-41d4-a716-446655440206', 'Exercices de respiration en position assise', 'cool_down', 2, 0, 1, '550e8400-e29b-41d4-a716-446655440012'),
-('550e8400-e29b-41d4-a716-446655440207', 'Étirer quadriceps et ischio-jambiers', 'cool_down', 3, 0, 2, '550e8400-e29b-41d4-a716-446655440012'),
-('550e8400-e29b-41d4-a716-446655440208', 'Rei de fin de cours', 'cool_down', 0, 30, 3, '550e8400-e29b-41d4-a716-446655440012');
+('550e8400-e29b-41d4-a716-446655440206', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Exercices de respiration en position assise"}]}]}', 'cool_down', 2, 0, 1, '550e8400-e29b-41d4-a716-446655440012'),
+('550e8400-e29b-41d4-a716-446655440207', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Étirer quadriceps et ischio-jambiers"}]}]}', 'cool_down', 3, 0, 2, '550e8400-e29b-41d4-a716-446655440012'),
+('550e8400-e29b-41d4-a716-446655440208', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Rei de fin de cours"}]}]}', 'cool_down', 0, 30, 3, '550e8400-e29b-41d4-a716-446655440012');
 
 -- Instructions pour la leçon 3 (Karaté kata)
 INSERT INTO instructions(instruction_id, text, type, min, sec, "order", lesson_id)
 VALUES 
 -- WarmUp leçon 3
-('550e8400-e29b-41d4-a716-446655440301', 'Techniques de base en déplacement', 'warm_up', 5, 0, 1, '550e8400-e29b-41d4-a716-446655440013'),
-('550e8400-e29b-41d4-a716-446655440302', 'Étirements dynamiques des jambes', 'warm_up', 3, 0, 2, '550e8400-e29b-41d4-a716-446655440013'),
+('550e8400-e29b-41d4-a716-446655440301', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Techniques de base en déplacement"}]}]}', 'warm_up', 5, 0, 1, '550e8400-e29b-41d4-a716-446655440013'),
+('550e8400-e29b-41d4-a716-446655440302', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Étirements dynamiques des jambes"}]}]}', 'warm_up', 3, 0, 2, '550e8400-e29b-41d4-a716-446655440013'),
 -- Body leçon 3
-('550e8400-e29b-41d4-a716-446655440303', 'Première moitié du kata', 'body', 4, 0, 1, '550e8400-e29b-41d4-a716-446655440013'),
-('550e8400-e29b-41d4-a716-446655440304', 'Seconde moitié du kata', 'body', 4, 0, 2, '550e8400-e29b-41d4-a716-446655440013'),
-('550e8400-e29b-41d4-a716-446655440305', 'Enchaînement complet avec kiai', 'body', 8, 0, 3, '550e8400-e29b-41d4-a716-446655440013'),
+('550e8400-e29b-41d4-a716-446655440303', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Première moitié du kata"}]}]}', 'body', 4, 0, 1, '550e8400-e29b-41d4-a716-446655440013'),
+('550e8400-e29b-41d4-a716-446655440304', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Seconde moitié du kata"}]}]}', 'body', 4, 0, 2, '550e8400-e29b-41d4-a716-446655440013'),
+('550e8400-e29b-41d4-a716-446655440305', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Enchaînement complet avec kiai"}]}]}', 'body', 8, 0, 3, '550e8400-e29b-41d4-a716-446655440013'),
 -- CoolDown leçon 3
-('550e8400-e29b-41d4-a716-446655440306', 'Méditation en position seiza', 'cool_down', 2, 0, 1, '550e8400-e29b-41d4-a716-446655440013'),
-('550e8400-e29b-41d4-a716-446655440307', 'Étirements passifs de tout le corps', 'cool_down', 4, 0, 2, '550e8400-e29b-41d4-a716-446655440013');
+('550e8400-e29b-41d4-a716-446655440306', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Méditation en position seiza"}]}]}', 'cool_down', 2, 0, 1, '550e8400-e29b-41d4-a716-446655440013'),
+('550e8400-e29b-41d4-a716-446655440307', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Étirements passifs de tout le corps"}]}]}', 'cool_down', 4, 0, 2, '550e8400-e29b-41d4-a716-446655440013');
 
 -- Instructions pour la leçon 4 (MMA cardio)
 INSERT INTO instructions(instruction_id, text, type, min, sec, "order", lesson_id)
 VALUES 
 -- WarmUp leçon 4
-('550e8400-e29b-41d4-a716-446655440401', 'Échauffement explosif avec burpees', 'warm_up', 2, 0, 1, '550e8400-e29b-41d4-a716-446655440014'),
-('550e8400-e29b-41d4-a716-446655440402', 'Montées de genoux rapides', 'warm_up', 2, 0, 2, '550e8400-e29b-41d4-a716-446655440014'),
-('550e8400-e29b-41d4-a716-446655440403', 'Rotations poignets, chevilles, hanches', 'warm_up', 2, 0, 3, '550e8400-e29b-41d4-a716-446655440014'),
+('550e8400-e29b-41d4-a716-446655440401', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Échauffement explosif avec burpees"}]}]}', 'warm_up', 2, 0, 1, '550e8400-e29b-41d4-a716-446655440014'),
+('550e8400-e29b-41d4-a716-446655440402', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Montées de genoux rapides"}]}]}', 'warm_up', 2, 0, 2, '550e8400-e29b-41d4-a716-446655440014'),
+('550e8400-e29b-41d4-a716-446655440403', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Rotations poignets, chevilles, hanches"}]}]}', 'warm_up', 2, 0, 3, '550e8400-e29b-41d4-a716-446655440014'),
 -- Body leçon 4
-('550e8400-e29b-41d4-a716-446655440404', 'Combinaisons pieds-poings intensives', 'body', 5, 0, 1, '550e8400-e29b-41d4-a716-446655440014'),
-('550e8400-e29b-41d4-a716-446655440405', 'Entrées de jambes répétées', 'body', 5, 0, 2, '550e8400-e29b-41d4-a716-446655440014'),
-('550e8400-e29b-41d4-a716-446655440406', 'Enchaînement pompes-squats-abdos', 'body', 6, 0, 3, '550e8400-e29b-41d4-a716-446655440014'),
+('550e8400-e29b-41d4-a716-446655440404', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Combinaisons pieds-poings intensives"}]}]}', 'body', 5, 0, 1, '550e8400-e29b-41d4-a716-446655440014'),
+('550e8400-e29b-41d4-a716-446655440405', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Entrées de jambes répétées"}]}]}', 'body', 5, 0, 2, '550e8400-e29b-41d4-a716-446655440014'),
+('550e8400-e29b-41d4-a716-446655440406', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Enchaînement pompes-squats-abdos"}]}]}', 'body', 6, 0, 3, '550e8400-e29b-41d4-a716-446655440014'),
 -- CoolDown leçon 4
-('550e8400-e29b-41d4-a716-446655440407', 'Marche lente pour récupérer', 'cool_down', 3, 0, 1, '550e8400-e29b-41d4-a716-446655440014'),
-('550e8400-e29b-41d4-a716-446655440408', 'Étirer tous les groupes musculaires sollicités', 'cool_down', 5, 0, 2, '550e8400-e29b-41d4-a716-446655440014');
+('550e8400-e29b-41d4-a716-446655440407', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Marche lente pour récupérer"}]}]}', 'cool_down', 3, 0, 1, '550e8400-e29b-41d4-a716-446655440014'),
+('550e8400-e29b-41d4-a716-446655440408', '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Étirer tous les groupes musculaires sollicités"}]}]}', 'cool_down', 5, 0, 2, '550e8400-e29b-41d4-a716-446655440014');

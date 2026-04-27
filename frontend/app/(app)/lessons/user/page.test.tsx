@@ -6,6 +6,7 @@ import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
 import * as AuthContext from "@/contexts/AuthContext"
 import { useRouter } from "next/navigation"
 import { useGetAllLessonsQuery } from "@/store/api/lessonApi"
+import { createTiptapJSON } from "@/utils/tiptapHelpers"
 
 vi.mock("next/navigation", () => ({
   useRouter: vi.fn(),
@@ -74,7 +75,7 @@ describe("LessonsUserPage", () => {
 
     expect(screen.getByText("Leçons de sport de combat")).toBeInTheDocument()
     expect(
-      screen.getByText("Gérez et consultez toutes les leçons")
+      screen.getByText("Gérez et consultez toutes les leçons"),
     ).toBeInTheDocument()
   })
 
@@ -115,9 +116,9 @@ describe("LessonsUserPage", () => {
     expect(state.lessonForm.value).toEqual({
       warmUp: "custom",
       coolDown: "custom",
-      warmUpInstructions: [{ text: "", min: 1, sec: 0 }],
-      bodyInstructions: [{ text: "", min: 1, sec: 0 }],
-      coolDownInstructions: [{ text: "", min: 1, sec: 0 }],
+      warmUpInstructions: [{ text: createTiptapJSON(""), min: 1, sec: 0 }],
+      bodyInstructions: [{ text: createTiptapJSON(""), min: 1, sec: 0 }],
+      coolDownInstructions: [{ text: createTiptapJSON(""), min: 1, sec: 0 }],
     })
   })
 

@@ -1,5 +1,6 @@
 import { describe, test, expect } from "vitest"
 import { getYupValidationSchema } from "./getInstructionYupValidationSchema"
+import { createTiptapJSON } from "./tiptapHelpers"
 
 describe("getYupValidationSchema", () => {
   describe("Schema creation", () => {
@@ -24,8 +25,8 @@ describe("getYupValidationSchema", () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const validData = {
         warmUpInstructions: [
-          { text: "Échauffement cardio", min: 5, sec: 0 },
-          { text: "Étirements dynamiques", min: 3, sec: 30 },
+          { text: createTiptapJSON("Échauffement cardio"), min: 5, sec: 0 },
+          { text: createTiptapJSON("Étirements dynamiques"), min: 3, sec: 30 },
         ],
       }
 
@@ -35,7 +36,9 @@ describe("getYupValidationSchema", () => {
     test("should validate correct bodyInstructions data", async () => {
       const schema = getYupValidationSchema("bodyInstructions")
       const validData = {
-        bodyInstructions: [{ text: "Exercice principal", min: 10, sec: 0 }],
+        bodyInstructions: [
+          { text: createTiptapJSON("Exercice principal"), min: 10, sec: 0 },
+        ],
       }
 
       await expect(schema.validate(validData)).resolves.toEqual(validData)
@@ -44,7 +47,7 @@ describe("getYupValidationSchema", () => {
     test("should validate minimum text length (3 characters)", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const validData = {
-        warmUpInstructions: [{ text: "abc", min: 1, sec: 0 }],
+        warmUpInstructions: [{ text: createTiptapJSON("abc"), min: 1, sec: 0 }],
       }
 
       await expect(schema.validate(validData)).resolves.toEqual(validData)
@@ -54,7 +57,9 @@ describe("getYupValidationSchema", () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const longText = "a".repeat(2000)
       const validData = {
-        warmUpInstructions: [{ text: longText, min: 1, sec: 0 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON(longText), min: 1, sec: 0 },
+        ],
       }
 
       await expect(schema.validate(validData)).resolves.toEqual(validData)
@@ -63,7 +68,9 @@ describe("getYupValidationSchema", () => {
     test("should validate minimum minutes (0)", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const validData = {
-        warmUpInstructions: [{ text: "Test", min: 0, sec: 30 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON("Test"), min: 0, sec: 30 },
+        ],
       }
 
       await expect(schema.validate(validData)).resolves.toEqual(validData)
@@ -72,7 +79,9 @@ describe("getYupValidationSchema", () => {
     test("should validate maximum minutes (90)", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const validData = {
-        warmUpInstructions: [{ text: "Test", min: 90, sec: 0 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON("Test"), min: 90, sec: 0 },
+        ],
       }
 
       await expect(schema.validate(validData)).resolves.toEqual(validData)
@@ -81,7 +90,9 @@ describe("getYupValidationSchema", () => {
     test("should validate minimum seconds (0)", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const validData = {
-        warmUpInstructions: [{ text: "Test", min: 1, sec: 0 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON("Test"), min: 1, sec: 0 },
+        ],
       }
 
       await expect(schema.validate(validData)).resolves.toEqual(validData)
@@ -90,7 +101,9 @@ describe("getYupValidationSchema", () => {
     test("should validate maximum seconds (59)", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const validData = {
-        warmUpInstructions: [{ text: "Test", min: 1, sec: 59 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON("Test"), min: 1, sec: 59 },
+        ],
       }
 
       await expect(schema.validate(validData)).resolves.toEqual(validData)
@@ -101,11 +114,11 @@ describe("getYupValidationSchema", () => {
     test("should reject text shorter than 3 characters", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const invalidData = {
-        warmUpInstructions: [{ text: "ab", min: 1, sec: 0 }],
+        warmUpInstructions: [{ text: createTiptapJSON("ab"), min: 1, sec: 0 }],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "L'instruction doit contenir au moins 3 caractères"
+        "L'instruction doit contenir au moins 3 caractères",
       )
     })
 
@@ -113,11 +126,13 @@ describe("getYupValidationSchema", () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const longText = "a".repeat(2001)
       const invalidData = {
-        warmUpInstructions: [{ text: longText, min: 1, sec: 0 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON(longText), min: 1, sec: 0 },
+        ],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "L'instruction ne peut pas dépasser 2000 caractères"
+        "L'instruction ne peut pas dépasser 2000 caractères",
       )
     })
 
@@ -128,18 +143,18 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "L'instruction est requise"
+        "L'instruction est requise",
       )
     })
 
     test("should reject empty text", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const invalidData = {
-        warmUpInstructions: [{ text: "", min: 1, sec: 0 }],
+        warmUpInstructions: [{ text: createTiptapJSON(""), min: 1, sec: 0 }],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "L'instruction doit contenir au moins 3 caractères"
+        "L'instruction doit contenir au moins 3 caractères",
       )
     })
   })
@@ -148,33 +163,37 @@ describe("getYupValidationSchema", () => {
     test("should reject negative minutes", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const invalidData = {
-        warmUpInstructions: [{ text: "Test", min: -1, sec: 0 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON("Test"), min: -1, sec: 0 },
+        ],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les minutes doivent être au minimum 0"
+        "Les minutes doivent être au minimum 0",
       )
     })
 
     test("should reject minutes greater than 90", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const invalidData = {
-        warmUpInstructions: [{ text: "Test", min: 91, sec: 0 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON("Test"), min: 91, sec: 0 },
+        ],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les minutes ne peuvent pas dépasser 90"
+        "Les minutes ne peuvent pas dépasser 90",
       )
     })
 
     test("should reject missing min field", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const invalidData = {
-        warmUpInstructions: [{ text: "Test", sec: 0 }],
+        warmUpInstructions: [{ text: createTiptapJSON("Test"), sec: 0 }],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les minutes sont requises"
+        "Les minutes sont requises",
       )
     })
   })
@@ -183,33 +202,37 @@ describe("getYupValidationSchema", () => {
     test("should reject negative seconds", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const invalidData = {
-        warmUpInstructions: [{ text: "Test", min: 1, sec: -1 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON("Test"), min: 1, sec: -1 },
+        ],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les secondes doivent être au minimum 0"
+        "Les secondes doivent être au minimum 0",
       )
     })
 
     test("should reject seconds greater than 59", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const invalidData = {
-        warmUpInstructions: [{ text: "Test", min: 1, sec: 60 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON("Test"), min: 1, sec: 60 },
+        ],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les secondes ne peuvent pas dépasser 59"
+        "Les secondes ne peuvent pas dépasser 59",
       )
     })
 
     test("should reject missing sec field", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const invalidData = {
-        warmUpInstructions: [{ text: "Test", min: 1 }],
+        warmUpInstructions: [{ text: createTiptapJSON("Test"), min: 1 }],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les secondes sont requises"
+        "Les secondes sont requises",
       )
     })
   })
@@ -219,9 +242,9 @@ describe("getYupValidationSchema", () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const validData = {
         warmUpInstructions: [
-          { text: "Instruction 1", min: 1, sec: 0 },
-          { text: "Instruction 2", min: 2, sec: 30 },
-          { text: "Instruction 3", min: 3, sec: 45 },
+          { text: createTiptapJSON("Instruction 1"), min: 1, sec: 0 },
+          { text: createTiptapJSON("Instruction 2"), min: 2, sec: 30 },
+          { text: createTiptapJSON("Instruction 3"), min: 3, sec: 45 },
         ],
       }
 
@@ -241,13 +264,13 @@ describe("getYupValidationSchema", () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const invalidData = {
         warmUpInstructions: [
-          { text: "Valid instruction", min: 1, sec: 0 },
-          { text: "ab", min: 1, sec: 0 },
+          { text: createTiptapJSON("Valid instruction"), min: 1, sec: 0 },
+          { text: createTiptapJSON("ab"), min: 1, sec: 0 },
         ],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "L'instruction doit contenir au moins 3 caractères"
+        "L'instruction doit contenir au moins 3 caractères",
       )
     })
   })
@@ -256,7 +279,9 @@ describe("getYupValidationSchema", () => {
     test("should create schema with correct field name for warmUpInstructions", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const validData = {
-        warmUpInstructions: [{ text: "Test", min: 1, sec: 0 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON("Test"), min: 1, sec: 0 },
+        ],
       }
 
       await expect(schema.validate(validData)).resolves.toEqual(validData)
@@ -265,7 +290,7 @@ describe("getYupValidationSchema", () => {
     test("should create schema with correct field name for bodyInstructions", async () => {
       const schema = getYupValidationSchema("bodyInstructions")
       const validData = {
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0 }],
+        bodyInstructions: [{ text: createTiptapJSON("Test"), min: 1, sec: 0 }],
       }
 
       await expect(schema.validate(validData)).resolves.toEqual(validData)
@@ -274,7 +299,9 @@ describe("getYupValidationSchema", () => {
     test("should create schema with correct field name for coolDownInstructions", async () => {
       const schema = getYupValidationSchema("coolDownInstructions")
       const validData = {
-        coolDownInstructions: [{ text: "Test", min: 1, sec: 0 }],
+        coolDownInstructions: [
+          { text: createTiptapJSON("Test"), min: 1, sec: 0 },
+        ],
       }
 
       await expect(schema.validate(validData)).resolves.toEqual(validData)
@@ -283,7 +310,7 @@ describe("getYupValidationSchema", () => {
     test("should reject data with wrong field name", async () => {
       const schema = getYupValidationSchema("warmUpInstructions")
       const invalidData = {
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0 }],
+        bodyInstructions: [{ text: createTiptapJSON("Test"), min: 1, sec: 0 }],
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow()

@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest"
 import { calculateLessonDuration } from "./calculateLessonDuration"
 import { Lesson } from "@/types"
+import { createTiptapJSON } from '@/utils/tiptapHelpers'
 
 describe("calculateLessonDuration", () => {
   it("calculates total duration and rounds up to nearest minute", () => {
@@ -9,29 +10,29 @@ describe("calculateLessonDuration", () => {
         {
           sec: 23,
           min: 1,
-          text: "ddddddddddd",
+          text: createTiptapJSON("ddddddddddd"),
         },
         {
           sec: 50,
           min: 3,
-          text: "qxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          text: createTiptapJSON("qxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
         },
       ],
       warmUpInstructions: [
         {
-          text: "ddddddddd ddddddddddddddddddddd dddddddddddddddddddd ddddddddddddddddddddddddd sssssssssssssss ssssssssss ssssss s s sssssssssssssss ssssssssssssssssssssssssssss s",
+          text: createTiptapJSON("ddddddddd ddddddddddddddddddddd dddddddddddddddddddd ddddddddddddddddddddddddd sssssssssssssss ssssssssss ssssss s s sssssssssssssss ssssssssssssssssssssssssssss s"),
           min: 1,
           sec: 0,
         },
         {
           sec: 0,
           min: 2,
-          text: "ssssssssssssssssssssssssss",
+          text: createTiptapJSON("ssssssssssssssssssssssssss"),
         },
       ],
       coolDownInstructions: [
         {
-          text: "",
+          text: createTiptapJSON(""),
           min: 1,
           sec: 0,
         },
@@ -52,7 +53,7 @@ describe("calculateLessonDuration", () => {
         {
           min: 2,
           sec: 30,
-          text: "Exercise 1",
+          text: createTiptapJSON("Exercise 1"),
         },
       ],
     }
@@ -65,14 +66,14 @@ describe("calculateLessonDuration", () => {
         {
           min: 5,
           sec: 0,
-          text: "Warm up",
+          text: createTiptapJSON("Warm up"),
         },
       ],
       bodyInstructions: [
         {
           min: 10,
           sec: 0,
-          text: "Main exercise",
+          text: createTiptapJSON("Main exercise"),
         },
       ],
     }
@@ -85,12 +86,12 @@ describe("calculateLessonDuration", () => {
         {
           min: 0,
           sec: 30,
-          text: "Quick exercise",
+          text: createTiptapJSON("Quick exercise"),
         },
         {
           min: 0,
           sec: 45,
-          text: "Another quick one",
+          text: createTiptapJSON("Another quick one"),
         },
       ],
     }

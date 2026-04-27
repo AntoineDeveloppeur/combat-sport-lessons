@@ -6,7 +6,7 @@ export const buildInstructionsQuery = (
   bodyInstructions: Instruction[],
   coolDownInstructions: Instruction[],
   lessonId: string,
-  idGenerator: IdGenerator
+  idGenerator: IdGenerator,
 ): [string, Array<string | number>] => {
   const instructionGroups = [
     { instructions: warmUpInstructions, type: "warm_up" as const },
@@ -46,12 +46,12 @@ export const buildInstructionsQuery = (
   allInstructions.forEach((item) => {
     params.push(
       idGenerator.generate(),
-      item.instruction.text,
+      JSON.stringify(item.instruction.text),
       item.type,
       item.instruction.min,
       item.instruction.sec,
       item.order,
-      lessonId
+      lessonId,
     )
   })
 

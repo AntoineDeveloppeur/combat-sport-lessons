@@ -17,13 +17,14 @@ interface UseInstructionFormConfig {
 }
 
 interface UseInstructionReturn {
-  handleSubmit: UseFormHandleSubmit<T>
-  register: UseFormRegister<T>
-  errors: FieldErrors<T>
-  fields: FieldArrayWithId<T, string, "id">[]
+  handleSubmit: UseFormHandleSubmit<any>
+  register: UseFormRegister<any>
+  errors: FieldErrors<any>
+  fields: FieldArrayWithId<any, string, "id">[]
   addInstruction: () => void
   removeLastInstruction: () => void
-  getValues: UseFormGetValues<T>
+  getValues: UseFormGetValues<any>
+  control: any
 }
 
 export function useInstructionForm({
@@ -55,6 +56,7 @@ export function useInstructionForm({
     fields,
     addInstruction,
     removeLastInstruction,
+    control,
     getValues,
   }
 }

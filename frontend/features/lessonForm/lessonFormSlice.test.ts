@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest"
 import { lessonFormSlice, save } from "./lessonFormSlice"
 import type { Lesson } from "@/types"
+import { createTiptapJSON } from "@/utils/tiptapHelpers"
 
 describe("lessonFormSlice", () => {
   describe("reducer", () => {
@@ -21,7 +22,7 @@ describe("lessonFormSlice", () => {
       expect(state.value.bodyInstructions).toHaveLength(1)
       expect(state.value.coolDownInstructions).toHaveLength(1)
       expect(state.value.warmUpInstructions?.[0]).toEqual({
-        text: "",
+        text: createTiptapJSON(""),
         min: 1,
         sec: 0,
       })
@@ -39,9 +40,15 @@ describe("lessonFormSlice", () => {
         objective: "Improve kicks",
         warmUp: "preset",
         coolDown: "custom",
-        warmUpInstructions: [{ text: "Warm up exercise", min: 5, sec: 0 }],
-        bodyInstructions: [{ text: "Main exercise", min: 10, sec: 30 }],
-        coolDownInstructions: [{ text: "Stretching", min: 3, sec: 0 }],
+        warmUpInstructions: [
+          { text: createTiptapJSON("Warm up exercise"), min: 5, sec: 0 },
+        ],
+        bodyInstructions: [
+          { text: createTiptapJSON("Main exercise"), min: 10, sec: 30 },
+        ],
+        coolDownInstructions: [
+          { text: createTiptapJSON("Stretching"), min: 3, sec: 0 },
+        ],
       }
 
       const state = lessonFormSlice.reducer(initialState, save(newLesson))
@@ -101,7 +108,7 @@ describe("lessonFormSlice", () => {
 
       const state = lessonFormSlice.reducer(
         initialState,
-        save(lessonWithEmptyArrays)
+        save(lessonWithEmptyArrays),
       )
 
       expect(state.value.warmUpInstructions).toEqual([])
@@ -117,20 +124,20 @@ describe("lessonFormSlice", () => {
       const lessonWithMultipleInstructions: Lesson = {
         warmUp: "custom",
         warmUpInstructions: [
-          { text: "Exercise 1", min: 2, sec: 0 },
-          { text: "Exercise 2", min: 3, sec: 30 },
-          { text: "Exercise 3", min: 1, sec: 15 },
+          { text: createTiptapJSON("Exercise 1"), min: 2, sec: 0 },
+          { text: createTiptapJSON("Exercise 2"), min: 3, sec: 30 },
+          { text: createTiptapJSON("Exercise 3"), min: 1, sec: 15 },
         ],
       }
 
       const state = lessonFormSlice.reducer(
         initialState,
-        save(lessonWithMultipleInstructions)
+        save(lessonWithMultipleInstructions),
       )
 
       expect(state.value.warmUpInstructions).toHaveLength(3)
       expect(state.value.warmUpInstructions?.[1]).toEqual({
-        text: "Exercise 2",
+        text: createTiptapJSON("Exercise 2"),
         min: 3,
         sec: 30,
       })

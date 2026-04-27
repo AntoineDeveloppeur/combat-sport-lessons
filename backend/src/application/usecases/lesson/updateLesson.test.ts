@@ -8,6 +8,7 @@ import type { lessonRepository } from "../../../domain/repositories/lessonReposi
 import type { TokenManager } from "../../../domain/services/TokenManager.js"
 import type { IdGenerator } from "../../../domain/services/IdGenerator.js"
 import { Lesson } from "../../../domain/Entities/Lesson.js"
+import { createTiptapJSON } from "../../../utils/tiptapHelpers.js"
 
 describe("updateLesson use case", () => {
   let mockLessonRepository: Partial<lessonRepository>
@@ -26,7 +27,7 @@ describe("updateLesson use case", () => {
       "Boxe",
       "Updated objective",
       [],
-      [{ text: "New exercise", min: 10, sec: 0, order: 1 }],
+      [{ text: createTiptapJSON("New exercise"), min: 10, sec: 0, order: 1 }],
       [],
       new Date(),
       "user-123",

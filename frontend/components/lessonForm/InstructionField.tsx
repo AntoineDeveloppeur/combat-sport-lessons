@@ -1,10 +1,16 @@
-import { UseFormRegister, FieldErrors, UseFormGetValues } from "react-hook-form"
+import {
+  UseFormRegister,
+  FieldErrors,
+  UseFormGetValues,
+  Control,
+  Controller,
+} from "react-hook-form"
 import { Field, FieldTitle, FieldError } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Lesson } from "@/types/index"
 import { useAppDispatch } from "@/store/hooks"
 import { save } from "@/features/lessonForm/lessonFormSlice"
+import RichTextEditor from "@/components/lessonForm/RichTextEditor"
 
 interface InstructionFieldProps {
   step: "warmUpInstructions" | "bodyInstructions" | "coolDownInstructions"
@@ -12,6 +18,7 @@ interface InstructionFieldProps {
   errors: FieldErrors<Lesson>
   register: UseFormRegister<Lesson>
   getValues: UseFormGetValues<Lesson>
+  control: Control<Lesson>
 }
 
 export default function InstructionField({
@@ -20,6 +27,7 @@ export default function InstructionField({
   errors,
   register,
   getValues,
+  control,
 }: InstructionFieldProps) {
   const dispatch = useAppDispatch()
 
@@ -32,11 +40,24 @@ export default function InstructionField({
     <>
       <Field>
         <FieldTitle>Instruction n°{id + 1}</FieldTitle>
-        <Textarea {...register(`${step}.${id}.text`)} onBlur={handleBlur} />
+        <Controller
+          name={`${step}.${id}.text`}
+          control={control}
+          render={({ field }) => (
+            <RichTextEditor
+              content={field.value}
+              onChange={field.onChange}
+              onBlur={handleBlur}
+            />
+          )}
+        />
         <FieldError>{errors?.[step]?.[id]?.text?.message}</FieldError>
       </Field>
 
-      <Field orientation="horizontal" className="w-auto items-center gap-2">
+      <Field
+        orientation="horizontal"
+        className="w-auto items-center gap-2"
+      >
         <Input
           {...register(`${step}.${id}.min`)}
           className="text-center"

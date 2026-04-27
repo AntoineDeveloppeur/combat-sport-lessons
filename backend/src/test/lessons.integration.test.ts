@@ -2,6 +2,7 @@ import { describe, test, expect, beforeEach, afterAll } from "vitest"
 import request from "supertest"
 import { app } from "../presentation/app.js"
 import { cleanDatabase, closeTestDatabase } from "./setup.js"
+import { toTiptapJSON } from "./helpers/tiptapHelper.js"
 
 describe("Lessons integration tests", () => {
   let userToken: string
@@ -34,11 +35,13 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Apprendre les bases",
         warmUpInstructions: [
-          { text: "Échauffement", min: 5, sec: 0, order: 1 },
+          { text: toTiptapJSON("Échauffement"), min: 5, sec: 0, order: 1 },
         ],
-        bodyInstructions: [{ text: "Jab", min: 10, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Jab"), min: 10, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [
-          { text: "Étirements", min: 3, sec: 0, order: 1 },
+          { text: toTiptapJSON("Étirements"), min: 3, sec: 0, order: 1 },
         ],
       }
 
@@ -65,10 +68,14 @@ describe("Lessons integration tests", () => {
         title: "Karaté kata",
         sport: "Karaté",
         objective: "Maîtriser le kata",
-        warmUpInstructions: [{ text: "Kihon", min: 5, sec: 0, order: 1 }],
-        bodyInstructions: [{ text: "Kata Heian", min: 15, sec: 0, order: 1 }],
+        warmUpInstructions: [
+          { text: toTiptapJSON("Kihon"), min: 5, sec: 0, order: 1 },
+        ],
+        bodyInstructions: [
+          { text: toTiptapJSON("Kata Heian"), min: 15, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [
-          { text: "Méditation", min: 2, sec: 0, order: 1 },
+          { text: toTiptapJSON("Méditation"), min: 2, sec: 0, order: 1 },
         ],
       }
 
@@ -92,7 +99,7 @@ describe("Lessons integration tests", () => {
 
     test("retourne 404 si lesson non trouvée", async () => {
       const response = await request(app).get(
-        "/lessons/550e8400-e29b-41d4-a716-446655440999"
+        "/lessons/550e8400-e29b-41d4-a716-446655440999",
       )
 
       expect(response.status).toBe(404)
@@ -106,13 +113,15 @@ describe("Lessons integration tests", () => {
         title: "MMA cardio",
         sport: "MMA",
         objective: "Améliorer endurance",
-        warmUpInstructions: [{ text: "Burpees", min: 2, sec: 0, order: 1 }],
+        warmUpInstructions: [
+          { text: toTiptapJSON("Burpees"), min: 2, sec: 0, order: 1 },
+        ],
         bodyInstructions: [
-          { text: "Combinaisons", min: 5, sec: 0, order: 1 },
-          { text: "Entrées de jambes", min: 5, sec: 0, order: 2 },
+          { text: toTiptapJSON("Combinaisons"), min: 5, sec: 0, order: 1 },
+          { text: toTiptapJSON("Entrées de jambes"), min: 5, sec: 0, order: 2 },
         ],
         coolDownInstructions: [
-          { text: "Marche lente", min: 3, sec: 0, order: 1 },
+          { text: toTiptapJSON("Marche lente"), min: 3, sec: 0, order: 1 },
         ],
       }
 
@@ -141,7 +150,9 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -158,11 +169,15 @@ describe("Lessons integration tests", () => {
         sport: "Judo",
         objective: "Test",
         warmUpInstructions: [
-          { text: "Warm 1", min: 1, sec: 0, order: 1 },
-          { text: "Warm 2", min: 2, sec: 0, order: 2 },
+          { text: toTiptapJSON("Warm 1"), min: 1, sec: 0, order: 1 },
+          { text: toTiptapJSON("Warm 2"), min: 2, sec: 0, order: 2 },
         ],
-        bodyInstructions: [{ text: "Body 1", min: 5, sec: 0, order: 1 }],
-        coolDownInstructions: [{ text: "Cool 1", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Body 1"), min: 5, sec: 0, order: 1 },
+        ],
+        coolDownInstructions: [
+          { text: toTiptapJSON("Cool 1"), min: 1, sec: 0, order: 1 },
+        ],
       }
 
       const createResponse = await request(app)
@@ -191,7 +206,9 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -204,7 +221,9 @@ describe("Lessons integration tests", () => {
         sport: "Karaté",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -222,7 +241,9 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -231,7 +252,9 @@ describe("Lessons integration tests", () => {
         sport: "Karaté",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -256,7 +279,9 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test visibility",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -282,7 +307,9 @@ describe("Lessons integration tests", () => {
         sport: "Karaté",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -329,11 +356,13 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test duplication",
         warmUpInstructions: [
-          { text: "Échauffement", min: 5, sec: 0, order: 1 },
+          { text: toTiptapJSON("Échauffement"), min: 5, sec: 0, order: 1 },
         ],
-        bodyInstructions: [{ text: "Exercice", min: 10, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Exercice"), min: 10, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [
-          { text: "Retour au calme", min: 3, sec: 0, order: 1 },
+          { text: toTiptapJSON("Retour au calme"), min: 3, sec: 0, order: 1 },
         ],
       }
 
@@ -349,7 +378,7 @@ describe("Lessons integration tests", () => {
       expect(duplicateResponse.status).toBe(201)
       expect(duplicateResponse.body.lesson).toBeDefined()
       expect(duplicateResponse.body.lesson.title).toBe(
-        "Leçon originale (copie)"
+        "Leçon originale (copie)",
       )
       expect(duplicateResponse.body.lesson.isPublic).toBe(false)
       expect(duplicateResponse.body.lesson.sport).toBe("Boxe")
@@ -364,7 +393,9 @@ describe("Lessons integration tests", () => {
         sport: "Karaté",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -404,7 +435,9 @@ describe("Lessons integration tests", () => {
         sport: "MMA",
         objective: "Test duplication par autre utilisateur",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -445,11 +478,13 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test suppression",
         warmUpInstructions: [
-          { text: "Échauffement", min: 5, sec: 0, order: 1 },
+          { text: toTiptapJSON("Échauffement"), min: 5, sec: 0, order: 1 },
         ],
-        bodyInstructions: [{ text: "Exercice", min: 10, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Exercice"), min: 10, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [
-          { text: "Retour au calme", min: 3, sec: 0, order: 1 },
+          { text: toTiptapJSON("Retour au calme"), min: 3, sec: 0, order: 1 },
         ],
       }
 
@@ -484,7 +519,9 @@ describe("Lessons integration tests", () => {
         sport: "Karaté",
         objective: "Test ownership",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -522,14 +559,16 @@ describe("Lessons integration tests", () => {
         sport: "MMA",
         objective: "Test CASCADE",
         warmUpInstructions: [
-          { text: "Warm 1", min: 1, sec: 0, order: 1 },
-          { text: "Warm 2", min: 2, sec: 0, order: 2 },
+          { text: toTiptapJSON("Warm 1"), min: 1, sec: 0, order: 1 },
+          { text: toTiptapJSON("Warm 2"), min: 2, sec: 0, order: 2 },
         ],
         bodyInstructions: [
-          { text: "Body 1", min: 5, sec: 0, order: 1 },
-          { text: "Body 2", min: 5, sec: 0, order: 2 },
+          { text: toTiptapJSON("Body 1"), min: 5, sec: 0, order: 1 },
+          { text: toTiptapJSON("Body 2"), min: 5, sec: 0, order: 2 },
         ],
-        coolDownInstructions: [{ text: "Cool 1", min: 1, sec: 0, order: 1 }],
+        coolDownInstructions: [
+          { text: toTiptapJSON("Cool 1"), min: 1, sec: 0, order: 1 },
+        ],
       }
 
       const createResponse = await request(app)
@@ -562,9 +601,15 @@ describe("Lessons integration tests", () => {
         title: "Leçon originale",
         sport: "Boxe",
         objective: "Objectif original",
-        warmUpInstructions: [{ text: "Warm 1", min: 5, sec: 0, order: 1 }],
-        bodyInstructions: [{ text: "Body 1", min: 10, sec: 0, order: 1 }],
-        coolDownInstructions: [{ text: "Cool 1", min: 3, sec: 0, order: 1 }],
+        warmUpInstructions: [
+          { text: toTiptapJSON("Warm 1"), min: 5, sec: 0, order: 1 },
+        ],
+        bodyInstructions: [
+          { text: toTiptapJSON("Body 1"), min: 10, sec: 0, order: 1 },
+        ],
+        coolDownInstructions: [
+          { text: toTiptapJSON("Cool 1"), min: 3, sec: 0, order: 1 },
+        ],
       }
 
       const createResponse = await request(app)
@@ -577,10 +622,12 @@ describe("Lessons integration tests", () => {
         sport: "Karaté",
         objective: "Objectif modifié",
         warmUpInstructions: [
-          { text: "New Warm 1", min: 3, sec: 0, order: 1 },
-          { text: "New Warm 2", min: 2, sec: 0, order: 2 },
+          { text: toTiptapJSON("New Warm 1"), min: 3, sec: 0, order: 1 },
+          { text: toTiptapJSON("New Warm 2"), min: 2, sec: 0, order: 2 },
         ],
-        bodyInstructions: [{ text: "New Body 1", min: 15, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("New Body 1"), min: 15, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -603,7 +650,9 @@ describe("Lessons integration tests", () => {
         sport: "MMA",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Original", min: 5, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Original"), min: 5, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -616,12 +665,16 @@ describe("Lessons integration tests", () => {
         title: "Updated Test",
         sport: "Judo",
         objective: "Updated objective",
-        warmUpInstructions: [{ text: "Warm", min: 5, sec: 0, order: 1 }],
-        bodyInstructions: [
-          { text: "Updated 1", min: 10, sec: 0, order: 1 },
-          { text: "Updated 2", min: 5, sec: 0, order: 2 },
+        warmUpInstructions: [
+          { text: toTiptapJSON("Warm"), min: 5, sec: 0, order: 1 },
         ],
-        coolDownInstructions: [{ text: "Cool", min: 2, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Updated 1"), min: 10, sec: 0, order: 1 },
+          { text: toTiptapJSON("Updated 2"), min: 5, sec: 0, order: 2 },
+        ],
+        coolDownInstructions: [
+          { text: toTiptapJSON("Cool"), min: 2, sec: 0, order: 1 },
+        ],
       }
 
       const updateResponse = await request(app)
@@ -633,9 +686,9 @@ describe("Lessons integration tests", () => {
       expect(result.title).toBe("Updated Test")
       expect(result.sport).toBe("Judo")
       expect(result.objective).toBe("Updated objective")
-      expect(result.warmUpInstructions[0].text).toBe("Warm")
+      expect(result.warmUpInstructions[0].text).toEqual(toTiptapJSON("Warm"))
       expect(result.bodyInstructions).toHaveLength(2)
-      expect(result.coolDownInstructions[0].text).toBe("Cool")
+      expect(result.coolDownInstructions[0].text).toEqual(toTiptapJSON("Cool"))
     })
 
     test("retourne 404 si leçon n'existe pas", async () => {
@@ -644,7 +697,9 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -662,7 +717,9 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test ownership",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -683,7 +740,9 @@ describe("Lessons integration tests", () => {
         sport: "Karaté",
         objective: "Hack",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Hack", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Hack"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -701,7 +760,9 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -718,7 +779,9 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -727,7 +790,9 @@ describe("Lessons integration tests", () => {
         sport: "Karaté",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -745,7 +810,9 @@ describe("Lessons integration tests", () => {
         sport: "MMA",
         objective: "Updated",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -763,7 +830,9 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Objectif original",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 5, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 5, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -777,9 +846,11 @@ describe("Lessons integration tests", () => {
         sport: "Karaté",
         objective: "Objectif modifié",
         warmUpInstructions: [
-          { text: "Nouveau warm", min: 3, sec: 0, order: 1 },
+          { text: toTiptapJSON("Nouveau warm"), min: 3, sec: 0, order: 1 },
         ],
-        bodyInstructions: [{ text: "Test", min: 5, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 5, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -799,7 +870,9 @@ describe("Lessons integration tests", () => {
         sport: "Boxe",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -808,7 +881,9 @@ describe("Lessons integration tests", () => {
         sport: "Karaté",
         objective: "Test",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 
@@ -826,7 +901,9 @@ describe("Lessons integration tests", () => {
         sport: "MMA",
         objective: "Updated",
         warmUpInstructions: [],
-        bodyInstructions: [{ text: "Test", min: 1, sec: 0, order: 1 }],
+        bodyInstructions: [
+          { text: toTiptapJSON("Test"), min: 1, sec: 0, order: 1 },
+        ],
         coolDownInstructions: [],
       }
 

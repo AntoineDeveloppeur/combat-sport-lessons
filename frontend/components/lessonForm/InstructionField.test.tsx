@@ -5,6 +5,33 @@ import InstructionField from "./InstructionField"
 import { UseFormRegister, FieldErrors } from "react-hook-form"
 import { Lesson } from "@/types/index"
 
+vi.mock("@/components/lessonForm/RichTextEditor", () => ({
+  default: ({ content, onChange, onBlur }: any) => (
+    <textarea
+      value={JSON.stringify(content)}
+      onChange={(e) => onChange(JSON.parse(e.target.value))}
+      onBlur={onBlur}
+    />
+  ),
+}))
+
+vi.mock("react-hook-form", async () => {
+  const actual = await vi.importActual("react-hook-form")
+  return {
+    ...actual,
+    Controller: ({ render }: any) => {
+      const field = {
+        value: { type: "doc", content: [] },
+        onChange: vi.fn(),
+        onBlur: vi.fn(),
+        name: "test",
+        ref: vi.fn(),
+      }
+      return render({ field })
+    },
+  }
+})
+
 describe("Instruction", () => {
   const mockRegister: UseFormRegister<Lesson> = vi.fn((name) => ({
     name,
@@ -13,12 +40,67 @@ describe("Instruction", () => {
     ref: vi.fn(),
   }))
 
+  const mockControl = {
+    register: mockRegister,
+    unregister: vi.fn(),
+    getFieldState: vi.fn(),
+    _subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+    _subjects: {
+      values: {
+        subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+        unsubscribe: vi.fn(),
+      },
+      array: {
+        subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+        unsubscribe: vi.fn(),
+      },
+      state: {
+        subscribe: vi.fn(() => ({ unsubscribe: vi.fn() })),
+        unsubscribe: vi.fn(),
+      },
+    },
+    _options: {
+      shouldUnregister: false,
+    },
+    _executeSchema: vi.fn(),
+    _getWatch: vi.fn(),
+    _getDirty: vi.fn(),
+    _updateValid: vi.fn(),
+    _removeUnmounted: vi.fn(),
+    _formState: {
+      isDirty: false,
+      isSubmitting: false,
+      isSubmitted: false,
+      isSubmitSuccessful: false,
+      isValid: false,
+      isValidating: false,
+      errors: {},
+    },
+    _reset: vi.fn(),
+    _names: {
+      mount: new Set(),
+      unMount: new Set(),
+      array: new Set(),
+      watch: new Set(),
+    },
+    _state: {
+      mount: false,
+      action: false,
+      watch: false,
+    },
+    _fields: {},
+    _formValues: {},
+    _proxyFormState: {},
+    _defaultValues: {},
+  } as any
+
   const defaultProps = {
     step: "warmUpInstructions" as const,
     id: 0,
     errors: {} as FieldErrors<Lesson>,
     register: mockRegister,
     getValues: vi.fn(),
+    control: mockControl,
   }
 
   it("should render the instruction title with correct number", () => {
@@ -27,7 +109,12 @@ describe("Instruction", () => {
   })
 
   it("should render instruction title with id + 1", () => {
-    renderWithProvider(<InstructionField {...defaultProps} id={2} />)
+    renderWithProvider(
+      <InstructionField
+        {...defaultProps}
+        id={2}
+      />,
+    )
     expect(screen.getByText("Instruction n°3")).toBeInTheDocument()
   })
 
@@ -73,12 +160,16 @@ describe("Instruction", () => {
 
   it("should call register with correct field names", () => {
     renderWithProvider(
-      <InstructionField {...defaultProps} step="bodyInstructions" id={1} />
+      <InstructionField
+        {...defaultProps}
+        step="bodyInstructions"
+        id={1}
+      />,
     )
 
-    expect(mockRegister).toHaveBeenCalledWith("bodyInstructions.1.text")
     expect(mockRegister).toHaveBeenCalledWith("bodyInstructions.1.min")
     expect(mockRegister).toHaveBeenCalledWith("bodyInstructions.1.sec")
+    expect(mockRegister).not.toHaveBeenCalledWith("bodyInstructions.1.text")
   })
 
   it("should display text error message when present", () => {
@@ -91,7 +182,10 @@ describe("Instruction", () => {
     }
 
     renderWithProvider(
-      <InstructionField {...defaultProps} errors={errorsWithTextError} />
+      <InstructionField
+        {...defaultProps}
+        errors={errorsWithTextError}
+      />,
     )
     expect(screen.getByText("Text is required")).toBeInTheDocument()
   })
@@ -106,7 +200,10 @@ describe("Instruction", () => {
     }
 
     renderWithProvider(
-      <InstructionField {...defaultProps} errors={errorsWithMinError} />
+      <InstructionField
+        {...defaultProps}
+        errors={errorsWithMinError}
+      />,
     )
     expect(screen.getByText("Min must be valid")).toBeInTheDocument()
   })
@@ -121,7 +218,10 @@ describe("Instruction", () => {
     }
 
     renderWithProvider(
-      <InstructionField {...defaultProps} errors={errorsWithSecError} />
+      <InstructionField
+        {...defaultProps}
+        errors={errorsWithSecError}
+      />,
     )
     expect(screen.getByText("Sec must be valid")).toBeInTheDocument()
   })
@@ -142,7 +242,7 @@ describe("Instruction", () => {
         {...defaultProps}
         step="coolDownInstructions"
         errors={errorsWithMultiple}
-      />
+      />,
     )
 
     expect(screen.getByText("Text error")).toBeInTheDocument()

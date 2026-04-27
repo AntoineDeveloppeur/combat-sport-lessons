@@ -5,6 +5,7 @@ import { renderHook } from "@testing-library/react"
 import { createWrapper } from "@/__tests__/helpers/renderWithProvider"
 import { useInstructionForm } from "./useInstructionForm"
 import { Lesson } from "@/types"
+import { createTiptapJSON } from '@/utils/tiptapHelpers'
 import { ReactNode } from "react"
 
 vi.mock("react-hook-form", async () => {
@@ -54,12 +55,12 @@ describe("useInstructionForm", () => {
   const mockLesson: Lesson = {
     warmUp: "custom",
     coolDown: "custom",
-    warmUpInstructions: [{ text: "", min: 1, sec: 0 }],
-    bodyInstructions: [{ text: "", min: 1, sec: 0 }],
-    coolDownInstructions: [{ text: "", min: 1, sec: 0 }],
+    warmUpInstructions: [{ text: createTiptapJSON(""), min: 1, sec: 0 }],
+    bodyInstructions: [{ text: createTiptapJSON(""), min: 1, sec: 0 }],
+    coolDownInstructions: [{ text: createTiptapJSON(""), min: 1, sec: 0 }],
   }
 
-  const mockFields = [{ id: "1", text: "Warm up", min: 1, sec: 0 }]
+  const mockFields = [{ id: "1", text: createTiptapJSON("Warm up"), min: 1, sec: 0 }]
 
   beforeEach(() => {
     vi.clearAllMocks()
