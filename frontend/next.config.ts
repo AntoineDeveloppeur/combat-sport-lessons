@@ -7,7 +7,7 @@ config({ path: resolve(__dirname, "../.env") })
 
 const nextConfig: NextConfig = {
   env: {
-    NEXT_PUBLIC_BACKEND_URL: process.env.BACKEND_URL,
+    NEXT_PUBLIC_API_URL: `${process.env.API_PROTOCOL}://${process.env.API_HOST}:${process.env.API_PORT}`,
   },
 }
 

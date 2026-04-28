@@ -3,7 +3,7 @@ import { Lesson } from "@/types"
 
 export const lessonApi = createApi({
   reducerPath: "lessonApi",
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_URL }),
   tagTypes: ["Lesson"],
   endpoints: (builder) => ({
     getLesson: builder.query<{ lesson: Lesson }, string>({
