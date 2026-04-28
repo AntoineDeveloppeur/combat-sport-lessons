@@ -6,7 +6,6 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-Express-green.svg)](https://expressjs.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Docker-blue.svg)](https://www.postgresql.org/)
-[![Swagger](https://img.shields.io/badge/API-Swagger-85EA2D.svg)](http://localhost:4000/api-docs)
 
 ---
 
