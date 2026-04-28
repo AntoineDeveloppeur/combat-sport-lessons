@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@react-pdf/renderer": "^4.5.1",
     "@reduxjs/toolkit": "^2.11.2",
     "@tabler/icons-react": "^3.40.0",
     "@tanstack/react-table": "^8.21.3",
@@ -22,9 +23,9 @@
     "@tiptap/starter-kit": "^3.22.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "jspdf": "^4.2.0",
     "lucide-react": "^0.563.0",
     "next": "^16.2.3",
+    "pako": "^2.1.0",
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",

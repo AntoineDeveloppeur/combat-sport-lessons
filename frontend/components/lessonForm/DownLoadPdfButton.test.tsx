@@ -3,8 +3,10 @@ import { screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import DownLoadPdfButton from "./DownLoadPdfButton"
 import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
-import * as buildAndDownloadPdfModule from "@/utils/buildAndDownloadPdf"
 import type { Lesson } from "@/types"
+import { createTiptapJSON } from "@/utils/tiptapHelpers"
+
+import * as buildAndDownloadPdfModule from "@/utils/buildAndDownloadPdf"
 
 vi.mock("@/utils/buildAndDownloadPdf", () => ({
   buildAndDownloadPdf: vi.fn(),
@@ -24,7 +26,7 @@ describe("DownLoadPdfButton", () => {
     renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)
 
     expect(
-      screen.getByRole("button", { name: /voir la leçon/i })
+      screen.getByRole("button", { name: /voir la leçon/i }),
     ).toBeInTheDocument()
   })
 
@@ -47,14 +49,14 @@ describe("DownLoadPdfButton", () => {
 
     expect(mockGetFormValues).toHaveBeenCalledTimes(1)
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledTimes(
-      1
+      1,
     )
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledWith(
       expect.objectContaining({
         sport: "Karate",
         title: "Test Lesson",
         objective: "Test objective",
-      })
+      }),
     )
   })
 
@@ -74,7 +76,7 @@ describe("DownLoadPdfButton", () => {
 
     expect(mockGetFormValues).toHaveBeenCalledTimes(1)
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledTimes(
-      1
+      1,
     )
   })
 
@@ -87,11 +89,13 @@ describe("DownLoadPdfButton", () => {
       warmUp: "custom",
       coolDown: "custom",
       warmUpInstructions: [
-        { text: "Warm up 1", min: 5, sec: 0 },
-        { text: "Warm up 2", min: 3, sec: 30 },
+        { text: createTiptapJSON("Warm up 1"), min: 5, sec: 0 },
+        { text: createTiptapJSON("Warm up 2"), min: 3, sec: 30 },
       ],
-      bodyInstructions: [{ text: "Body 1", min: 10, sec: 0 }],
-      coolDownInstructions: [{ text: "Cool down 1", min: 5, sec: 0 }],
+      bodyInstructions: [{ text: createTiptapJSON("Body 1"), min: 10, sec: 0 }],
+      coolDownInstructions: [
+        { text: createTiptapJSON("Cool down 1"), min: 5, sec: 0 },
+      ],
       duration: 1410,
     }
 
@@ -107,9 +111,11 @@ describe("DownLoadPdfButton", () => {
       expect.objectContaining({
         sport: "Boxing",
         warmUpInstructions: expect.arrayContaining([
-          expect.objectContaining({ text: "Warm up 1" }),
+          expect.objectContaining({
+            text: expect.objectContaining({ type: "doc" }),
+          }),
         ]),
-      })
+      }),
     )
   })
 
@@ -120,7 +126,7 @@ describe("DownLoadPdfButton", () => {
         ({
           warmUp: "custom",
           coolDown: "custom",
-        }) as Lesson
+        }) as Lesson,
     )
 
     renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)
@@ -133,7 +139,7 @@ describe("DownLoadPdfButton", () => {
 
     expect(mockGetFormValues).toHaveBeenCalledTimes(3)
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledTimes(
-      3
+      3,
     )
   })
 
@@ -143,7 +149,7 @@ describe("DownLoadPdfButton", () => {
         ({
           warmUp: "custom",
           coolDown: "custom",
-        }) as Lesson
+        }) as Lesson,
     )
 
     renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)

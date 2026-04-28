@@ -1,55 +1,73 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import { buildAndDownloadPdf } from "./buildAndDownloadPdf"
-import { jsPDF } from "jspdf"
 import { mockLesson } from "@/data/mockLesson"
+import * as reactPdf from "@react-pdf/renderer"
 
-vi.mock("jspdf", () => ({
-  jsPDF: vi.fn(),
+vi.mock("@react-pdf/renderer", async () => {
+  const actual = await vi.importActual("@react-pdf/renderer")
+  return {
+    ...actual,
+    pdf: vi.fn(),
+  }
+})
+
+vi.mock("@/components/pdf/LessonPdfDocument", () => ({
+  LessonPdfDocument: () => null,
 }))
 
 describe("buildAndDownloadPdf", () => {
-  let mockDoc: {
-    internal: { pageSize: { getWidth: () => number; getHeight: () => number } }
-    setFontSize: ReturnType<typeof vi.fn>
-    rect: ReturnType<typeof vi.fn>
-    setFont: ReturnType<typeof vi.fn>
-    text: ReturnType<typeof vi.fn>
-    splitTextToSize: ReturnType<typeof vi.fn>
-    addPage: ReturnType<typeof vi.fn>
-    save: ReturnType<typeof vi.fn>
-  }
+  let mockBlob: Blob
+  let mockToBlob: ReturnType<typeof vi.fn>
+  let mockCreateObjectURL: ReturnType<typeof vi.fn>
+  let mockRevokeObjectURL: ReturnType<typeof vi.fn>
+  let mockClick: ReturnType<typeof vi.fn>
 
   beforeEach(() => {
-    mockDoc = {
-      internal: {
-        pageSize: {
-          getWidth: vi.fn(() => 210),
-          getHeight: vi.fn(() => 297),
-        },
-      },
-      setFontSize: vi.fn(),
-      rect: vi.fn(),
-      setFont: vi.fn(),
-      text: vi.fn(),
-      splitTextToSize: vi.fn((text: string) => [text]),
-      addPage: vi.fn(),
-      save: vi.fn(),
-    }
+    mockBlob = new Blob(["test"], { type: "application/pdf" })
+    mockToBlob = vi.fn().mockResolvedValue(mockBlob)
+    mockCreateObjectURL = vi.fn().mockReturnValue("blob:mock-url")
+    mockRevokeObjectURL = vi.fn()
+    mockClick = vi.fn()
 
-    vi.mocked(jsPDF).mockImplementation(function (this: unknown) {
-      return mockDoc as unknown as jsPDF
-    } as unknown as typeof jsPDF)
+    vi.mocked(reactPdf.pdf).mockReturnValue({
+      toBlob: mockToBlob,
+    } as any)
+
+    global.URL.createObjectURL = mockCreateObjectURL
+    global.URL.revokeObjectURL = mockRevokeObjectURL
+
+    vi.spyOn(document, "createElement").mockReturnValue({
+      click: mockClick,
+      href: "",
+      download: "",
+    } as any)
   })
 
-  it("should create a jsPDF instance", () => {
-    buildAndDownloadPdf(mockLesson)
+  it("should generate PDF blob using @react-pdf/renderer", async () => {
+    await buildAndDownloadPdf(mockLesson)
 
-    expect(jsPDF).toHaveBeenCalled()
+    expect(reactPdf.pdf).toHaveBeenCalled()
+    expect(mockToBlob).toHaveBeenCalled()
   })
 
-  it("should save the PDF with the correct filename", () => {
-    buildAndDownloadPdf(mockLesson)
+  it("should create download link and trigger download", async () => {
+    await buildAndDownloadPdf(mockLesson)
 
-    expect(mockDoc.save).toHaveBeenCalledWith("lesson.pdf")
+    expect(mockCreateObjectURL).toHaveBeenCalledWith(mockBlob)
+    expect(document.createElement).toHaveBeenCalledWith("a")
+    expect(mockClick).toHaveBeenCalled()
+  })
+
+  it("should revoke object URL after download", async () => {
+    await buildAndDownloadPdf(mockLesson)
+
+    expect(mockRevokeObjectURL).toHaveBeenCalledWith("blob:mock-url")
+  })
+
+  it("should use lesson sport in filename", async () => {
+    await buildAndDownloadPdf(mockLesson)
+
+    const link = vi.mocked(document.createElement).mock.results[0].value
+    expect(link.download).toBe("lesson-Arnis.pdf")
   })
 })

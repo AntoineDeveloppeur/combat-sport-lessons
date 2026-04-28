@@ -15,10 +15,10 @@ export default function DownLoadPdfButton({
 }: DownLoadPdfButtonProps) {
   const dispatch = useAppDispatch()
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const currentLesson = getFormValues()
     dispatch(save(currentLesson))
-    buildAndDownloadPdf(currentLesson)
+    await buildAndDownloadPdf(currentLesson)
   }
 
   return <Button onClick={handleClick}>voir la leçon</Button>
