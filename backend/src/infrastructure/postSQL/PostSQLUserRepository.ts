@@ -30,7 +30,6 @@ export class PostSQLUserRepository implements UserRepository {
   async getHash(id: string): Promise<string> {
     const query = `SELECT hash FROM users WHERE user_id = $1`
     const result = await this.pool.query(query, [id])
-    console.log("result de getHash :", result.rows)
     if (result.rows.length === 0) {
       throw new UserIdNotFound(id)
     }
@@ -47,7 +46,6 @@ export class PostSQLUserRepository implements UserRepository {
   async findUserId(email: string): Promise<string> {
     const query = `SELECT user_id FROM users WHERE email = $1`
     const result = await this.pool.query(query, [email])
-    console.log("result de findUserId :", result.rows)
 
     if (result.rows.length === 0) {
       throw new EmailNotFound(email)
