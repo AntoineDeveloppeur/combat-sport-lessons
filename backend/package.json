@@ -1,7 +1,7 @@
 {
-  "name": "repository-pattern",
+  "name": "combat-sport-lesson",
   "version": "1.0.0",
-  "description": "Appréhender le repository Pattern",
+  "description": "Voir et créer des lessons de sport de combat",
   "license": "ISC",
   "author": "",
   "type": "module",
@@ -16,7 +16,8 @@
     "prettier": "npx prettier . --write",
     "db:start": "docker-compose --env-file ../.env up",
     "db:stop": "docker-compose --env-file ../.env down",
-    "db:reset": "docker-compose --env-file ../.env down -v && docker-compose --env-file ../.env up"
+    "db:reset": "docker-compose --env-file ../.env down -v && docker-compose --env-file ../.env up",
+    "db:start:tools": "docker-compose --env-file ../.env --profile tools up"
   },
   "dependencies": {
     "@types/cors": "^2.8.19",
