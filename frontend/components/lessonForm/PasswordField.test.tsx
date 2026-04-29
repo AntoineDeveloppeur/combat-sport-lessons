@@ -129,8 +129,8 @@ describe("PasswordField", () => {
     const user = userEvent.setup()
     render(<TestWrapper />)
 
-    const input = screen.getByLabelText(/mot de passe/i)
-    await user.click(input)
+    const input = screen.getByLabelText(/mot de passe/i) as HTMLInputElement
+    await user.clear(input)
     await user.paste("pastedPassword123")
 
     expect(input).toHaveValue("pastedPassword123")

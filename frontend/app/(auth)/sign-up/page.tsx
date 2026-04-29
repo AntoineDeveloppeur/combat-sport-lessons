@@ -22,6 +22,7 @@ import { useSignUpMutation } from "@/store/api/userAPI"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/contexts/AuthContext"
 import { useEffect } from "react"
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 
 export default function SignUp() {
   const validationSchema = Yup.object().shape({
@@ -57,9 +58,16 @@ export default function SignUp() {
     useSignUpMutation()
   const { login: saveAuth } = useAuth()
   const router = useRouter()
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const onValid = async (data: FormData) => {
-    await signUp(data)
+    if (!executeRecaptcha) {
+      console.error("reCAPTCHA not ready")
+      return
+    }
+
+    const recaptchaToken = await executeRecaptcha("signup")
+    await signUp({ ...data, recaptchaToken })
   }
 
   useEffect(() => {

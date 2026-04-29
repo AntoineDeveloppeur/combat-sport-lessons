@@ -22,6 +22,7 @@ import { BackendError } from "@/types"
 import { useAuth } from "@/contexts/AuthContext"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3"
 
 export default function Page() {
   const validationSchema = Yup.object().shape({
@@ -51,9 +52,16 @@ export default function Page() {
   const errorMessage = getErrorMessage(error as BackendError)
   const { login: saveAuth } = useAuth()
   const router = useRouter()
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const onValid = async (data: FormData) => {
-    await login(data)
+    if (!executeRecaptcha) {
+      console.error("reCAPTCHA not ready")
+      return
+    }
+
+    const recaptchaToken = await executeRecaptcha("login")
+    await login({ ...data, recaptchaToken })
   }
 
   useEffect(() => {

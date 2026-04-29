@@ -19,6 +19,3 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use("/users", userRoutes)
 app.use("/lessons", lessonRoutes)
-app.get("/", (_req, res) => {
-  res.send(`<h1>Repository Pattern API</h1>`)
-})

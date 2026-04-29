@@ -48,12 +48,14 @@ export type Preset = Record<string, InstructionType[]>
 export interface Login {
   email: string
   password: string
+  recaptchaToken: string
 }
 
 export interface SignUp {
   name: string
   email: string
   password: string
+  recaptchaToken: string
 }
 
 export interface BackendError {

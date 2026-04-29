@@ -6,9 +6,6 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const envPath = resolve(__dirname, "../../../.env")
-console.log("📂 Chemin vers .env:", envPath)
-console.log("📂 __dirname:", __dirname)
-
 const result = dotenv.config({ path: envPath })
 
 if (result.error) {
@@ -18,7 +15,10 @@ if (result.error) {
   }
 }
 
-console.log("📦 Variables chargées:", Object.keys(result.parsed || {}).length)
+console.log(
+  "📦 Variables d'environnement chargées:",
+  Object.keys(result.parsed || {}).length
+)
 
 if (!process.env.JWT_SECRET) {
   if (process.env.NODE_ENV === "test") {
@@ -29,4 +29,9 @@ if (!process.env.JWT_SECRET) {
   }
 }
 
-console.log("✅ Variables d'environnement chargées")
+if (
+  !process.env.RECAPTCHA_SECRET_KEY &&
+  process.env.NODE_ENV !== "development"
+) {
+  throw new Error("RECAPTCHA_SECRET_KEY manquant dans .env")
+}
