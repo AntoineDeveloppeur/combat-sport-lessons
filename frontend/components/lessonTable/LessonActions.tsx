@@ -52,7 +52,6 @@ export function LessonActions({ lesson, isOwner }: LessonActionsProps) {
         }).unwrap()
         alert("Leçon supprimée avec succès")
       } catch (error) {
-        console.error("Erreur lors de la suppression:", error)
         const errorMessage =
           error && typeof error === "object" && "data" in error
             ? (error.data as { error?: string })?.error
@@ -76,7 +75,6 @@ export function LessonActions({ lesson, isOwner }: LessonActionsProps) {
       }).unwrap()
       alert("Leçon dupliquée avec succès ! Disponible dans 'Mes leçons'")
     } catch (error) {
-      console.error("Erreur lors de la duplication:", error)
       const errorMessage =
         error && typeof error === "object" && "data" in error
           ? (error.data as { error?: string })?.error
@@ -97,8 +95,7 @@ export function LessonActions({ lesson, isOwner }: LessonActionsProps) {
         lessonId: lesson.lessonId as string,
         token,
       }).unwrap()
-    } catch (error) {
-      console.error("Erreur lors du changement de visibilité:", error)
+    } catch {
       alert("Erreur lors du changement de visibilité de la lesson")
     }
   }

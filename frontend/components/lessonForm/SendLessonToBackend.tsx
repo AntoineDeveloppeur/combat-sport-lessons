@@ -42,7 +42,6 @@ export default function SendLessonToBackend() {
       }
       router.push("/lessons/user")
     } catch (error) {
-      console.error("Erreur lors de la sauvegarde:", error)
       const errorMessage =
         error && typeof error === "object" && "data" in error
           ? (error.data as { error?: string })?.error

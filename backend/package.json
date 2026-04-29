@@ -14,9 +14,9 @@
     "type:watch": "npx tsc --watch --project config/tsconfig.json",
     "lint": "npx eslint --config config/eslint.config.ts",
     "prettier": "npx prettier . --write",
-    "db:start": "docker-compose up",
-    "db:stop": "docker-compose down",
-    "db:reset": "docker-compose down -v && docker-compose up"
+    "db:start": "docker-compose --env-file ../.env up",
+    "db:stop": "docker-compose --env-file ../.env down",
+    "db:reset": "docker-compose --env-file ../.env down -v && docker-compose --env-file ../.env up"
   },
   "dependencies": {
     "@types/cors": "^2.8.19",

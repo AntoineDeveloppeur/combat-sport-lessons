@@ -3,11 +3,11 @@ import pg from "pg"
 const { Pool } = pg
 
 export const pool = new Pool({
-  host: "localhost",
-  port: 5432,
-  user: "postgres",
-  password: "password",
-  database: "repository_pattern_db",
+  host: process.env.POSTGRES_HOST,
+  port: Number(process.env.POSTGRES_PORT),
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
