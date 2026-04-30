@@ -118,8 +118,7 @@ backend/src/
 │
 └── presentation/        # HTTP layer
     ├── controllers/     # Express controllers
-    ├── routes/          # Route definitions
-    └── swagger/         # API documentation
+    └── routes/          # Route definitions
 ```
 
 **Key Principles:**
@@ -384,7 +383,6 @@ export const lessonApi = createApi({
 - **Database**: PostgreSQL runs on `localhost:5432` via Docker
 - **Backend API**: Runs on `http://localhost:4000`
 - **Frontend**: Runs on `http://localhost:3000`
-- **API Docs**: Swagger UI at `http://localhost:4000/api-docs`
 - **Environment**: Backend requires `.env` file with `JWT_SECRET` and database credentials
 - **Type Safety**: Always check types when proposing solutions
 - **Immutability**: Prefer immutable data structures and pure functions

@@ -1,21 +1,58 @@
-MIT License
+GNU AFFERO GENERAL PUBLIC LICENSE
+Version 3, 19 November 2007
 
 Copyright (c) 2025 Antoine
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, version 3 of the License.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+================================================================================
+
+ADDITIONAL TERMS
+
+This software is licensed under AGPL-3.0-only with the following additional
+restrictions under section 7 of the AGPL-3.0:
+
+1. NON-COMMERCIAL USE ONLY
+   This software may not be used for commercial purposes without explicit
+   written permission from the copyright holder.
+
+2. NO INDEPENDENT DEPLOYMENT
+   - Forks are permitted and encouraged for contributing via Pull Requests
+     to the original repository
+   - Independent deployment or distribution of this software outside the
+     original repository is prohibited
+   - You may not create derivative works for separate deployment or
+     distribution
+
+3. CONTRIBUTION REQUIREMENT
+   All modifications and improvements must be contributed back to the
+   original repository via Pull Request at:
+   https://github.com/AntoineDeveloppeur/combat-sport-lessons
+
+4. PERMITTED USES
+   ✅ Fork the repository to contribute improvements
+   ✅ Study and learn from the code
+   ✅ Run locally for personal development and testing
+   ✅ Submit Pull Requests with enhancements
+   
+   ❌ Deploy as an independent service (commercial or non-commercial)
+   ❌ Use in commercial products or services
+   ❌ Create derivative projects for separate distribution
+
+For commercial licensing, deployment permissions, or other inquiries,
+please contact: [your-email@example.com]
+
+================================================================================
+
+Full text of the GNU Affero General Public License v3.0 is available at:
+https://www.gnu.org/licenses/agpl-3.0.txt
