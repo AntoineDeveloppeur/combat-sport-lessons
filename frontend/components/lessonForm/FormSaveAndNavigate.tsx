@@ -17,12 +17,12 @@ export default function FormSaveAndNavigate({
   prev,
   next,
 }: FormSaveAndNavigateProps) {
-  const Router = useRouter()
+  const router = useRouter()
   const dispatch = useAppDispatch()
 
   const handleClick = async (route?: string) => {
     const success = await validateFormAndSaveToLesson()
-    if (success && route) Router.push(route)
+    if (success && route) router.push(route)
   }
 
   const validateFormAndSaveToLesson = async (): Promise<boolean> => {
