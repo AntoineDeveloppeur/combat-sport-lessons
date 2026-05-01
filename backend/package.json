@@ -12,6 +12,7 @@
     "start": "node ./dist/presentation/server.js",
     "dev": "nodemon ./dist/presentation/server.js",
     "type:watch": "npx tsc --watch --project config/tsconfig.json",
+    "build": "npx tsc --project config/tsconfig.json",
     "lint": "npx eslint --config config/eslint.config.ts",
     "prettier": "npx prettier . --write",
     "db:start": "docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file ../.env up postgres postgres_test",
