@@ -14,10 +14,13 @@
     "type:watch": "npx tsc --watch --project config/tsconfig.json",
     "lint": "npx eslint --config config/eslint.config.ts",
     "prettier": "npx prettier . --write",
-    "db:start": "docker-compose --env-file ../.env up",
-    "db:stop": "docker-compose --env-file ../.env down",
-    "db:reset": "docker-compose --env-file ../.env down -v && docker-compose --env-file ../.env up",
-    "db:start:tools": "docker-compose --env-file ../.env --profile tools up"
+    "db:start": "docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file ../.env up postgres postgres_test",
+    "db:stop": "docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file ../.env down",
+    "db:reset": "docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file ../.env down -v && npm run db:start",
+    "db:start:tools": "docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file ../.env --profile tools up -d",
+    "db:prod:start": "docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file ../.env up -d",
+    "db:prod:stop": "docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file ../.env down",
+    "db:prod:logs": "docker compose -f docker-compose.yml -f docker-compose.prod.yml --env-file ../.env logs -f postgres"
   },
   "dependencies": {
     "@types/cors": "^2.8.19",
