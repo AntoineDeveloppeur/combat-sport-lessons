@@ -21,18 +21,18 @@ export default defineConfig({
   webServer: [
     {
       command: "cd ../backend && npm run db:reset",
-      port: 5432,
+      port: Number(process.env.POSTGRES_PORT),
       reuseExistingServer: true,
     },
     {
       command:
         'cd ../backend && concurrently "npm run type:watch" "npm run dev"',
-      port: 4000,
+      port: Number(process.env.API_PORT),
       reuseExistingServer: true,
     },
     {
       command: "cd ../frontend && npm run dev",
-      port: 3000,
+      port: Number(process.env.FRONTEND_PORT),
       reuseExistingServer: true,
     },
   ],

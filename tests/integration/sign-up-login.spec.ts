@@ -14,6 +14,7 @@ test("user sign-up then login", async ({ page }) => {
   await page.locator("#password").fill(testUser.password)
   await page.locator("#confirm-password").fill(testUser.password)
 
+  await page.waitForTimeout(2000) // for Google Recaptcha to be ready
   await page.click('button[type="submit"]')
 
   await page.goto("/login")
@@ -21,6 +22,7 @@ test("user sign-up then login", async ({ page }) => {
   await page.locator("#email").fill(testUser.email)
   await page.locator("#password").fill(testUser.password)
 
+  await page.waitForTimeout(2000) // for Google Recaptcha to be ready
   await page.click('button[type="submit"]')
 
   await expect(page.locator("text=/Connexion réussie|Bienvenue/i")).toBeVisible(
