@@ -15,7 +15,7 @@ import { SectionTitle } from "./SectionTitle"
 
 export function DiscoverSection() {
   const { data, isLoading } = useGetLessonQuery(
-    "550e8400-e29b-41d4-a716-446655440011"
+    "550e8400-e29b-41d4-a716-446655440011",
   )
 
   const handleDownload = () => {
@@ -97,11 +97,6 @@ export function DiscoverSection() {
         ) : (
           <p className="text-red-500">Impossible de charger le cours</p>
         )}
-
-        <p className="text-sm text-gray-500 pt-8">
-          Ce n&apos;est qu&apos;un exemple parmi des centaines de cours
-          disponibles sur la plateforme
-        </p>
       </div>
     </SectionContainer>
   )

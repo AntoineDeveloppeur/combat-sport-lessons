@@ -21,10 +21,10 @@ export function Footer() {
               Une question ? Contactez-nous :
             </p>
             <a
-              href="mailto:contact@combatlessons.com"
+              href="mailto:antoine.developpeur@gmail.com"
               className="text-white hover:text-white/80 underline"
             >
-              contact@combatlessons.com
+              antoine.developpeur@gmail.com
             </a>
           </div>
         </div>
