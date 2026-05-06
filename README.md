@@ -106,38 +106,6 @@ cd frontend; npm run dev
 
 ---
 
-## ⚙️ Configuration
-
-### Variables d'Environnement
-
-**IMPORTANT** : Toutes les variables d'environnement doivent être dans le
-fichier `.env` **à la racine du projet**, pas dans `backend/` ou `frontend/`.
-
-1. Copiez le template :
-
-   ```bash
-   cp .env.example .env
-   ```
-
-2. Éditez `.env` et configurez les variables essentielles :
-
-   ```bash
-   # JWT Secret (OBLIGATOIRE - générez une chaîne aléatoire de 32+ caractères)
-   JWT_SECRET=votre_secret_jwt_tres_securise_ici
-
-   # Mots de passe PostgreSQL
-   POSTGRES_PASSWORD=votre_mot_de_passe_securise
-   POSTGRES_TEST_PASSWORD=votre_mot_de_passe_test
-   ```
-
-3. **reCAPTCHA** (optionnel pour développement local) :
-   - Pour le développement, vous pouvez utiliser les clés de test fournies dans
-     `.env.example`
-   - Pour la production, obtenez vos clés sur
-     [Google reCAPTCHA](https://www.google.com/recaptcha/admin)
-
----
-
 ## 🗄️ Base de Données
 
 ### Démarrage Standard
@@ -266,6 +234,8 @@ npm run test              # Mode watch (développement)
 npm run test:coverage     # Coverage sans watch
 
 # E2E (depuis la racine)
+# Pour que le test réussisse la base de donnée doit être montée
+cd backend; npm run db:reset
 npm run test:e2e          # Tests Playwright headless
 npm run test:e2e:ui       # Avec interface UI
 npm run test:e2e:debug    # Mode debug

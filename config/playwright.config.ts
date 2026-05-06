@@ -9,7 +9,7 @@ const __dirname = dirname(__filename)
 config({ path: join(__dirname, "../.env") })
 
 export default defineConfig({
-  testDir: "../tests/integration",
+  testDir: "../tests/e2e",
   outputDir: "../tests/test-results",
   timeout: 30000,
   retries: 2,

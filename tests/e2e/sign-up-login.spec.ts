@@ -16,6 +16,7 @@ test("user sign-up then login", async ({ page }) => {
 
   await page.waitForTimeout(2000) // for Google Recaptcha to be ready
   await page.click('button[type="submit"]')
+  await page.waitForTimeout(2000) // wait for account to be created
 
   await page.goto("/login")
 
@@ -25,9 +26,6 @@ test("user sign-up then login", async ({ page }) => {
   await page.waitForTimeout(2000) // for Google Recaptcha to be ready
   await page.click('button[type="submit"]')
 
-  await expect(page.locator("text=/Connexion réussie|Bienvenue/i")).toBeVisible(
-    {
-      timeout: 10000,
-    },
-  )
+  await page.waitForURL("**/lessons")
+  await expect(page).toHaveURL(/\/lessons/)
 })

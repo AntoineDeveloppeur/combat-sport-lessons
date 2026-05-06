@@ -119,18 +119,12 @@ npm install
 cp .env.example .env
 ```
 
-**Éditez `.env`** et configurez :
-
-- `JWT_SECRET` : Générez une chaîne aléatoire sécurisée (32+ caractères)
-- `POSTGRES_PASSWORD` : Choisissez un mot de passe
-- `RECAPTCHA_*` : Optionnel pour dev local (utilisez les clés de test fournies)
-
 ### 4. Démarrer les Services
 
 ```bash
 # Terminal 1 : PostgreSQL
 cd backend
-npm run db:start
+npm run db:reset
 
 # Terminal 2 : Compilation TypeScript (backend)
 cd backend
@@ -147,7 +141,7 @@ npm run dev
 
 **Accès** :
 
-- Frontend : http://localhost:3000
+- Frontend : http://localhost:3010
 - Backend API : http://localhost:4000
 - PgAdmin (optionnel) : http://localhost:8888 (avec `npm run db:start:tools`)
 
@@ -159,9 +153,8 @@ npm run dev
 
 **NE JAMAIS commit avec les tests en mode watch !**
 
-Les batteries de tests backend et frontend utilisent des configurations
-différentes qui peuvent entrer en conflit. **Arrêtez toujours le mode watch
-avant de commit.**
+Les tests exécutés par le commit et les tests watch peuvent entrer en conflit.
+**Arrêtez toujours le mode watch avant de commit.**
 
 ### Commandes de Test
 
@@ -177,6 +170,8 @@ npm run test              # Mode watch (développement)
 npm run test:coverage     # Coverage sans watch
 
 # E2E (depuis la racine)
+# Pour que le test réussisse la base de donnée doit être montée
+cd backend; npm run db:reset
 npm run test:e2e          # Headless
 npm run test:e2e:ui       # Avec UI
 npm run test:e2e:debug    # Mode debug
