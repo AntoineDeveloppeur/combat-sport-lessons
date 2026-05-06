@@ -5,7 +5,7 @@ export async function deleteLesson(
   lessonId: string,
   token: string,
   tokenManager: TokenManager,
-  lessonRepository: lessonRepository,
+  lessonRepository: lessonRepository
 ): Promise<void> {
   const userId = await tokenManager.getUserIdFromToken(token)
   await lessonRepository.delete(lessonId, userId)

@@ -24,7 +24,7 @@ export const mockLesson: Lesson = {
   warmUpInstructions: [
     {
       text: createTiptapJSON(
-        "ddddddddd ddddddddddddddddddddd dddddddddddddddddddd ddddddddddddddddddddddddd sssssssssssssss ssssssssss ssssss s s sssssssssssssss ssssssssssssssssssssssssssss s",
+        "ddddddddd ddddddddddddddddddddd dddddddddddddddddddd ddddddddddddddddddddddddd sssssssssssssss ssssssssss ssssss s s sssssssssssssss ssssssssssssssssssssssssssss s"
       ),
       min: 1,
       sec: 0,

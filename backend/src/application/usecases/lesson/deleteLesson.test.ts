@@ -25,12 +25,12 @@ describe("deleteLesson use case", () => {
       "lesson-123",
       "valid-token",
       mockTokenManager as TokenManager,
-      mockLessonRepository as lessonRepository,
+      mockLessonRepository as lessonRepository
     )
 
     expect(mockLessonRepository.delete).toHaveBeenCalledWith(
       "lesson-123",
-      "user-123",
+      "user-123"
     )
   })
 
@@ -44,8 +44,8 @@ describe("deleteLesson use case", () => {
         "lesson-999",
         "valid-token",
         mockTokenManager as TokenManager,
-        mockLessonRepository as lessonRepository,
-      ),
+        mockLessonRepository as lessonRepository
+      )
     ).rejects.toThrow(LessonIdNotFound)
   })
 
@@ -59,8 +59,8 @@ describe("deleteLesson use case", () => {
         "lesson-123",
         "valid-token",
         mockTokenManager as TokenManager,
-        mockLessonRepository as lessonRepository,
-      ),
+        mockLessonRepository as lessonRepository
+      )
     ).rejects.toThrow(NotOwner)
   })
 
@@ -74,8 +74,8 @@ describe("deleteLesson use case", () => {
         "lesson-123",
         "invalid-token",
         mockTokenManager as TokenManager,
-        mockLessonRepository as lessonRepository,
-      ),
+        mockLessonRepository as lessonRepository
+      )
     ).rejects.toThrow(TokenInvalid)
   })
 })

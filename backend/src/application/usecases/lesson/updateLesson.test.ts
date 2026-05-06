@@ -31,7 +31,7 @@ describe("updateLesson use case", () => {
       [],
       new Date(),
       "user-123",
-      false,
+      false
     )
 
     const existingLesson = new Lesson(
@@ -44,7 +44,7 @@ describe("updateLesson use case", () => {
       [],
       new Date(),
       "user-123",
-      false,
+      false
     )
 
     mockLessonRepository = {
@@ -65,13 +65,13 @@ describe("updateLesson use case", () => {
       "valid-token",
       mockTokenManager as TokenManager,
       mockLessonRepository as lessonRepository,
-      mockIdGenerator as IdGenerator,
+      mockIdGenerator as IdGenerator
     )
 
     expect(mockLessonRepository.update).toHaveBeenCalledWith(
       "lesson-123",
       mockLesson,
-      mockIdGenerator,
+      mockIdGenerator
     )
     expect(result).toEqual(mockLesson)
   })
@@ -88,8 +88,8 @@ describe("updateLesson use case", () => {
         "valid-token",
         mockTokenManager as TokenManager,
         mockLessonRepository as lessonRepository,
-        mockIdGenerator as IdGenerator,
-      ),
+        mockIdGenerator as IdGenerator
+      )
     ).rejects.toThrow(LessonIdNotFound)
   })
 
@@ -104,7 +104,7 @@ describe("updateLesson use case", () => {
       [],
       new Date(),
       "user-456",
-      false,
+      false
     )
     mockLessonRepository.get = vi.fn().mockResolvedValue(lessonOwnedByOther)
 
@@ -115,8 +115,8 @@ describe("updateLesson use case", () => {
         "valid-token",
         mockTokenManager as TokenManager,
         mockLessonRepository as lessonRepository,
-        mockIdGenerator as IdGenerator,
-      ),
+        mockIdGenerator as IdGenerator
+      )
     ).rejects.toThrow(NotOwner)
   })
 
@@ -132,8 +132,8 @@ describe("updateLesson use case", () => {
         "invalid-token",
         mockTokenManager as TokenManager,
         mockLessonRepository as lessonRepository,
-        mockIdGenerator as IdGenerator,
-      ),
+        mockIdGenerator as IdGenerator
+      )
     ).rejects.toThrow(TokenInvalid)
   })
 
@@ -147,8 +147,8 @@ describe("updateLesson use case", () => {
         "valid-token",
         mockTokenManager as TokenManager,
         mockLessonRepository as lessonRepository,
-        mockIdGenerator as IdGenerator,
-      ),
+        mockIdGenerator as IdGenerator
+      )
     ).rejects.toThrow(DuplicateLessonTitle)
   })
 })

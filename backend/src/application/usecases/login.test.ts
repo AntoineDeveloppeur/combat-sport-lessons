@@ -24,7 +24,7 @@ describe("login use case", () => {
       "password123",
       mockPasswordHasher as PasswordHasher,
       mockUserRepository as UserRepository,
-      mockTokenManager as TokenManager,
+      mockTokenManager as TokenManager
     )
 
     expect(result).toEqual({
@@ -52,11 +52,11 @@ describe("login use case", () => {
       "password",
       mockPasswordHasher as PasswordHasher,
       mockUserRepository as UserRepository,
-      mockTokenManager as TokenManager,
+      mockTokenManager as TokenManager
     )
 
     expect(mockUserRepository.findUserId).toHaveBeenCalledWith(
-      "john@example.com",
+      "john@example.com"
     )
   })
 
@@ -79,12 +79,12 @@ describe("login use case", () => {
       "mypassword",
       mockPasswordHasher as PasswordHasher,
       mockUserRepository as UserRepository,
-      mockTokenManager as TokenManager,
+      mockTokenManager as TokenManager
     )
 
     expect(mockPasswordHasher.verify).toHaveBeenCalledWith(
       "mypassword",
-      "stored_hash_value",
+      "stored_hash_value"
     )
   })
 
@@ -108,8 +108,8 @@ describe("login use case", () => {
         "wrongpassword",
         mockPasswordHasher as PasswordHasher,
         mockUserRepository as UserRepository,
-        mockTokenManager as TokenManager,
-      ),
+        mockTokenManager as TokenManager
+      )
     ).rejects.toThrow("Identifiants incorrects")
   })
 
@@ -133,9 +133,9 @@ describe("login use case", () => {
         "wrongpassword",
         mockPasswordHasher as PasswordHasher,
         mockUserRepository as UserRepository,
-        mockTokenManager as TokenManager,
+        mockTokenManager as TokenManager
       )
-    } catch (error) {
+    } catch {
       // Expected error
     }
 
@@ -161,7 +161,7 @@ describe("login use case", () => {
       "password",
       mockPasswordHasher as PasswordHasher,
       mockUserRepository as UserRepository,
-      mockTokenManager as TokenManager,
+      mockTokenManager as TokenManager
     )
 
     expect(mockTokenManager.generateToken).toHaveBeenCalledWith("user-456")

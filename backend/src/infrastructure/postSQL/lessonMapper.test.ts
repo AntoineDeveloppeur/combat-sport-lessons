@@ -42,7 +42,7 @@ const createLessonRow = (
   text: string,
   type: string,
   min: number,
-  order: number,
+  order: number
 ) => ({
   lesson_id: lessonId,
   title,
@@ -69,7 +69,7 @@ describe("mapOne", () => {
       mockLessonDB,
       emptyInstructionsDB,
       emptyInstructionsDB,
-      emptyInstructionsDB,
+      emptyInstructionsDB
     )
 
     expect(result.lessonId).toBe("lessonId123")
@@ -100,18 +100,18 @@ describe("mapOne", () => {
       mockLessonDB,
       createMockInstructionsDB(warmUpInstructions),
       createMockInstructionsDB(bodyInstructions),
-      createMockInstructionsDB(coolDownInstructions),
+      createMockInstructionsDB(coolDownInstructions)
     )
 
     expect(result.warmUpInstructions).toHaveLength(2)
     expect(result.bodyInstructions).toHaveLength(2)
     expect(result.coolDownInstructions).toHaveLength(1)
     expect(result.warmUpInstructions[0].text).toEqual(
-      createTiptapJSON("Texte 1"),
+      createTiptapJSON("Texte 1")
     )
     expect(result.bodyInstructions[0].text).toEqual(createTiptapJSON("Texte 3"))
     expect(result.coolDownInstructions[0].text).toEqual(
-      createTiptapJSON("Texte 5"),
+      createTiptapJSON("Texte 5")
     )
   })
 
@@ -123,7 +123,7 @@ describe("mapOne", () => {
       mockLessonDB,
       emptyInstructionsDB,
       emptyInstructionsDB,
-      emptyInstructionsDB,
+      emptyInstructionsDB
     )
 
     expect(result.sport).toBe("Karaté")
@@ -137,7 +137,7 @@ describe("mapOne", () => {
       mockLessonDB,
       emptyInstructionsDB,
       emptyInstructionsDB,
-      emptyInstructionsDB,
+      emptyInstructionsDB
     )
 
     expect(result.warmUpInstructions).toEqual([])
@@ -157,7 +157,7 @@ describe("mapOne", () => {
       mockLessonDB,
       createMockInstructionsDB(instructions),
       createMockInstructionsDB([]),
-      createMockInstructionsDB([]),
+      createMockInstructionsDB([])
     )
 
     expect(result.warmUpInstructions[0].min).toBe(1)
@@ -185,7 +185,7 @@ describe("addInstructions", () => {
       "Étirements bras",
       "cool_down",
       3,
-      1,
+      1
     )
 
     const result = lessonMapper.addInstructions(lesson, instructionRow)
@@ -216,7 +216,7 @@ describe("addInstructions", () => {
       "Rotations épaules",
       "warm_up",
       2,
-      2,
+      2
     )
 
     const result = lessonMapper.addInstructions(lesson, instructionRow)
@@ -248,7 +248,7 @@ describe("addInstructions", () => {
       "Technique du jab",
       "body",
       5,
-      1,
+      1
     )
 
     const result = lessonMapper.addInstructions(lesson, instructionRow)
@@ -271,7 +271,7 @@ describe("mapMany", () => {
           "Jumping jacks",
           "warm_up",
           3,
-          1,
+          1
         ),
         createLessonRow(
           "lessonId123",
@@ -281,7 +281,7 @@ describe("mapMany", () => {
           "Technique du jab",
           "body",
           5,
-          1,
+          1
         ),
         createLessonRow(
           "lessonId123",
@@ -291,7 +291,7 @@ describe("mapMany", () => {
           "Étirements",
           "cool_down",
           3,
-          1,
+          1
         ),
       ],
     }
@@ -316,7 +316,7 @@ describe("mapMany", () => {
           "Jumping jacks",
           "warm_up",
           3,
-          1,
+          1
         ),
         createLessonRow(
           "lessonId123",
@@ -326,7 +326,7 @@ describe("mapMany", () => {
           "Rotations",
           "warm_up",
           2,
-          2,
+          2
         ),
         createLessonRow(
           "lessonId123",
@@ -336,7 +336,7 @@ describe("mapMany", () => {
           "Jab",
           "body",
           5,
-          1,
+          1
         ),
         createLessonRow(
           "lessonId456",
@@ -346,7 +346,7 @@ describe("mapMany", () => {
           "Course légère",
           "warm_up",
           3,
-          1,
+          1
         ),
         createLessonRow(
           "lessonId456",
@@ -356,7 +356,7 @@ describe("mapMany", () => {
           "O-goshi",
           "body",
           6,
-          1,
+          1
         ),
         createLessonRow(
           "lessonId456",
@@ -366,7 +366,7 @@ describe("mapMany", () => {
           "Seoi-nage",
           "body",
           6,
-          2,
+          2
         ),
         createLessonRow(
           "lessonId789",
@@ -376,7 +376,7 @@ describe("mapMany", () => {
           "Kihon",
           "warm_up",
           5,
-          1,
+          1
         ),
       ],
     }
@@ -417,7 +417,7 @@ describe("mapMany", () => {
           "Instruction 3",
           "body",
           5,
-          3,
+          3
         ),
         createLessonRow(
           "lessonId123",
@@ -427,7 +427,7 @@ describe("mapMany", () => {
           "Instruction 1",
           "body",
           5,
-          1,
+          1
         ),
         createLessonRow(
           "lessonId123",
@@ -437,7 +437,7 @@ describe("mapMany", () => {
           "Instruction 2",
           "body",
           5,
-          2,
+          2
         ),
       ],
     }
@@ -460,7 +460,7 @@ describe("mapMany", () => {
           "Jab",
           "body",
           5,
-          1,
+          1
         ),
         createLessonRow(
           "1",
@@ -470,7 +470,7 @@ describe("mapMany", () => {
           "Direct",
           "body",
           5,
-          2,
+          2
         ),
       ],
     }

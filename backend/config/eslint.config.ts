@@ -20,6 +20,14 @@ export default defineConfig([
         tsconfigRootDir: join(__dirname, ".."),
       },
     },
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          caughtErrors: "none",
+        },
+      ],
+    },
   },
   ...tseslint.configs.recommended,
 ])

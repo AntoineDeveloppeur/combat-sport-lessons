@@ -51,7 +51,7 @@ export const lessonCtrl = {
         req.body.token,
         jwtTokenManager,
         postSQLessonRepository,
-        new RandomUUIDGenerator(),
+        new RandomUUIDGenerator()
       )
       return res.status(201).json({ message: "succès", lessonId })
     } catch (error) {
@@ -106,7 +106,7 @@ export const lessonCtrl = {
         token,
         jwtTokenManager,
         postSQLessonRepository,
-        new RandomUUIDGenerator(),
+        new RandomUUIDGenerator()
       )
 
       return res.status(201).json({ lesson: duplicatedLesson })
@@ -140,7 +140,7 @@ export const lessonCtrl = {
         lessonId,
         token,
         jwtTokenManager,
-        postSQLessonRepository,
+        postSQLessonRepository
       )
 
       return res.status(200).json({ message: "Leçon supprimée avec succès" })
@@ -173,7 +173,7 @@ export const lessonCtrl = {
         token,
         jwtTokenManager,
         postSQLessonRepository,
-        new RandomUUIDGenerator(),
+        new RandomUUIDGenerator()
       )
 
       return res.status(200).json({ lesson: updatedLesson })

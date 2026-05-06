@@ -5,7 +5,7 @@ import { NotOwner } from "../../../domain/errors/NotOwner.js"
 export async function toggleLessonVisibility(
   lessonId: string,
   userId: string,
-  lessonRepository: lessonRepository,
+  lessonRepository: lessonRepository
 ): Promise<void> {
   const lesson = await lessonRepository.get(lessonId)
 

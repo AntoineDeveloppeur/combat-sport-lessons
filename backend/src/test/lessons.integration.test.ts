@@ -99,7 +99,7 @@ describe("Lessons integration tests", () => {
 
     test("retourne 404 si lesson non trouvée", async () => {
       const response = await request(app).get(
-        "/lessons/550e8400-e29b-41d4-a716-446655440999",
+        "/lessons/550e8400-e29b-41d4-a716-446655440999"
       )
 
       expect(response.status).toBe(404)
@@ -378,7 +378,7 @@ describe("Lessons integration tests", () => {
       expect(duplicateResponse.status).toBe(201)
       expect(duplicateResponse.body.lesson).toBeDefined()
       expect(duplicateResponse.body.lesson.title).toBe(
-        "Leçon originale (copie)",
+        "Leçon originale (copie)"
       )
       expect(duplicateResponse.body.lesson.isPublic).toBe(false)
       expect(duplicateResponse.body.lesson.sport).toBe("Boxe")

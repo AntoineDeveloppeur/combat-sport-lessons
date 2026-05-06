@@ -16,7 +16,7 @@ export const mapOne = (
   lessonDB: PostgreSQLResult<LessonDBRow>,
   warmUpInstructionsDB: PostgreSQLResult<InstructionDBRow>,
   bodyInstructionsDB: PostgreSQLResult<InstructionDBRow>,
-  coolDownInstructionsDB: PostgreSQLResult<InstructionDBRow>,
+  coolDownInstructionsDB: PostgreSQLResult<InstructionDBRow>
 ): Lesson => {
   const {
     lesson_id,
@@ -54,7 +54,7 @@ export const mapOne = (
 }
 
 export const mapMany = (
-  lessonsDB: PostgreSQLResult<LessonDBwithInstructionRow>,
+  lessonsDB: PostgreSQLResult<LessonDBwithInstructionRow>
 ): Lesson[] => {
   const map = new Map()
 
@@ -101,7 +101,7 @@ export const mapMany = (
 
 export const addInstructions = (
   lesson: Partial<Lesson>,
-  lessonDBwithInstructionRow: LessonDBwithInstructionRow,
+  lessonDBwithInstructionRow: LessonDBwithInstructionRow
 ): Partial<Lesson> => {
   const res: Partial<Lesson> = { ...lesson }
   const { text, type, min, sec, order } = lessonDBwithInstructionRow

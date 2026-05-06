@@ -11,7 +11,7 @@ export async function updateLesson(
   token: string,
   tokenManager: TokenManager,
   lessonRepository: lessonRepository,
-  idGenerator: IdGenerator,
+  idGenerator: IdGenerator
 ): Promise<Lesson> {
   const userId = await tokenManager.getUserIdFromToken(token)
 
@@ -24,7 +24,7 @@ export async function updateLesson(
   if (lesson.title !== existingLesson.title) {
     const titleExists = await lessonRepository.titleExistsGlobally(
       lesson.title,
-      lessonId,
+      lessonId
     )
     if (titleExists) {
       throw new DuplicateLessonTitle(lesson.title)
@@ -34,7 +34,7 @@ export async function updateLesson(
   const updatedLesson = await lessonRepository.update(
     lessonId,
     lesson,
-    idGenerator,
+    idGenerator
   )
   return updatedLesson
 }

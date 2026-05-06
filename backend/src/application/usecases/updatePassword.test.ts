@@ -22,12 +22,12 @@ describe("updatePassword use case", () => {
       "oldpassword",
       "newpassword",
       mockUserRepository as UserRepository,
-      mockPasswordHasher as PasswordHasher,
+      mockPasswordHasher as PasswordHasher
     )
 
     expect(mockUserRepository.updatePassword).toHaveBeenCalledWith(
       "user-123",
-      "new_hash",
+      "new_hash"
     )
   })
 
@@ -47,8 +47,8 @@ describe("updatePassword use case", () => {
         "wrongpassword",
         "newpassword",
         mockUserRepository as UserRepository,
-        mockPasswordHasher as PasswordHasher,
-      ),
+        mockPasswordHasher as PasswordHasher
+      )
     ).rejects.toThrow(IncorrectCurrentPassword)
   })
 
@@ -68,15 +68,15 @@ describe("updatePassword use case", () => {
         "currentpass",
         "newpass",
         mockUserRepository as UserRepository,
-        mockPasswordHasher as PasswordHasher,
+        mockPasswordHasher as PasswordHasher
       )
-    } catch (error) {
+    } catch {
       // Expected error
     }
 
     expect(mockPasswordHasher.verify).toHaveBeenCalledWith(
       "currentpass",
-      "stored_hash_value",
+      "stored_hash_value"
     )
   })
 
@@ -97,7 +97,7 @@ describe("updatePassword use case", () => {
       "oldpassword",
       "mynewpassword",
       mockUserRepository as UserRepository,
-      mockPasswordHasher as PasswordHasher,
+      mockPasswordHasher as PasswordHasher
     )
 
     expect(mockPasswordHasher.hash).toHaveBeenCalledWith("mynewpassword")
@@ -120,9 +120,9 @@ describe("updatePassword use case", () => {
         "wrongpassword",
         "newpassword",
         mockUserRepository as UserRepository,
-        mockPasswordHasher as PasswordHasher,
+        mockPasswordHasher as PasswordHasher
       )
-    } catch (error) {
+    } catch {
       // Expected error
     }
 
@@ -146,11 +146,11 @@ describe("updatePassword use case", () => {
       "old",
       "new",
       mockUserRepository as UserRepository,
-      mockPasswordHasher as PasswordHasher,
+      mockPasswordHasher as PasswordHasher
     )
 
     expect(mockUserRepository.findUserId).toHaveBeenCalledWith(
-      "john@example.com",
+      "john@example.com"
     )
   })
 })

@@ -17,7 +17,7 @@ describe("toggleLessonVisibility use case", () => {
       [],
       new Date(),
       "user-123",
-      true,
+      true
     )
 
     const mockLessonRepository: Partial<lessonRepository> = {
@@ -28,12 +28,12 @@ describe("toggleLessonVisibility use case", () => {
     await toggleLessonVisibility(
       "lesson-123",
       "user-123",
-      mockLessonRepository as lessonRepository,
+      mockLessonRepository as lessonRepository
     )
 
     expect(mockLessonRepository.updateVisibility).toHaveBeenCalledWith(
       "lesson-123",
-      false,
+      false
     )
   })
 
@@ -48,7 +48,7 @@ describe("toggleLessonVisibility use case", () => {
       [],
       new Date(),
       "user-456",
-      false,
+      false
     )
 
     const mockLessonRepository: Partial<lessonRepository> = {
@@ -59,12 +59,12 @@ describe("toggleLessonVisibility use case", () => {
     await toggleLessonVisibility(
       "lesson-456",
       "user-456",
-      mockLessonRepository as lessonRepository,
+      mockLessonRepository as lessonRepository
     )
 
     expect(mockLessonRepository.updateVisibility).toHaveBeenCalledWith(
       "lesson-456",
-      true,
+      true
     )
   })
 
@@ -77,8 +77,8 @@ describe("toggleLessonVisibility use case", () => {
       toggleLessonVisibility(
         "nonexistent-lesson",
         "user-123",
-        mockLessonRepository as lessonRepository,
-      ),
+        mockLessonRepository as lessonRepository
+      )
     ).rejects.toThrow(LessonIdNotFound)
   })
 
@@ -93,7 +93,7 @@ describe("toggleLessonVisibility use case", () => {
       [],
       new Date(),
       "owner-123",
-      true,
+      true
     )
 
     const mockLessonRepository: Partial<lessonRepository> = {
@@ -104,8 +104,8 @@ describe("toggleLessonVisibility use case", () => {
       toggleLessonVisibility(
         "lesson-123",
         "different-user-456",
-        mockLessonRepository as lessonRepository,
-      ),
+        mockLessonRepository as lessonRepository
+      )
     ).rejects.toThrow(NotOwner)
   })
 
@@ -120,7 +120,7 @@ describe("toggleLessonVisibility use case", () => {
       [],
       new Date(),
       "owner-123",
-      true,
+      true
     )
 
     const mockLessonRepository: Partial<lessonRepository> = {
@@ -132,9 +132,9 @@ describe("toggleLessonVisibility use case", () => {
       await toggleLessonVisibility(
         "lesson-123",
         "different-user",
-        mockLessonRepository as lessonRepository,
+        mockLessonRepository as lessonRepository
       )
-    } catch (error) {
+    } catch {
       // Expected error
     }
 
@@ -152,7 +152,7 @@ describe("toggleLessonVisibility use case", () => {
       [],
       new Date(),
       "user-789",
-      false,
+      false
     )
 
     const mockLessonRepository: Partial<lessonRepository> = {
@@ -163,7 +163,7 @@ describe("toggleLessonVisibility use case", () => {
     await toggleLessonVisibility(
       "lesson-789",
       "user-789",
-      mockLessonRepository as lessonRepository,
+      mockLessonRepository as lessonRepository
     )
 
     expect(mockLessonRepository.get).toHaveBeenCalledWith("lesson-789")

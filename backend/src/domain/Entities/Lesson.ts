@@ -12,6 +12,6 @@ export class Lesson {
     public coolDownInstructions: Instruction[],
     public readonly creationDate: Date,
     public readonly userId: string,
-    public readonly isPublic: boolean,
+    public readonly isPublic: boolean
   ) {}
 }

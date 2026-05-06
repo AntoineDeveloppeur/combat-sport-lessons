@@ -6,7 +6,7 @@ export const buildInstructionsQuery = (
   bodyInstructions: Instruction[],
   coolDownInstructions: Instruction[],
   lessonId: string,
-  idGenerator: IdGenerator,
+  idGenerator: IdGenerator
 ): [string, Array<string | number>] => {
   const instructionGroups = [
     { instructions: warmUpInstructions, type: "warm_up" as const },
@@ -51,7 +51,7 @@ export const buildInstructionsQuery = (
       item.instruction.min,
       item.instruction.sec,
       item.order,
-      lessonId,
+      lessonId
     )
   })
 
