@@ -8,19 +8,18 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card"
-import { useGetLessonQuery } from "@/store/api/lessonApi"
+import { useGetAllLessonsQuery } from "@/store/api/lessonApi"
 import { buildAndDownloadPdf } from "@/utils/buildAndDownloadPdf"
 import { SectionContainer } from "./SectionContainer"
 import { SectionTitle } from "./SectionTitle"
 
 export function DiscoverSection() {
-  const { data, isLoading } = useGetLessonQuery(
-    "550e8400-e29b-41d4-a716-446655440011",
-  )
+  const { data, isLoading } = useGetAllLessonsQuery()
+  const lesson = data?.lessons[0]
 
   const handleDownload = () => {
-    if (data?.lesson) {
-      buildAndDownloadPdf(data.lesson)
+    if (lesson) {
+      buildAndDownloadPdf(lesson)
     }
   }
 
@@ -42,24 +41,24 @@ export function DiscoverSection() {
             <div className="w-16 h-16 border-4 border-black/20 border-t-black rounded-full animate-spin" />
             <p className="text-gray-500">Chargement du cours...</p>
           </div>
-        ) : data?.lesson ? (
+        ) : lesson ? (
           <Card className="max-w-2xl mx-auto">
             <CardHeader className="space-y-4">
               <div>
                 <CardDescription className="uppercase">Sport</CardDescription>
-                <CardTitle className="text-2xl">{data.lesson.sport}</CardTitle>
+                <CardTitle className="text-2xl">{lesson.sport}</CardTitle>
               </div>
               <div>
                 <CardDescription className="uppercase">Titre</CardDescription>
                 <CardTitle className="text-xl font-normal">
-                  {data.lesson.title}
+                  {lesson.title}
                 </CardTitle>
               </div>
               <div>
                 <CardDescription className="uppercase">
                   Objectif
                 </CardDescription>
-                <p className="text-gray-700">{data.lesson.objective}</p>
+                <p className="text-gray-700">{lesson.objective}</p>
               </div>
             </CardHeader>
 
@@ -68,19 +67,19 @@ export function DiscoverSection() {
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Échauffement</p>
                   <p className="text-lg font-bold">
-                    {data.lesson.warmUpInstructions?.length || 0} exercices
+                    {lesson.warmUpInstructions?.length || 0} exercices
                   </p>
                 </div>
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Corps de séance</p>
                   <p className="text-lg font-bold">
-                    {data.lesson.bodyInstructions?.length || 0} exercices
+                    {lesson.bodyInstructions?.length || 0} exercices
                   </p>
                 </div>
                 <div className="text-center">
                   <p className="text-sm text-gray-500">Retour au calme</p>
                   <p className="text-lg font-bold">
-                    {data.lesson.coolDownInstructions?.length || 0} exercices
+                    {lesson.coolDownInstructions?.length || 0} exercices
                   </p>
                 </div>
               </div>
