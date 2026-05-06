@@ -81,7 +81,6 @@ cd ..
 
 # 3️⃣ Configurer les variables d'environnement
 cp .env.example .env
-# ⚠️ Éditez .env et configurez au minimum JWT_SECRET et les mots de passe
 
 # 4️⃣ Démarrer Docker Desktop puis PostgreSQL
 cd backend
@@ -348,3 +347,20 @@ Ce projet est avant tout un **exercice d'apprentissage** pour maîtriser :
 Merci à tous les contributeurs qui participent à ce projet d'apprentissage !
 
 **Happy coding!** 🚀
+
+---
+
+## 🙏 Pour l'admin
+
+### Déploiement
+
+```
+// sur VPS
+git pull origin main
+// Vérifier si changement dans le .env
+cd backend; npm run build
+cd ../frontend npm run build
+pm2 list
+// identifier les processus api et frontend
+pm2 restart [id]
+```
