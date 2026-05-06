@@ -75,31 +75,32 @@ cd combat-sport-lessons
 
 # 2️⃣ Installer les dépendances
 npm install
-cd backend && npm install
-cd ../frontend && npm install
+cd backend; npm install
+cd ../frontend; npm install
 cd ..
 
-# 3️⃣ Configurer les variables d'environnement
+# 3️⃣ Copier les variables d'environnement
 cp .env.example .env
 
-# 4️⃣ Démarrer Docker Desktop puis PostgreSQL
-cd backend
-npm run db:start
+# 4️⃣ Démarrer Docker Desktop
 
 # 5️⃣ Dans des terminaux séparés, lancer :
-# Terminal 1 : Compilation TypeScript backend
-cd backend && npm run type:watch
+# Terminal 1 : base de donnée PostgreSQL
+cd backend; npm run db:reset
 
-# Terminal 2 : Serveur backend
-cd backend && npm run dev
+# Terminal 2 : Compilation TypeScript backend
+cd backend; npm run type:watch
 
-# Terminal 3 : Serveur frontend
-cd frontend && npm run dev
+# Terminal 3 : Serveur backend
+cd backend; npm run dev
+
+# Terminal 4 : Serveur frontend
+cd frontend; npm run dev
 ```
 
 ### 🎉 Accès à l'Application
 
-- **Frontend** : [http://localhost:3000](http://localhost:3000)
+- **Frontend** : [http://localhost:3010](http://localhost:3010)
 - **Backend API** : [http://localhost:4000](http://localhost:4000)
 - **PgAdmin** (optionnel) : [http://localhost:8888](http://localhost:8888)
 
