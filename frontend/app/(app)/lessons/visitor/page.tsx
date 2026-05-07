@@ -29,12 +29,7 @@ export default function LessonsVisitorPage() {
         </Link>
       </div>
 
-      {!isLoading && (
-        <LessonTable
-          data={publicLessons}
-          showActions={false}
-        />
-      )}
+      {!isLoading && <LessonTable data={publicLessons} showActions={false} />}
     </div>
   )
 }

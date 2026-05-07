@@ -13,17 +13,14 @@ describe("LessonFilters", () => {
   describe("Rendering", () => {
     it("should render both filter buttons", () => {
       render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       expect(
-        screen.getByRole("button", { name: /mes lessons/i }),
+        screen.getByRole("button", { name: /mes lessons/i })
       ).toBeInTheDocument()
       expect(
-        screen.getByRole("button", { name: /toutes les lessons/i }),
+        screen.getByRole("button", { name: /toutes les lessons/i })
       ).toBeInTheDocument()
     })
 
@@ -32,7 +29,7 @@ describe("LessonFilters", () => {
         <LessonFilters
           activeFilter="mine"
           onFilterChange={mockOnFilterChange}
-        />,
+        />
       )
 
       const mineButton = screen.getByRole("button", { name: /mes lessons/i })
@@ -46,10 +43,7 @@ describe("LessonFilters", () => {
 
     it("should highlight 'all' button when activeFilter is 'all'", () => {
       render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       const mineButton = screen.getByRole("button", { name: /mes lessons/i })
@@ -66,10 +60,7 @@ describe("LessonFilters", () => {
     it("should call onFilterChange with 'mine' when 'Mes lessons' is clicked", async () => {
       const user = userEvent.setup()
       render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       const mineButton = screen.getByRole("button", { name: /mes lessons/i })
@@ -85,7 +76,7 @@ describe("LessonFilters", () => {
         <LessonFilters
           activeFilter="mine"
           onFilterChange={mockOnFilterChange}
-        />,
+        />
       )
 
       const allButton = screen.getByRole("button", {
@@ -100,10 +91,7 @@ describe("LessonFilters", () => {
     it("should allow clicking the same filter multiple times", async () => {
       const user = userEvent.setup()
       render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       const allButton = screen.getByRole("button", {
@@ -119,10 +107,7 @@ describe("LessonFilters", () => {
     it("should switch between filters", async () => {
       const user = userEvent.setup()
       const { rerender } = render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       const mineButton = screen.getByRole("button", { name: /mes lessons/i })
@@ -134,7 +119,7 @@ describe("LessonFilters", () => {
         <LessonFilters
           activeFilter="mine"
           onFilterChange={mockOnFilterChange}
-        />,
+        />
       )
 
       const allButton = screen.getByRole("button", {
@@ -149,10 +134,7 @@ describe("LessonFilters", () => {
   describe("Styling", () => {
     it("should have correct button sizes", () => {
       render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       const buttons = screen.getAllByRole("button")
@@ -163,10 +145,7 @@ describe("LessonFilters", () => {
 
     it("should have gap between buttons", () => {
       const { container } = render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       const filterContainer = container.firstChild
@@ -175,10 +154,7 @@ describe("LessonFilters", () => {
 
     it("should have margin bottom", () => {
       const { container } = render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       const filterContainer = container.firstChild
@@ -189,25 +165,19 @@ describe("LessonFilters", () => {
   describe("Accessibility", () => {
     it("should have accessible button labels", () => {
       render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       expect(screen.getByRole("button", { name: /mes lessons/i })).toBeEnabled()
       expect(
-        screen.getByRole("button", { name: /toutes les lessons/i }),
+        screen.getByRole("button", { name: /toutes les lessons/i })
       ).toBeEnabled()
     })
 
     it("should be keyboard navigable", async () => {
       const user = userEvent.setup()
       render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       await user.tab()
@@ -215,17 +185,14 @@ describe("LessonFilters", () => {
 
       await user.tab()
       expect(
-        screen.getByRole("button", { name: /toutes les lessons/i }),
+        screen.getByRole("button", { name: /toutes les lessons/i })
       ).toHaveFocus()
     })
 
     it("should trigger on Enter key", async () => {
       const user = userEvent.setup()
       render(
-        <LessonFilters
-          activeFilter="all"
-          onFilterChange={mockOnFilterChange}
-        />,
+        <LessonFilters activeFilter="all" onFilterChange={mockOnFilterChange} />
       )
 
       const mineButton = screen.getByRole("button", { name: /mes lessons/i })

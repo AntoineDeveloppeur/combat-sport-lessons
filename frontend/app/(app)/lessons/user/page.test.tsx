@@ -75,7 +75,7 @@ describe("LessonsUserPage", () => {
 
     expect(screen.getByText("Leçons de sport de combat")).toBeInTheDocument()
     expect(
-      screen.getByText("Gérez et consultez toutes les leçons"),
+      screen.getByText("Gérez et consultez toutes les leçons")
     ).toBeInTheDocument()
   })
 

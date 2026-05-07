@@ -34,7 +34,9 @@ describe("TitleField", () => {
   it("should display placeholder text", () => {
     render(<TestWrapper />)
 
-    const input = screen.getByPlaceholderText(/exemple : défense contre coups de pied médian/i)
+    const input = screen.getByPlaceholderText(
+      /exemple : défense contre coups de pied médian/i
+    )
     expect(input).toBeInTheDocument()
   })
 

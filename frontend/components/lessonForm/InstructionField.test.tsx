@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi } from "vitest"
 import { screen } from "@testing-library/react"
 import { renderWithProvider } from "@/__tests__/helpers/renderWithProvider"
@@ -109,12 +110,7 @@ describe("Instruction", () => {
   })
 
   it("should render instruction title with id + 1", () => {
-    renderWithProvider(
-      <InstructionField
-        {...defaultProps}
-        id={2}
-      />,
-    )
+    renderWithProvider(<InstructionField {...defaultProps} id={2} />)
     expect(screen.getByText("Instruction n°3")).toBeInTheDocument()
   })
 
@@ -160,11 +156,7 @@ describe("Instruction", () => {
 
   it("should call register with correct field names", () => {
     renderWithProvider(
-      <InstructionField
-        {...defaultProps}
-        step="bodyInstructions"
-        id={1}
-      />,
+      <InstructionField {...defaultProps} step="bodyInstructions" id={1} />
     )
 
     expect(mockRegister).toHaveBeenCalledWith("bodyInstructions.1.min")
@@ -182,10 +174,7 @@ describe("Instruction", () => {
     }
 
     renderWithProvider(
-      <InstructionField
-        {...defaultProps}
-        errors={errorsWithTextError}
-      />,
+      <InstructionField {...defaultProps} errors={errorsWithTextError} />
     )
     expect(screen.getByText("Text is required")).toBeInTheDocument()
   })
@@ -200,10 +189,7 @@ describe("Instruction", () => {
     }
 
     renderWithProvider(
-      <InstructionField
-        {...defaultProps}
-        errors={errorsWithMinError}
-      />,
+      <InstructionField {...defaultProps} errors={errorsWithMinError} />
     )
     expect(screen.getByText("Min must be valid")).toBeInTheDocument()
   })
@@ -218,10 +204,7 @@ describe("Instruction", () => {
     }
 
     renderWithProvider(
-      <InstructionField
-        {...defaultProps}
-        errors={errorsWithSecError}
-      />,
+      <InstructionField {...defaultProps} errors={errorsWithSecError} />
     )
     expect(screen.getByText("Sec must be valid")).toBeInTheDocument()
   })
@@ -242,7 +225,7 @@ describe("Instruction", () => {
         {...defaultProps}
         step="coolDownInstructions"
         errors={errorsWithMultiple}
-      />,
+      />
     )
 
     expect(screen.getByText("Text error")).toBeInTheDocument()

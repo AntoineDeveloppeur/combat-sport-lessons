@@ -54,10 +54,7 @@ export default function InstructionField({
         <FieldError>{errors?.[step]?.[id]?.text?.message}</FieldError>
       </Field>
 
-      <Field
-        orientation="horizontal"
-        className="w-auto items-center gap-2"
-      >
+      <Field orientation="horizontal" className="w-auto items-center gap-2">
         <Input
           {...register(`${step}.${id}.min`)}
           className="text-center"

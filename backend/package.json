@@ -14,7 +14,7 @@
     "type:watch": "npx tsc --watch --project config/tsconfig.json",
     "build": "npx tsc --project config/tsconfig.json",
     "lint": "npx eslint --config config/eslint.config.ts",
-    "prettier": "npx prettier . --write --config ../config/.prettierrc",
+    "prettier": "npx prettier . --write --config ../config/.prettierrc --ignore-path ../config/.prettierignore",
     "db:start": "docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file ../.env up postgres postgres_test",
     "db:stop": "docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file ../.env down",
     "db:reset": "docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file ../.env down -v && npm run db:start",

@@ -50,43 +50,28 @@ describe("LessonActions", () => {
 
   describe("Rendering", () => {
     it("should render dropdown menu trigger button", () => {
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       expect(screen.getByRole("button")).toBeInTheDocument()
     })
 
     it("should show owner actions when isOwner is true", async () => {
       const user = userEvent.setup()
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
 
       expect(screen.getByText(/modifier/i)).toBeInTheDocument()
       expect(
-        screen.getByText(/rendre privée|rendre publique/i),
+        screen.getByText(/rendre privée|rendre publique/i)
       ).toBeInTheDocument()
       expect(screen.getByText(/supprimer/i)).toBeInTheDocument()
     })
 
     it("should not show owner actions when isOwner is false", async () => {
       const user = userEvent.setup()
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={false}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={false} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -97,12 +82,7 @@ describe("LessonActions", () => {
 
     it("should always show duplicate and download actions", async () => {
       const user = userEvent.setup()
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={false}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={false} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -114,12 +94,7 @@ describe("LessonActions", () => {
     it("should show 'Rendre publique' when lesson is private", async () => {
       const user = userEvent.setup()
       const privateLesson = { ...mockLesson, isPublic: false }
-      render(
-        <LessonActions
-          lesson={privateLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={privateLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -130,12 +105,7 @@ describe("LessonActions", () => {
     it("should show 'Rendre privée' when lesson is public", async () => {
       const user = userEvent.setup()
       const publicLesson = { ...mockLesson, isPublic: true }
-      render(
-        <LessonActions
-          lesson={publicLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={publicLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -147,12 +117,7 @@ describe("LessonActions", () => {
   describe("Edit action", () => {
     it("should dispatch lesson and navigate to form when edit is clicked", async () => {
       const user = userEvent.setup()
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -164,7 +129,7 @@ describe("LessonActions", () => {
         expect.objectContaining({
           type: expect.stringContaining("save"),
           payload: mockLesson,
-        }),
+        })
       )
       expect(mockPush).toHaveBeenCalledWith("/form/general")
     })
@@ -174,12 +139,7 @@ describe("LessonActions", () => {
     it("should show confirmation dialog when delete is clicked", async () => {
       const user = userEvent.setup()
       localStorage.setItem("token", "test-token")
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -188,7 +148,7 @@ describe("LessonActions", () => {
       await user.click(deleteButton)
 
       expect(global.confirm).toHaveBeenCalledWith(
-        "Êtes-vous sûr de vouloir supprimer cette lesson ?",
+        "Êtes-vous sûr de vouloir supprimer cette lesson ?"
       )
     })
 
@@ -199,12 +159,7 @@ describe("LessonActions", () => {
         unwrap: vi.fn().mockResolvedValue({}),
       })
 
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -224,12 +179,7 @@ describe("LessonActions", () => {
       const user = userEvent.setup()
       global.confirm = vi.fn(() => false)
 
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -244,12 +194,7 @@ describe("LessonActions", () => {
       const user = userEvent.setup()
       mockDeleteLesson.mockRejectedValue(new Error("Delete failed"))
 
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -259,7 +204,7 @@ describe("LessonActions", () => {
 
       await waitFor(() => {
         expect(global.alert).toHaveBeenCalledWith(
-          "Vous devez être connecté pour supprimer une leçon",
+          "Vous devez être connecté pour supprimer une leçon"
         )
       })
     })
@@ -273,12 +218,7 @@ describe("LessonActions", () => {
         unwrap: vi.fn().mockResolvedValue({}),
       })
 
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={false}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={false} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -298,12 +238,7 @@ describe("LessonActions", () => {
       const user = userEvent.setup()
       mockDuplicateLesson.mockRejectedValue(new Error("Duplicate failed"))
 
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={false}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={false} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -313,7 +248,7 @@ describe("LessonActions", () => {
 
       await waitFor(() => {
         expect(global.alert).toHaveBeenCalledWith(
-          "Vous devez être connecté pour dupliquer une leçon",
+          "Vous devez être connecté pour dupliquer une leçon"
         )
       })
     })
@@ -322,12 +257,7 @@ describe("LessonActions", () => {
   describe("Toggle visibility action", () => {
     it("should require authentication token", async () => {
       const user = userEvent.setup()
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -336,7 +266,7 @@ describe("LessonActions", () => {
       await user.click(visibilityButton)
 
       expect(global.alert).toHaveBeenCalledWith(
-        "Vous devez être connecté pour modifier la visibilité",
+        "Vous devez être connecté pour modifier la visibilité"
       )
       expect(mockToggleVisibility).not.toHaveBeenCalled()
     })
@@ -348,12 +278,7 @@ describe("LessonActions", () => {
         unwrap: vi.fn().mockResolvedValue({}),
       })
 
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -374,12 +299,7 @@ describe("LessonActions", () => {
       localStorage.setItem("token", "test-token")
       mockToggleVisibility.mockRejectedValue(new Error("Toggle failed"))
 
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       const trigger = screen.getByRole("button")
       await user.click(trigger)
@@ -389,7 +309,7 @@ describe("LessonActions", () => {
 
       await waitFor(() => {
         expect(global.alert).toHaveBeenCalledWith(
-          "Erreur lors du changement de visibilité de la lesson",
+          "Erreur lors du changement de visibilité de la lesson"
         )
       })
     })
@@ -398,24 +318,14 @@ describe("LessonActions", () => {
   describe("Accessibility", () => {
     it("should be keyboard navigable", async () => {
       const user = userEvent.setup()
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       await user.tab()
       expect(screen.getByRole("button")).toHaveFocus()
     })
 
     it("should have accessible button", () => {
-      render(
-        <LessonActions
-          lesson={mockLesson}
-          isOwner={true}
-        />,
-      )
+      render(<LessonActions lesson={mockLesson} isOwner={true} />)
 
       const button = screen.getByRole("button")
       expect(button).toBeEnabled()

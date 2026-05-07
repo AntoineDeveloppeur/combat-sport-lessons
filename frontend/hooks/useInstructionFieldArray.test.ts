@@ -55,7 +55,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
     )
 
     expect(result.current.fields).toHaveLength(2)
@@ -77,7 +77,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
     )
 
     expect(useFieldArray).toHaveBeenCalledWith({
@@ -108,7 +108,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result, rerender } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
     )
 
     act(() => {
@@ -157,7 +157,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result, rerender } = renderHook(() =>
-      useInstructionFieldArray(lesson, "bodyInstructions", mockControl),
+      useInstructionFieldArray(lesson, "bodyInstructions", mockControl)
     )
 
     act(() => {
@@ -206,7 +206,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     renderHook(() =>
-      useInstructionFieldArray(lesson, "coolDownInstructions", mockControl),
+      useInstructionFieldArray(lesson, "coolDownInstructions", mockControl)
     )
 
     expect(useFieldArray).toHaveBeenCalledWith({
@@ -231,7 +231,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
     )
 
     expect(result.current.addInstruction).toBeInstanceOf(Function)
@@ -259,7 +259,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
     )
 
     expect(result.current.fields).toEqual(mockFields)
@@ -287,7 +287,7 @@ describe("useInstructionFieldArray", () => {
     }))
 
     const { result, rerender } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
     )
 
     act(() => {
@@ -339,7 +339,7 @@ describe("useInstructionFieldArray", () => {
     })
 
     const { result } = renderHook(() =>
-      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl),
+      useInstructionFieldArray(lesson, "warmUpInstructions", mockControl)
     )
 
     expect(result.current.fields).toHaveLength(3)

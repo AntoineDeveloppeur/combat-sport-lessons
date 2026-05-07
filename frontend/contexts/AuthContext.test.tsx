@@ -23,7 +23,9 @@ describe("AuthContext", () => {
     it("should provide auth context to children", () => {
       const TestComponent = () => {
         const { isAuthenticated } = useAuth()
-        return <div>{isAuthenticated ? "Authenticated" : "Not authenticated"}</div>
+        return (
+          <div>{isAuthenticated ? "Authenticated" : "Not authenticated"}</div>
+        )
       }
 
       render(

@@ -103,10 +103,7 @@ export function LessonActions({ lesson, isOwner }: LessonActionsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-        >
+        <Button variant="ghost" size="sm">
           <IconDots className="size-4" />
         </Button>
       </DropdownMenuTrigger>

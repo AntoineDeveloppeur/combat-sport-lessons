@@ -9,7 +9,14 @@ const __dirname = dirname(__filename)
 
 export default defineConfig([
   {
-    ignores: ["**/dist/**", "**/node_modules/**", "config/**"],
+    ignores: [
+      "**/dist/**",
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/build/**",
+      "**/coverage/**",
+      "config/**",
+    ],
   },
   {
     files: ["src/**/*.{ts,mts,cts}"],

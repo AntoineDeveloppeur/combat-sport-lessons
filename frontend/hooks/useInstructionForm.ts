@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm, FieldErrors, FieldArrayWithId } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as Yup from "yup"

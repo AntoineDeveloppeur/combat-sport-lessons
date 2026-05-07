@@ -1,0 +1,14 @@
+# Dependencies
+**/node_modules
+
+# Build outputs
+**/dist
+**/.next
+**/build
+**/out
+
+# Coverage
+**/coverage
+
+# Test results
+**/test-results

@@ -1,13 +1,13 @@
 {
   "backend/**/*.{js,ts}": [
     "npx eslint --config backend/config/eslint.config.ts --fix",
-    "npx prettier --config config/.prettierrc --write",
+    "npx prettier --config config/.prettierrc --ignore-path config/.prettierignore --write",
     "bash -c 'cd backend && npx tsc --noEmit --project config/tsconfig.json'",
     "npm --prefix backend run test -- --run --passWithNoTests"
   ],
   "frontend/**/*.{js,jsx,ts,tsx,mjs}": [
     "npx eslint --config frontend/eslint.config.mjs --fix",
-    "npx prettier --config config/.prettierrc --write",
+    "npx prettier --config config/.prettierrc --ignore-path config/.prettierignore --write",
     "npm --prefix frontend run test -- --run --passWithNoTests"
   ]
 }

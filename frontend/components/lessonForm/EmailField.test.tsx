@@ -63,7 +63,7 @@ describe("EmailField", () => {
     render(<TestWrapper />)
 
     const input = screen.getByLabelText(/email/i)
-    
+
     await user.type(input, "user+tag@example.co.uk")
     expect(input).toHaveValue("user+tag@example.co.uk")
   })

@@ -24,18 +24,12 @@ export const Stepper = () => {
           </p>
         </li>
         <li className="flex-1 text-center">
-          <p
-            href="/form/corps"
-            className={highlight("/form/corps")}
-          >
+          <p href="/form/corps" className={highlight("/form/corps")}>
             Corps de séance
           </p>
         </li>
         <li className="flex-1 text-center">
-          <p
-            href="/form/calme"
-            className={highlight("/form/calme")}
-          >
+          <p href="/form/calme" className={highlight("/form/calme")}>
             Retour au calme
           </p>
         </li>

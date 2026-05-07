@@ -44,7 +44,7 @@ describe("WarmUp page", () => {
     renderWithProvider(<WarmUp />, { warmUp: "preset" })
 
     expect(
-      screen.getByText(/Sélectionne un échauffement prédéfinis/i),
+      screen.getByText(/Sélectionne un échauffement prédéfinis/i)
     ).toBeInTheDocument()
   })
   it("with preset: render all preset warmUp ", async () => {

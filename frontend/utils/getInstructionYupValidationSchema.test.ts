@@ -118,7 +118,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "L'instruction doit contenir au moins 3 caractères",
+        "L'instruction doit contenir au moins 3 caractères"
       )
     })
 
@@ -132,7 +132,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "L'instruction ne peut pas dépasser 2000 caractères",
+        "L'instruction ne peut pas dépasser 2000 caractères"
       )
     })
 
@@ -143,7 +143,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "L'instruction est requise",
+        "L'instruction est requise"
       )
     })
 
@@ -154,7 +154,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "L'instruction doit contenir au moins 3 caractères",
+        "L'instruction doit contenir au moins 3 caractères"
       )
     })
   })
@@ -169,7 +169,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les minutes doivent être au minimum 0",
+        "Les minutes doivent être au minimum 0"
       )
     })
 
@@ -182,7 +182,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les minutes ne peuvent pas dépasser 90",
+        "Les minutes ne peuvent pas dépasser 90"
       )
     })
 
@@ -193,7 +193,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les minutes sont requises",
+        "Les minutes sont requises"
       )
     })
   })
@@ -208,7 +208,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les secondes doivent être au minimum 0",
+        "Les secondes doivent être au minimum 0"
       )
     })
 
@@ -221,7 +221,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les secondes ne peuvent pas dépasser 59",
+        "Les secondes ne peuvent pas dépasser 59"
       )
     })
 
@@ -232,7 +232,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "Les secondes sont requises",
+        "Les secondes sont requises"
       )
     })
   })
@@ -270,7 +270,7 @@ describe("getYupValidationSchema", () => {
       }
 
       await expect(schema.validate(invalidData)).rejects.toThrow(
-        "L'instruction doit contenir au moins 3 caractères",
+        "L'instruction doit contenir au moins 3 caractères"
       )
     })
   })

@@ -29,18 +29,13 @@ vi.mock("react-hook-form", async () => {
 })
 
 vi.mock("@/components/lessonForm/FormSaveAndNavigate", () => ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   default: ({ handleSubmit, prev, next }: any) => (
     <div data-testid="form-save-navigate">
-      <button
-        data-testid="prev-button"
-        data-route={prev}
-      >
+      <button data-testid="prev-button" data-route={prev}>
         Prev
       </button>
-      <button
-        data-testid="next-button"
-        data-route={next}
-      >
+      <button data-testid="next-button" data-route={next}>
         Next
       </button>
     </div>
@@ -131,7 +126,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />,
+      />
     )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
@@ -157,7 +152,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />,
+      />
     )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
@@ -184,7 +179,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />,
+      />
     )
 
     const addButton = screen.getByRole("button", { name: /ajouter un champs/i })
@@ -209,7 +204,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />,
+      />
     )
 
     const legend = document.querySelector("legend")
@@ -240,7 +235,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />,
+      />
     )
 
     expect(screen.getByText("Text is required")).toBeInTheDocument()
@@ -263,7 +258,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />,
+      />
     )
 
     expect(screen.getByText("Instruction n°1")).toBeInTheDocument()
@@ -288,7 +283,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />,
+      />
     )
 
     expect(mockRegister).toHaveBeenCalledWith("warmUpInstructions.0.min")
@@ -312,7 +307,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Custom legend text"
         presetType="warmUpInstructions"
-      />,
+      />
     )
 
     expect(screen.getByText("Custom legend text")).toBeInTheDocument()
@@ -334,7 +329,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />,
+      />
     )
 
     const addButton = screen.getByRole("button", { name: /ajouter un champs/i })
@@ -355,10 +350,7 @@ describe("CustomInstructions", () => {
     })
 
     renderWithProvider(
-      <CustomInstructions
-        legend="Test legend"
-        presetType="bodyInstructions"
-      />,
+      <CustomInstructions legend="Test legend" presetType="bodyInstructions" />
     )
 
     expect(useInstructionForm).toHaveBeenCalledWith({
@@ -385,7 +377,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="coolDownInstructions"
-      />,
+      />
     )
 
     expect(mockRegister).toHaveBeenCalledWith("coolDownInstructions.0.min")
@@ -410,7 +402,7 @@ describe("CustomInstructions", () => {
       <CustomInstructions
         legend="Test legend"
         presetType="warmUpInstructions"
-      />,
+      />
     )
 
     expect(mockAddInstruction).not.toHaveBeenCalled()

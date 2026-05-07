@@ -171,7 +171,7 @@ describe("Stepper", () => {
 
     const steps = container.querySelectorAll("p")
     const highlightedSteps = Array.from(steps).filter((step) =>
-      step.className.includes("font-bold text-blue-600"),
+      step.className.includes("font-bold text-blue-600")
     )
 
     expect(highlightedSteps).toHaveLength(1)

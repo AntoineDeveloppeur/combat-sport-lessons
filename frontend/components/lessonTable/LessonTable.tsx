@@ -55,7 +55,7 @@ export function LessonTable({
 
   const columns = useMemo(
     () => getColumns({ showActions, userId }),
-    [showActions, userId],
+    [showActions, userId]
   )
 
   const handleRowClick = (lesson: Lesson) => {
@@ -92,19 +92,13 @@ export function LessonTable({
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-            >
+            <Button variant="outline" size="sm">
               <IconLayoutColumns className="mr-2" />
               Colonnes
               <IconChevronDown className="ml-2" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            className="w-[200px]"
-          >
+          <DropdownMenuContent align="end" className="w-[200px]">
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
@@ -143,7 +137,7 @@ export function LessonTable({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                     </TableHead>
                   )
@@ -164,7 +158,7 @@ export function LessonTable({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}

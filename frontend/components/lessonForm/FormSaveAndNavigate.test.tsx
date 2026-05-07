@@ -30,7 +30,7 @@ describe("FormSaveAndNavigate", () => {
         handleSubmit={mockHandleSubmit}
         prev="/prev"
         next="/next"
-      />,
+      />
     )
     const div = container.querySelector("div")
     expect(div).toHaveClass("flex", "justify-end", "gap-4", "w-full")
@@ -38,10 +38,7 @@ describe("FormSaveAndNavigate", () => {
 
   it("should render Retour button when prev prop is provided", () => {
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        prev="/prev"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
     )
     const prevButton = screen.getByRole("button", { name: /retour/i })
     expect(prevButton).toBeInTheDocument()
@@ -49,10 +46,7 @@ describe("FormSaveAndNavigate", () => {
 
   it("should render Suivant button when next prop is provided", () => {
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        next="/next"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
     )
     const nextButton = screen.getByRole("button", { name: /suivant/i })
     expect(nextButton).toBeInTheDocument()
@@ -60,10 +54,7 @@ describe("FormSaveAndNavigate", () => {
 
   it("should not render Retour button when prev prop is not provided", () => {
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        next="/next"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
     )
     const prevButton = screen.queryByRole("button", { name: /retour/i })
     expect(prevButton).not.toBeInTheDocument()
@@ -71,10 +62,7 @@ describe("FormSaveAndNavigate", () => {
 
   it("should not render Suivant button when next prop is not provided", () => {
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        prev="/prev"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
     )
     const nextButton = screen.queryByRole("button", { name: /suivant/i })
     expect(nextButton).not.toBeInTheDocument()
@@ -86,7 +74,7 @@ describe("FormSaveAndNavigate", () => {
         handleSubmit={mockHandleSubmit}
         prev="/prev"
         next="/next"
-      />,
+      />
     )
     expect(screen.getByRole("button", { name: /retour/i })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /suivant/i })).toBeInTheDocument()
@@ -100,10 +88,7 @@ describe("FormSaveAndNavigate", () => {
 
   it("should have type button on Retour button", () => {
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        prev="/prev"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
     )
     const prevButton = screen.getByRole("button", { name: /retour/i })
     expect(prevButton).toHaveAttribute("type", "button")
@@ -111,10 +96,7 @@ describe("FormSaveAndNavigate", () => {
 
   it("should have type button on Suivant button", () => {
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        next="/next"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
     )
     const nextButton = screen.getByRole("button", { name: /suivant/i })
     expect(nextButton).toHaveAttribute("type", "button")
@@ -123,10 +105,7 @@ describe("FormSaveAndNavigate", () => {
   it("should call handleSubmit when Retour button is clicked", async () => {
     const user = userEvent.setup()
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        prev="/prev"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
     )
     const prevButton = screen.getByRole("button", { name: /retour/i })
 
@@ -138,10 +117,7 @@ describe("FormSaveAndNavigate", () => {
   it("should call handleSubmit when Suivant button is clicked", async () => {
     const user = userEvent.setup()
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        next="/next"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
     )
     const nextButton = screen.getByRole("button", { name: /suivant/i })
 
@@ -156,7 +132,7 @@ describe("FormSaveAndNavigate", () => {
       <FormSaveAndNavigate
         handleSubmit={mockHandleSubmit}
         prev="/form/general"
-      />,
+      />
     )
     const prevButton = screen.getByRole("button", { name: /retour/i })
 
@@ -171,7 +147,7 @@ describe("FormSaveAndNavigate", () => {
       <FormSaveAndNavigate
         handleSubmit={mockHandleSubmit}
         next="/form/echauffement"
-      />,
+      />
     )
     const nextButton = screen.getByRole("button", { name: /suivant/i })
 
@@ -187,10 +163,7 @@ describe("FormSaveAndNavigate", () => {
     })
 
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={customHandleSubmit}
-        prev="/prev"
-      />,
+      <FormSaveAndNavigate handleSubmit={customHandleSubmit} prev="/prev" />
     )
     const prevButton = screen.getByRole("button", { name: /retour/i })
 
@@ -206,10 +179,7 @@ describe("FormSaveAndNavigate", () => {
     })
 
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={customHandleSubmit}
-        next="/next"
-      />,
+      <FormSaveAndNavigate handleSubmit={customHandleSubmit} next="/next" />
     )
     const nextButton = screen.getByRole("button", { name: /suivant/i })
 
@@ -220,10 +190,7 @@ describe("FormSaveAndNavigate", () => {
 
   it("should display < symbol in Retour button", () => {
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        prev="/prev"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
     )
     const prevButton = screen.getByRole("button", { name: /retour/i })
     expect(prevButton).toHaveTextContent("<")
@@ -231,10 +198,7 @@ describe("FormSaveAndNavigate", () => {
 
   it("should display > symbol in Suivant button", () => {
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        next="/next"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
     )
     const nextButton = screen.getByRole("button", { name: /suivant/i })
     expect(nextButton).toHaveTextContent(">")
@@ -246,7 +210,7 @@ describe("FormSaveAndNavigate", () => {
       <FormSaveAndNavigate
         handleSubmit={mockHandleSubmit}
         prev="/custom/route"
-      />,
+      />
     )
     const prevButton = screen.getByRole("button", { name: /retour/i })
 
@@ -261,7 +225,7 @@ describe("FormSaveAndNavigate", () => {
       <FormSaveAndNavigate
         handleSubmit={mockHandleSubmit}
         next="/another/route"
-      />,
+      />
     )
     const nextButton = screen.getByRole("button", { name: /suivant/i })
 
@@ -273,10 +237,7 @@ describe("FormSaveAndNavigate", () => {
   it("should handle multiple clicks on Retour button", async () => {
     const user = userEvent.setup()
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        prev="/prev"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} prev="/prev" />
     )
     const prevButton = screen.getByRole("button", { name: /retour/i })
 
@@ -291,10 +252,7 @@ describe("FormSaveAndNavigate", () => {
   it("should handle multiple clicks on Suivant button", async () => {
     const user = userEvent.setup()
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={mockHandleSubmit}
-        next="/next"
-      />,
+      <FormSaveAndNavigate handleSubmit={mockHandleSubmit} next="/next" />
     )
     const nextButton = screen.getByRole("button", { name: /suivant/i })
 
@@ -312,10 +270,7 @@ describe("FormSaveAndNavigate", () => {
     })
 
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={failingHandleSubmit}
-        prev="/prev"
-      />,
+      <FormSaveAndNavigate handleSubmit={failingHandleSubmit} prev="/prev" />
     )
     const prevButton = screen.getByRole("button", { name: /retour/i })
 
@@ -332,10 +287,7 @@ describe("FormSaveAndNavigate", () => {
     })
 
     renderWithProvider(
-      <FormSaveAndNavigate
-        handleSubmit={failingHandleSubmit}
-        next="/next"
-      />,
+      <FormSaveAndNavigate handleSubmit={failingHandleSubmit} next="/next" />
     )
     const nextButton = screen.getByRole("button", { name: /suivant/i })
 

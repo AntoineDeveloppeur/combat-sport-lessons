@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest"
 import { calculateLessonDuration } from "./calculateLessonDuration"
 import { Lesson } from "@/types"
-import { createTiptapJSON } from '@/utils/tiptapHelpers'
+import { createTiptapJSON } from "@/utils/tiptapHelpers"
 
 describe("calculateLessonDuration", () => {
   it("calculates total duration and rounds up to nearest minute", () => {
@@ -20,7 +20,9 @@ describe("calculateLessonDuration", () => {
       ],
       warmUpInstructions: [
         {
-          text: createTiptapJSON("ddddddddd ddddddddddddddddddddd dddddddddddddddddddd ddddddddddddddddddddddddd sssssssssssssss ssssssssss ssssss s s sssssssssssssss ssssssssssssssssssssssssssss s"),
+          text: createTiptapJSON(
+            "ddddddddd ddddddddddddddddddddd dddddddddddddddddddd ddddddddddddddddddddddddd sssssssssssssss ssssssssss ssssss s s sssssssssssssss ssssssssssssssssssssssssssss s"
+          ),
           min: 1,
           sec: 0,
         },

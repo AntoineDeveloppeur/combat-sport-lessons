@@ -56,12 +56,12 @@ const styles = StyleSheet.create({
 
 const renderTextWithMarks = (
   text: string,
-  marks?: Array<{ type: string; attrs?: Record<string, unknown> }>,
+  marks?: Array<{ type: string; attrs?: Record<string, unknown> }>
 ): React.ReactElement => {
   if (!marks || marks.length === 0) {
     return <Text>{text}</Text>
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let textStyle: any = {}
   let isLink = false
   let linkHref = ""
@@ -109,7 +109,7 @@ const renderContent = (content?: TiptapNode[]): React.ReactElement[] => {
 const renderListItem = (
   item: TiptapNode,
   index: number,
-  ordered: boolean,
+  ordered: boolean
 ): React.ReactElement => {
   const bullet = ordered ? `${index + 1}. ` : "• "
 
@@ -137,7 +137,7 @@ const renderNode = (node: TiptapNode): React.ReactElement | null => {
       return (
         <View>
           {node.content?.map((item, index) =>
-            renderListItem(item, index, false),
+            renderListItem(item, index, false)
           )}
         </View>
       )
@@ -145,7 +145,9 @@ const renderNode = (node: TiptapNode): React.ReactElement | null => {
     case "orderedList":
       return (
         <View>
-          {node.content?.map((item, index) => renderListItem(item, index, true))}
+          {node.content?.map((item, index) =>
+            renderListItem(item, index, true)
+          )}
         </View>
       )
 
@@ -161,7 +163,7 @@ const renderNode = (node: TiptapNode): React.ReactElement | null => {
 }
 
 export const renderTiptapContent = (
-  tiptapJSON: TiptapJSON,
+  tiptapJSON: TiptapJSON
 ): React.ReactElement[] => {
   if (!tiptapJSON || !tiptapJSON.content) {
     return []

@@ -108,7 +108,7 @@ describe("lessonFormSlice", () => {
 
       const state = lessonFormSlice.reducer(
         initialState,
-        save(lessonWithEmptyArrays),
+        save(lessonWithEmptyArrays)
       )
 
       expect(state.value.warmUpInstructions).toEqual([])
@@ -132,7 +132,7 @@ describe("lessonFormSlice", () => {
 
       const state = lessonFormSlice.reducer(
         initialState,
-        save(lessonWithMultipleInstructions),
+        save(lessonWithMultipleInstructions)
       )
 
       expect(state.value.warmUpInstructions).toHaveLength(3)

@@ -16,12 +16,7 @@ const TestWrapper = ({
     defaultValues: { confirmPassword: defaultConfirmPassword },
   })
 
-  return (
-    <ConfirmPasswordField
-      register={register}
-      errors={errors}
-    />
-  )
+  return <ConfirmPasswordField register={register} errors={errors} />
 }
 
 describe("ConfirmPasswordField", () => {

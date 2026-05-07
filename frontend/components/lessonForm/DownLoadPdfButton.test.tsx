@@ -26,7 +26,7 @@ describe("DownLoadPdfButton", () => {
     renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)
 
     expect(
-      screen.getByRole("button", { name: /voir la leçon/i }),
+      screen.getByRole("button", { name: /voir la leçon/i })
     ).toBeInTheDocument()
   })
 
@@ -49,14 +49,14 @@ describe("DownLoadPdfButton", () => {
 
     expect(mockGetFormValues).toHaveBeenCalledTimes(1)
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledTimes(
-      1,
+      1
     )
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledWith(
       expect.objectContaining({
         sport: "Karate",
         title: "Test Lesson",
         objective: "Test objective",
-      }),
+      })
     )
   })
 
@@ -76,7 +76,7 @@ describe("DownLoadPdfButton", () => {
 
     expect(mockGetFormValues).toHaveBeenCalledTimes(1)
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledTimes(
-      1,
+      1
     )
   })
 
@@ -115,7 +115,7 @@ describe("DownLoadPdfButton", () => {
             text: expect.objectContaining({ type: "doc" }),
           }),
         ]),
-      }),
+      })
     )
   })
 
@@ -126,7 +126,7 @@ describe("DownLoadPdfButton", () => {
         ({
           warmUp: "custom",
           coolDown: "custom",
-        }) as Lesson,
+        }) as Lesson
     )
 
     renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)
@@ -139,7 +139,7 @@ describe("DownLoadPdfButton", () => {
 
     expect(mockGetFormValues).toHaveBeenCalledTimes(3)
     expect(buildAndDownloadPdfModule.buildAndDownloadPdf).toHaveBeenCalledTimes(
-      3,
+      3
     )
   })
 
@@ -149,7 +149,7 @@ describe("DownLoadPdfButton", () => {
         ({
           warmUp: "custom",
           coolDown: "custom",
-        }) as Lesson,
+        }) as Lesson
     )
 
     renderWithProvider(<DownLoadPdfButton getFormValues={mockGetFormValues} />)

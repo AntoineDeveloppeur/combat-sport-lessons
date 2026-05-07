@@ -30,7 +30,7 @@ vi.mock("@/components/lessonForm/SelectField", () => ({
 }))
 
 vi.mock("@/components/lessonForm/FormSaveAndNavigate", () => ({
-  default: ({ handleSubmit, prev, next }: any) => (
+  default: ({ prev, next }: any) => (
     <div data-testid="form-save-navigate">
       <button data-testid="prev-button" data-route={prev}>
         Prev

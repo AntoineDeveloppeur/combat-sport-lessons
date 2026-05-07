@@ -91,22 +91,10 @@ export default function SignUp() {
           <CardContent>
             <Form onSubmit={handleSubmit(onValid)}>
               <FieldGroup>
-                <NameField
-                  register={register}
-                  errors={errors}
-                />
-                <EmailField
-                  register={register}
-                  errors={errors}
-                />
-                <PasswordField
-                  register={register}
-                  errors={errors}
-                />
-                <ConfirmPasswordField
-                  register={register}
-                  errors={errors}
-                />
+                <NameField register={register} errors={errors} />
+                <EmailField register={register} errors={errors} />
+                <PasswordField register={register} errors={errors} />
+                <ConfirmPasswordField register={register} errors={errors} />
               </FieldGroup>
               <div className="flex flex-col gap-3 pt-8">
                 <Button type="submit">
@@ -117,10 +105,7 @@ export default function SignUp() {
                     {error.data?.error}
                   </p>
                 )}
-                <Button
-                  variant="outline"
-                  type="button"
-                >
+                <Button variant="outline" type="button">
                   S&apos;inscrire avec Google
                 </Button>
                 <p className="px-6 text-center">

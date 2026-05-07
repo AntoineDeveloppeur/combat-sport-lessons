@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react"
+import { ReactNode } from "react"
 import { describe, it, expect } from "vitest"
 import { renderHook } from "@testing-library/react"
 import { Provider } from "react-redux"
@@ -16,9 +16,11 @@ describe("Store hooks", () => {
   }
 
   const createWrapper = (store: ReturnType<typeof createTestStore>) => {
-    return ({ children }: { children: ReactNode }) => (
+    const Wrapper = ({ children }: { children: ReactNode }) => (
       <Provider store={store}>{children}</Provider>
     )
+    Wrapper.displayName = "TestWrapper"
+    return Wrapper
   }
 
   describe("useAppDispatch", () => {

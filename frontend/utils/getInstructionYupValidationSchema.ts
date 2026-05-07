@@ -5,6 +5,7 @@ import { type TiptapJSON } from "@/types"
 const extractTextFromTiptap = (tiptapJSON: TiptapJSON): string => {
   let text = ""
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const traverse = (node: any): void => {
     if (!node) return
 
@@ -22,7 +23,7 @@ const extractTextFromTiptap = (tiptapJSON: TiptapJSON): string => {
 }
 
 export function getYupValidationSchema(
-  fieldName: keyof Lesson,
+  fieldName: keyof Lesson
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Yup.ObjectSchema<any> {
   return Yup.object().shape({
@@ -42,7 +43,7 @@ export function getYupValidationSchema(
                 }
                 const extractedText = extractTextFromTiptap(value as TiptapJSON)
                 return extractedText.length >= 3
-              },
+              }
             )
             .test(
               "max-text-length",
@@ -51,7 +52,7 @@ export function getYupValidationSchema(
                 if (!value) return true
                 const extractedText = extractTextFromTiptap(value as TiptapJSON)
                 return extractedText.length <= 2000
-              },
+              }
             ),
           min: Yup.number()
             .min(0, "Les minutes doivent être au minimum 0")
@@ -61,7 +62,7 @@ export function getYupValidationSchema(
             .min(0, "Les secondes doivent être au minimum 0")
             .max(59, "Les secondes ne peuvent pas dépasser 59")
             .required("Les secondes sont requises"),
-        }),
+        })
       )
       .required(),
   })
