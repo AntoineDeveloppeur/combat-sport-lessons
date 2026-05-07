@@ -46,7 +46,6 @@
 
 ### DevOps & Outils
 
-- **Monorepo** : npm workspaces
 - **Containerization** : Docker + Docker Compose
 - **Linting** : ESLint
 - **Formatting** : Prettier
