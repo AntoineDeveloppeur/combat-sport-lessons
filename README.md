@@ -233,8 +233,10 @@ npm run test              # Mode watch (développement)
 npm run test:coverage     # Coverage sans watch
 
 # E2E (depuis la racine)
-# Pour que le test réussisse la base de donnée doit être montée
+# Pour que le test réussisse la base de donnée doit être montée, ainsi que le front et la back
 cd backend; npm run db:reset
+cd backend; npm run dev
+cd frontend; npm run dev
 npm run test:e2e          # Tests Playwright headless
 npm run test:e2e:ui       # Avec interface UI
 npm run test:e2e:debug    # Mode debug

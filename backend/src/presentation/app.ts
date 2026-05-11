@@ -8,8 +8,20 @@ export const app = express()
 
 app.use(
   cors({
-    // origin: [process.env.FRONTEND_URL as string],
-    origin: true,
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        process.env.FRONTEND_URL as string,
+        "https://coursdecombat.fr",
+        "https://www.coursdecombat.fr",
+      ]
+
+      // Accept server-to-server (Next.js SSR) or allowed origins
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true)
+      } else {
+        callback(new Error("Not allowed by CORS"))
+      }
+    },
     credentials: true,
   })
 )
