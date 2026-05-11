@@ -47,7 +47,7 @@ export function SignupSection() {
         </div>
 
         <div className="pt-8">
-          <Link href="/signup">
+          <Link href="/sign-up">
             <Button
               size="lg"
               className="bg-white text-black hover:bg-white/90 font-bold text-base md:text-xl px-8 md:px-12 py-4 md:py-6 whitespace-normal"

@@ -55,7 +55,7 @@ export function HeroSection() {
               Découvrir un exemple
             </Button>
           </Link>
-          <Link href="/signup">
+          <Link href="/sign-up">
             <Button
               size="lg"
               className="bg-white text-black hover:bg-white/90 font-bold text-lg px-8"
