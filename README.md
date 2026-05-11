@@ -329,7 +329,7 @@ Merci à tous les contributeurs qui participent à ce projet d'apprentissage !
 git pull origin main
 // Vérifier si changement dans le .env
 cd backend; npm run build
-cd ../frontend npm run build
+cd ../frontend; npm run build
 pm2 list
 // identifier les processus api et frontend
 pm2 restart [id]
