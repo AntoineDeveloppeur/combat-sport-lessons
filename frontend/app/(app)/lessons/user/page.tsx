@@ -3,8 +3,7 @@
 import { LessonTable } from "@/components/lessonTable/LessonTable"
 import { useGetAllLessonsQuery } from "@/store/api/lessonApi"
 import { useAuth } from "@/contexts/AuthContext"
-import { useRouter } from "next/navigation"
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo } from "react"
 import { LessonFilters } from "@/components/lessonTable/LessonFilters"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -12,15 +11,8 @@ import { useAppDispatch } from "@/store/hooks"
 import { reset } from "@/features/lessonForm/lessonFormSlice"
 
 export default function LessonsUserPage() {
-  const { isAuthenticated, userId } = useAuth()
-  const router = useRouter()
+  const { userId } = useAuth()
   const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login")
-    }
-  }, [isAuthenticated, router])
 
   const { data, isLoading } = useGetAllLessonsQuery()
 

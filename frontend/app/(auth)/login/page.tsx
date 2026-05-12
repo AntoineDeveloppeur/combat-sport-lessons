@@ -50,7 +50,7 @@ export default function Page() {
   const [login, { isLoading, error, isSuccess, data: loginData }] =
     useLoginMutation()
   const errorMessage = getErrorMessage(error as BackendError)
-  const { login: saveAuth } = useAuth()
+  const { saveAuth } = useAuth()
   const router = useRouter()
   const { executeRecaptcha } = useGoogleReCaptcha()
 

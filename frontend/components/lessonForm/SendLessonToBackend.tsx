@@ -8,9 +8,17 @@ import {
   usePostLessonMutation,
   useUpdateLessonMutation,
 } from "@/store/api/lessonApi"
+import { useAuth } from "@/contexts/AuthContext"
+
+const isAuthError = (error: unknown): boolean =>
+  typeof error === "object" &&
+  error !== null &&
+  "status" in error &&
+  (error as { status: number }).status === 403
 
 export default function SendLessonToBackend() {
   const router = useRouter()
+  const { logout } = useAuth()
 
   const lesson = useAppSelector(selectLessonForm)
   const [postLesson, { isLoading: isPosting, error: postError }] =
@@ -22,11 +30,7 @@ export default function SendLessonToBackend() {
   const error = postError || updateError
 
   const handleClick = async () => {
-    const token = window.localStorage.getItem("token")
-    if (!token) {
-      router.push("/login")
-      return
-    }
+    const token = window.localStorage.getItem("token") ?? ""
 
     try {
       if (lesson.lessonId) {
@@ -42,6 +46,12 @@ export default function SendLessonToBackend() {
       }
       router.push("/lessons/user")
     } catch (error) {
+      if (isAuthError(error)) {
+        alert("Votre session a expiré, veuillez vous reconnecter")
+        logout()
+        router.push("/login")
+        return
+      }
       const errorMessage =
         error && typeof error === "object" && "data" in error
           ? (error.data as { error?: string })?.error

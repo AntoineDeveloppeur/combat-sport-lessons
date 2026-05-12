@@ -3,6 +3,16 @@ import { render, screen, renderHook, act } from "@testing-library/react"
 import { AuthProvider, useAuth } from "./AuthContext"
 import { ReactNode } from "react"
 
+const makeJwt = (expSecondsFromNow: number): string => {
+  const header = btoa(JSON.stringify({ alg: "HS256", typ: "JWT" }))
+  const payload = btoa(
+    JSON.stringify({ exp: Math.floor(Date.now() / 1000) + expSecondsFromNow })
+  )
+  return `${header}.${payload}.signature`
+}
+
+const VALID_TOKEN = makeJwt(3600)
+
 describe("AuthContext", () => {
   beforeEach(() => {
     localStorage.clear()
@@ -52,7 +62,7 @@ describe("AuthContext", () => {
       })
 
       it("should initialize with authenticated state when token exists in localStorage", () => {
-        localStorage.setItem("token", "fake-token")
+        localStorage.setItem("token", VALID_TOKEN)
         localStorage.setItem("userId", "user-123")
 
         const { result } = renderHook(() => useAuth(), { wrapper })
@@ -62,7 +72,7 @@ describe("AuthContext", () => {
       })
 
       it("should initialize as unauthenticated when only token exists", () => {
-        localStorage.setItem("token", "fake-token")
+        localStorage.setItem("token", VALID_TOKEN)
 
         const { result } = renderHook(() => useAuth(), { wrapper })
 
@@ -85,7 +95,7 @@ describe("AuthContext", () => {
         const { result } = renderHook(() => useAuth(), { wrapper })
 
         act(() => {
-          result.current.login("test-token", "user-456")
+          result.current.saveAuth("test-token", "user-456")
         })
 
         expect(result.current.isAuthenticated).toBe(true)
@@ -98,13 +108,13 @@ describe("AuthContext", () => {
         const { result } = renderHook(() => useAuth(), { wrapper })
 
         act(() => {
-          result.current.login("token-1", "user-1")
+          result.current.saveAuth("token-1", "user-1")
         })
 
         expect(result.current.userId).toBe("user-1")
 
         act(() => {
-          result.current.login("token-2", "user-2")
+          result.current.saveAuth("token-2", "user-2")
         })
 
         expect(result.current.userId).toBe("user-2")
@@ -116,7 +126,7 @@ describe("AuthContext", () => {
         const { result } = renderHook(() => useAuth(), { wrapper })
 
         act(() => {
-          result.current.login("", "user-123")
+          result.current.saveAuth("", "user-123")
         })
 
         expect(result.current.isAuthenticated).toBe(true)
@@ -127,7 +137,7 @@ describe("AuthContext", () => {
         const { result } = renderHook(() => useAuth(), { wrapper })
 
         act(() => {
-          result.current.login("token-123", "")
+          result.current.saveAuth("token-123", "")
         })
 
         expect(result.current.isAuthenticated).toBe(true)
@@ -138,7 +148,7 @@ describe("AuthContext", () => {
         const { result } = renderHook(() => useAuth(), { wrapper })
 
         act(() => {
-          result.current.login("token@#$%^&*()", "user!@#$%")
+          result.current.saveAuth("token@#$%^&*()", "user!@#$%")
         })
 
         expect(result.current.isAuthenticated).toBe(true)
@@ -179,7 +189,7 @@ describe("AuthContext", () => {
         const { result } = renderHook(() => useAuth(), { wrapper })
 
         act(() => {
-          result.current.login("token", "user-id")
+          result.current.saveAuth("token", "user-id")
         })
 
         expect(result.current.isAuthenticated).toBe(true)
@@ -208,7 +218,7 @@ describe("AuthContext", () => {
         const { result, rerender } = renderHook(() => useAuth(), { wrapper })
 
         act(() => {
-          result.current.login("token", "user-id")
+          result.current.saveAuth("token", "user-id")
         })
 
         rerender()
@@ -218,7 +228,7 @@ describe("AuthContext", () => {
       })
 
       it("should load state from localStorage on mount", () => {
-        localStorage.setItem("token", "existing-token")
+        localStorage.setItem("token", VALID_TOKEN)
         localStorage.setItem("userId", "existing-user")
 
         const { result } = renderHook(() => useAuth(), { wrapper })
@@ -231,11 +241,11 @@ describe("AuthContext", () => {
     describe("Multiple consumers", () => {
       it("should share state between multiple consumers", () => {
         const Consumer1 = () => {
-          const { isAuthenticated, login } = useAuth()
+          const { isAuthenticated, saveAuth } = useAuth()
           return (
             <div>
               <span>{isAuthenticated ? "Auth1: Yes" : "Auth1: No"}</span>
-              <button onClick={() => login("token", "user")}>Login</button>
+              <button onClick={() => saveAuth("token", "user")}>Login</button>
             </div>
           )
         }

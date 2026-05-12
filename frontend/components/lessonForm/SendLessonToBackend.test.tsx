@@ -21,6 +21,16 @@ vi.mock("next/navigation", () => ({
   }),
 }))
 
+vi.mock("@/contexts/AuthContext", () => ({
+  useAuth: () => ({
+    isAuthenticated: true,
+    userId: "user-test",
+    saveAuth: vi.fn(),
+    logout: vi.fn(),
+    checkAuth: vi.fn(),
+  }),
+}))
+
 vi.mock("@/store/api/lessonApi", () => ({
   usePostLessonMutation: () => [
     mockPostLesson,
@@ -53,18 +63,6 @@ describe("SendLessonToBackend", () => {
     expect(
       screen.getByRole("button", { name: /sauvegarder la leçon/i })
     ).toBeInTheDocument()
-  })
-
-  it("should redirect to login when no token is present", async () => {
-    const user = userEvent.setup()
-    renderWithProvider(<SendLessonToBackend />)
-
-    const button = screen.getByRole("button", {
-      name: /sauvegarder la leçon/i,
-    })
-    await user.click(button)
-
-    expect(mockPush).toHaveBeenCalledWith("/login")
   })
 
   it("should call postLesson with lesson data and token when token exists", async () => {

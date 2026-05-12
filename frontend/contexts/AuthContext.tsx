@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, ReactNode } from "react"
+import { isTokenExpired } from "@/utils/isTokenExpired"
 
 interface AuthState {
   isAuthenticated: boolean
@@ -8,13 +9,19 @@ interface AuthState {
 }
 
 interface AuthContextType extends AuthState {
-  login: (token: string, userId: string) => void
+  saveAuth: (token: string, userId: string) => void
   logout: () => void
+  checkAuth: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-const getInitialAuthState = (): AuthState => {
+const clearStoredAuth = (): void => {
+  localStorage.removeItem("token")
+  localStorage.removeItem("userId")
+}
+
+const readStoredAuth = (): AuthState => {
   if (typeof window === "undefined") {
     return { isAuthenticated: false, userId: null }
   }
@@ -22,19 +29,22 @@ const getInitialAuthState = (): AuthState => {
   const token = localStorage.getItem("token")
   const userId = localStorage.getItem("userId")
 
-  if (token && userId) {
-    return { isAuthenticated: true, userId }
+  if (!token || !userId) {
+    return { isAuthenticated: false, userId: null }
   }
 
-  return { isAuthenticated: false, userId: null }
+  if (isTokenExpired(token)) {
+    clearStoredAuth()
+    return { isAuthenticated: false, userId: null }
+  }
+
+  return { isAuthenticated: true, userId }
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [authState, setAuthState] = useState<AuthState>(() =>
-    getInitialAuthState()
-  )
+  const [authState, setAuthState] = useState<AuthState>(() => readStoredAuth())
 
-  const login = (token: string, userId: string) => {
+  const saveAuth = (token: string, userId: string) => {
     localStorage.setItem("token", token)
     localStorage.setItem("userId", userId)
     setAuthState({
@@ -44,12 +54,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const logout = () => {
-    localStorage.removeItem("token")
-    localStorage.removeItem("userId")
+    clearStoredAuth()
     setAuthState({
       isAuthenticated: false,
       userId: null,
     })
+  }
+
+  const checkAuth = () => {
+    const next = readStoredAuth()
+    setAuthState((prev) =>
+      prev.isAuthenticated === next.isAuthenticated &&
+      prev.userId === next.userId
+        ? prev
+        : next
+    )
   }
 
   return (
@@ -57,8 +76,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       value={{
         isAuthenticated: authState.isAuthenticated,
         userId: authState.userId,
-        login,
+        saveAuth,
         logout,
+        checkAuth,
       }}
     >
       {children}

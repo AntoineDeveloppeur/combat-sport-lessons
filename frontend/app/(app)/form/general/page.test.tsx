@@ -19,6 +19,16 @@ vi.mock("@/store/api/lessonApi", () => ({
   useUpdateLessonMutation: () => mockUpdateMutationResult,
 }))
 
+vi.mock("@/contexts/AuthContext", () => ({
+  useAuth: () => ({
+    isAuthenticated: true,
+    userId: "user-test",
+    saveAuth: vi.fn(),
+    logout: vi.fn(),
+    checkAuth: vi.fn(),
+  }),
+}))
+
 describe("General page", () => {
   beforeEach(() => {
     mockPush.mockClear()
