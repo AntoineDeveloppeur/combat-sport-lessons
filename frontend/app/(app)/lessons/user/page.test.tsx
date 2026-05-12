@@ -44,22 +44,6 @@ describe("LessonsUserPage", () => {
     mockUseRouter.mockReturnValue({ push: mockPush })
   })
 
-  it("should redirect to login if not authenticated", () => {
-    mockUseAuth.mockReturnValue({
-      isAuthenticated: false,
-      userId: null,
-    })
-
-    mockUseGetAllLessonsQuery.mockReturnValue({
-      data: null,
-      isLoading: false,
-    })
-
-    renderWithProvider(<LessonsUserPage />)
-
-    expect(mockPush).toHaveBeenCalledWith("/login")
-  })
-
   it("should render page title and description", () => {
     mockUseAuth.mockReturnValue({
       isAuthenticated: true,

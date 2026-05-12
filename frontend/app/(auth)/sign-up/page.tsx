@@ -56,7 +56,7 @@ export default function SignUp() {
 
   const [signUp, { isLoading, error, isSuccess, data: signUpData }] =
     useSignUpMutation()
-  const { login: saveAuth } = useAuth()
+  const { saveAuth } = useAuth()
   const router = useRouter()
   const { executeRecaptcha } = useGoogleReCaptcha()
 
