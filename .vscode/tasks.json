@@ -46,7 +46,7 @@
     {
       "label": "Backend: Tests",
       "type": "shell",
-      "command": "cd backend; npm test",
+      "command": "Start-Sleep -Seconds 30; cd backend; npm test",
       "group": "build",
       "presentation": {
         "echo": true,
