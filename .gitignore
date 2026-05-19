@@ -46,7 +46,7 @@
 /frontend/next-env.d.ts
 
 # test result
-/tests/test_results/
+**/tests/test-results/
 
 # ide
 .windsurf
