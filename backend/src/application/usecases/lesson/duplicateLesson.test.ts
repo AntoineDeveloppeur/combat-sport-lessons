@@ -20,6 +20,7 @@ describe("duplicateLesson use case", () => {
     [],
     [],
     [],
+    30,
     new Date(),
     "user-123",
     false

@@ -10,8 +10,9 @@ export class Lesson {
     public warmUpInstructions: Instruction[],
     public bodyInstructions: Instruction[],
     public coolDownInstructions: Instruction[],
+    public readonly duration: number,
     public readonly creationDate: Date,
     public readonly userId: string,
-    public readonly isPublic: boolean
+    public readonly isPublic: boolean,
   ) {}
 }

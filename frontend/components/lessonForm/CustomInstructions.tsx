@@ -6,6 +6,7 @@ import InstructionField from "@/components/lessonForm/InstructionField"
 import { useInstructionForm } from "@/hooks/useInstructionForm"
 import type { LessonInstructionKey, Lesson } from "@/types"
 import FormSaveAndNavigate from "./FormSaveAndNavigate"
+import DurationDisplay from "./DurationDisplay"
 import { useEffect } from "react"
 
 interface CustomInstructionsProps {
@@ -73,6 +74,7 @@ export default function CustomInstructions({
         {" "}
         Ajouter un champs
       </Button>
+      <DurationDisplay />
       <FormSaveAndNavigate
         handleSubmit={handleSubmit}
         prev={prev}

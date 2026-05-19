@@ -40,12 +40,12 @@ export class PostSQLLessonRepository implements lessonRepository {
       lessonDB,
       warmUpInstructionsDB,
       bodyInstructionsDB,
-      coolDownInstructionsDB
+      coolDownInstructionsDB,
     )
   }
   async getAll(): Promise<Lesson[]> {
     const query = `
-      SELECT l.lesson_id, l.title, l.sport, l.objective, l.created_at, l.user_id, l.is_public, l.warm_up,l.cool_down, i.text, i.type, i.min, i.sec, i.order 
+      SELECT l.lesson_id, l.title, l.sport, l.objective, l.duration, l.created_at, l.user_id, l.is_public, l.warm_up,l.cool_down, i.text, i.type, i.min, i.sec, i.order 
       FROM lessons l
       LEFT JOIN instructions i
       ON l.lesson_id = i.lesson_id
@@ -58,7 +58,7 @@ export class PostSQLLessonRepository implements lessonRepository {
   async save(
     lesson: Lesson,
     userId: string,
-    IdGenerator: IdGenerator
+    IdGenerator: IdGenerator,
   ): Promise<string> {
     const lessonId = IdGenerator.generate()
     const warm_up = "custom"
@@ -75,13 +75,14 @@ export class PostSQLLessonRepository implements lessonRepository {
       cool_down,
       warm_up_preset_title,
       cool_down_preset_title,
+      lesson.duration,
       userId,
       is_public,
     ]
 
     const queryLesson = `
-      INSERT INTO lessons (lesson_id, title, sport, objective, warm_up, cool_down, warm_up_preset_title, cool_down_preset_title, user_id, is_public)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      INSERT INTO lessons (lesson_id, title, sport, objective, warm_up, cool_down, warm_up_preset_title, cool_down_preset_title, duration, user_id, is_public)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     `
 
     const [queryInstructions, paramsInstructions] = buildInstructionsQuery(
@@ -89,7 +90,7 @@ export class PostSQLLessonRepository implements lessonRepository {
       lesson.bodyInstructions,
       lesson.coolDownInstructions,
       lessonId,
-      IdGenerator
+      IdGenerator,
     )
 
     await this.pool.query("BEGIN")
@@ -116,7 +117,7 @@ export class PostSQLLessonRepository implements lessonRepository {
   async duplicate(
     lessonId: string,
     userId: string,
-    idGenerator: IdGenerator
+    idGenerator: IdGenerator,
   ): Promise<Lesson> {
     const sourceLesson = await this.get(lessonId)
 
@@ -143,8 +144,8 @@ export class PostSQLLessonRepository implements lessonRepository {
 
     const newLessonId = idGenerator.generate()
     const queryLesson = `
-      INSERT INTO lessons (lesson_id, title, sport, objective, warm_up, cool_down, warm_up_preset_title, cool_down_preset_title, user_id, is_public)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      INSERT INTO lessons (lesson_id, title, sport, objective, warm_up, cool_down, warm_up_preset_title, cool_down_preset_title, duration, user_id, is_public)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     `
     const paramsLesson = [
       newLessonId,
@@ -155,6 +156,7 @@ export class PostSQLLessonRepository implements lessonRepository {
       "custom",
       null,
       null,
+      sourceLesson.duration,
       userId,
       false,
     ]
@@ -164,7 +166,7 @@ export class PostSQLLessonRepository implements lessonRepository {
       sourceLesson.bodyInstructions,
       sourceLesson.coolDownInstructions,
       newLessonId,
-      idGenerator
+      idGenerator,
     )
 
     await this.pool.query("BEGIN")
@@ -195,7 +197,7 @@ export class PostSQLLessonRepository implements lessonRepository {
 
   async titleExistsGlobally(
     title: string,
-    excludeLessonId?: string
+    excludeLessonId?: string,
   ): Promise<boolean> {
     const query = excludeLessonId
       ? `SELECT EXISTS(SELECT 1 FROM lessons WHERE title = $1 AND lesson_id != $2)`
@@ -210,17 +212,18 @@ export class PostSQLLessonRepository implements lessonRepository {
   async update(
     lessonId: string,
     lesson: Lesson,
-    idGenerator: IdGenerator
+    idGenerator: IdGenerator,
   ): Promise<Lesson> {
     const queryLesson = `
       UPDATE lessons 
-      SET title = $1, sport = $2, objective = $3
-      WHERE lesson_id = $4
+      SET title = $1, sport = $2, objective = $3, duration = $4
+      WHERE lesson_id = $5
     `
     const paramsLesson = [
       lesson.title,
       lesson.sport,
       lesson.objective,
+      lesson.duration,
       lessonId,
     ]
 
@@ -233,7 +236,7 @@ export class PostSQLLessonRepository implements lessonRepository {
       lesson.bodyInstructions,
       lesson.coolDownInstructions,
       lessonId,
-      idGenerator
+      idGenerator,
     )
 
     await this.pool.query("BEGIN")

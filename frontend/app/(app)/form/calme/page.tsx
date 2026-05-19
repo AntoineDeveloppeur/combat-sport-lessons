@@ -17,7 +17,7 @@ export default function Confirm() {
   const coolDownType = lesson.coolDown === "preset" ? "preset" : "custom"
   const prevPage = "/form/corps"
   const [getFormValues, setGetFormValues] = useState<(() => Lesson) | null>(
-    null
+    null,
   )
 
   return (

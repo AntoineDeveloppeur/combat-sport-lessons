@@ -9,6 +9,7 @@ export interface LessonDBRow {
   cool_down: string
   warm_up_preset_title: string | null
   cool_down_preset_title: string | null
+  duration: number
   created_at: string
   user_id: string
   is_public: boolean
@@ -29,6 +30,7 @@ export interface LessonDBwithInstructionRow {
   title: string
   sport: Sport
   objective: string
+  duration: number
   created_at: Date
   user_id: string
   is_public: boolean

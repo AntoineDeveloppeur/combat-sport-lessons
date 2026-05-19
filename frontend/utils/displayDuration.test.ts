@@ -3,13 +3,13 @@ import { minutesToHoursAndMinutes, displayDuration } from "./displayDuration"
 
 describe("displayDuration", () => {
   it("should display minutes only when below 60", () => {
-    expect(displayDuration(10)).toBe("10min")
-    expect(displayDuration(45)).toBe("45min")
+    expect(displayDuration(10)).toBe("10 min")
+    expect(displayDuration(45)).toBe("45 min")
   })
 
   it("should display hours and minutes when above 60", () => {
-    expect(displayDuration(70)).toBe("1h 10min")
-    expect(displayDuration(125)).toBe("2h 5min")
+    expect(displayDuration(70)).toBe("1h10")
+    expect(displayDuration(125)).toBe("2h5")
   })
 
   it("should display hours only when minutes are 0", () => {
@@ -28,8 +28,8 @@ describe("displayDuration", () => {
   })
 
   it("should handle decimal values by flooring them", () => {
-    expect(displayDuration(65.7)).toBe("1h 5min")
-    expect(displayDuration(30.9)).toBe("30min")
+    expect(displayDuration(65.7)).toBe("1h5")
+    expect(displayDuration(30.9)).toBe("30 min")
   })
 
   it("should handle very large durations", () => {

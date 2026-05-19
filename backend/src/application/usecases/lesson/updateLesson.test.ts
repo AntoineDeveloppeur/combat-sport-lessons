@@ -29,6 +29,7 @@ describe("updateLesson use case", () => {
       [],
       [{ text: createTiptapJSON("New exercise"), min: 10, sec: 0, order: 1 }],
       [],
+      30,
       new Date(),
       "user-123",
       false
@@ -42,6 +43,7 @@ describe("updateLesson use case", () => {
       [],
       [],
       [],
+      30,
       new Date(),
       "user-123",
       false
@@ -102,6 +104,7 @@ describe("updateLesson use case", () => {
       [],
       [],
       [],
+      30,
       new Date(),
       "user-456",
       false

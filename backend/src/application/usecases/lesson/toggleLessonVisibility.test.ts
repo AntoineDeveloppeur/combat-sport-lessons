@@ -15,6 +15,7 @@ describe("toggleLessonVisibility use case", () => {
       [],
       [],
       [],
+      30,
       new Date(),
       "user-123",
       true
@@ -46,6 +47,7 @@ describe("toggleLessonVisibility use case", () => {
       [],
       [],
       [],
+      30,
       new Date(),
       "user-456",
       false
@@ -91,6 +93,7 @@ describe("toggleLessonVisibility use case", () => {
       [],
       [],
       [],
+      30,
       new Date(),
       "owner-123",
       true
@@ -118,6 +121,7 @@ describe("toggleLessonVisibility use case", () => {
       [],
       [],
       [],
+      30,
       new Date(),
       "owner-123",
       true
@@ -150,6 +154,7 @@ describe("toggleLessonVisibility use case", () => {
       [],
       [],
       [],
+      30,
       new Date(),
       "user-789",
       false

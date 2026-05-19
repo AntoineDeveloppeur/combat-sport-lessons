@@ -9,6 +9,7 @@ import {
   useUpdateLessonMutation,
 } from "@/store/api/lessonApi"
 import { useAuth } from "@/contexts/AuthContext"
+import { calculateLessonDuration } from "@/utils/calculateLessonDuration"
 
 const isAuthError = (error: unknown): boolean =>
   typeof error === "object" &&
@@ -31,17 +32,19 @@ export default function SendLessonToBackend() {
 
   const handleClick = async () => {
     const token = window.localStorage.getItem("token") ?? ""
+    const duration = calculateLessonDuration(lesson)
+    const lessonWithDuration = { ...lesson, duration }
 
     try {
       if (lesson.lessonId) {
         await updateLesson({
           lessonId: lesson.lessonId,
-          lesson,
+          lesson: lessonWithDuration,
           token,
         }).unwrap()
         alert("Leçon mise à jour avec succès")
       } else {
-        await postLesson({ lesson, token }).unwrap()
+        await postLesson({ lesson: lessonWithDuration, token }).unwrap()
         alert("Leçon enregistrée avec succès")
       }
       router.push("/lessons/user")
