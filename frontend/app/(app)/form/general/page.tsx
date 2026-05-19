@@ -33,10 +33,10 @@ export default function General() {
     warmUp: Yup.string()
       .oneOf(
         ["custom", "preset"],
-        "Veuillez choisir d'écrire vous même l'échauffement ou de sélectionner un échauffement tout fait"
+        "Veuillez choisir d'écrire vous même l'échauffement ou de sélectionner un échauffement tout fait",
       )
       .required(
-        "Veuillez choisir d'écrire vous même l'échauffement ou de sélectionner un échauffement tout fait"
+        "Veuillez choisir d'écrire vous même l'échauffement ou de sélectionner un échauffement tout fait",
       ),
     coolDown: Yup.string()
       .oneOf(["custom", "preset"], "fdqsfdsq")

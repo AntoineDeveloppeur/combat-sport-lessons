@@ -1,9 +1,9 @@
 export const displayDuration = (duration: number): string => {
   const [hour, minute] = minutesToHoursAndMinutes(duration)
   if (hour === 0 && minute === 0) return "pas de durée"
-  if (hour === 0) return `${minute}min`
+  if (hour === 0) return `${minute} min`
   if (minute === 0) return `${hour}h`
-  return `${hour}h ${minute}min`
+  return `${hour}h${minute}`
 }
 
 export const minutesToHoursAndMinutes = (

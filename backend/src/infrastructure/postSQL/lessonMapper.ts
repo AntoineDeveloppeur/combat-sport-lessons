@@ -16,7 +16,7 @@ export const mapOne = (
   lessonDB: PostgreSQLResult<LessonDBRow>,
   warmUpInstructionsDB: PostgreSQLResult<InstructionDBRow>,
   bodyInstructionsDB: PostgreSQLResult<InstructionDBRow>,
-  coolDownInstructionsDB: PostgreSQLResult<InstructionDBRow>
+  coolDownInstructionsDB: PostgreSQLResult<InstructionDBRow>,
 ): Lesson => {
   const {
     lesson_id,
@@ -26,6 +26,7 @@ export const mapOne = (
     is_public,
     warm_up,
     cool_down,
+    duration,
     ...rest
   } = lessonDB.rows[0]
   const lesson = {
@@ -36,6 +37,7 @@ export const mapOne = (
     isPublic: is_public,
     warmUp: warm_up,
     coolDown: cool_down,
+    duration,
     ...rest,
     warmUpInstructions: warmUpInstructionsDB.rows.map((row) => ({
       ...row,
@@ -54,7 +56,7 @@ export const mapOne = (
 }
 
 export const mapMany = (
-  lessonsDB: PostgreSQLResult<LessonDBwithInstructionRow>
+  lessonsDB: PostgreSQLResult<LessonDBwithInstructionRow>,
 ): Lesson[] => {
   const map = new Map()
 
@@ -68,6 +70,7 @@ export const mapMany = (
         title,
         sport,
         objective,
+        duration,
         created_at,
         is_public,
         warm_up,
@@ -78,6 +81,7 @@ export const mapMany = (
         userId: user_id,
         title,
         objective,
+        duration,
         creationDate: new Date(created_at),
         sport: sport as Sport,
         isPublic: is_public,
@@ -101,7 +105,7 @@ export const mapMany = (
 
 export const addInstructions = (
   lesson: Partial<Lesson>,
-  lessonDBwithInstructionRow: LessonDBwithInstructionRow
+  lessonDBwithInstructionRow: LessonDBwithInstructionRow,
 ): Partial<Lesson> => {
   const res: Partial<Lesson> = { ...lesson }
   const { text, type, min, sec, order } = lessonDBwithInstructionRow

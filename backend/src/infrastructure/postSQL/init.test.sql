@@ -20,6 +20,7 @@ CREATE TABLE "lessons" (
   "cool_down" warm_up_cool_down_mode_enum,
   "warm_up_preset_title" varchar,
   "cool_down_preset_title" varchar,
+  "duration" integer,
   "created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
   "user_id" uuid NOT NULL,
   "is_public" boolean DEFAULT FALSE,

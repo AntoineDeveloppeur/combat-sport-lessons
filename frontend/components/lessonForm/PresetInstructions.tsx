@@ -7,6 +7,7 @@ import * as Yup from "yup"
 import { useForm } from "react-hook-form"
 import { Lesson } from "@/types"
 import FormSaveAndNavigate from "./FormSaveAndNavigate"
+import DurationDisplay from "./DurationDisplay"
 import { useAppSelector } from "@/store/hooks"
 import { selectLessonForm } from "@/features/lessonForm/lessonFormSelectors"
 
@@ -54,6 +55,7 @@ export default function PresetInstructions({
         register={register}
         errors={errors}
       />
+      <DurationDisplay />
       <FormSaveAndNavigate
         handleSubmit={handleSubmit}
         prev={prev}

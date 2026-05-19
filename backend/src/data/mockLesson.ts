@@ -6,6 +6,7 @@ export const mockLesson: Lesson = {
   title: "ouaiiiii",
   sport: "Boxe",
   objective: "dddddddddddddddddddddddddddddddddddd",
+  duration: 30,
   creationDate: new Date(),
   userId: "userId456",
   isPublic: false,

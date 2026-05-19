@@ -34,6 +34,7 @@ describe("postLesson use case", () => {
       [],
       [],
       [],
+      30,
       new Date(),
       "user-123",
       false
@@ -65,6 +66,7 @@ describe("postLesson use case", () => {
       [],
       [],
       [],
+      30,
       new Date(),
       "user-123",
       false
