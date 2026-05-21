@@ -1,8 +1,7 @@
 # Combat Sport Lessons 🥋
 
-> Application full-stack pour créer, gérer et partager des plans de leçons de
-> sports de combat. Projet d'apprentissage open-source avec architecture
-> hexagonale et stack moderne.
+> Application pour que les profs de sport de combat puissent créer et partager
+> leurs cours.
 
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL%203.0-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
