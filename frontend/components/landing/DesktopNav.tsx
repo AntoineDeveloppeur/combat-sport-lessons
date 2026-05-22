@@ -6,22 +6,25 @@ export function DesktopNav() {
     <div className="hidden md:flex items-center gap-4">
       <Link href="/lessons">
         <Button
-          variant="ghost"
+          variant="link"
           className="text-white hover:bg-white/10 hover:text-white"
         >
-          Voir les lessons
+          Voir les cours
         </Button>
       </Link>
       <Link href="/login">
         <Button
-          variant="outline"
+          variant="link"
           className="bg-white text-black hover:bg-white/90 font-bold"
         >
           Se connecter
         </Button>
       </Link>
       <Link href="/sign-up">
-        <Button className="bg-white text-black hover:bg-white/90 font-bold">
+        <Button
+          variant="link"
+          className="bg-white text-black hover:bg-white/90 font-bold"
+        >
           S&apos;inscrire
         </Button>
       </Link>

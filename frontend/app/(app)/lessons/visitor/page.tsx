@@ -17,15 +17,15 @@ export default function LessonsVisitorPage() {
   return (
     <div className="container mx-auto py-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Leçons de sports de combat</h1>
+        <h1 className="text-3xl font-bold">Cours de sports de combat</h1>
         <p className="text-muted-foreground mt-2">
-          Consultez toutes les lessons disponibles
+          Consultez tous les cours disponibles
         </p>
       </div>
 
       <div className="mb-6">
         <Link href="/sign-up">
-          <Button size="lg">Créer votre première lesson</Button>
+          <Button size="lg">Créer votre premier cours</Button>
         </Link>
       </div>
 

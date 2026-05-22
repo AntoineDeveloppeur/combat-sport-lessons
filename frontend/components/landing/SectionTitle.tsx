@@ -13,7 +13,7 @@ export function SectionTitle({
     <div className={`space-y-4 ${centered ? "text-center" : ""}`}>
       <h2 className="text-4xl md:text-6xl font-bold">{title}</h2>
       {subtitle && (
-        <p className="text-xl text-current opacity-80 max-w-2xl mx-auto">
+        <p className="text-xl text-current opacity-80 max-w-2xl mt-10 mb-6 mx-auto">
           {subtitle}
         </p>
       )}

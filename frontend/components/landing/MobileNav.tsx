@@ -39,7 +39,7 @@ export function MobileNav() {
               variant="ghost"
               className="w-full justify-start text-white hover:bg-white/10 hover:text-white text-lg"
             >
-              Voir les lessons
+              Voir les cours
             </Button>
           </Link>
           <Link href="/login" onClick={() => setIsOpen(false)}>
