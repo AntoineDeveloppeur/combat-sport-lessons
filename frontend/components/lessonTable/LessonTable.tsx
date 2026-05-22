@@ -50,7 +50,9 @@ export function LessonTable({
 }: LessonTableProps) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    creationDate: false,
+  })
   const [globalFilter, setGlobalFilter] = useState("")
 
   const columns = useMemo(

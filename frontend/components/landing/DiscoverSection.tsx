@@ -8,10 +8,12 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card"
+import { FileDown } from "lucide-react"
 import { useGetAllLessonsQuery } from "@/store/api/lessonApi"
 import { buildAndDownloadPdf } from "@/utils/buildAndDownloadPdf"
 import { SectionContainer } from "./SectionContainer"
 import { SectionTitle } from "./SectionTitle"
+import { ParallaxWrapper } from "./ParallaxWrapper"
 
 export function DiscoverSection() {
   const { data, isLoading } = useGetAllLessonsQuery()
@@ -31,10 +33,12 @@ export function DiscoverSection() {
       imageOpacity={0.1}
     >
       <div className="max-w-4xl mx-auto text-center space-y-8">
-        <SectionTitle
-          title="Découvrez un cours exemple"
-          subtitle="Téléchargez gratuitement un cours complet pour voir la qualité et la structure de nos lessons. Aucune inscription requise."
-        />
+        <ParallaxWrapper speed={0.8} stopAtCenter={true}>
+          <SectionTitle
+            title="Découvrez des cours prêts à l'emploi"
+            subtitle="Tous les cours sont disponibles gratuitement et sans inscription. Voici un exemple ci-dessous."
+          />
+        </ParallaxWrapper>
 
         {isLoading ? (
           <div className="flex flex-col items-center gap-4 py-12">
@@ -42,7 +46,7 @@ export function DiscoverSection() {
             <p className="text-gray-500">Chargement du cours...</p>
           </div>
         ) : lesson ? (
-          <Card className="max-w-2xl mx-auto">
+          <Card className="max-w-2xl w-fit  px-auto mx-auto">
             <CardHeader className="space-y-4">
               <div>
                 <CardDescription className="uppercase">Sport</CardDescription>
@@ -63,33 +67,13 @@ export function DiscoverSection() {
             </CardHeader>
 
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-3 gap-4 pt-4 border-t">
-                <div className="text-center">
-                  <p className="text-sm text-gray-500">Échauffement</p>
-                  <p className="text-lg font-bold">
-                    {lesson.warmUpInstructions?.length || 0} exercices
-                  </p>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm text-gray-500">Corps de séance</p>
-                  <p className="text-lg font-bold">
-                    {lesson.bodyInstructions?.length || 0} exercices
-                  </p>
-                </div>
-                <div className="text-center">
-                  <p className="text-sm text-gray-500">Retour au calme</p>
-                  <p className="text-lg font-bold">
-                    {lesson.coolDownInstructions?.length || 0} exercices
-                  </p>
-                </div>
-              </div>
-
               <Button
                 onClick={handleDownload}
                 size="lg"
-                className="w-full bg-black text-white hover:bg-gray-800 font-bold"
+                className="w-auto bg-black text-white hover:bg-gray-800 font-bold flex items-center gap-2"
               >
-                📥 Télécharger ce cours en PDF
+                <FileDown className="w-5 h-5" />
+                Télécharger en PDF
               </Button>
             </CardContent>
           </Card>
