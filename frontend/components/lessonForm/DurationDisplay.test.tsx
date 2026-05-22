@@ -69,7 +69,7 @@ describe("DurationDisplay", () => {
         </Provider>
       )
 
-      expect(screen.getByText("36min")).toBeInTheDocument()
+      expect(screen.getByText("36 min")).toBeInTheDocument()
     })
 
     it("should display hours and minutes when duration is 60 minutes or more", () => {
@@ -86,7 +86,7 @@ describe("DurationDisplay", () => {
         </Provider>
       )
 
-      expect(screen.getByText("1h 26min")).toBeInTheDocument()
+      expect(screen.getByText("1h26")).toBeInTheDocument()
     })
 
     it("should display hours only when minutes are exactly 0", () => {
@@ -123,7 +123,7 @@ describe("DurationDisplay", () => {
       )
 
       // Total: 5*60+30 + 10*60+15 + 3*60+45 = 330 + 615 + 225 = 1170 seconds = 19.5 minutes -> rounds up to 20min
-      expect(screen.getByText("20min")).toBeInTheDocument()
+      expect(screen.getByText("20 min")).toBeInTheDocument()
     })
 
     it("should handle all instruction types (warmUp, body, coolDown)", () => {
@@ -150,7 +150,7 @@ describe("DurationDisplay", () => {
       )
 
       // Total: 2+3+10+15+5+5 = 40min
-      expect(screen.getByText("40min")).toBeInTheDocument()
+      expect(screen.getByText("40 min")).toBeInTheDocument()
     })
 
     it("should handle missing instruction arrays", () => {
@@ -167,7 +167,7 @@ describe("DurationDisplay", () => {
         </Provider>
       )
 
-      expect(screen.getByText("10min")).toBeInTheDocument()
+      expect(screen.getByText("10 min")).toBeInTheDocument()
     })
   })
 
