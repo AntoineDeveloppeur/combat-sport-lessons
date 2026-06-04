@@ -262,3 +262,10 @@ label {
     scroll-behavior: smooth;
   }
 }
+
+/* Hide Google reCAPTCHA badge */
+.grecaptcha-badge {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
