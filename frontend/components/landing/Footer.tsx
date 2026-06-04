@@ -8,21 +8,13 @@ export function Footer() {
       <div className="container mx-auto px-6 py-12">
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <div>
-            <h3 className="text-2xl font-bold mb-4">Combat Lessons</h3>
-            <p className="text-white/70 mb-6">
-              La plateforme dédiée aux professeurs de sports de combat pour
-              créer, organiser et partager leurs cours.
-            </p>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-bold mb-4">Contact</h4>
-            <p className="text-white/70 mb-2">
+            <h4 className="text-sm font-bold mb-3">Contact</h4>
+            <p className="text-xs text-white/50 mb-2">
               Une question ? Contactez-nous :
             </p>
             <a
               href="mailto:antoine.developpeur@gmail.com"
-              className="text-white hover:text-white/80 underline"
+              className="text-xs text-white/50 hover:text-white/80 underline"
             >
               antoine.developpeur@gmail.com
             </a>
@@ -72,6 +64,31 @@ export function Footer() {
                 </a>
               </p>
             </div>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-bold mb-3">Protection</h4>
+            <p className="text-xs text-white/50">
+              Ce site est protégé par reCAPTCHA et les{" "}
+              <a
+                href="https://policies.google.com/privacy"
+                className="hover:text-white/70 underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Règles de confidentialité
+              </a>{" "}
+              et{" "}
+              <a
+                href="https://policies.google.com/terms"
+                className="hover:text-white/70 underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Conditions d&apos;utilisation
+              </a>{" "}
+              de Google s&apos;appliquent.
+            </p>
           </div>
         </div>
 
