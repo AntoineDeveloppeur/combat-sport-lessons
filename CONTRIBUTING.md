@@ -1,3 +1,7 @@
+# Fermé à la contribution
+
+# Ne pas lire ci-dessous
+
 # Guide de Contribution 🤝
 
 Merci de votre intérêt pour contribuer à **Combat Sport Lessons** ! Ce projet
